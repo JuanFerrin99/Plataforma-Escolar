@@ -32,7 +32,11 @@ export default function AlumnoPage() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("http://localhost:3001/alumnos/?nombre")
+        fetch("http://localhost:3001/alumnos/1",
+        { method: 'GET',
+          mode: 'no-cors', 
+          cache: 'default'
+       })
             .then(response => response.json())
             .then(alumnosAPI => {
                 setAlumnos(alumnosAPI)

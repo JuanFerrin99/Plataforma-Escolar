@@ -6,9 +6,12 @@ const { default: mongoose } = require('mongoose');
 //--------------------------------------- POST /alumnos/ ------------------------------------------------------------------
 
 module.exports.agregarAlumno = (req, res) => {
-    const { nombre, apellido, dni, fechaNacimiento, telefono, mail, titulos, datosResidiencia, fechaIngreso, usuario, datosNacimiento, carrera} = req.body;
-
+    const { _id, nombre, apellido, dni, fechaNacimiento, telefono, mail, titulos, datosResidiencia, fechaIngreso, usuario, datosNacimiento, carrera} = req.body;
+    
+    Alumno.init()
+    
     const alumno = new Alumno({
+    _id,
     nombre, 
     apellido, 
     dni, 
