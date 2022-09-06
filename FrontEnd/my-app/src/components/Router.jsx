@@ -15,7 +15,7 @@ export default function Router() {
                     <Route path="/login" element= { <HomePage /> } />
                     <Route path="/inscripcion" element= { <HomePage/> } />                     
                 </Route>
-                    <Route path="/alumno " element= { <AlumnoPage/> } />
+                    <Route path="/alumno" element= { <AlumnoPage/> } />
                     <Route path="/profesor" element= { <ProfesorPage/> } />
                     <Route path="/secretario" element= { <SecretarioPage/> } />              
                     <Route path="/admin" element= { <AdminPage/> } />

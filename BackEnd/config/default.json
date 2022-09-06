@@ -1,0 +1,7 @@
+{
+    "mongodbUri": "mongodb://localhost:27017/TP_API",
+    "authentication": {
+        "jwtSecret": "asdsahdjhj1h23787as98dyoh1i2h3hoi798asdyhiu12y8632y1iugqudy81237oaisdhu16238978y",
+        "jwtExpiry": "14 days"
+    }
+}

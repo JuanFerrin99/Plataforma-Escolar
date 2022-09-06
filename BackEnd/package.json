@@ -1,0 +1,29 @@
+{
+  "name": "BackEnd",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "jest"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "express-validator": "^6.14.0",
+    "firebase": "^9.8.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.5.4",
+    "morgan": "~1.9.1"
+  },
+  "main": "app.js",
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "jest": "^28.1.0",
+    "supertest": "^6.2.3"
+  }
+}

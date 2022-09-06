@@ -1,0 +1,14 @@
+{
+    "nombre": "Santiago",
+    "apellido": "Patiño",
+    "dni": 45749908,
+    "fechaNacimiento": "2004-06-12",
+    "telefono": 1122475777,
+    "mail": "mitens2004@gmail.com",
+    "titulos": ["Instituto Politecnico Modelo"],
+    "datosResidencia": {},
+    "fechaIngreso": "2000-01-01",
+    "usuario": {},    
+    "datosNacimiento": {},
+    "carrera": {}
+}
