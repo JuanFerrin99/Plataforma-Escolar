@@ -1,9 +1,12 @@
 .Cards {
   display: flex;
   gap: 10px;
+  background-color: blue;
 }
 .parentContainer{
+  background-color: aqua;
   width: 100%;
+  padding: 1%;
 }
 
 @media screen and (max-width: 1200px) {

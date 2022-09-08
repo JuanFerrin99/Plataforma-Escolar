@@ -32,7 +32,7 @@ export default function AlumnoPage() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("http://localhost:3001/alumnos/1",
+        fetch("http://localhost:3001/cursos/1",
         { method: 'GET',
           mode: 'no-cors', 
           cache: 'default'

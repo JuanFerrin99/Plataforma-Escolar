@@ -9,12 +9,16 @@
   --boxShadow: 0px 19px 60px rgb(0 0 0 / 8%);
   --smboxShadow: -79px 51px 60px rgba(0, 0, 0, 0.08);
   --activeItem: #f799a354;
+  --celesteGamer: #48c2e0;
+  --celesteOpaco: #91aec2;
+  --celeste: #91aec263;
 }
 
-.SecretarioPage {
+.App {
   /* padding: 0.5rem 3.5rem; */
+
   color: var(--black);
-  background: white; 
+  background: whitesmoke; 
   height: 100vh;
   display: flex;
   align-items: center;
@@ -23,11 +27,12 @@
 }
 
 .AppGlass {
+  padding: 2%;
   display: grid;
-  height: 97%;
-  width: 97%;
+  height: 100%;
+  width: 100%;
   background: var(--glass);
-  border-radius: 2rem;
+  border-radius: 0;
   gap: 16px;
   grid-template-columns: 11rem auto 20rem;
   overflow: hidden;

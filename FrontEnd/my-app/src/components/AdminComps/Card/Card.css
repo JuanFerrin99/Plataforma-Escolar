@@ -20,26 +20,13 @@
   justify-content: flex-end;
   gap: 1rem;
 }
-.CircularProgressbar {
-  width: 4rem !important;
-  overflow: visible;
-}
-.CircularProgressbar-path {
-  stroke: white !important;
-  stroke-width: 12px !important;
-  filter: drop-shadow(2px 4px 6px white);
-}
-.CircularProgressbar-trail {
-  display: none;
-}
-.CircularProgressbar-text {
-  fill: white !important;
-}
 
 .radialBar > span {
-  font-size: 17px;
+  padding: 3%;
+  text-align: left;
+  font-size: 23px;
   font-weight: bold;
-}
+} 
 
 /* sideDetail*/
 .detail {

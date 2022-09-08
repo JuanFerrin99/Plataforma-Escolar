@@ -5,9 +5,9 @@ import "./MainDash.css";
 const MainDash = () => {
   return (
     <div className="MainDash">
-      <h1 id="titulo">Admin</h1>
-      <Cards />
-    </div>
+      <h1 id="titulo">Administracion</h1>
+      <Cards/>
+    </div> 
   );
 };
 

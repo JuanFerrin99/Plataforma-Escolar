@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  padding-top: 4rem;
+  padding-top: 2.2rem;
   transition: all 300ms ease;
 }
 /* logo */
@@ -21,7 +21,7 @@
   height: 4%;
 }
 .logo > span > span {
-  color: var(--pink);
+  color: var(--celesteGamer);
 }
 
 .logo > img {
@@ -47,27 +47,18 @@
   transition: all 300ms ease;
   border-radius: 0.7rem;
   font-size: 14px;
-}
-
-.menuItem:hover {
-  cursor: pointer;
-}
-
-.menu .menuItem:last-child {
-  position: absolute;
-  bottom: 2.3rem;
   width: 100%;
 }
 
 .active {
-  background: var(--activeItem);
+  background: var(--celeste);
   margin-left: 0;
 }
 .active::before {
   content: "";
   width: 8px;
   height: 100%;
-  background: var(--pink);
+  background: var(--celesteOpaco);
   margin-right: calc(1rem - 8px);
 }
 

@@ -39,7 +39,6 @@ const Sidebar = () => {
 
       <div className="menu">
         {SidebarData.map((item, index) => {
-          //linea 48 onclick es la funcionañodad de los comprobar inscripciones y eso
           return (
             
             <div

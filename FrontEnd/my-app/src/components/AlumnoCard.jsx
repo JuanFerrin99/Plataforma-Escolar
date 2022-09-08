@@ -7,6 +7,20 @@ import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
+/*
+    _id: Number,
+    nombre: String,
+    apellido: String,
+    dni: Number,
+    fechaNacimiento: Date,
+    telefono: Number,
+    mail: String,
+    titulos: [String],
+    datosResidencia: Object,   
+    usuario: Object,           
+    datosNacimiento: Object,    
+    carrera: Object  
+*/
 export default function alumnoCard({ id, nombre, añoDeEstreno }) {
     return (
         <Grid item xs={4}>
