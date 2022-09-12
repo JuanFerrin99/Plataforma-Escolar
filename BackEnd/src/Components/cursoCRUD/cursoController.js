@@ -74,7 +74,24 @@ module.exports.getCurso = (req, res) => {
             else{
                 res.status(200).json(curso)
             }
+        })  
+        .catch((error) => {
+            console.log(error)
+            res.status(500).json({ error: "Ocurrio un error" })
         })
+}
+//-------------------------------------------- GET /cursos/id --------------------------------------------------------------
+
+module.exports.getCursos = (req, res) => {
+    return Curso.find({})
+        .then((cursos) => {
+            if(cursos == undefined){
+                res.status(404).json({error: "No se encontro el curso"})
+            }
+            else{
+                res.status(200).json(cursos)
+            }
+        })  
         .catch((error) => {
             console.log(error)
             res.status(500).json({ error: "Ocurrio un error" })
