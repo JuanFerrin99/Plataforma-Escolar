@@ -36,8 +36,8 @@ module.exports.login = (req,res) =>{
     signInWithEmailAndPassword(auth, req.body.email, req.body.password)
         .then((userCredential) => {
             if(userCredential.user.emailVerified != false){
-                const user = userCredential.user;
-                res.status(200).json(user)
+                const user = userCredential.user;  //ver si guardar
+                next()
             }
             else{
                 res.status(400).json({"error": "Mail no verificado"})
@@ -60,20 +60,36 @@ module.exports.resetPassword = (req, res) =>{
 
 //-------------------------------------TOKEN------------------------------------
 
-module.exports.createSessionToken = (req, res) => { 
-    createToken(req.currentUserData, "14d")
-        .then(token => {
-            res.status(200).json({
-                code: 10,
-                message: token
-            })
+module.exports.createSessionToken = (req, res, next) => {
+    createToken(req.currentUserData, "7d")
+    .then(token => {
+        req.userToken = token
+        next()
+        
+    })
+    .catch(error => {
+        console.log(error)
+        res.status(500).json({
+            code: 5,
+            message: "Ocurrio un error"
         })
-        .catch(error => {
-            res.status(500).json({
-                code: 5,
-                message: "Ocurrio un error"
-            })
-        })
+    })
+}
+
+module.exports.sendLoginResponse = (req, res) => {
+    const token = req.userToken;
+
+    const options = {
+        maxAge: 5000 * 1000
+    }
+
+    res.cookie("token", token, {...options, httpOnly: true})
+    res.cookie("isLogged", true, options)
+
+    res.status(200).json({
+        code: 10,
+        message: token
+    })
 }
 
 module.exports.verificarAuth = async (req, res, next) => {
@@ -83,13 +99,13 @@ module.exports.verificarAuth = async (req, res, next) => {
         const resultado = await checkToken(token)
 
         if (resultado == false) {
-            res.status(401).json({ error: "tokenInvalido" });
+            res.status(401).json({ error: "Token invalido" });
         }
         else {
             next()
         }
     }
     else {
-        res.status(401).json({ error: "tokenNoProvisto" })
+        res.status(401).json({ error: "Token no provisto" })
     }
 }

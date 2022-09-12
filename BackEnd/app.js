@@ -10,7 +10,7 @@ var routeCarrera = require('./src/Components/carreraCRUD/carreraRouter')
 var routeCurso = require('./src/Components/cursoCRUD/cursoRouter')
 var routeFalta = require('./src/Components/faltaCRUD/faltaRouter');
 var routeMateria = require('./src/Components/materiaCRUD/materiaRouter');
-var routeEvaluacion = require('./src/Components/evaluacionCRUD/evaluacionRouter')
+var routeEvaluacion = require('./src/Components/EvaluacionCRUD/evaluacionRouter')
 
 var routeAlumno = require('./src/Components/alumnoCRUD/alumnoRouter')
 var routeProfesor = require('./src/Components/profesorCRUD/profesorRouter')

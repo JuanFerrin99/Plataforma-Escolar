@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var alumnos = new Schema({
-    _id: Number,
     nombre: String,
     apellido: String,
     dni: Number,

@@ -9,6 +9,7 @@ const { agregarFalta, eliminarFalta, modificarFalta, getFalta } = require("./fal
 // 1 POST /faltas/
 router.post('/', agregarValidator, agregarFalta);
 
+//route
 // 2 DELETE /faltas/:id
 router.delete('/:id', idValidator, eliminarFalta);
 
