@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { verificarAuth } = require('../../auth/authController.js');
 const { agregarValidator, idValidator, modificacionValidator } = require("./inasistenciaValidator");
+const { agregarInasistencia, eliminarInasistencia, modificarInasistencia, getInasistencia } = require("./inasistenciaController");
 const { agregarInasistencia, eliminarInasistencia, modificarInasistencia, getInasistencia } = require("./inasistenciasController");
 
 //router.use(verificarAuth)
