@@ -1,5 +1,5 @@
 {
-  "name": "BackEnd",
+  "name": "TP_API",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -7,7 +7,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "cookie-parser": "^1.4.6",
+    "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "express-validator": "^6.14.0",
@@ -15,7 +15,7 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.5.4",
+    "mongoose": "^6.3.3",
     "morgan": "~1.9.1"
   },
   "main": "app.js",
