@@ -13,7 +13,6 @@ var secretarios = new Schema({
     datosResidencia: Object,    /* pais: String, provincia: String, localidad: String, domicilio: String, codigoPostal: Number*/
     fechaIngreso: Date,
     usuario: Object,            /* username: String, password: String, rol: String */
-    inasistencias: [Object]
 });
 
 module.exports = mongoose.model('Secretario', secretarios);

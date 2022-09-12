@@ -6,7 +6,7 @@ const { default: mongoose } = require('mongoose');
 //--------------------------------------- POST /profesores/ ------------------------------------------------------------------
 
 module.exports.agregarProfesor = (req, res) => {
-    const { nombre, apellido, dni, fechaNacimiento, telefono, mail, titulos, datosResidiencia, fechaIngreso, usuario, inasistencias, cursos} = req.body;
+    const { nombre, apellido, dni, fechaNacimiento, telefono, mail, titulos, datosResidiencia, fechaIngreso, usuario, cursos} = req.body;
 
     const profesor = new Profesor({
     nombre, 
@@ -18,8 +18,7 @@ module.exports.agregarProfesor = (req, res) => {
     titulos, 
     datosResidiencia, 
     fechaIngreso, 
-    usuario, 
-    inasistencias, 
+    usuario,
     cursos
     });
 
@@ -55,7 +54,7 @@ module.exports.eliminarProfesor = (req, res) => {
 //----------------------------------------- PATCH /profesores/id----------------------------------------------------------------------
 
 module.exports.modificarProfesor = (req, res) => {
-    return Profesor.findOneAndUpdate({ _id: req.params.id },{ nombre: req.body.nombre, apellido: req.body.apellido, dni: req.body.dni, fechaNacimiento: req.body.fechaNacimiento, telefono: req.body.telefono, mail: req.body.mail, titulos: req.body.titulos, datosResidiencia: req.body.datosResidiencia, fechaIngreso: req.body.fechaIngreso, usuario: req.body.usuario, inasistencias: req.body.inasistencias, cursos: req.body.cursos} ,{new: true})
+    return Profesor.findOneAndUpdate({ _id: req.params.id },{ nombre: req.body.nombre, apellido: req.body.apellido, dni: req.body.dni, fechaNacimiento: req.body.fechaNacimiento, telefono: req.body.telefono, mail: req.body.mail, titulos: req.body.titulos, datosResidiencia: req.body.datosResidiencia, fechaIngreso: req.body.fechaIngreso, usuario: req.body.usuario, cursos: req.body.cursos} ,{new: true})
         .then((result) => {
             if(result){
                 res.status(200).json("Se realizaron los cambios a " + req.params.id)

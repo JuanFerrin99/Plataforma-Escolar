@@ -4,10 +4,10 @@ var Schema = mongoose.Schema;
 
 var cursos = new Schema({
     materia: String,
-    profesor: Object,
+    profesor: Object, /* nombre: String, apellido: String. dni: int */
     alumnos: [Object],
     evaluaciones: [Object],
-    periodo: Object,
+    periodo: Object, /* horario: String, datos: String */
     estado: String
 });
 
