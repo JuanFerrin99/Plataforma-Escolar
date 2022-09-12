@@ -18,7 +18,7 @@ module.exports.agregarSecretario = (req, res) => {
     titulos, 
     datosResidiencia, 
     fechaIngreso, 
-    usuario, 
+    usuario,
     });
 
     secretario.save()
