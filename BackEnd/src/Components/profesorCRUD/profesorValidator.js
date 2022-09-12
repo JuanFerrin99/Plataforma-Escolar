@@ -27,10 +27,6 @@ module.exports.agregarValidator = [
         .isISO8601().withMessage("Fecha de ingreso debe tener formato yyyy-mm-dd"),
     body("usuario")
         .isObject().withMessage("Usuario debe ser un objeto con los campos username, password y rol"),
-    body("inasistencias")
-        .isArray().withMessage("Inasistencias deben ser un array"),
-    body("inasistencias.*")
-        .isObject().withMessage("Inasistencias deben ser un array de objetos"),
     body("cursos")
         .isArray().withMessage("Cursos deben ser un array"),
     body("cursos.*")
@@ -79,11 +75,6 @@ module.exports.modificacionValidator = [
     body("usuario")
         .optional({nullable: true})
         .isObject().withMessage("Usuario debe ser un objeto con los campos username, password y rol"),
-    body("inasistencias")
-        .optional({nullable: true})
-        .isArray().withMessage("Inasistencias deben ser un array"),
-    body("inasistencias.*")
-        .isObject().withMessage("Inasistencias deben ser un array de objetos"),
     body("cursos")
         .optional({nullable: true})
         .isArray().withMessage("Cursos deben ser un array"),

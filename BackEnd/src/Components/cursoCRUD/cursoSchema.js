@@ -6,8 +6,8 @@ var cursos = new Schema({
     materia: String,
     profesor: Object,
     alumnos: [Object],
-    evaluaciones: [Object],
-    periodo: Object,
+    evaluaciones: [Object], /* id: int, tipo: String, fecha: Date, periodoDeInscripcion: Object */
+    periodo: Object, /* horario: String, datos: String */
     estado: String
 });
 
