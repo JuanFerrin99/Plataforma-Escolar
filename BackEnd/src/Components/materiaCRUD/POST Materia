@@ -1,0 +1,9 @@
+{
+    "_id": {
+      "$oid": "6320c137f4e49413d16e89c0"
+    },
+    "nombre": "Matematica",
+    "duracion": "Cuatrimestral",
+    "correlativas": [],
+    "final": "True"
+}
