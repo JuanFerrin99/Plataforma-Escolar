@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var jwt = require("jsonwebtoken");
+var cors = require('cors');
+var corsAllowed = ["http://localhost:3001"]
 
 /*-------------------------------------routes-------------------------------------*/
 var routeCarrera = require('./src/Components/carreraCRUD/carreraRouter')
@@ -21,6 +23,9 @@ var firebase = require("./config/configFireBase")
 
 var app = express();
 
+app.use(cors({
+    origin:corsAllowed
+}));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

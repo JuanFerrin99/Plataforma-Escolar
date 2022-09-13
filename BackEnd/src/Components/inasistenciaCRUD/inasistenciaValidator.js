@@ -4,13 +4,13 @@ const { verifyValidation } = require("../../utils/validationUtils")
 
 module.exports.agregarValidator = [
     body("fecha")
-        .isISO8601({}).withMessage("Fecha debe tener formato yyyy-mm-dd"),
+        .isISO8601({}).withMessage("La fecha debe tener formato yyyy-mm-dd"),
     body("tipo")
-        .isString().withMessage("Tipo debe ser un string"),
+        .isString().withMessage("El tipo debe ser un string"),
     body("motivo")
-        .isString().withMessage("Motivo debe ser un string"),
+        .isString().withMessage("El motivo debe ser un string"),
     body("justificado")
-        .isBoolean().withMessage("Justificado debe ser un boolean"),
+        .isBoolean().withMessage("La caracterestica justificado debe ser un boolean"),
     body("curso")
         .isInt().withMessage("Curso debe ser un int"),
     body("materia")

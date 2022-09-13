@@ -1,7 +1,7 @@
 import { Card, CardActions, CardContent, Grid, Skeleton, Container } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import AlumnoCard from "../components/AlumnoCard";
+import CursoCard from "../components/CursoCard";
 import Chart from "../components/Chart";
 
 function Variants() {
@@ -28,18 +28,14 @@ function Variants() {
 }
 
 export default function AlumnoPage() {
-    const [alumnos, setAlumnos] = useState([]);
+    const [cursos, setCursos] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("http://localhost:3001/cursos/1",
-        { method: 'GET',
-          mode: 'no-cors', 
-          cache: 'default'
-       })
+        fetch("http://localhost:3000/cursos/")
             .then(response => response.json())
-            .then(alumnosAPI => {
-                setAlumnos(alumnosAPI)
+            .then(cursosAPI => {
+                setCursos(cursosAPI)
                 setLoading(false)
 
             })
@@ -48,18 +44,18 @@ export default function AlumnoPage() {
             })
     }, []);
 
-    const alumnosComponent = alumnos.map((alumno, i) => {
-        return <AlumnoCard key={alumno._id} id={alumno._id} />
+    const cursosComponent = cursos.map((curso, i) => {
+        return <CursoCard key={curso._id} id={curso.id} materia={curso.materia}/>
     })
 
-    const alumnosSkeleton = new Array(20).fill(<Variants />)
+    const cursosSkeleton = new Array(20).fill(<Variants />)
 
 
     return (
         <div>
             <br /><br />
             <Grid container spacing={3}>
-                {loading ? alumnosSkeleton : alumnosComponent}
+                {loading ? cursosSkeleton : cursosComponent}
             </Grid>
             <Chart/>
             <Container>

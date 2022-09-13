@@ -18,7 +18,7 @@ module.exports.agregarSecretario = (req, res) => {
     titulos, 
     datosResidiencia, 
     fechaIngreso, 
-    usuario
+    usuario, 
     });
 
     secretario.save()
@@ -29,7 +29,6 @@ module.exports.agregarSecretario = (req, res) => {
             console.log(error)
             res.status(500).json({ error: "Ocurrio un error" })
         })
-
 }
 
 //------------------------------------  DELETE /secretarios/id ------------------------------------------------------------------
