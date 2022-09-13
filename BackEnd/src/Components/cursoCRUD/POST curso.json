@@ -1,0 +1,34 @@
+{
+    "_id": {
+        "$oid": "6320bfc1f4e49413d16e89bd"
+    },
+    "materia": "Matematica",
+    "profesor": {
+        "nombre": "Juan",
+        "apellido": "Ferrin",
+        "dni": 45156489
+    },
+    "alumnos": {
+        "nombre": "Emanuel",
+        "apellido": "Ruiz",
+        "dni": 15456123,
+        "evaluaciones": {
+            "id": 1,
+            "nota": 8
+        }
+    },
+    "evaluaciones": {
+        "id": 1,
+        "tipo": "Parcial",
+        "fecha": "2022-09-13",
+        "periodoInscripcion": {
+            "fechaInicio": "2022-09-01",
+            "fechaFinal": "2022-09-12"
+        }
+    },
+    "periodo": {
+        "horario": "Mañana",
+        "datos": "Informacion"
+    },
+    "estado": "Activa"
+}

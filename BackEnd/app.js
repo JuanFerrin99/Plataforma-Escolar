@@ -8,9 +8,8 @@ var jwt = require("jsonwebtoken");
 /*-------------------------------------routes-------------------------------------*/
 var routeCarrera = require('./src/Components/carreraCRUD/carreraRouter')
 var routeCurso = require('./src/Components/cursoCRUD/cursoRouter')
-var routeFalta = require('./src/Components/faltaCRUD/faltaRouter');
+var routeInasistencia = require('./src/Components/inasistenciaCRUD/inasistenciaRouter');
 var routeMateria = require('./src/Components/materiaCRUD/materiaRouter');
-var routeEvaluacion = require('./src/Components/EvaluacionCRUD/evaluacionRouter')
 
 var routeAlumno = require('./src/Components/alumnoCRUD/alumnoRouter')
 var routeProfesor = require('./src/Components/profesorCRUD/profesorRouter')
@@ -35,8 +34,7 @@ app.use('/secretario/', routeSecretario)
 
 app.use('/carreras/', routeCarrera)
 app.use('/cursos/', routeCurso)
-app.use('/faltas/', routeFalta);
+app.use('/inasistencias/', routeInasistencia);
 app.use('/materias/', routeMateria);
-app.use('/evaluaciones/', routeEvaluacion);
 
 module.exports = app;
