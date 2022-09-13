@@ -1,0 +1,9 @@
+{
+    "_id": {
+      "$oid": "6320c137f4e49413d16e89c0"
+    },
+    "nombre": "Ingenieria Informatica",
+    "duracion": 5,
+    "materias": ["Matematica, Fisica, Programacion, Electronica, Lengua"],
+    "tipo": "Carrera"
+}
