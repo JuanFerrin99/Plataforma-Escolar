@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
@@ -13,3 +14,5 @@ var inasistencias = new Schema({
 });
 
 module.exports = mongoose.model('Inasistencia', inasistencias);
+
+

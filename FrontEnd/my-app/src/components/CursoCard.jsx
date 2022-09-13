@@ -7,8 +7,7 @@ import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-
-export default function alumnoCard({ id, nombre, añoDeEstreno }) {
+export default function cursoCard({ id, materia }) {
     return (
         <Grid item xs={4}>
             <Card sx={{ minWidth: 300 }}>
@@ -17,15 +16,12 @@ export default function alumnoCard({ id, nombre, añoDeEstreno }) {
                         {id}
                     </Typography>
                     <Typography variant="h5" component="div">
-                        {nombre}
+                        {materia}
                     </Typography>
-                    <Typography variant="h5" component="div">
-                        {añoDeEstreno}
-                    </Typography>
-                    
+  
                 </CardContent>
                 <CardActions>
-                    <Button LinkComponent={Link} to={`/${id}`} size="small">Ir a pelicula</Button>
+                    <Button LinkComponent={Link} to={`/${id}`} size="small">Ir a curso</Button>
                 </CardActions>
             </Card>
         </Grid>
