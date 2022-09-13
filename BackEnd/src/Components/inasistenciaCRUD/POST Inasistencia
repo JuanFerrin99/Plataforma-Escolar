@@ -1,0 +1,16 @@
+{
+    "_id": {
+      "$oid": "6320c137f4e49413d16e89c0"
+    },
+    "fecha": "2022-03-01",
+    "tipo": "Tarde",
+    "motivo": "-",
+    "justificado": "False",
+    "curso": 1,
+    "materia": "Matematica",
+    "persona": {
+        "nombre": "Santiago",
+        "apellido": "Patiño",
+        "dni": "45749908"
+    }
+}
