@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
@@ -12,4 +13,6 @@ var inasistencias = new Schema({
     persona: Object  /* nombre: String, apellido: String, dni: int */
 });
 
-module.exports = mongoose.model('Inasitencia', inasistencias);
+module.exports = mongoose.model('Inasistencia', inasistencias);
+
+
