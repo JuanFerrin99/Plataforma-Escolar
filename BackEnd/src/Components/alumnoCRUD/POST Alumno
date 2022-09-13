@@ -1,0 +1,35 @@
+{
+    "_id": {
+      "$oid": "6320c137f4e49413d16e89c0"
+    },
+    "nombre": "Santiago",
+    "apellido": "Patiño",
+    "dni": 45749908,
+    "fechaNacimiento": "2004-06-12",
+    "telefono": 1122475777,
+    "mail": "santiagogilio04@gmail.com",
+    "titulos": ["Instituto Politecnico Modelo"],
+    "datosResidencia": {
+        "pais": "Argentina", 
+        "provincia": "Buenos Aires", 
+        "localidad": "CABA", 
+        "domicilio": "Capdevila 2852", 
+        "codigoPostal": 1417
+    },
+    "fechaIngreso": "2000-01-01",
+    "usuario": {
+        "username": "usuario1",
+        "password": "password1",
+        "rol": "alumno"
+    },    
+    "datosNacimiento": {
+        "pais": "Argentina",
+        "localidad": "CABA"
+    },
+    "carrera": {
+        "nombre": "Ingenieria Informatica", 
+        "duracion": 5, 
+        "materias": [{}], 
+        "tipo": "Carrera"
+    }  
+}
