@@ -1,8 +1,9 @@
-import { Card, CardActions, CardContent, Grid, Skeleton, Container } from "@mui/material";
+import { Button, Card, CardActions, CardContent, Grid, Skeleton, Container } from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import CursoCard from "../components/CursoCard";
-import Chart from "../components/Chart";
+import "../styles/AlumnoPage.css";
 
 function Variants() {
     return (
@@ -45,7 +46,7 @@ export default function AlumnoPage() {
     }, []);
 
     const cursosComponent = cursos.map((curso, i) => {
-        return <CursoCard key={curso._id} id={curso.id} materia={curso.materia}/>
+        return <CursoCard key={curso._id} id={curso.id} materia={curso.materia} />
     })
 
     const cursosSkeleton = new Array(20).fill(<Variants />)
@@ -53,11 +54,13 @@ export default function AlumnoPage() {
 
     return (
         <div>
-            <br /><br />
+
+            <Button id="botonInscripcion" variant="contained" endIcon={<AddIcon/>}>
+                Inscribirse materia
+            </Button>
             <Grid container spacing={3}>
                 {loading ? cursosSkeleton : cursosComponent}
             </Grid>
-            <Chart/>
             <Container>
                 <Outlet />
             </Container>
