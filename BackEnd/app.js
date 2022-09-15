@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var jwt = require("jsonwebtoken");
 var cors = require('cors');
-var corsAllowed = ["http://localhost:3001"]
+var corsAllowed = ["http://localhost:3000"]
 
 /*-------------------------------------routes-------------------------------------*/
 var routeCarrera = require('./src/Components/carreraCRUD/carreraRouter')

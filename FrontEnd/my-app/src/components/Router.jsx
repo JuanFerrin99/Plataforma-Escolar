@@ -5,6 +5,8 @@ import AlumnoPage from "../pages/AlumnoPage"
 import ProfesorPage from "../pages/ProfesorPage"
 import SecretarioPage from "../pages/SecretarioPage"
 import AdminPage from "../pages/AdminPage"
+import CursoPage from "../pages/CursoPage"
+
 
 export default function Router() {
     return (
@@ -16,6 +18,7 @@ export default function Router() {
                     <Route path="/inscripcion" element= { <HomePage/> } />                     
                 </Route>
                     <Route path="/alumno" element= { <AlumnoPage/> } />
+                        <Route path="/alumno/curso" element= { <CursoPage/> } />
                     <Route path="/profesor" element= { <ProfesorPage/> } />
                     <Route path="/secretario" element= { <SecretarioPage/> } />              
                     <Route path="/admin" element= { <AdminPage/> } />

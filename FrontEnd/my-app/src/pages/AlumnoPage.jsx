@@ -33,7 +33,7 @@ export default function AlumnoPage() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("http://localhost:3000/cursos/")
+        fetch("http://localhost:3001/cursos/")
             .then(response => response.json())
             .then(cursosAPI => {
                 setCursos(cursosAPI)
