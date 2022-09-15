@@ -11,6 +11,7 @@ export default function cursoCard({ id, materia }) {
             Inscribirse final
         </Button>
         <Table/>
+        <Table/>
     </div>
     );
 }
