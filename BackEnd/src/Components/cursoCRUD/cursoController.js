@@ -81,7 +81,8 @@ module.exports.getCurso = (req, res) => {
             res.status(500).json({ error: "Ocurrio un error" })
         })
 }
-//-------------------------------------------- GET /cursos/id --------------------------------------------------------------
+
+//-------------------------------------------- GET /cursos/ --------------------------------------------------------------
 
 module.exports.getCursos = (req, res) => {
     return Curso.find({})

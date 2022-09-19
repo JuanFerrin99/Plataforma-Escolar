@@ -3,9 +3,16 @@ const AuthRouter = express.Router();
 const { signUp, login, resetPassword, createSessionToken, sendLoginResponse } = require('../auth/authController.js');
 const { loginValidator } = require('./authValidator.js');
 
+// 1 POST /login/
 AuthRouter.post("/", loginValidator, login, createSessionToken, sendLoginResponse)
+
+// 2 POST /login/new
 AuthRouter.post("/new", loginValidator, signUp)
-//AuthRouter.post("/logout", )
+
+// 3 POST /password/reset
 AuthRouter.post("/password/reset", resetPassword)
+
+// 4 POST /logout/
+//AuthRouter.post("/logout", )
 
 module.exports = AuthRouter;
