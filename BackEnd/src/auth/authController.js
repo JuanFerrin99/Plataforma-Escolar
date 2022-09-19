@@ -7,7 +7,7 @@ const { checkToken } = require("../utils/tokenUtils.js");
 
 //-----------------------------------------------FIREBASE-----------------------------------------------
 
-const { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail } = require("firebase/auth")
+const { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendEmailVerification, sendPasswordResetEmail } = require("firebase/auth")
 const { firebase } = require("../../config/configFireBase");
 const res = require("express/lib/response");
 const { body } = require("express-validator");
@@ -46,6 +46,15 @@ module.exports.login = (req,res) =>{
         .catch((error) => {
             res.status(400).json({'error': error})
         });
+}
+
+module.exports.signOut = (req, res) =>{
+    signOut(auth).then(() => {
+        res.status(200)
+    })
+    .catch((error) => {
+        res.status(400).json({'error': error})
+    });
 }
 
 module.exports.resetPassword = (req, res) =>{
