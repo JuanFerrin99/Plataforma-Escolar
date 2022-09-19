@@ -12,7 +12,4 @@ AuthRouter.post("/new", loginValidator, signUp)
 // 3 POST /password/reset
 AuthRouter.post("/password/reset", resetPassword)
 
-// 4 POST /logout/
-//AuthRouter.post("/logout", )
-
 module.exports = AuthRouter;
