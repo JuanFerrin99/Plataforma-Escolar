@@ -29,6 +29,10 @@ module.exports.agregarValidator = [
         .isObject().withMessage("Usuario debe ser un objeto con los campos username, password y rol"),
     body("datosNacimiento")
         .isObject().withMessage("Datos de nacimiento debe ser un objeto con los campos pais y localidad"),
+    body("cursosActivos")
+        .isArray().withMessage("CursosActivos debe ser un array"),
+    body("cursosActivos.*")
+        .isObject().withMessage("CursosActivos debe ser un array de objetos"),
     body("carrera")
         .isObject().withMessage("Carrera debe ser un objeto con los campos nombre, duracion, materias y tipo"),
     verifyValidation
@@ -78,6 +82,11 @@ module.exports.modificacionValidator = [
     body("datosNacimiento")
         .optional({nullable: true})
         .isObject().withMessage("Datos de nacimiento debe ser un objeto con los campos pais y localidad"),
+    body("cursosActivos")
+        .optional({nullable: true})
+        .isArray().withMessage("CursosActivos debe ser un array"),
+    body("cursosActivos.*")
+        .isObject().withMessage("CursosActivos debe ser un array de objetos"),
     body("carrera")
         .optional({nullable: true})
         .isObject().withMessage("Carrera debe ser un objeto con los campos nombre, duracion, materias y tipo"),

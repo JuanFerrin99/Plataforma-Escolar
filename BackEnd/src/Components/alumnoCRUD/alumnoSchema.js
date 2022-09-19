@@ -15,6 +15,7 @@ var alumnos = new Schema({
     fechaIngreso: Date,
     usuario: Object,            /* username: String, password: String, rol: String */
     datosNacimiento: Object,    /* pais: String, localidad: String */
+    cursosActivos: [Object],    /* id: int, nombre: String */
     carrera: Object             /* nombre: String, duracion: Number, materias: [Object], tipo: String */
 });
 

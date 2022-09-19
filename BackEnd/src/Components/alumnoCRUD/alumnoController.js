@@ -6,7 +6,7 @@ const { default: mongoose } = require('mongoose');
 //--------------------------------------- POST /alumnos/ ------------------------------------------------------------------
 
 module.exports.agregarAlumno = (req, res) => {
-    const { nombre, apellido, dni, fechaNacimiento, telefono, mail, titulos, datosResidiencia, fechaIngreso, usuario, datosNacimiento, carrera} = req.body;
+    const { nombre, apellido, dni, fechaNacimiento, telefono, mail, titulos, datosResidiencia, fechaIngreso, usuario, datosNacimiento, cursosActivos, carrera} = req.body;
 
     const alumno = new Alumno({
     nombre, 
@@ -19,7 +19,8 @@ module.exports.agregarAlumno = (req, res) => {
     datosResidiencia, 
     fechaIngreso, 
     usuario, 
-    datosNacimiento, 
+    datosNacimiento,
+    cursosActivos, 
     carrera
     });
 
@@ -55,7 +56,7 @@ module.exports.eliminarAlumno = (req, res) => {
 //----------------------------------------- PATCH /alumnos/id----------------------------------------------------------------------
 
 module.exports.modificarAlumno = (req, res) => {
-    return Alumno.findOneAndUpdate({ _id: req.params.id },{ nombre: req.body.nombre, apellido: req.body.apellido, dni: req.body.dni, fechaNacimiento: req.body.fechaNacimiento, telefono: req.body.telefono, mail: req.body.mail, titulos: req.body.titulos, datosResidiencia: req.body.datosResidiencia, fechaIngreso: req.body.fechaIngreso, usuario: req.body.usuario, datosNacimiento: req.body.datosNacimiento, carrera: req.body.carrera} ,{new: true})
+    return Alumno.findOneAndUpdate({ _id: req.params.id },{ nombre: req.body.nombre, apellido: req.body.apellido, dni: req.body.dni, fechaNacimiento: req.body.fechaNacimiento, telefono: req.body.telefono, mail: req.body.mail, titulos: req.body.titulos, datosResidiencia: req.body.datosResidiencia, fechaIngreso: req.body.fechaIngreso, usuario: req.body.usuario, datosNacimiento: req.body.datosNacimiento, cursosActivos: req.body.cursosActivos, carrera: req.body.carrera} ,{new: true})
         .then((result) => {
             if(result){
                 res.status(200).json("Se realizaron los cambios a " + req.params.id)

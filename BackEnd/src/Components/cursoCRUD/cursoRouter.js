@@ -17,7 +17,7 @@ router.patch('/:id', idValidator, modificacionValidator, modificarCurso);
 
 // 4 GET /cursos/:id
 router.get('/:id', idValidator, getCurso)
-
++
 // 5 GET /cursos/
 router.get('/', getCursos)
 

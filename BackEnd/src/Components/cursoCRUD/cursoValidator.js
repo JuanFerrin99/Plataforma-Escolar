@@ -3,10 +3,12 @@ const { verifyValidation } = require("../../utils/validationUtils")
 
 
 module.exports.agregarValidator = [
+    body("nombre")
+        .isString().withMessage("Nombre debe ser un string"),
     body("materia")
-        .isString().withMessage("El tipo debe ser un string"),
+        .isString().withMessage("Materia debe ser un string"),
     body("profesor")
-        .isObject().withMessage("El profesor debe ser un objeto"),
+        .isObject().withMessage("Profesor debe ser un objeto"),
     body("alumnos")
         .isArray().withMessage("Alumnos debe ser un array"),
     body("alumnos.*")
@@ -29,6 +31,9 @@ module.exports.idValidator = [
 ]
 
 module.exports.modificacionValidator = [
+    body("nombre")
+        .optional({nullable: true})
+        .isString().withMessage("Nombre debe ser un string"),
     body("materia")
         .optional({nullable: true})
         .isString().withMessage("Materia debe ser un string"),
