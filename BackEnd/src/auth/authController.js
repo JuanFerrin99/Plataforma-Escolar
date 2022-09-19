@@ -32,7 +32,7 @@ module.exports.signUp = (req, res) => {
         });
 }
 
-module.exports.login = (req,res) =>{
+module.exports.login = (req, res, next) =>{
     signInWithEmailAndPassword(auth, req.body.email, req.body.password)
         .then((userCredential) => {
             if(userCredential.user.emailVerified != false){
@@ -74,7 +74,6 @@ module.exports.createSessionToken = (req, res, next) => {
     .then(token => {
         req.userToken = token
         next()
-        
     })
     .catch(error => {
         console.log(error)
