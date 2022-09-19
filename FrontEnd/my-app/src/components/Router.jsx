@@ -6,6 +6,7 @@ import ProfesorPage from "../pages/ProfesorPage"
 import SecretarioPage from "../pages/SecretarioPage"
 import AdminPage from "../pages/AdminPage"
 import CursoPage from "../pages/CursoPage"
+import LoginPage from "../pages/LoginPage"
 
 
 export default function Router() {
@@ -14,7 +15,7 @@ export default function Router() {
             <Routes>
                 <Route element={<ResponsiveAppBar/>} >
                     <Route path="/" element= { <HomePage/> } />
-                    <Route path="/login" element= { <HomePage /> } />
+                    <Route path="/login" element= { <LoginPage /> } />
                     <Route path="/inscripcion" element= { <HomePage/> } />                     
                 </Route>
                     <Route path="/alumno" element= { <AlumnoPage/> } />
