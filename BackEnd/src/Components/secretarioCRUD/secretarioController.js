@@ -84,3 +84,19 @@ module.exports.getSecretario = (req, res) => {
             res.status(500).json({ error: "Ocurrio un error" })
         })
 }
+
+module.exports.getSecretarioMail = (req, res) => {
+    return Secretario.findOne({mail: req.params.mail})
+        .then((secretario) => {
+            if(secretario == undefined){
+                res.status(404).json({error: "No se encontro al secretario"})
+            }
+            else{
+                res.status(200).json(secretario)
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            res.status(500).json({ error: "Ocurrio un error" })
+        })
+}

@@ -46,17 +46,28 @@ export default function SignIn() {
     const handleLogin = () => {
 
         const body = {
-            username: email,
+            email: email,
             password: password
         }
 
-        const options = {
-            withCredentials: true
-        }
+
       
-        axios.post("http://localhost:3000/login", body, options)
+        axios.post("http://localhost:3001/login", body)
             .then(body => {
-                window.location.href = '/';
+                //hay que guardar mail en algun lado que no se pueda cambiar
+                if(body.usuario.rol=="alumno"){
+                    window.location.href = '/alumno';
+                }
+                else if(body.usuario.rol=="profesor"){  
+                    window.location.href = '/profesor';
+                }
+                else if(body.usuario.rol=="secretario"){
+                    window.location.href = '/secretario';
+                }
+                else if(body.usuario.rol=="admin"){
+                    window.location.href = '/admin';
+                }
+                else {console.log("tu cuenta no posee un rol")}
             })
             .catch(e => console.log(e));
     }

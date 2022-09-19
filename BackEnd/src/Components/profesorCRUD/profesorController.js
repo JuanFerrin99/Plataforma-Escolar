@@ -86,3 +86,19 @@ module.exports.getProfesor = (req, res) => {
             res.status(500).json({ error: "Ocurrio un error" })
         })
 }
+
+module.exports.getProfesorMail = (req, res) => {
+    return Profesor.findOne({mail: req.params.mail})
+        .then((profesor) => {
+            if(profesor == undefined){
+                res.status(404).json({error: "No se encontro al profesor"})
+            }
+            else{
+                res.status(200).json(profesor)
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            res.status(500).json({ error: "Ocurrio un error" })
+        })
+}
