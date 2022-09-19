@@ -36,7 +36,7 @@ module.exports.login = (req, res, next) =>{
     signInWithEmailAndPassword(auth, req.body.email, req.body.password)
         .then((userCredential) => {
             if(userCredential.user.emailVerified != false){
-                const user = userCredential.user;  //ver si guardar
+                req.currentUserData = userCredential.user.reloadUserInfo.email;  //ver si guardar
                 next()
             }
             else{
@@ -70,6 +70,7 @@ module.exports.resetPassword = (req, res) =>{
 //-------------------------------------TOKEN------------------------------------
 
 module.exports.createSessionToken = (req, res, next) => {
+    console.log("Usuario: ", req.currentUserData)
     createToken(req.currentUserData, "7d")
     .then(token => {
         req.userToken = token
