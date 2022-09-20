@@ -25,8 +25,8 @@ module.exports.agregarValidator = [
         .isObject().withMessage("Datos de residencia debe ser un objeto con los campos pais, provincia, localidad, domicilio y codigo postal"),
     body("fechaIngreso")
         .isISO8601().withMessage("Fecha de ingreso debe tener formato yyyy-mm-dd"),
-    body("usuario")
-        .isObject().withMessage("Usuario debe ser un objeto con los campos username, password y rol"),
+    body("rol")
+        .isString().withMessage("Rol debe ser un string"),
     body("datosNacimiento")
         .isObject().withMessage("Datos de nacimiento debe ser un objeto con los campos pais y localidad"),
     body("cursosActivos")
@@ -40,7 +40,13 @@ module.exports.agregarValidator = [
 
 module.exports.idValidator = [
     param("id")
-        .isAlphanumeric().withMessage("El id debe ser alfanumerico"),
+        .isAlphanumeric().withMessage("Id debe ser alfanumerico"),
+    verifyValidation
+]
+
+module.exports.emailValidator = [
+    param("email")
+        .isEmail().withMessage("Email debe tener formato de email"),
     verifyValidation
 ]
 
@@ -76,9 +82,9 @@ module.exports.modificacionValidator = [
     body("fechaIngreso")
         .optional({nullable: true})
         .isISO8601().withMessage("Fecha de ingreso debe tener formato yyyy-mm-dd"),
-    body("usuario")
+    body("rol")
         .optional({nullable: true})
-        .isObject().withMessage("Usuario debe ser un objeto con los campos username, password y rol"),
+        .isString().withMessage("Rol debe ser un string"),
     body("datosNacimiento")
         .optional({nullable: true})
         .isObject().withMessage("Datos de nacimiento debe ser un objeto con los campos pais y localidad"),

@@ -1,4 +1,5 @@
 //*-------------------------------------------------------------------IMPORTS--------------------------------------------------------------------
+const { axios } = require("axios")
 
 //-------------------------TOKEN-------------------------
 
@@ -24,56 +25,61 @@ module.exports.signUp = (req, res) => {
                     res.status(200).json(userCredential.user)
                 })
                 .catch((error) => {
-                    res.status(500).json({"error": error})
+                    res.status(500).json({ "error": error })
                 })
         })
         .catch((error) => {
             res.status(500).json({ "error": error })
         });
 }
-
-module.exports.login = (req, res, next) =>{
+//!arreglar la basura de axios
+module.exports.login = (req, res, next) => {
     signInWithEmailAndPassword(auth, req.body.email, req.body.password)
         .then((userCredential) => {
-            if(userCredential.user.emailVerified != false){
-                req.currentUserData = userCredential.user.reloadUserInfo.email;  //ver si guardar
+            if (userCredential.user.emailVerified != false) {
+                axios.get(`http://localhost:3001/alumnos/${req.body.email}`)
+                    .then(body => {
+                        req.currentUserData = body;
+                        console.log(req.currentUserData)
+                    })
+                    .catch(e => console.log(e));
                 next()
             }
-            else{
-                res.status(400).json({"error": "Mail no verificado"})
+            else {
+                res.status(400).json({ "error": "Mail no verificado" })
             }
         })
         .catch((error) => {
-            res.status(400).json({'error': error})
+            console.log(error)
+            res.status(400).json({ 'error': error })
         });
 }
 
-module.exports.resetPassword = (req, res) =>{
+module.exports.resetPassword = (req, res) => {
     sendPasswordResetEmail(auth, req.body.email)
-        .then(() =>{
+        .then(() => {
             res.status(200)
         })
         .catch((error) => {
-            res.status(500).json({"error": error})
+            res.status(500).json({ "error": error })
         })
 }
 
 //-------------------------------------TOKEN------------------------------------
 
 module.exports.createSessionToken = (req, res, next) => {
-    console.log("Usuario: ", req.currentUserData)
     createToken(req.currentUserData, "7d")
-    .then(token => {
-        req.userToken = token
-        next()
-    })
-    .catch(error => {
-        console.log(error)
-        res.status(500).json({
-            code: 5,
-            message: "Ocurrio un error"
+        .then(token => {
+            req.userToken = token
+            next()
         })
-    })
+        .catch(error => {
+            console.log(error)
+            res.status(500).json({
+                code: 5,
+                message: "Ocurrio un error"
+            })
+        })
 }
 
 module.exports.sendLoginResponse = (req, res) => {
@@ -83,7 +89,7 @@ module.exports.sendLoginResponse = (req, res) => {
         maxAge: 5000 * 1000
     }
 
-    res.cookie("token", token, {...options, httpOnly: true})
+    res.cookie("token", token, { ...options, httpOnly: true })
     res.cookie("isLogged", true, options)
 
     res.status(200).json({

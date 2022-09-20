@@ -13,7 +13,7 @@ var alumnos = new Schema({
     titulos: [String],
     datosResidencia: Object,    /* pais: String, provincia: String, localidad: String, domicilio: String, codigoPostal: Number*/
     fechaIngreso: Date,
-    usuario: Object,            /* username: String, password: String, rol: String */
+    rol: String,            
     datosNacimiento: Object,    /* pais: String, localidad: String */
     cursosActivos: [Object],    /* id: int, nombre: String */
     carrera: Object             /* nombre: String, duracion: Number, materias: [Object], tipo: String */
