@@ -1,11 +1,5 @@
 //*-------------------------------------------------------------------IMPORTS--------------------------------------------------------------------
-const { axios } = require("axios")
-
-/*-----------Sacar------------*/
-const express = require('express');
-const router = express.Router();
 const Alumno = require("../Components/alumnoCRUD/alumnoSchema");
-const { default: mongoose } = require('mongoose');
 
 //-------------------------TOKEN-------------------------
 
@@ -39,20 +33,10 @@ module.exports.signUp = (req, res) => {
         });
 }
 
-//!arreglar la basura de axios
-/*axios.get(`http://localhost:3001/alumnos/${req.body.email}`)
-    .then(body => {
-        req.currentUserData = body;
-        console.log(req.currentUserData)
-    })
-    .catch(e => console.log(e));*/
-
 module.exports.login = (req, res, next) => {
     signInWithEmailAndPassword(auth, req.body.email, req.body.password)
         .then((userCredential) => {
             if (userCredential.user.emailVerified != false) {
-
-                //!Sacar esto cuando funcione axios
                 return Alumno.findOne({ mail: req.body.email })
                     .then((alumno) => {
                         if (alumno == undefined) {
@@ -64,10 +48,8 @@ module.exports.login = (req, res, next) => {
                         }
                     })
                     .catch((error) => {
-                        console.log(error)
-                        res.status(500).json({ error: "Ocurrio un error" })
+                        res.status(500).json({ error: error })
                     })
-                //!Hasta aca
             }
             else {
                 res.status(400).json({ "error": "Mail no verificado" })
