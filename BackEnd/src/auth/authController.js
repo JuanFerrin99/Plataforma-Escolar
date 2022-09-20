@@ -1,5 +1,6 @@
 //*-------------------------------------------------------------------IMPORTS--------------------------------------------------------------------
 const Alumno = require("../Components/alumnoCRUD/alumnoSchema");
+const { getAlumnoEmail } = require("../Components/alumnoCRUD/alumnoController")
 
 //-------------------------TOKEN-------------------------
 
@@ -97,6 +98,8 @@ module.exports.sendLoginResponse = (req, res) => {
 
     res.cookie("token", token, { ...options, httpOnly: true })
     res.cookie("isLogged", true, options)
+    res.cookie("mail", req.currentUserData.mail)
+    res.cookie("rol", req.currentUserData.rol)
 
     res.status(200).json({
         code: 10,
