@@ -19,7 +19,7 @@ router.patch('/:id', idValidator, modificacionValidator, modificarAlumno);
 router.get('/:id', idValidator, getAlumno);
 
 // 5 GET filtroEmail /alumnos/:email
-router.get('/:email', emailValidator, getAlumnoEmail);
+router.get('/filtro/:email', emailValidator, getAlumnoEmail);
 
 
 module.exports = router;

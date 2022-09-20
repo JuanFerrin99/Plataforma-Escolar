@@ -5,6 +5,7 @@ import { Outlet } from "react-router-dom";
 import CursoCard from "../components/CursoCard";
 import "../styles/AlumnoPage.css";
 
+
 function Variants() {
     return (
         <Grid item xs={4}>
@@ -31,9 +32,22 @@ function Variants() {
 export default function AlumnoPage() {
     const [cursos, setCursos] = useState([]);
     const [loading, setLoading] = useState(true);
-    setCursos(location.state.cursos)
-    
-    //location.state.mail
+    //---------------hacer endpoint get cursos----------------------------------
+    const getCursos = () =>{
+        return(
+            useEffect(() => {
+                fetch(`http://localhost:3001/alumno/filtro/${Cookies.get("mail")}`)
+                    .then(response => response.json())
+                    .then(alumno => {
+                        setCursos(alumno.cursosActivos)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            },[]);
+        )
+    }
+
     const cursosComponent = cursos.map((curso, i) => {
         return <CursoCard key={curso._id} id={curso.id} materia={curso.materia} />
     })

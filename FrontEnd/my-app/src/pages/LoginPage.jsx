@@ -30,7 +30,9 @@ const theme = createTheme();
 export default function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    const navigate = useNavigate();
+    const location = useLocation();
+    
     const handleEmailChange = (event) => {
         setEmail(event.target.value)
     }
@@ -45,15 +47,14 @@ export default function SignIn() {
 
     const handleLogin = () => {
 
-        const navigate = useNavigate();
         const body = {
             email: email,
             password: password
         }
-
+        
         axios.post("http://localhost:3001/login", body)
-            .then(body => {
-                navigate(`/${body.usuario.rol}`,{state:{mail:body.usuario.mail, cursos:body.usuario.cursosActivos}}); 
+            .then(jwt => {
+                window.location.href = `/${Cookies.get("rol")}`
             })
             .catch(e => console.log(e));
     }
