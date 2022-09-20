@@ -32,18 +32,36 @@ module.exports.signUp = (req, res) => {
             res.status(500).json({ "error": error })
         });
 }
+
 //!arreglar la basura de axios
+/*axios.get(`http://localhost:3001/alumnos/${req.body.email}`)
+    .then(body => {
+        req.currentUserData = body;
+        console.log(req.currentUserData)
+    })
+    .catch(e => console.log(e));*/
+
 module.exports.login = (req, res, next) => {
     signInWithEmailAndPassword(auth, req.body.email, req.body.password)
         .then((userCredential) => {
             if (userCredential.user.emailVerified != false) {
-                axios.get(`http://localhost:3001/alumnos/${req.body.email}`)
-                    .then(body => {
-                        req.currentUserData = body;
-                        console.log(req.currentUserData)
+
+                //!Sacar esto cuando funcione axios
+                return Alumno.findOne({ mail: req.body.email })
+                    .then((alumno) => {
+                        if (alumno == undefined) {
+                            res.status(404).json({ error: "No se encontro al alumno" })
+                        }
+                        else {
+                            req.currentUserData = alumno
+                            next()
+                        }
                     })
-                    .catch(e => console.log(e));
-                next()
+                    .catch((error) => {
+                        console.log(error)
+                        res.status(500).json({ error: "Ocurrio un error" })
+                    })
+                //!Hasta aca
             }
             else {
                 res.status(400).json({ "error": "Mail no verificado" })
