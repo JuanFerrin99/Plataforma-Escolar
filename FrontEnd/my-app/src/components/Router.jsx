@@ -13,16 +13,16 @@ export default function Router() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route element={<ResponsiveAppBar/>} >
-                    <Route path="/" element= { <HomePage/> } />
+                <Route element={<ResponsiveAppBar />} >
+                    <Route path="/" element= { <HomePage /> } />
                     <Route path="/login" element= { <LoginPage /> } />
-                    <Route path="/inscripcion" element= { <HomePage/> } />                     
+                    <Route path="/inscripcion" element= { <HomePage /> } />                     
                 </Route>
-                    <Route path="/alumno" element= { <AlumnoPage/> } />
-                        <Route path="/alumno/curso" element= { <CursoPage/> } />
-                    <Route path="/profesor" element= { <ProfesorPage/> } />
-                    <Route path="/secretario" element= { <SecretarioPage/> } />              
-                    <Route path="/admin" element= { <AdminPage/> } />
+                    <Route path="/alumno" element= { <AlumnoPage mail = "mailRecibido"/> } />
+                        <Route path="/alumno/curso" element= { <CursoPage /> } />
+                    <Route path="/profesor" element= { <ProfesorPage /> } />
+                    <Route path="/secretario" element= { <SecretarioPage /> } />
+                    <Route path="/admin" element= { <AdminPage /> } />
             </Routes>
         </BrowserRouter>
     )

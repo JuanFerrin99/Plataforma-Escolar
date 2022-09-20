@@ -31,20 +31,9 @@ function Variants() {
 export default function AlumnoPage() {
     const [cursos, setCursos] = useState([]);
     const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        fetch("http://localhost:3001/cursos/")
-            .then(response => response.json())
-            .then(cursosAPI => {
-                setCursos(cursosAPI)
-                setLoading(false)
-
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }, []);
-
+    setCursos(location.state.cursos)
+    
+    //location.state.mail
     const cursosComponent = cursos.map((curso, i) => {
         return <CursoCard key={curso._id} id={curso.id} materia={curso.materia} />
     })
