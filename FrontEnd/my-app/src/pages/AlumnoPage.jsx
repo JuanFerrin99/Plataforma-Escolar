@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import CursoCard from "../components/CursoCard";
 import "../styles/AlumnoPage.css";
+import Cookies from "js-cookie";
+
 
 
 function Variants() {
@@ -33,8 +35,7 @@ export default function AlumnoPage() {
     const [cursos, setCursos] = useState([]);
     const [loading, setLoading] = useState(true);
     //---------------hacer endpoint get cursos----------------------------------
-    const getCursos = () =>{
-        return(
+
             useEffect(() => {
                 fetch(`http://localhost:3001/alumno/filtro/${Cookies.get("mail")}`)
                     .then(response => response.json())
@@ -44,9 +45,9 @@ export default function AlumnoPage() {
                     .catch(error => {
                         console.log(error)
                     })
-            },[]);
-        )
-    }
+            },[])
+        
+    
 
     const cursosComponent = cursos.map((curso, i) => {
         return <CursoCard key={curso._id} id={curso.id} materia={curso.materia} />

@@ -11,6 +11,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
 import { useState } from "react";
+import Cookies from "js-cookie";
 
 function Copyright(props) {
     return (
@@ -30,8 +31,6 @@ const theme = createTheme();
 export default function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate();
-    const location = useLocation();
     
     const handleEmailChange = (event) => {
         setEmail(event.target.value)
@@ -54,6 +53,7 @@ export default function SignIn() {
         
         axios.post("http://localhost:3001/login", body)
             .then(jwt => {
+                console.log("ADW",Cookies.get("mail"))
                 window.location.href = `/${Cookies.get("rol")}`
             })
             .catch(e => console.log(e));
