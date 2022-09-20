@@ -1,6 +1,12 @@
 //*-------------------------------------------------------------------IMPORTS--------------------------------------------------------------------
 const { axios } = require("axios")
 
+/*-----------Sacar------------*/
+const express = require('express');
+const router = express.Router();
+const Alumno = require("../Components/alumnoCRUD/alumnoSchema");
+const { default: mongoose } = require('mongoose');
+
 //-------------------------TOKEN-------------------------
 
 const { createToken } = require("../utils/tokenUtils")
