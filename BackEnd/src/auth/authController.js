@@ -107,7 +107,7 @@ module.exports.sendLoginResponse = (req, res) => {
     })
 }
 
-//?Funcion que compruebe si el usuario no altero el token
+//TODO: Funcion que compruebe si el usuario no altero el token
 
 module.exports.verificarAuth = async (req, res, next) => {
     const authorizationHeader = req.headers.authorization;
