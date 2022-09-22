@@ -23,7 +23,7 @@ var firebase = require("./config/configFireBase")
 
 var app = express();
 
-app.use(cors({origin:corsAllowed}));
+app.use(cors({origin: corsAllowed}));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

@@ -88,7 +88,7 @@ module.exports.getAlumno = (req, res) => {
             res.status(500).json({ error: "Ocurrio un error" })
         })
 }
-//!Debatir crear una funcion solo para agarrar rol
+
 module.exports.getAlumnoEmail = (req, res) => {
     return Alumno.findOne({mail: req.params.email})
         .then((alumno) => {

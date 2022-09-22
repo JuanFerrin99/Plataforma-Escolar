@@ -1,6 +1,5 @@
 //*-------------------------------------------------------------------IMPORTS--------------------------------------------------------------------
 const Alumno = require("../Components/alumnoCRUD/alumnoSchema");
-const { getAlumnoEmail } = require("../Components/alumnoCRUD/alumnoController")
 
 //-------------------------TOKEN-------------------------
 
