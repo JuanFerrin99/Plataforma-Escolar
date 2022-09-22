@@ -21,9 +21,15 @@ var routeSecretario = require('./src/Components/secretarioCRUD/secretarioRouter'
 var AuthRouter = require('./src/auth/authRouter.js');
 var firebase = require("./config/configFireBase")
 
-var app = express();
+const corsOptions ={
+    origin:corsAllowed, 
+    credentials:true,            
+    optionSuccessStatus:200,
+}
 
-app.use(cors({origin: corsAllowed}));
+const app = express();
+
+app.use(cors(corsOptions)) 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
