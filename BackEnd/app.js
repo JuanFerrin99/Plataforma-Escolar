@@ -23,7 +23,7 @@ var firebase = require("./config/configFireBase")
 
 const corsOptions ={
     origin:corsAllowed, 
-    credentials:true,            
+    credentials:true,      //! comprobar si esto es inseguro    
     optionSuccessStatus:200,
 }
 

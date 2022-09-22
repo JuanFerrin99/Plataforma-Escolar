@@ -35,27 +35,29 @@ export default function AlumnoPage() {
     const [cursos, setCursos] = useState([]);
     const [loading, setLoading] = useState(true);
     //---------------hacer endpoint get cursos----------------------------------
-
-            useEffect(() => {
-                fetch(`http://localhost:3001/alumno/filtro/${Cookies.get("mail")}`)
-                    .then(response => response.json())
-                    .then(alumno => {
-                        setCursos(alumno.cursosActivos)
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
-            },[])
-        
     
-
+    useEffect(() => {
+        fetch(`http://localhost:3001/alumnos/filtro/${Cookies.get("mail")}`)
+        .then(response => response.json())
+        .then(alumno => {
+            setCursos(alumno.cursosActivos)
+            setLoading(false)
+            
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    },[])
+    
+    
+    
     const cursosComponent = cursos.map((curso, i) => {
-        return <CursoCard key={curso._id} id={curso.id} materia={curso.materia} />
+        return <CursoCard key={curso._id} id={curso._id} materia={curso.nombre} />
     })
-
+    
     const cursosSkeleton = new Array(20).fill(<Variants />)
-
-
+    
+    
     return (
         <div>
 
@@ -71,5 +73,5 @@ export default function AlumnoPage() {
 
         </div>
     )
-
+    
 }

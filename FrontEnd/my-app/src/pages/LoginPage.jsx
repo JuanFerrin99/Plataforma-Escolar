@@ -57,7 +57,6 @@ export default function SignIn() {
         
         axios.post("http://localhost:3001/login", body, options)
             .then(jwt => {
-                console.log(jwt)
                 window.location.href = `/${Cookies.get("rol")}`
             })
             .catch(e => console.log(e+"daw"));
