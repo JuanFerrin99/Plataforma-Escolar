@@ -16,7 +16,7 @@ router.delete('/:id', idValidator, eliminarAlumno);
 router.patch('/:id', idValidator, modificacionValidator, modificarAlumno);
 
 // 4 GET /alumnos/:id
-router.get('/:id', idValidator, getAlumno);
+router.get('/:id', getAlumno);
 
 // 5 GET filtroEmail /alumnos/:email
 router.get('/filtro/:email', emailValidator, getAlumnoEmail);
