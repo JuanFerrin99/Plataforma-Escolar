@@ -50,13 +50,17 @@ export default function SignIn() {
             email: email,
             password: password
         }
+ 
+        const options = {
+            withCredentials: true
+        }  
         
-        axios.post("http://localhost:3001/login", body)
+        axios.post("http://localhost:3001/login", body, options)
             .then(jwt => {
-                console.log("ADW",Cookies.get("mail"))
+                console.log(jwt)
                 window.location.href = `/${Cookies.get("rol")}`
             })
-            .catch(e => console.log(e));
+            .catch(e => console.log(e+"daw"));
     }
 
 
