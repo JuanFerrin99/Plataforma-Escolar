@@ -33,6 +33,7 @@ function Variants() {
 
 export default function AlumnoPage() {
     const [cursos, setCursos] = useState([]);
+    const [dni, setDni] = useState(0);
     const [loading, setLoading] = useState(true);
     //---------------hacer endpoint get cursos----------------------------------
     
@@ -52,7 +53,7 @@ export default function AlumnoPage() {
     
     
     const cursosComponent = cursos.map((curso, i) => {
-        return <CursoCard key={curso._id} id={curso._id} materia={curso.nombre} />
+        return <CursoCard key={curso._id} id={curso._id} materia={curso.nombre} dniAlumno={dni} />
     })
     
     const cursosSkeleton = new Array(20).fill(<Variants />)
