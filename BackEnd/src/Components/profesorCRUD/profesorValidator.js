@@ -40,6 +40,12 @@ module.exports.idValidator = [
     verifyValidation
 ]
 
+module.exports.mailValidator = [
+    param("mail")
+        .isEmail().withMessage("Email debe tener formato de email"),
+    verifyValidation
+]
+
 module.exports.modificacionValidator = [
     body("nombre")
         .optional({nullable: true})

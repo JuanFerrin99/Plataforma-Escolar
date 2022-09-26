@@ -89,8 +89,8 @@ module.exports.getAlumno = (req, res) => {
         })
 }
 
-module.exports.getAlumnoEmail = (req, res) => {
-    return Alumno.findOne({mail: req.params.email})
+module.exports.getAlumnoMail = (req, res) => {
+    return Alumno.findOne({mail: req.params.mail})
         .then((alumno) => {
             if(alumno == undefined){
                 res.status(404).json({error: "No se encontro al alumno"})

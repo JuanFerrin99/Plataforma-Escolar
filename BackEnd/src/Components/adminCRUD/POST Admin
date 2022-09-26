@@ -1,0 +1,13 @@
+{
+    "_id": {
+        "$oid": "6320c137f4e49413d16e89c0"
+    },
+    "nombre": "Santiago",
+    "apellido": "Patiño",
+    "mail": "santiagogilio04@gmail.com",
+    "instance": {
+        "nombre": "Santiago",
+        "apellido": "Patiño",
+        "mail": "santiagogilio04@gmail.com"
+    }
+}

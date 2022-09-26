@@ -37,10 +37,57 @@ module.exports.login = (req, res, next) => {
     signInWithEmailAndPassword(auth, req.body.email, req.body.password)
         .then((userCredential) => {
             if (userCredential.user.emailVerified != false) {
+                //Collection Alumno
                 return Alumno.findOne({ mail: req.body.email })
                     .then((alumno) => {
                         if (alumno == undefined) {
-                            res.status(404).json({ error: "No se encontro al alumno" })
+                            //Collection Profesores
+                            return Profesor.findOne({ mail: req.params.mail })
+                                .then((profesor) => {
+                                    if (profesor == undefined) {
+                                        //Collection Secretario
+                                        module.exports.getSecretarioMail = (req, res) => {
+                                            return Secretario.findOne({ mail: req.params.mail })
+                                                .then((secretario) => {
+                                                    if (secretario == undefined) {
+                                                        //Collection Admin
+                                                        module.exports.getAdminMail = (req, res) => {
+                                                            return Admin.findOne({ mail: req.params.mail })
+                                                                .then((admin) => {
+                                                                    if (admin == undefined) {
+                                                                        res.status(404).json({ error: "No se encontro al usuario" })
+                                                                    }
+                                                                    else {
+                                                                        req.currentUserData = admin
+                                                                        next()
+                                                                    }
+                                                                })
+                                                                .catch((error) => {
+                                                                    console.log(error)
+                                                                    res.status(500).json({ error: "Ocurrio un error" })
+                                                                })
+                                                        }
+                                                    }
+                                                    else {
+                                                        req.currentUserData = secretario
+                                                        next()
+                                                    }
+                                                })
+                                                .catch((error) => {
+                                                    console.log(error)
+                                                    res.status(500).json({ error: "Ocurrio un error" })
+                                                })
+                                        }
+                                    }
+                                    else {
+                                        req.currentUserData = profesor
+                                        next()
+                                    }
+                                })
+                                .catch((error) => {
+                                    console.log(error)
+                                    res.status(500).json({ error: "Ocurrio un error" })
+                                })
                         }
                         else {
                             req.currentUserData = alumno

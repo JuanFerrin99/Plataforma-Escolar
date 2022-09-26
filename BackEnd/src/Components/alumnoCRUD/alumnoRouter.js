@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { verificarAuth } = require('../../auth/authController');
 const { agregarAlumno, eliminarAlumno, modificarAlumno, getAlumno, getAlumnoEmail } = require('./alumnoController');
-const { agregarValidator, idValidator, emailValidator, modificacionValidator } = require("./alumnoValidator");
+const { agregarValidator, idValidator, mailValidator, modificacionValidator } = require("./alumnoValidator");
 
 //router.use(verificarAuth)
 
@@ -18,8 +18,8 @@ router.patch('/:id', idValidator, modificacionValidator, modificarAlumno);
 // 4 GET /alumnos/:id
 router.get('/:id', getAlumno);
 
-// 5 GET filtroEmail /alumnos/:email
-router.get('/filtro/:email', emailValidator, getAlumnoEmail);
+// 5 GET filtroEmail /alumnos/:mail
+router.get('/filtro/:mail', mailValidator, getAlumnoMail);
 
 
 module.exports = router;
