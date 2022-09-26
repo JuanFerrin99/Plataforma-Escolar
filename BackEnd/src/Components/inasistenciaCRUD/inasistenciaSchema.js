@@ -8,7 +8,7 @@ var inasistencias = new Schema({
     tipo: String,
     motivo: String,
     justificado: Boolean,
-    curso: Number,
+    curso: String,
     materia: String,
     persona: Object  /* nombre: String, apellido: String, dni: int */
 });

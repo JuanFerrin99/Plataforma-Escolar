@@ -5,7 +5,7 @@ const { default: mongoose } = require('mongoose');
 const inasistencia = require('./inasistenciaSchema.js');
 
 const errorHandler = (res) => (error) => { 
-    console.log(error)                                      //!mover a utils, agregar winston
+    console.log(error)                                   
     res.status(500).json({ error: "Ocurrio un error" })
 }
 
@@ -74,3 +74,19 @@ module.exports.getInasistencia = (req, res) => {
         })
         .catch(errorHandler(res))
 }
+
+//-------------------------------------------- GET /inasistencias/id --------------------------------------------------------------
+
+module.exports.getInasistenciaAlumnoCurso = (req, res) => {
+    return Inasistencia.find({curso : req.body.cursoId, dni : req.body.curso})
+        .then((inasistencias) => {
+            if(inasistencias == undefined){
+                res.status(404).json({error: "No se encontraron inasistencias"})
+            }
+            else{
+                res.status(200).json(inasistencias)
+            }
+        })
+        .catch(errorHandler(res))
+}
+
