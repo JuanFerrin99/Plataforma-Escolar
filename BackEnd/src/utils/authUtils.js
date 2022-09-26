@@ -1,4 +1,4 @@
-
+/*
 
 module.exports.authCheck = (req, res, next) => {
     if (req.currentUserData) {
@@ -32,3 +32,5 @@ module.exports.signUp = (req, res) => {
             res.status(500).json({ "error": error })
         });
 }
+
+*/

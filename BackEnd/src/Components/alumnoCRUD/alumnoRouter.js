@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { verificarAuth } = require('../../auth/authController');
-const { agregarAlumno, eliminarAlumno, modificarAlumno, getAlumno, getAlumnoEmail } = require('./alumnoController');
+const { agregarAlumno, eliminarAlumno, modificarAlumno, getAlumno, getAlumnoMail } = require('./alumnoController');
 const { agregarValidator, idValidator, mailValidator, modificacionValidator } = require("./alumnoValidator");
 
 //router.use(verificarAuth)

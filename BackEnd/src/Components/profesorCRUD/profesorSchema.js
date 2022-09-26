@@ -12,7 +12,7 @@ var profesores = new Schema({
     titulos: [String],
     datosResidencia: Object,    /* pais: String, provincia: String, localidad: String, domicilio: String, codigoPostal: Number*/
     fechaIngreso: Date,
-    usuario: Object,            /* username: String, password: String, rol: String */
+    rol: String,
     cursos: [Object]
 });
 

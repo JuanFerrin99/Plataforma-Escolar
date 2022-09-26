@@ -4,10 +4,11 @@
     },
     "nombre": "Santiago",
     "apellido": "Patiño",
-    "mail": "santiagogilio04@gmail.com",
+    "mail": "admin@gmail.com",
+    "rol": "admin",
     "instance": {
         "nombre": "Santiago",
         "apellido": "Patiño",
-        "mail": "santiagogilio04@gmail.com"
+        "mail": "admin@gmail.com"
     }
 }

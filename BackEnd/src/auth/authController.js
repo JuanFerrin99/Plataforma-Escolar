@@ -1,5 +1,8 @@
 //*-------------------------------------------------------------------IMPORTS--------------------------------------------------------------------
 const Alumno = require("../Components/alumnoCRUD/alumnoSchema");
+const Profesor = require("../Components/profesorCRUD/profesorSchema");
+const Secretario = require("../Components/secretarioCRUD/secretarioSchema");
+const Admin = require("../Components/adminCRUD/adminSchema");
 
 //-------------------------TOKEN-------------------------
 
@@ -20,13 +23,13 @@ const auth = getAuth(firebase)
 module.exports.signUp = (req, res) => {
     createUserWithEmailAndPassword(auth, req.body.email, req.body.password)
         .then((userCredential) => {
-            sendEmailVerification(userCredential.user)
-                .then(() => {
-                    res.status(200).json(userCredential.user)
-                })
-                .catch((error) => {
-                    res.status(500).json({ "error": error })
-                })
+            /*sendEmailVerification(userCredential.user)
+                .then(() => {*/
+            res.status(200).json(userCredential.user)
+            /*})
+            .catch((error) => {
+                res.status(500).json({ "error": error })
+            })*/
         })
         .catch((error) => {
             res.status(500).json({ "error": error })
@@ -36,71 +39,78 @@ module.exports.signUp = (req, res) => {
 module.exports.login = (req, res, next) => {
     signInWithEmailAndPassword(auth, req.body.email, req.body.password)
         .then((userCredential) => {
-            if (userCredential.user.emailVerified != false) {
-                //Collection Alumno
-                return Alumno.findOne({ mail: req.body.email })
-                    .then((alumno) => {
-                        if (alumno == undefined) {
-                            //Collection Profesores
-                            return Profesor.findOne({ mail: req.params.mail })
-                                .then((profesor) => {
-                                    if (profesor == undefined) {
-                                        //Collection Secretario
-                                        module.exports.getSecretarioMail = (req, res) => {
-                                            return Secretario.findOne({ mail: req.params.mail })
-                                                .then((secretario) => {
-                                                    if (secretario == undefined) {
-                                                        //Collection Admin
-                                                        module.exports.getAdminMail = (req, res) => {
-                                                            return Admin.findOne({ mail: req.params.mail })
-                                                                .then((admin) => {
-                                                                    if (admin == undefined) {
-                                                                        res.status(404).json({ error: "No se encontro al usuario" })
-                                                                    }
-                                                                    else {
-                                                                        req.currentUserData = admin
-                                                                        next()
-                                                                    }
-                                                                })
-                                                                .catch((error) => {
-                                                                    console.log(error)
-                                                                    res.status(500).json({ error: "Ocurrio un error" })
-                                                                })
+            //if (userCredential.user.emailVerified != false) {
+            //Collection Alumno
+            return Alumno.findOne({ mail: req.body.email })
+                .then((alumno) => {
+                    if (alumno == undefined) {
+                        console.log("No encontre en alumno")
+                        //Collection Profesores
+                        return Profesor.findOne({ mail: req.body.email })
+                            .then((profesor) => {
+                                if (profesor == undefined) {
+                                    console.log("No encontre en profesor")
+                                    //Collection Secretario
+                                    return Secretario.findOne({ mail: req.body.email })
+                                        .then((secretario) => {
+                                            if (secretario == undefined) {
+                                                console.log("No encontre en secretario")
+                                                //Collection Admin
+                                                return Admin.findOne({ mail: req.body.email })
+                                                    .then((admin) => {
+                                                        if (admin == undefined) {
+                                                            res.status(404).json({ error: "No se encontro al usuario" })
                                                         }
-                                                    }
-                                                    else {
-                                                        req.currentUserData = secretario
-                                                        next()
-                                                    }
-                                                })
-                                                .catch((error) => {
-                                                    console.log(error)
-                                                    res.status(500).json({ error: "Ocurrio un error" })
-                                                })
-                                        }
-                                    }
-                                    else {
-                                        req.currentUserData = profesor
-                                        next()
-                                    }
-                                })
-                                .catch((error) => {
-                                    console.log(error)
-                                    res.status(500).json({ error: "Ocurrio un error" })
-                                })
-                        }
-                        else {
-                            req.currentUserData = alumno
-                            next()
-                        }
-                    })
-                    .catch((error) => {
-                        res.status(500).json({ error: error })
-                    })
-            }
+                                                        else {
+                                                            console.log("Entre en admin")
+                                                            console.log(admin)
+                                                            req.currentUserData = admin
+                                                            next()
+                                                        }
+                                                    })
+                                                    .catch((error) => {
+                                                        console.log(error)
+                                                        res.status(500).json({ error: "Ocurrio un error" })
+                                                    })
+                                            }
+                                            else {
+                                                console.log("Entre en secretario")
+                                                console.log(secretario)
+                                                req.currentUserData = secretario
+                                                next()
+                                            }
+                                        })
+                                        .catch((error) => {
+                                            console.log(error)
+                                            res.status(500).json({ error: "Ocurrio un error" })
+                                        })
+                                }
+                                else {
+                                    console.log("Entre en profesor")
+                                    console.log(profesor)
+                                    req.currentUserData = profesor
+                                    next()
+                                }
+                            })
+                            .catch((error) => {
+                                console.log(error)
+                                res.status(500).json({ error: "Ocurrio un error" })
+                            })
+                    }
+                    else {
+                        console.log("Entre en alumno")
+                        console.log(alumno)
+                        req.currentUserData = alumno
+                        next()
+                    }
+                })
+                .catch((error) => {
+                    res.status(500).json({ error: error })
+                })
+            /*}
             else {
                 res.status(400).json({ "error": "Mail no verificado" })
-            }
+            }*/
         })
         .catch((error) => {
             console.log(error)

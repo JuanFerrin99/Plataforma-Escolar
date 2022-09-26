@@ -7,7 +7,7 @@
     "dni": 23456789,
     "fechaNacimiento": "1993-02-22",
     "telefono": 1145785962,
-    "mail": "juliopatino@gmail.com",
+    "mail": "profesor@gmail.com",
     "titulos": ["Secundario, terciario"],
     "datosResidencia": {
         "pais": "Argentina", 
@@ -17,10 +17,6 @@
         "codigoPostal": 1431
     },
     "fechaIngreso": "2000-01-01",
-    "usuario": {
-        "username": "usuario2",
-        "password": "password2",
-        "rol": "profesor"
-    },    
+    "rol": "profesor", 
     "cursos": [1, 2, 3]
 }
