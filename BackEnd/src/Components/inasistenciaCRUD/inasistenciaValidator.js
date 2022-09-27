@@ -22,7 +22,13 @@ module.exports.agregarValidator = [
 
 module.exports.idValidator = [
     param("id")
-        .isAlphanumeric().withMessage("El id debe ser alfanumerico"),
+        .isAlphanumeric().withMessage("Id debe ser alfanumerico"),
+    verifyValidation
+]
+
+module.exports.dniValidator = [
+    param("dni")
+        .isInt().withMessage("Dni debe ser un int"),
     verifyValidation
 ]
 
