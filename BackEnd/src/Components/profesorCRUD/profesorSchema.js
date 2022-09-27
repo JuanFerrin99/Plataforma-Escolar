@@ -13,7 +13,7 @@ var profesores = new Schema({
     datosResidencia: Object,    /* pais: String, provincia: String, localidad: String, domicilio: String, codigoPostal: Number*/
     fechaIngreso: Date,
     rol: String,
-    cursos: [Object]
+    cursos: [Object]  /* id: String, materia: String */
 });
 
 module.exports = mongoose.model('Profesor', profesores);

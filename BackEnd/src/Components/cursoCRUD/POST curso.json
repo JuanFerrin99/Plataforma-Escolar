@@ -12,10 +12,20 @@
         "nombre": "Emanuel",
         "apellido": "Ruiz",
         "dni": 15456123,
-        "evaluaciones": {
-            "id": 1,
-            "nota": 8
-        }
+        "evaluaciones": [
+            {
+                "id": 1,
+                "nota": 8
+            },
+            {
+                "id": 2,
+                "nota": 10
+            },
+            {
+                "id": 3,
+                "nota": 4
+            }
+        ]
     },
     "evaluaciones": {
         "id": 1,
