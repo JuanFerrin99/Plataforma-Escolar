@@ -50,8 +50,8 @@ export default function CursoCard({ }) {
                 Inscribirse final
             </Button>
             <TableInasistencia rows ={GetPropsValues()}/>
-      
         </div>
     );
 }
+//<TableInasistencia />
 

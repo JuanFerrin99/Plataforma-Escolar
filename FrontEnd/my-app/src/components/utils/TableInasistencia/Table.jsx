@@ -7,6 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import "./Table.css";
+import { useEffect, useState } from "react";
 
 const makeStyle=(status)=>{
   if(status === 'Justificada'){
@@ -24,7 +25,9 @@ const makeStyle=(status)=>{
 }
 
 export default function BasicTable(rows) {
-  console.log(rows)
+  const [props, setProps] = useState([]);
+  setProps(Object.values(Object.values(rows)[0]))
+  console.log(props)
   return (
       <div className="Table">
       <h3>Inasistencias</h3>
@@ -45,8 +48,8 @@ export default function BasicTable(rows) {
             <TableBody style={{ color: "white" }}>
               {[rows].map((row) => (
                 <TableRow
-                  key={row.fecha}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                key={row.fecha}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
                     {row.fecha}
@@ -56,6 +59,7 @@ export default function BasicTable(rows) {
                   <TableCell align="left">
                     <span className="status" style={makeStyle(row.justificacion)}>{row.justificacion}</span>
                   </TableCell>
+                  
                   <TableCell align="left" className="Details">Details</TableCell>
                 </TableRow>
               ))}
