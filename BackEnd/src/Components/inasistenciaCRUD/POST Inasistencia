@@ -11,6 +11,6 @@
     "persona": {
         "nombre": "Santiago",
         "apellido": "Patiño",
-        "dni": "45749908"
+        "dni": 45749908
     }
 }
