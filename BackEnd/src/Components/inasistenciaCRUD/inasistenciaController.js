@@ -94,7 +94,8 @@ module.exports.getInasistenciaAlumno = (req, res) => {
 //-------------------------------------------- GET /inasistencias/:dni/:id --------------------------------------------------------------
 
 module.exports.getInasistenciaAlumnoCurso = (req, res) => {
-    return Inasistencia.find({ dni : req.params.dni, curso : req.params.id})
+    console.log("Entre a la funcion")
+    return Inasistencia.find({ curso : req.params.id })
         .then((inasistencias) => {
             if(inasistencias == undefined){
                 res.status(404).json({error: "No se encontraron inasistencias "})

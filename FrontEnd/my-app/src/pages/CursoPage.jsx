@@ -9,7 +9,7 @@ import { circularProgressClasses } from '@mui/material';
 
 export default function CursoCard({ }) {
     const [inasistencias, setInasistencias] = useState(true);
-    const [notas, setNotas] = useState(true);
+    const [notas, setNotas] = useState([]);
     const location = useLocation()
     const id = location.state.idCurso
     const dni = location.state.dni
@@ -28,27 +28,29 @@ export default function CursoCard({ }) {
         useEffect(() => {
             fetch(`http://localhost:3001/cursos/${id}`)
                 .then(response => response.json())
-                .then(curso => {
-                    for( let i = 0; i <= curso.alumnos.length ; i++){
-                        if (curso.alumnos.dni == dni ){
-                            setNotas(curso.alumnos.evaluaciones)
+                .then(curso => {  
+                    setNotas([])
+                    curso.alumnos.forEach( (element,i) => {
+                        if(element.dni == dni){
+                            setNotas((oldState) => [...oldState, element.evaluaciones])
                         }
                     }
-                })  
+                    )       
+                }
+                )  
                 .catch(error => {
                     console.log(error)
                 })
-        }, []);
-        return {"inasistencias":inasistencias,"notas":notas}
-    }
-
-    return (
-        <div>
+            }, []);
+            return {inasistencias, notas}
+        }
+        return (    
+            <div>
             <Button id="botonInscripcion" variant="contained" endIcon={<AddIcon />}>
                 Inscribirse final
             </Button>
             <TableInasistencia rows ={GetPropsValues()}/>
-            <TableInasistencia />
+      
         </div>
     );
 }
