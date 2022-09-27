@@ -6,7 +6,7 @@
     "tipo": "Tarde",
     "motivo": "-",
     "justificado": "False",
-    "curso": 1,
+    "curso": "632cb33431fc4d15132f0efc",
     "materia": "Matematica",
     "persona": {
         "nombre": "Santiago",

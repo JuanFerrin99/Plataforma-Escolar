@@ -29,7 +29,7 @@ export default function CursoCard({ }) {
             fetch(`http://localhost:3001/cursos/${id}`)
                 .then(response => response.json())
                 .then(curso => {
-                    for( let i = 0; curso.alumnos.length; i++){
+                    for( let i = 0; i <= curso.alumnos.length ; i++){
                         if (curso.alumnos.dni == dni ){
                             setNotas(curso.alumnos.evaluaciones)
                         }
