@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { verificarAuth } = require('../../auth/authController.js');
-const { agregarValidator, idValidator, modificacionValidator } = require("./inasistenciaValidator");
+const { agregarValidator, idValidator, modificacionValidator, dniValidator } = require("./inasistenciaValidator");
 const { agregarInasistencia, eliminarInasistencia, modificarInasistencia, getInasistencia,getInasistenciaAlumno,getInasistenciaAlumnoCurso } = require("./inasistenciaController");
 
 //router.use(verificarAuth)
@@ -18,10 +18,8 @@ router.patch('/:id', idValidator, modificacionValidator, modificarInasistencia);
 // 4 GET /inasistencias/:id
 router.get('/:id', idValidator, getInasistencia);
 
-// 5 GET /inasistencias/:dni
-router.get('/:dni/', idValidator, getInasistenciaAlumno);
-
 // 6 GET /inasistencias/:dni/:id
-router.get('/:dni/:id', idValidator, getInasistenciaAlumnoCurso);
+router.get('/:dni/:id', idValidator, dniValidator, getInasistenciaAlumnoCurso);
+
 
 module.exports = router;
