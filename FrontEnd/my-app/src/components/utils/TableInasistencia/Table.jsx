@@ -24,6 +24,7 @@ const makeStyle=(status)=>{
 }
 
 export default function BasicTable(rows) {
+  console.log(rows)
   return (
       <div className="Table">
       <h3>Inasistencias</h3>

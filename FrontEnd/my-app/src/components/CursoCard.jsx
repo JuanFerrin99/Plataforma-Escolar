@@ -9,7 +9,7 @@ import VistaCurso from './VistaCurso';
 import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 
-export default function cursoCard({ id, materia }) {
+export default function cursoCard({ id, materia, dniAlumno }) {
     
     return (
         <Grid item xs={4}>

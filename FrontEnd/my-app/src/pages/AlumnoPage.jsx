@@ -42,6 +42,7 @@ export default function AlumnoPage() {
         .then(response => response.json())
         .then(alumno => {
             setCursos(alumno.cursosActivos)
+            setDni(alumno.dni)
             setLoading(false)
             
         })

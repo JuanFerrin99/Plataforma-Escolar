@@ -16,7 +16,7 @@ export default function CursoCard({ }) {
 
     const GetPropsValues = () => {
         useEffect(() => {
-            fetch(`http://localhost:3001/inasistencias/`, { body: JSON.stringify({ curso: id, dni: dni }) })
+            fetch(`http://localhost:3001/inasistencias/${dni}/${id}`)
                 .then(response => response.json())
                 .then(res => {
                     setInasistencias(res)
@@ -29,16 +29,17 @@ export default function CursoCard({ }) {
             fetch(`http://localhost:3001/cursos/${id}`)
                 .then(response => response.json())
                 .then(curso => {
-                    for( i = 0; curso.alumnos.length; i++){
-                        if (cursos.alumnos.dni == dni ){
-                            setNotas(cursos.alumnos.evaluaciones)
+                    for( let i = 0; curso.alumnos.length; i++){
+                        if (curso.alumnos.dni == dni ){
+                            setNotas(curso.alumnos.evaluaciones)
                         }
                     }
-                })
+                })  
                 .catch(error => {
                     console.log(error)
                 })
         }, []);
+        return {"inasistencias":inasistencias,"notas":notas}
     }
 
     return (
@@ -46,7 +47,7 @@ export default function CursoCard({ }) {
             <Button id="botonInscripcion" variant="contained" endIcon={<AddIcon />}>
                 Inscribirse final
             </Button>
-            <TableInasistencia rows={{"inasistencias":inasistencias,"notas":notas}} />
+            <TableInasistencia rows ={GetPropsValues()}/>
             <TableInasistencia />
         </div>
     );
