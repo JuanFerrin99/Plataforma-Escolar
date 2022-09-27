@@ -1,20 +1,22 @@
 //*-------------------------------------------------------------------IMPORTS--------------------------------------------------------------------
-const Alumno = require("../Components/alumnoCRUD/alumnoSchema");
-const Profesor = require("../Components/profesorCRUD/profesorSchema");
-const Secretario = require("../Components/secretarioCRUD/secretarioSchema");
-const Admin = require("../Components/adminCRUD/adminSchema");
+const Alumno = require("../Components/alumnoCRUD/alumnoSchema")
+const Profesor = require("../Components/profesorCRUD/profesorSchema")
+const Secretario = require("../Components/secretarioCRUD/secretarioSchema")
+const Admin = require("../Components/adminCRUD/adminSchema")
+
+//------------------------EXPRESS--------------------------------------
+const res = require("express/lib/response");
+const { body } = require("express-validator");
 
 //-------------------------TOKEN-------------------------
 
 const { createToken } = require("../utils/tokenUtils")
-const { checkToken } = require("../utils/tokenUtils.js");
+const { checkToken } = require("../utils/tokenUtils.js")
 
-//-----------------------------------------------FIREBASE-----------------------------------------------
+//-----------------------------------------------FIREBASE----------------------------------------------------------------------------------------------
 
 const { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail } = require("firebase/auth")
 const { firebase } = require("../../config/configFireBase");
-const res = require("express/lib/response");
-const { body } = require("express-validator");
 const auth = getAuth(firebase)
 
 //*---------------------------------------------------------------------CODE---------------------------------------------------------------------
@@ -23,13 +25,13 @@ const auth = getAuth(firebase)
 module.exports.signUp = (req, res) => {
     createUserWithEmailAndPassword(auth, req.body.email, req.body.password)
         .then((userCredential) => {
-            /*sendEmailVerification(userCredential.user)
-                .then(() => {*/
-            res.status(200).json(userCredential.user)
-            /*})
-            .catch((error) => {
-                res.status(500).json({ "error": error })
-            })*/
+            sendEmailVerification(userCredential.user)
+                .then(() => {
+                    res.status(200).json(userCredential.user)
+                })
+                .catch((error) => {
+                    res.status(500).json({ "error": error })
+                })
         })
         .catch((error) => {
             res.status(500).json({ "error": error })
@@ -44,17 +46,14 @@ module.exports.login = (req, res, next) => {
             return Alumno.findOne({ mail: req.body.email })
                 .then((alumno) => {
                     if (alumno == undefined) {
-                        console.log("No encontre en alumno")
                         //Collection Profesores
                         return Profesor.findOne({ mail: req.body.email })
                             .then((profesor) => {
                                 if (profesor == undefined) {
-                                    console.log("No encontre en profesor")
                                     //Collection Secretario
                                     return Secretario.findOne({ mail: req.body.email })
                                         .then((secretario) => {
                                             if (secretario == undefined) {
-                                                console.log("No encontre en secretario")
                                                 //Collection Admin
                                                 return Admin.findOne({ mail: req.body.email })
                                                     .then((admin) => {
@@ -62,8 +61,6 @@ module.exports.login = (req, res, next) => {
                                                             res.status(404).json({ error: "No se encontro al usuario" })
                                                         }
                                                         else {
-                                                            console.log("Entre en admin")
-                                                            console.log(admin)
                                                             req.currentUserData = admin
                                                             next()
                                                         }
@@ -74,8 +71,6 @@ module.exports.login = (req, res, next) => {
                                                     })
                                             }
                                             else {
-                                                console.log("Entre en secretario")
-                                                console.log(secretario)
                                                 req.currentUserData = secretario
                                                 next()
                                             }
@@ -86,8 +81,6 @@ module.exports.login = (req, res, next) => {
                                         })
                                 }
                                 else {
-                                    console.log("Entre en profesor")
-                                    console.log(profesor)
                                     req.currentUserData = profesor
                                     next()
                                 }
@@ -98,8 +91,6 @@ module.exports.login = (req, res, next) => {
                             })
                     }
                     else {
-                        console.log("Entre en alumno")
-                        console.log(alumno)
                         req.currentUserData = alumno
                         next()
                     }
@@ -162,8 +153,6 @@ module.exports.sendLoginResponse = (req, res) => {
         message: token
     })
 }
-
-//TODO: Funcion que compruebe si el usuario no altero el token
 
 module.exports.verificarAuth = async (req, res, next) => {
     const authorizationHeader = req.headers.authorization;

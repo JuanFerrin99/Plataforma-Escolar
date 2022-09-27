@@ -1,36 +1,22 @@
-/*
-
 module.exports.authCheck = (req, res, next) => {
+    console.log(req.currentUserData)
     if (req.currentUserData) {
-        next();
+        console.log("Ya estoy logueado")
+        res.redirect(`/${req.currentUserData.rol}`);
     } else {
-        res.redirect('/auth/login');
+        console.log("No estoy logueado")
+        next();
     }
 };
 
-module.exports.verifyRol = (req, res, next) => {
+//TODO: Funcion que compruebe que el rol del usuario coincida con lo que intenta acceder
+/*module.exports.verifyRol = (req, res, next) => {
     if (req.currentUserData) {
         var backURL = req.header('Referer') || '/';
         res.redirect(backURL);
     } else {
         next();
     }
-};
+}*/
 
-module.exports.signUp = (req, res) => {
-    createUserWithEmailAndPassword(auth, req.body.email, req.body.password)
-        .then((userCredential) => {
-            sendEmailVerification(userCredential.user)
-                .then(() => {
-                    res.status(200).json(userCredential.user)
-                })
-                .catch((error) => {
-                    res.status(500).json({ "error": error })
-                })
-        })
-        .catch((error) => {
-            res.status(500).json({ "error": error })
-        });
-}
-
-*/
+//TODO: Funcion que compruebe que el usuario no altero el token
