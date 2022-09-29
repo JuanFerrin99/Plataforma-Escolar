@@ -1,16 +1,16 @@
 {
-    "_id": {
-      "$oid": "6320c137f4e49413d16e89c0"
-    },
-    "fecha": "2022-03-01",
-    "tipo": "Tarde",
-    "motivo": "-",
-    "justificado": "False",
-    "curso": "632cb33431fc4d15132f0efc",
-    "materia": "Matematica",
-    "persona": {
-        "nombre": "Santiago",
-        "apellido": "Patiño",
-        "dni": 45749908
-    }
+	"_id": {
+		"$oid": "6320c137f4e49413d16e89c0"
+	},
+	"fecha": "2022-03-01",
+	"tipo": "Tarde",
+	"motivo": "-",
+	"justificado": "False",
+	"curso": "632cb33431fc4d15132f0efc",
+	"materia": "Matematica",
+	"persona": {
+		"nombre": "Santiago",
+		"apellido": "Patiño",
+		"dni": 45749908
+	}
 }
