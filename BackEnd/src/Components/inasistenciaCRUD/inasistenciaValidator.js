@@ -10,7 +10,7 @@ module.exports.agregarValidator = [
     body("motivo")
         .isString().withMessage("El motivo debe ser un string"),
     body("justificado")
-        .isBoolean().withMessage("La caracterestica justificado debe ser un boolean"),
+        .isString().withMessage("Justificado debe ser un string"),
     body("curso")
         .isInt().withMessage("Curso debe ser un int"),
     body("materia")
@@ -44,7 +44,7 @@ module.exports.modificacionValidator = [
         .isString().withMessage("El motivo debe ser un string"),
     body("justificado")
         .optional({nullable: true})
-        .isBoolean().withMessage("La caracteristica justificado debe ser un boolean"),
+        .isBoolean().withMessage("Justificado debe ser un string"),
     body("curso")
         .optional({nullable: true})
         .isInt().withMessage("Curso debe ser un int"),

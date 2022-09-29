@@ -7,7 +7,7 @@ var inasistencias = new Schema({
     fecha: Date,
     tipo: String,
     motivo: String,
-    justificado: Boolean,
+    justificado: String,
     curso: String,
     materia: String,
     persona: Object  /* nombre: String, apellido: String, dni: int */

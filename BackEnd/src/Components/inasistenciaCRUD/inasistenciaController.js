@@ -95,7 +95,7 @@ module.exports.getInasistenciaAlumno = (req, res) => {
 
 module.exports.getInasistenciaAlumnoCurso = (req, res) => {
     console.log("Entre a la funcion")
-    return Inasistencia.find({ curso : req.params.id})
+    return Inasistencia.find({ curso : req.params.id, dni: req.params.dni})
         .then((inasistencias) => {
             console.log(inasistencias)
             if(inasistencias == undefined){
