@@ -10,7 +10,7 @@ import "./Table.css";
 import { useEffect, useState } from "react";
 
 const makeStyle = (status) => {
-	if (status === 'True') {
+	if (status === 'Justificado') {
 		return {
 			background: 'rgb(145 254 159 / 47%)',
 			color: 'green',
@@ -23,8 +23,18 @@ const makeStyle = (status) => {
 		}
 	}
 }
-
 export default function BasicTable(props) {
+	let total = 0;
+	const getPesoFalta = (tipo) => {
+		if (tipo == "Tarde"){
+			return 0.5
+		}
+		else if (tipo =="Ausente"){
+			return 1
+		}
+		else {return 0}
+	}
+
 	return (
 		<div className="Table">
 			<h3>Inasistencias</h3>
@@ -46,18 +56,15 @@ export default function BasicTable(props) {
 
 						{props.inasistencia.map((elem) => (
 							<TableRow
-							key={elem._id}
-							sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+								key={elem._id}
+								sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
 							>
 								<TableCell component="th" scope="row">{elem.fecha}</TableCell>
 								<TableCell align="left">{elem.tipo}</TableCell>
-								<TableCell align="left">{elem.total}</TableCell>
-								{console.log(elem)}
+								<TableCell align="left">{total = total + getPesoFalta(elem.tipo)}</TableCell>
 								<TableCell align="left">
 									<span className="status" style={makeStyle(elem.justificado)}>{elem.justificado}</span>
 								</TableCell>
-
-								<TableCell align="left" className="Details">Details</TableCell>
 							</TableRow>
 						))}
 					</TableBody>

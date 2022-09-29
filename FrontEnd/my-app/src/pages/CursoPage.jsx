@@ -49,8 +49,8 @@ export default function CursoCard({ }) {
                 Inscribirse final
             </Button>
             <TableInasistencia inasistencia={inasistencias} />
+            <TableInasistencia />
         </div>
     );
 }
-//<TableInasistencia />
 
