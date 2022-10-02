@@ -82,6 +82,24 @@ module.exports.getCurso = (req, res) => {
         })
 }
 
+//-------------------------------------------- GET /cursos/id/dni --------------------------------------------------------------
+
+module.exports.getCursoAlumno = (req, res) => {
+    return Curso.findOne({_id: req.params.id, dni: req.params.dni})
+        .then((curso) => {
+            if(curso == undefined){
+                res.status(404).json({error: "No se encontro el curso"})
+            }
+            else{
+                res.status(200).json(curso)
+            }
+        })  
+        .catch((error) => {
+            console.log(error)
+            res.status(500).json({ error: "Ocurrio un error" })
+        })
+}
+
 //-------------------------------------------- GET /cursos/ --------------------------------------------------------------
 
 module.exports.getCursos = (req, res) => {

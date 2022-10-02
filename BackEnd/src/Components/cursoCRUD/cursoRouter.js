@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { verificarAuth } = require('../../auth/authController.js');
 const { agregarValidator, idValidator, dniValidator, modificacionValidator } = require("./cursoValidator");
-const { agregarCurso, eliminarCurso, modificarCurso, getCurso, getCursos } = require("./cursoController");
+const { agregarCurso, eliminarCurso, modificarCurso, getCurso, getCursoAlumno, getCursos } = require("./cursoController");
 
 //router.use(verificarAuth)
 
@@ -18,7 +18,10 @@ router.patch('/:id', idValidator, modificacionValidator, modificarCurso);
 // 4 GET /cursos/:id
 router.get('/:id', idValidator, getCurso)
 
-// 5 GET /cursos/
+// 5 GET /cursos/:id/:dni
+router.get('/:id/:dni', idValidator, getCursoAlumno)
+
+// 6 GET /cursos/
 router.get('/', getCursos)
 
 module.exports = router;
