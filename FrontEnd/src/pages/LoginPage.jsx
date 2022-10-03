@@ -1,4 +1,8 @@
 import * as React from 'react';
+import axios from "axios";
+import { useState } from "react";
+import Cookies from "js-cookie";
+
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -8,9 +12,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from "axios";
-import { useState } from "react";
-import Cookies from "js-cookie";
 
 
 const theme = createTheme();
@@ -20,21 +21,23 @@ export default function SignIn() {
     const [password, setPassword] = useState('');
     const [pressed, setPressed] = useState(false);
 
-    const handleEnviarReset = (event) => {
-        event.preventDefault();
-        handleResetPassword()
-        window.location.href = '/login'
-    }
+
     const handleEmailChange = (event) => {
         setEmail(event.target.value)
     }
     const handlePasswordChange = (event) => {
         setPassword(event.target.value)
     }
+
     const handleSubmit = (event) => {
         event.preventDefault();
         handleLogin()
-    };
+    }
+    const handleEnviarReset = (event) => {
+        event.preventDefault();
+        handleResetPassword()
+        window.location.href = '/login'
+    }
 
     const handleLogin = () => {
         const body = {
