@@ -1,9 +1,14 @@
-import { Card, CardActions, CardContent, Grid, Skeleton } from "@mui/material";
+import { Button, Card, CardActions, CardContent, Grid, Skeleton, Container } from "@mui/material";
+import TableInasistencia from "../components/utils/TableInasistencia/Table"
+import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from "react";
-import AlumnoCard from "../components/AlumnoCard";
-import { Container } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import Chart from "../components/Chart";
+import CursoCard from "../components/CursoCard";
+import "../styles/AlumnoPage.css";
+import Cookies from "js-cookie";
+
+
+
 function Variants() {
     return (
         <Grid item xs={4}>
@@ -27,37 +32,51 @@ function Variants() {
     );
 }
 
-export default function Peliculas() {
-    const [peliculas, setPeliculas] = useState([]);
+export default function AlumnoPage() {
+    const [cursos, setCursos] = useState([]);
+    const [dni, setDni] = useState(0);
     const [loading, setLoading] = useState(true);
 
+    
     useEffect(() => {
-        fetch("http://localhost:3001/peliculas/?nombre")
+        fetch(`http://localhost:3001/profesores/filtro/${Cookies.get("mail")}`)
+        .then(response => response.json())
+        .then(profesor => {
+            setCursos(profesor.cursosActivos)
+            setDni(profesor.dni)
+            setLoading(false)
+            
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }, [])
+    
+    useEffect(() => {
+        fetch(`http://localhost:3001/inasistencias/${dni}/`)
             .then(response => response.json())
-            .then(peliculasAPI => {
-                setPeliculas(peliculasAPI)
-                setLoading(false)
-
+            .then(res => {
+                setInasistencias(res)
             })
             .catch(error => {
                 console.log(error)
             })
     }, []);
+    
 
-    const peliculasComponent = peliculas.map((pelicula, i) => {
-        return <AlumnoCard key={pelicula._id} id={pelicula._id} nombre={pelicula.nombre} añoDeEstreno={pelicula.añoDeEstreno} />
+    const cursosComponent = cursos.map((curso, i) => {
+        return <CursoCard key={curso.id} id={curso.id} materia={curso.nombre} dniAlumno={dni} />
     })
 
-    const peliculasSkeleton = new Array(20).fill(<Variants />)
+    const cursosSkeleton = new Array(20).fill(<Variants />)
 
 
     return (
         <div>
-            <br /><br />
+            <TableInasistencia inasistencia={inasistencias} />
             <Grid container spacing={3}>
-                {loading ? peliculasSkeleton : peliculasComponent}
+                {loading ? cursosSkeleton : cursosComponent}
             </Grid>
-            <Chart/>
             <Container>
                 <Outlet />
             </Container>
