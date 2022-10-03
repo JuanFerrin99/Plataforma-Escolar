@@ -9,7 +9,7 @@ import VistaCurso from './VistaCurso';
 import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 
-export default function cursoCard({ id, materia, dniAlumno }) {
+export default function cursoCard({ id, materia, dni }) {
     return (
         <Grid item xs={4}>
             <Card sx={{ minWidth: 300 }}>
@@ -23,7 +23,7 @@ export default function cursoCard({ id, materia, dniAlumno }) {
 
                 </CardContent>
                 <CardActions>
-                    <Button LinkComponent={Link} to={`curso`} state={{idCurso : id, dni : dniAlumno}} size="small">Ir a curso</Button>
+                    <Button LinkComponent={Link} to={`curso`} state={{idCurso : id, dni : dni}} size="small">Ir a curso</Button>
                 </CardActions>
             </Card>
         </Grid>

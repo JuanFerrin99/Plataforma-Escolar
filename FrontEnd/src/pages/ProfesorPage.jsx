@@ -34,6 +34,7 @@ function Variants() {
 
 export default function AlumnoPage() {
     const [cursos, setCursos] = useState([]);
+    const [inasistencias, setInasistencias] = useState([]);
     const [dni, setDni] = useState(0);
     const [loading, setLoading] = useState(true);
 
@@ -42,15 +43,15 @@ export default function AlumnoPage() {
         fetch(`http://localhost:3001/profesores/filtro/${Cookies.get("mail")}`)
         .then(response => response.json())
         .then(profesor => {
-            setCursos(profesor.cursosActivos)
             setDni(profesor.dni)
+            setCursos(profesor.cursos)
             setLoading(false)
             
         })
         .catch(error => {
             console.log(error)
         })
-    }, [])
+    }, [])  
     
     useEffect(() => {
         fetch(`http://localhost:3001/inasistencias/${dni}/`)
@@ -70,7 +71,7 @@ export default function AlumnoPage() {
 
     const cursosSkeleton = new Array(20).fill(<Variants />)
 
-
+    console.log(inasistencias)
     return (
         <div>
             <TableInasistencia inasistencia={inasistencias} />
