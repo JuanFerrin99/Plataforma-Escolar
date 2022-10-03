@@ -75,9 +75,9 @@ module.exports.getInasistencia = (req, res) => {
         .catch(errorHandler(res))
 }
 
-//-------------------------------------------- GET /inasistencias/:dni --------------------------------------------------------------
+//-------------------------------------------- GET /inasistencias/filtro/:dni --------------------------------------------------------------
 
-module.exports.getInasistenciaAlumno = (req, res) => {
+module.exports.getInasistenciaDni = (req, res) => {
     return Inasistencia.find({ dni : req.params.dni })
         .then((inasistencias) => {
             if(inasistencias == undefined){

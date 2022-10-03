@@ -19,6 +19,6 @@ router.patch('/:id', idValidator, modificacionValidator, modificarProfesor);
 router.get('/:id', idValidator, getProfesor);
 
 // 5 GET filtro mail /profesores/:mail
-router.get('/:mail', mailValidator, getProfesorMail);
+router.get('/filtro/:mail', mailValidator, getProfesorMail);
 
 module.exports = router;

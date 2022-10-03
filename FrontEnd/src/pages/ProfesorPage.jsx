@@ -38,51 +38,42 @@ export default function AlumnoPage() {
     const [dni, setDni] = useState(0);
     const [loading, setLoading] = useState(true);
 
-    
     useEffect(() => {
         fetch(`http://localhost:3001/profesores/filtro/${Cookies.get("mail")}`)
-        .then(response => response.json())
-        .then(profesor => {
-            setDni(profesor.dni)
-            setCursos(profesor.cursos)
-            setLoading(false)
-            
-        })
-        .catch(error => {
-            console.log(error)
-        })
-    }, [])  
-    
-    useEffect(() => {
-        fetch(`http://localhost:3001/inasistencias/${dni}/`)
             .then(response => response.json())
-            .then(res => {
-                setInasistencias(res)
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }, []);
-    
+            .then(profesor => {
+                setDni(profesor.dni)
+                setCursos(profesor.cursos)
+                setLoading(false)
+                fetch(`http://localhost:3001/inasistencias/${dni}/`)
+                    .then(response => response.json())
+                    .then(res => {
+                        setInasistencias(res)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+                    
+            }, [])
 
-    const cursosComponent = cursos.map((curso, i) => {
-        return <CursoCard key={curso.id} id={curso.id} materia={curso.nombre} dniAlumno={dni} />
-    })
+        })
 
-    const cursosSkeleton = new Array(20).fill(<Variants />)
+        const cursosComponent = cursos.map((curso, i) => {
+            return <CursoCard key={curso.id} id={curso.id} materia={curso.nombre} dniAlumno={dni} />
+        })
 
-    console.log(inasistencias)
-    return (
-        <div>
-            <TableInasistencia inasistencia={inasistencias} />
-            <Grid container spacing={3}>
-                {loading ? cursosSkeleton : cursosComponent}
-            </Grid>
-            <Container>
-                <Outlet />
-            </Container>
+        const cursosSkeleton = new Array(20).fill(<Variants />)
+        return (
+            <div>
 
-        </div>
-    )
+                <Grid container spacing={3}>
+                    {loading ? cursosSkeleton : cursosComponent}
+                </Grid>
+                <Container>
+                    <Outlet />
+                </Container>
 
-}
+            </div>
+        )
+
+    }
