@@ -1,0 +1,37 @@
+
+body {
+    background-color: aqua;
+    padding: 0px;
+    margin: 0px;
+    height: 100%;
+    width: 100%;
+}
+#a{
+    height: 100%;
+    width: 100%;
+}
+#infoInicio{
+    background-image:linear-gradient(to bottom, #03194a44, #03194a), url(https://ise.com.ar/wp-content/uploads/2020/10/ISE-Savio-Electronica-scaled.jpg);
+    background-image: no-repeat;
+    background-image: fixed;
+    background-image: top center;
+    
+    height: 700px;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    color: white;
+}
+#contacto{
+    height: 200px;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    background-color: #031A4A;
+    color: white;
+}
+#carruseñ-div{
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+}
