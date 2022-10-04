@@ -43,7 +43,6 @@ export default function AlumnoPage() {
             setCursos(alumno.cursosActivos)
             setDni(alumno.dni)
             setLoading(false)
-            
         })
         .catch(error => {
             console.log(error)
