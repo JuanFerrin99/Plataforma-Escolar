@@ -14,9 +14,6 @@ export default function cursoCard({ id, materia, dni}) {
         <Grid item xs={4}>
             <Card sx={{ minWidth: 300 }}>
                 <CardContent>
-                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                        {id}
-                    </Typography>
                     <Typography variant="h5" component="div">
                         {materia}
                     </Typography>   

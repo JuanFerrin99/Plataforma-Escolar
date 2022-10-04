@@ -23,6 +23,12 @@ const makeStyle = (status) => {
 		}
 	}
 }
+
+const fechaStyle = (date) => {
+	
+}
+
+
 export default function BasicTable(props) {
 	let total = 0;
 	const getPesoFalta = (tipo) => {
