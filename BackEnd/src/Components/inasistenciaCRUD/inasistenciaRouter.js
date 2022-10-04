@@ -18,8 +18,8 @@ router.patch('/:id', idValidator, modificacionValidator, modificarInasistencia);
 // 4 GET /inasistencias/:id
 router.get('/:id', idValidator, getInasistencia);
 
-// 5 GET /inasistencias/filtro/:id
-router.get('/filtro/:dni', idValidator, getInasistenciaDni);
+// 5 GET /inasistencias/filtro/:dni
+router.get('/filtro/:dni', dniValidator, getInasistenciaDni);
 
 // 6 GET /inasistencias/:dni/:id
 router.get('/:dni/:id', idValidator, dniValidator, getInasistenciaAlumnoCurso);
