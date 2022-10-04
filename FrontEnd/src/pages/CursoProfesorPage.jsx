@@ -57,7 +57,7 @@ export default function CursoCard({ }) {
 
         return (
             <div>
-            <Button id="botonAsistencia" variant="contained" onClick={} endIcon={<AddIcon />}>
+            <Button id="botonAsistencia" variant="contained"  endIcon={<AddIcon />}>
                 Tomar asistencia
             </Button>
             <Button id="botonParciales" variant="contained" endIcon={<AddIcon />}>
