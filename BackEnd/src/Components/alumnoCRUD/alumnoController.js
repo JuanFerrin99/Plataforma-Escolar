@@ -89,6 +89,8 @@ module.exports.getAlumno = (req, res) => {
         })
 }
 
+//------------------------------------------GET /alumnos/filtro/dni-------------------------------------------
+
 module.exports.getAlumnoMail = (req, res) => {
     return Alumno.findOne({mail: req.params.mail})
         .then((alumno) => {
