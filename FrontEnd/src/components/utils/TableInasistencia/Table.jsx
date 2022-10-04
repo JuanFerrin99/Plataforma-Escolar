@@ -7,7 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import "./Table.css";
-import { useEffect, useState } from "react";
+
 
 const makeStyle = (status) => {
 	if (status === 'Justificada') {
@@ -26,13 +26,13 @@ const makeStyle = (status) => {
 export default function BasicTable(props) {
 	let total = 0;
 	const getPesoFalta = (tipo) => {
-		if (tipo === "Tarde"){
+		if (tipo === "Tarde") {
 			return 0.5
 		}
-		else if (tipo === "Falta"){
+		else if (tipo === "Falta") {
 			return 1
 		}
-		else {return 0}
+		else { return 0 }
 	}
 
 	return (
