@@ -62,6 +62,7 @@ export default function AlumnoPage() {
     
     return (
         <div>
+
             <Button id="botonInscripcion" variant="contained" endIcon={<AddIcon/>}>
                 Inscribirse materia
             </Button>

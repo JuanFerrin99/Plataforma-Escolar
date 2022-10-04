@@ -5,7 +5,8 @@ import AlumnoPage from "../pages/AlumnoPage"
 import ProfesorPage from "../pages/ProfesorPage"
 import SecretarioPage from "../pages/SecretarioPage"
 import AdminPage from "../pages/AdminPage"
-import CursoPage from "../pages/CursoPage"
+import CursoAlumnoPage from "../pages/CursoAlumnoPage"
+import CursoProfesorPage from "../pages/CursoProfesorPage"
 import LoginPage from "../pages/LoginPage"
 
 
@@ -19,8 +20,9 @@ export default function Router() {
                     <Route path="/inscripcion" element= { <HomePage /> } />                     
                 </Route>
                     <Route path="/alumno" element= { <AlumnoPage/> } />
-                        <Route path="/alumno/curso" element= { <CursoPage /> } />
+                        <Route path="/alumno/curso" element= { <CursoAlumnoPage /> } />
                     <Route path="/profesor" element= { <ProfesorPage /> } />
+                        <Route path="/profesor/curso" element= { <CursoProfesorPage /> } />
                     <Route path="/secretario" element= { <SecretarioPage /> } />
                     <Route path="/admin" element= { <AdminPage /> } />
             </Routes>

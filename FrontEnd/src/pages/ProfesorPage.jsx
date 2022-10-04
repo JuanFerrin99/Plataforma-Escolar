@@ -58,13 +58,14 @@ export default function AlumnoPage() {
 
         })
         const cursosComponent = cursos.map((curso, i) => {
-            return <CursoCard key={curso.id} id={curso.id} materia={curso.materia} dniAlumno={dni} />
+            return <CursoCard key={curso.id} id={curso.id} materia={curso.materia} dniAlumno={dni}/>
         })
 
         const cursosSkeleton = new Array(20).fill(<Variants />)
         return (
             <div>
                 <TableInasistencia inasistencia = {inasistencias} />
+                <br />
                 <Grid container spacing={3}>
                     {loading ? cursosSkeleton : cursosComponent}
                 </Grid>
