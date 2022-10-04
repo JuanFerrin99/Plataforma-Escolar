@@ -12,8 +12,7 @@ export default function CursoCard({ }) {
     const location = useLocation()
     const id = location.state.idCurso
     const dni = location.state.dni
-
-
+    
     useEffect(() => {
         fetch(`http://localhost:3001/inasistencias/${dni}/${id}`)
             .then(response => response.json())

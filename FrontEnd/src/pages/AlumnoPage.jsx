@@ -54,15 +54,16 @@ export default function AlumnoPage() {
     
     
     const cursosComponent = cursos.map((curso, i) => {
-        return <CursoCard key={curso.id} id={curso.id} materia={curso.nombre} dniAlumno={dni} />
+        return <CursoCard key={curso.id} id={curso.id} materia={curso.nombre} dni={dni} />
     })
+    
     
     const cursosSkeleton = new Array(20).fill(<Variants />)
     
     
     return (
         <div>
-
+            {dni}
             <Button id="botonInscripcion" variant="contained" endIcon={<AddIcon/>}>
                 Inscribirse materia
             </Button>
