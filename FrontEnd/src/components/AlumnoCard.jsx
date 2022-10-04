@@ -5,29 +5,28 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
+import VistaCurso from './VistaCurso';
 import { Link } from 'react-router-dom';
+import AddIcon from '@mui/icons-material/Add';
 
-
-export default function alumnoCard({ id, nombre, añoDeEstreno }) {
+export default function cursoCard({ id, nombre, apellido, dni}) {
     return (
         <Grid item xs={4}>
             <Card sx={{ minWidth: 300 }}>
                 <CardContent>
                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                        {id}
-                    </Typography>
-                    <Typography variant="h5" component="div">
                         {nombre}
                     </Typography>
                     <Typography variant="h5" component="div">
-                        {añoDeEstreno}
-                    </Typography>
-                    
+                        {apellido}
+                    </Typography>   
+
                 </CardContent>
                 <CardActions>
-                    <Button LinkComponent={Link} to={`/${id}`} size="small">Ir a pelicula</Button>
+                    <Button LinkComponent={Link} to={`alumno`} state={{idCurso : id, dni : dni}} size="small">Ir a curso</Button>
                 </CardActions>
             </Card>
         </Grid>
+
     );
 }

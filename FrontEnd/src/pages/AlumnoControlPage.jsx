@@ -10,8 +10,8 @@ export default function CursoCard({ }) {
     const [inasistencias, setInasistencias] = useState([]);
     const [notas, setNotas] = useState([]);
     const location = useLocation()
-    const id = location.state.idCurso
-    const dni = location.state.dni
+    const id = location.state.idCurso // id curso
+    const dni = location.state.dni // dni alumno
 
     useEffect(() => {
         fetch(`http://localhost:3001/inasistencias/${dni}/${id}`)
@@ -22,9 +22,9 @@ export default function CursoCard({ }) {
             .catch(error => {
                 console.log(error)
             })
-    }, []);
-    useEffect(() => {
-        fetch(`http://localhost:3001/cursos/${id}/${dni}`)
+        }, []);
+        useEffect(() => {
+            fetch(`http://localhost:3001/cursos/${id}/${dni}`)
             .then(response => response.json())
             .then(curso => {
                 setNotas([])
@@ -39,12 +39,10 @@ export default function CursoCard({ }) {
             .catch(error => {
                 console.log(error)
             })
-    }, []);
+        }, []);
+
     return (
         <div>
-            <Button id="botonInscripcion" variant="contained" endIcon={<AddIcon />}>
-                Inscribirse final
-            </Button>
             <TableInasistencia inasistencia={inasistencias} />
             <TableNotas notas={notas} />
         </div>

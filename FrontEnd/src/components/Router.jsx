@@ -7,6 +7,7 @@ import SecretarioPage from "../pages/SecretarioPage"
 import AdminPage from "../pages/AdminPage"
 import CursoAlumnoPage from "../pages/CursoAlumnoPage"
 import CursoProfesorPage from "../pages/CursoProfesorPage"
+import AlumnoControlPage from "../pages/AlumnoControlPage"
 import LoginPage from "../pages/LoginPage"
 
 
@@ -23,6 +24,7 @@ export default function Router() {
                         <Route path="/alumno/curso" element= { <CursoAlumnoPage /> } />
                     <Route path="/profesor" element= { <ProfesorPage /> } />
                         <Route path="/profesor/curso" element= { <CursoProfesorPage /> } />
+                        <Route path="/profesor/curso/alumno" element= { <AlumnoControlPage /> } />
                     <Route path="/secretario" element= { <SecretarioPage /> } />
                     <Route path="/admin" element= { <AdminPage /> } />
             </Routes>
