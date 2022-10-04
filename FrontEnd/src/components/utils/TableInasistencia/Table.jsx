@@ -24,11 +24,6 @@ const makeStyle = (status) => {
 	}
 }
 
-const fechaStyle = (date) => {
-	
-}
-
-
 export default function BasicTable(props) {
 	let total = 0;
 	const getPesoFalta = (tipo) => {
@@ -59,13 +54,13 @@ export default function BasicTable(props) {
 						</TableRow>
 					</TableHead>
 					<TableBody style={{ color: "white" }}>
-
+						
 						{props.inasistencia.map((elem) => (
 							<TableRow
 								key={elem._id}
 								sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
 							>
-								<TableCell component="th" scope="row">{elem.fecha}</TableCell>
+								<TableCell component="th" scope="row">{elem.fecha.split("T")[0]}</TableCell>
 								<TableCell align="left">{elem.tipo}</TableCell>
 								<TableCell align="left">{total = total + getPesoFalta(elem.tipo)}</TableCell>
 								<TableCell align="left">
