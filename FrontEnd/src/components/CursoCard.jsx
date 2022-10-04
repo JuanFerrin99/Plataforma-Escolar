@@ -19,7 +19,7 @@ export default function cursoCard({ id, materia, dni }) {
                     </Typography>
                     <Typography variant="h5" component="div">
                         {materia}
-                    </Typography>
+                    </Typography>   
 
                 </CardContent>
                 <CardActions>
