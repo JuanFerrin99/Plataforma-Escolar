@@ -22,6 +22,6 @@ router.get('/:id', idValidator, getInasistencia);
 router.get('/filtro/:dni', dniValidator, getInasistenciaDni);
 
 // 6 GET /inasistencias/:dni/:id
-router.get('/:dni/:id', idValidator, dniValidator, getInasistenciaAlumnoCurso);
+router.get('/:dni/:id', dniValidator, idValidator, getInasistenciaAlumnoCurso);
 
 module.exports = router;
