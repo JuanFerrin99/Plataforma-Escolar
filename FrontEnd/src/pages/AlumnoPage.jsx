@@ -7,7 +7,6 @@ import "../styles/AlumnoPage.css";
 import Cookies from "js-cookie";
 
 
-
 function Variants() {
     return (
         <Grid item xs={4}>
@@ -50,11 +49,9 @@ export default function AlumnoPage() {
     },[])
     
     
-    
     const cursosComponent = cursos.map((curso, i) => {
         return <CursoCard key={curso.id} id={curso.id} materia={curso.nombre} dni={dni} />
     })
-    
     
     const cursosSkeleton = new Array(20).fill(<Variants />)
     
