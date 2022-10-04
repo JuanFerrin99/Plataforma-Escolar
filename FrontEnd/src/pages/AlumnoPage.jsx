@@ -44,7 +44,6 @@ export default function AlumnoPage() {
             setCursos(alumno.cursosActivos)
             setDni(alumno.dni)
             setLoading(false)
-            
         })
         .catch(error => {
             console.log(error)
@@ -63,7 +62,6 @@ export default function AlumnoPage() {
     
     return (
         <div>
-            {dni}
             <Button id="botonInscripcion" variant="contained" endIcon={<AddIcon/>}>
                 Inscribirse materia
             </Button>

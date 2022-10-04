@@ -10,7 +10,7 @@ import "./Table.css";
 import { useEffect, useState } from "react";
 
 const makeStyle = (status) => {
-	if (status === 'Justificado') {
+	if (status === 'Justificada') {
 		return {
 			background: 'rgb(145 254 159 / 47%)',
 			color: 'green',
@@ -26,10 +26,10 @@ const makeStyle = (status) => {
 export default function BasicTable(props) {
 	let total = 0;
 	const getPesoFalta = (tipo) => {
-		if (tipo == "Tarde"){
+		if (tipo === "Tarde"){
 			return 0.5
 		}
-		else if (tipo =="Ausente"){
+		else if (tipo === "Falta"){
 			return 1
 		}
 		else {return 0}
