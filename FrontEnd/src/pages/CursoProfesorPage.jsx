@@ -3,51 +3,71 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom"
-import TableInasistencia from "../components/utils/TableInasistencia/Table"
-import TableNotas from "../components/utils/TableNotas/Table"
+import { Outlet } from "react-router-dom";
+
+function Variants() {
+    return (
+        <Grid item xs={4}>
+            <Card sx={{ minWidth: 275 }}>
+                <CardContent>
+                    <Skeleton variant="rectangular" width={210} height={10} />
+                    <br />
+                    <Skeleton variant="rectangular" width={210} height={10} />
+                    <br />
+                    <Skeleton variant="rectangular" width={100} height={5} />
+                    <br />
+                    <Skeleton variant="rectangular" width={100} height={5} />
+                    <br />
+                    <Skeleton variant="rectangular" width={100} height={5} />
+                </CardContent>
+                <CardActions>
+                    <Skeleton variant="rectangular" width={50} height={2} />
+                </CardActions>
+            </Card>
+        </Grid>
+    );
+}
+
 
 export default function CursoCard({ }) {
-    const [inasistencias, setInasistencias] = useState([]);
-    const [notas, setNotas] = useState([]);
+    const [alumnos, setAlumnos] = useState([]);
+    const [loading, setLoading] = useState(true);
     const location = useLocation()
-    const id = location.state.idCurso
-    const dni = location.state.dni
+    const id = location.state.idCurso // id del curso que se esta mostrando
+    const dni = location.state.dni //dni de profesor
 
-
-    useEffect(() => {
-        fetch(`http://localhost:3001/inasistencias/${dni}/${id}`)
-            .then(response => response.json())
-            .then(res => {
-                setInasistencias(res)
-            })
-            .catch(error => {
-                console.log(error)
-            })
-        }, []);
         useEffect(() => {
-            fetch(`http://localhost:3001/cursos/${id}/${dni}`)
+            fetch(`http://localhost:3001/cursos/${id}/`)
             .then(response => response.json())
             .then(curso => {
-                setNotas([])
-                curso.alumnos.forEach((element, i) => {
-                    if (element.dni == dni) {
-                        setNotas((oldState) => [...oldState, element.calificaciones])
-                    }
-                }
-                )
+                setAlumnos(curso.alumnos)
             }
             )
             .catch(error => {
                 console.log(error)
             })
         }, []);
+
+        const cursosComponent = alumnos.map((alumno, i) => {
+            return <AlumnoCard key={alumno.id} id={alumno.id} materia={alumno.nombre} dni={dni} />
+        })
+        
+        const cursosSkeleton = new Array(20).fill(<Variants />)
+
         return (
             <div>
-            <Button id="botonInscripcion" variant="contained" endIcon={<AddIcon />}>
-                Inscribirse final
+            <Button id="botonAsistencia" variant="contained" endIcon={<AddIcon />}>
+                Tomar asistencia
             </Button>
-            <TableInasistencia inasistencia = {inasistencias} />
-            <TableNotas notas = {notas}/>
+            <Button id="botonParciales" variant="contained" endIcon={<AddIcon />}>
+                Parciales
+            </Button>
+            <Grid container spacing={3}>
+                {loading ? cursosSkeleton : cursosComponent}
+            </Grid>
+            <Container>
+                <Outlet />
+            </Container>
         </div>
     );
 }

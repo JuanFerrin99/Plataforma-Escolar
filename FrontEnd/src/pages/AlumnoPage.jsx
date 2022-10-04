@@ -35,8 +35,7 @@ export default function AlumnoPage() {
     const [cursos, setCursos] = useState([]);
     const [dni, setDni] = useState(0);
     const [loading, setLoading] = useState(true);
-    //---------------hacer endpoint get cursos----------------------------------
-    
+
     useEffect(() => {
         fetch(`http://localhost:3001/alumnos/filtro/${Cookies.get("mail")}`)
         .then(response => response.json())
@@ -63,7 +62,6 @@ export default function AlumnoPage() {
     
     return (
         <div>
-            {dni}
             <Button id="botonInscripcion" variant="contained" endIcon={<AddIcon/>}>
                 Inscribirse materia
             </Button>
