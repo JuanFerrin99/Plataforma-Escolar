@@ -42,6 +42,7 @@ export default function CursoCard({ }) {
     }, []);
     return (
         <div>
+            MATERIA
             <Button id="botonInscripcion" variant="contained" endIcon={<AddIcon />}>
                 Inscribirse final
             </Button>
