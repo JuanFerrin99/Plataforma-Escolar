@@ -1,4 +1,3 @@
-
 body {
     background-color: white;
     padding: 0px;
@@ -6,23 +5,52 @@ body {
     height: 100%;
     width: 100%;
 }
-#a{
+
+#a {
+    background-image: linear-gradient(to bottom, #03194a44, #03194a), url(https://ise.com.ar/wp-content/uploads/2020/10/ISE-Savio-Electronica-scaled.jpg);
+    background-image: no-repeat;
+    background-image: fixed;
+    background-image: center;
+    background-size: cover;
+
     height: 100%;
     width: 100%;
 }
-#infoInicio{
-    background-image:linear-gradient(to bottom, #03194a44, #03194a), url(https://ise.com.ar/wp-content/uploads/2020/10/ISE-Savio-Electronica-scaled.jpg);
-    background-image: no-repeat;
-    background-image: fixed;
-    background-image: top center;
-    
-    height: 700px;
+
+#infoInicio {
     width: 100%;
+    height: 300px;
     padding: 0px;
     margin: 0px;
     color: white;
+
+    font-family: system-ui;
+    font-weight: lighter;
 }
-#contacto{
+
+#infoInicio button {
+    align-items: center;
+    appearance: none;
+    background-color: transparent;
+    
+    width: 200px;
+    height: 50px;
+    padding: 0px;
+    margin: 10px;
+    
+    color: white;
+    justify-content: center;
+
+    border-radius: 24px;
+    border-style:groove;
+    border-color: white;
+
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: lighter;
+}
+
+
+#contacto {
     height: 200px;
     width: 100%;
     padding: 0px;
@@ -30,8 +58,10 @@ body {
     background-color: #031A4A;
     color: white;
 }
-#carruseñ-div{
-    padding: 0px;
-    margin: 0px;
+
+#carrucel-div {
+    padding: 10px;
+    margin: 10px;
     width: 100%;
+    height: 200px;
 }

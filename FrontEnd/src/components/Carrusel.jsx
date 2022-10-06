@@ -35,7 +35,7 @@ function Item(props)
             <p>{props.item.description}</p>
 
             <Button className="CheckButton">
-                Check it out!
+                + INFO
             </Button>
         </Paper>
     )
