@@ -19,6 +19,10 @@ module.exports.agregarValidator = [
         .isObject({}).withMessage("Evaluaciones debe ser un array de objetos"),
     body("periodo")
         .isObject().withMessage("Periodo debe ser una objeto"),
+    body("fechasAsistencia")
+        .isArray().withMessage("FechasAsistencia debe ser una array"),
+    body("fechasAsistencia.*")
+        .isObject({}).withMessage("FechasAsistencia debe ser un array de strings"),
     body("estado")
         .isString().withMessage("Estado debe ser un string"),
     verifyValidation
@@ -53,6 +57,11 @@ module.exports.modificacionValidator = [
     body("periodo")
         .optional({nullable: true})
         .isObject().withMessage("Periodo debe ser un objeto"),
+    body("fechasAsistencia")
+        .optional({nullable: true})
+        .isArray().withMessage("FechasAsistencia debe ser un array"),
+    body("fechasAsistencia.*")
+        .isObject({}).withMessage("FechasAsistencia debe ser un array de strings"),
     body("estado")
         .optional({nullable: true})
         .isString().withMessage("Estado debe ser un string"),
