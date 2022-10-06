@@ -8,19 +8,11 @@ import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import AlumnoCard from "../components/AlumnoCard";
 
 const columns = [
-    { field: 'firstName', headerName: 'First name', width: 130 },
-    { field: 'lastName', headerName: 'Last name', width: 130 },
+    { field: 'Apellido', headerName: 'Apellido', width: 130 },
+    { field: 'Nombre', headerName: 'Nombre', width: 130 },
 ];
 
-const rows = [
-    {id: 1,lastName: 'Snow', firstName: 'Jon'},
-    {id: 2,lastName: 'Snoaw', firstName: 'Jon'},
-    {id: 3,lastName: 'Snsow', firstName: 'Jon'},
-    {id: 4,lastName: 'Snogw', firstName: 'Jon'},
-    {id: 5,lastName: 'Sndow', firstName: 'Jon'},
-    {id: 6,lastName: 'Snonw', firstName: 'Jon'},
-    {id: 7,lastName: 'Snocvw', firstName: 'Jon'},
-  ];
+
 function Variants() {
     return (
         <Grid item xs={4}>
@@ -49,6 +41,7 @@ export default function CursoCard({ }) {
     const [alumnos, setAlumnos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isPressed, setIsPressed] = useState(false);
+    const [rows, setRows] = useState([]);
     const location = useLocation()
     const id = location.state.idCurso // id del curso que se esta mostrando
 
@@ -57,22 +50,26 @@ export default function CursoCard({ }) {
             .then(response => response.json())
             .then(curso => {
                 setAlumnos(curso.alumnos)
+                setRows([])
+                curso.alumnos.forEach((element) => {
+                    setRows((oldState) => [...oldState, { "id": element.dni, "Apellido": element.apellido, "Nombre": element.nombre }])
+                })
                 setLoading(false)
             }
             )
             .catch(error => {
                 console.log(error)
             })
-    }, []);
-
-    const alumnosComponent = alumnos.map((alumno, i) => {
-        return <AlumnoCard key={alumno._id} id={id} nombre={alumno.nombre} apellido={alumno.apellido} dni={alumno.dni} />
-    })
-
-    const alumnosSkeleton = new Array(20).fill(<Variants />)
-    if (isPressed === false) {
-        return (
-            <div>
+        }, []);
+        
+        const alumnosComponent = alumnos.map((alumno, i) => {
+            return <AlumnoCard key={alumno._id} id={id} nombre={alumno.nombre} apellido={alumno.apellido} dni={alumno.dni} />
+        })
+        
+        const alumnosSkeleton = new Array(20).fill(<Variants />)
+        if (isPressed === false) {
+            return (
+                <div>
                 MATERIA
                 <Button id="botonAsistencia" variant="contained" onClick={() => { setIsPressed(true) }} endIcon={<AddIcon />}>
                     Tomar asistencia
@@ -85,11 +82,12 @@ export default function CursoCard({ }) {
                 </Grid>
                 <Container>
                     <Outlet />
-                </Container>
+                </Container>    
             </div>
         );
     }
-    else {
+    else {     
+        console.log(rows)
         return (
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
@@ -98,11 +96,11 @@ export default function CursoCard({ }) {
                     pageSize={5}
                     rowsPerPageOptions={[5]}
                     checkboxSelection
-                />
+                    />
             </div>
         );
     }
-
+    
 }
 
 
