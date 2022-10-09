@@ -38,16 +38,19 @@ function Variants() {
 
 
 export default function CursoCard({ }) {
-    const [alumnos, setAlumnos] = useState([]);
-    const [fechasAsistencia, setFechasAsistencia] = useState([]);
-    const [diasCursados, setDiasCursados] = useState([]);
     const [materia, setMateria] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [isPressed, setIsPressed] = useState(false);
+    const [alumnos, setAlumnos] = useState([]);
+    const [diasCursados, setDiasCursados] = useState([]);
+    const [fechasAsistencia, setFechasAsistencia] = useState([]);
+    
     const [rows, setRows] = useState([]);
     const [date, setDate] = useState("");
     const location = useLocation()
-    const id = location.state.idCurso // id del curso que se esta mostrando
+    const id = location.state.idCurso  //id del curso que se esta mostrando
+
+    const [loading, setLoading] = useState(true);
+    const [isPressed, setIsPressed] = useState(false);
+
     let ausentes = []
 
     useEffect(() => {
@@ -56,16 +59,17 @@ export default function CursoCard({ }) {
             .then(curso => {
                 setMateria(curso.materia)
                 setAlumnos(curso.alumnos)
-                setFechasAsistencia(curso.fechasAsistencia)
                 setDiasCursados(curso.periodo.dias)
+                setFechasAsistencia(curso.fechasAsistencia)
+                
                 setRows([])
                 setDate(new Date())
+
                 curso.alumnos.forEach((element) => {
                     setRows((oldState) => [...oldState, { "id": element.dni, "Apellido": element.apellido, "Nombre": element.nombre }])
                 })
                 setLoading(false)
-            }
-            )
+            })
             .catch(error => {
                 console.log(error)
             })
@@ -82,12 +86,12 @@ export default function CursoCard({ }) {
     const alumnosComponent = alumnos.map((alumno, i) => {
         return <AlumnoCard key={alumno._id} id={id} nombre={alumno.nombre} apellido={alumno.apellido} dni={alumno.dni} />
     })
-
     const alumnosSkeleton = new Array(20).fill(<Variants />)
+
     if (isPressed === false) {
         return (
             <div>
-                MATERIA
+                {materia}
                 <Button id="botonAsistencia" variant="contained" onClick={() => { setIsPressed(true) }} endIcon={<AddIcon />}>
                     Tomar asistencia
                 </Button>
@@ -104,8 +108,8 @@ export default function CursoCard({ }) {
         );
     }
     else {
-        const f = () => {
-            if (diaCorrecto() && asitenciaNoTomada()) {//! if gamer
+        const functionClick = () => {
+            if (diaCorrecto() && asitenciaNoTomada()) { //! if gamer
                 ausentes.map((id) => rows.find((row) => row.id === id)).forEach((alumno) => {
                     fetch("http://localhost:3001/inasistencias/", {
                         method: 'POST',
@@ -115,13 +119,15 @@ export default function CursoCard({ }) {
                         },
                         body: JSON.stringify({ "fecha": `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`, "tipo": "Falta", "motivo": " ", "justificado": "Injustificada", "curso": id, "materia": materia, "persona": { "nombre": alumno.nombre, "apellido": alumno.apellido, "dni": alumno.dni } })
 
-                    }).then(res => res.json())
-                        .then(res => console.log(res));
+                    })
+                    .then(res => res.json())
+                    .then(res => console.log(res));
                 })
             }
-            else (console.log("no se puede tomar asistencia"))//! mostrar en pantalla
+            else{
+                alert("No se pudo tomar asistencia")
+            }
         }
-
         return (
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
@@ -132,7 +138,7 @@ export default function CursoCard({ }) {
                     checkboxSelection
                     onSelectionModelChange={(ids) => ausentes = ids}
                 />
-                <button onClick={() => { f() }}>Tomar asistencia</button>
+                <button onClick={() => { functionClick() }}>Tomar asistencia</button>
             </div>
         );
     }
