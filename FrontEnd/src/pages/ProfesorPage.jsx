@@ -54,9 +54,9 @@ export default function AlumnoPage() {
                         console.log(error)
                     })
                     
+                    
+                })
             }, [])
-
-        })
         const cursosComponent = cursos.map((curso, i) => {
             return <CursoCard key={curso.id} id={curso.id} materia={curso.materia} dni={dni}/>
         })
