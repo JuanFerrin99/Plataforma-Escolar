@@ -37,7 +37,7 @@ function Variants() {
 }
 
 
-export default function CursoCard({}) {
+export default function CursoCard({ }) {
     const [alumnos, setAlumnos] = useState([]);
     const [fechasAsistencia, setFechasAsistencia] = useState([]);
     const [diasCursados, setDiasCursados] = useState([]);
@@ -57,7 +57,7 @@ export default function CursoCard({}) {
                 setMateria(curso.materia)
                 setAlumnos(curso.alumnos)
                 setFechasAsistencia(curso.fechasAsistencia)
-                setDiasCursados(curso.diasCursados)
+                setDiasCursados(curso.periodo.dias)
                 setRows([])
                 setDate(new Date())
                 curso.alumnos.forEach((element) => {
@@ -75,7 +75,7 @@ export default function CursoCard({}) {
 
 
     const diaCorrecto = () => {
-        return diasCursados.includes(new Date.getDay())
+        return diasCursados.includes( date.getDay())
     }
 
     const asitenciaNoTomada = () => {
@@ -109,22 +109,21 @@ export default function CursoCard({}) {
 
     else {
         const f = () => {
-            //if (diaCorrecto() && asitenciaNoTomada()) {
-            ausentes.map((id) => rows.find((row) => row.id === id)).forEach((alumno) => {
-                console.log(JSON.stringify({ "fecha": `${date.getFullYear()}-${("0"+(date.getMonth() + 1)).slice(-2)}-${("0"+date.getDate()).slice(-2)}`, "tipo": "Falta", "motivo": " ", "justificado": "Injustificada", "curso": id, "materia": materia, "persona": { "nombre": alumno.nombre, "apellido": alumno.apellido, "dni": alumno.dni } }))
-                fetch("http://localhost:3001/inasistencias/", {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json, text/plain, */*',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ "fecha": `${date.getFullYear()}-${("0"+(date.getMonth() + 1)).slice(-2)}-${("0"+date.getDate()).slice(-2)}`, "tipo": "Falta", "motivo": " ", "justificado": "Injustificada", "curso": id, "materia": materia, "persona": { "nombre": alumno.nombre, "apellido": alumno.apellido, "dni": alumno.dni } })
-                    
-                }).then(res => res.json())
-                    .then(res => console.log(res));
-            })
-            //}
-            //else (console.log("no se puede tomar asistencia"))//! mostrar en pantalla
+            if (diaCorrecto() && asitenciaNoTomada()) {//! if gamer
+                ausentes.map((id) => rows.find((row) => row.id === id)).forEach((alumno) => {
+                    fetch("http://localhost:3001/inasistencias/", {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json, text/plain, */*',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ "fecha": `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`, "tipo": "Falta", "motivo": " ", "justificado": "Injustificada", "curso": id, "materia": materia, "persona": { "nombre": alumno.nombre, "apellido": alumno.apellido, "dni": alumno.dni } })
+
+                    }).then(res => res.json())
+                        .then(res => console.log(res));
+                })
+            }
+            else (console.log("no se puede tomar asistencia"))//! mostrar en pantalla
         }
 
         return (
@@ -135,9 +134,9 @@ export default function CursoCard({}) {
                     pageSize={50}
                     rowsPerPageOptions={[5]}
                     checkboxSelection
-                    onSelectionModelChange={(ids) => ausentes=ids}
+                    onSelectionModelChange={(ids) => ausentes = ids}
                 />
-                <button onClick={()=>{f()}}>Tomar asistencia</button>
+                <button onClick={() => { f() }}>Tomar asistencia</button>
             </div>
         );
     }
