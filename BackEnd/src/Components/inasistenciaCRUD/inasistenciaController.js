@@ -63,12 +63,12 @@ module.exports.modificarInasistencia = (req, res) => {
 
 module.exports.getInasistencia = (req, res) => {
     return Inasistencia.findOne({_id: req.params.id})
-        .then((falta) => {
-            if(falta == undefined){
+        .then((inasistencia) => {
+            if(inasistencia == undefined){
                 res.status(404).json({error: "No se encontro la inasistencia"})
             }
             else{
-                res.status(200).json(falta)
+                res.status(200).json(inasistencia)
             }
         })
         .catch(errorHandler(res))
@@ -104,4 +104,3 @@ module.exports.getInasistenciaAlumnoCurso = (req, res) => {
         })
         .catch(errorHandler(res))
 }
-
