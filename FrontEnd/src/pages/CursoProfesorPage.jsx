@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Button, Card, CardActions, CardContent, Grid, Skeleton, Container } from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom"
 import { Outlet } from "react-router-dom";
+import { Button, Card, CardActions, CardContent, Grid, Skeleton, Container } from "@mui/material";
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import AddIcon from '@mui/icons-material/Add';
 import AlumnoCard from "../components/AlumnoCard";
 
 const columns = [
@@ -72,15 +72,13 @@ export default function CursoCard({ }) {
     }, []);
 
 
-
-
     const diaCorrecto = () => {
-        return diasCursados.includes( date.getDay())
+        return diasCursados.includes(date.getDay())
     }
-
     const asitenciaNoTomada = () => {
         return fechasAsistencia.includes(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
     }
+
     const alumnosComponent = alumnos.map((alumno, i) => {
         return <AlumnoCard key={alumno._id} id={id} nombre={alumno.nombre} apellido={alumno.apellido} dni={alumno.dni} />
     })
@@ -105,8 +103,6 @@ export default function CursoCard({ }) {
             </div>
         );
     }
-
-
     else {
         const f = () => {
             if (diaCorrecto() && asitenciaNoTomada()) {//! if gamer
@@ -140,7 +136,4 @@ export default function CursoCard({ }) {
             </div>
         );
     }
-
-
 }
-
