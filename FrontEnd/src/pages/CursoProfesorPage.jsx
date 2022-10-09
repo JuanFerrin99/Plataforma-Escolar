@@ -37,27 +37,29 @@ function Variants() {
 }
 
 
-export default function CursoCard({ }) {
+export default function CursoCard({}) {
     const [alumnos, setAlumnos] = useState([]);
     const [fechasAsistencia, setFechasAsistencia] = useState([]);
     const [diasCursados, setDiasCursados] = useState([]);
+    const [materia, setMateria] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isPressed, setIsPressed] = useState(false);
-    const [isPressedAsistencia, setIsPressedAsistencia] = useState(false);
     const [rows, setRows] = useState([]);
     const [date, setDate] = useState("");
     const location = useLocation()
     const id = location.state.idCurso // id del curso que se esta mostrando
+    let ausentes = []
 
     useEffect(() => {
         fetch(`http://localhost:3001/cursos/${id}/`)
             .then(response => response.json())
             .then(curso => {
+                setMateria(curso.materia)
                 setAlumnos(curso.alumnos)
                 setFechasAsistencia(curso.fechasAsistencia)
                 setDiasCursados(curso.diasCursados)
                 setRows([])
-                setDate(new Date)
+                setDate(new Date())
                 curso.alumnos.forEach((element) => {
                     setRows((oldState) => [...oldState, { "id": element.dni, "Apellido": element.apellido, "Nombre": element.nombre }])
                 })
@@ -69,12 +71,15 @@ export default function CursoCard({ }) {
             })
     }, []);
 
+
+
+
     const diaCorrecto = () => {
         return diasCursados.includes(new Date.getDay())
     }
 
     const asitenciaNoTomada = () => {
-        return fechasAsistencia.includes(`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`)
+        return fechasAsistencia.includes(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
     }
     const alumnosComponent = alumnos.map((alumno, i) => {
         return <AlumnoCard key={alumno._id} id={id} nombre={alumno.nombre} apellido={alumno.apellido} dni={alumno.dni} />
@@ -100,29 +105,27 @@ export default function CursoCard({ }) {
             </div>
         );
     }
+
+
     else {
-        const onRowsSelectionHandler = (ids) => {
-            if (isPressedAsistencia == true) {
-                //if (diaCorrecto() && asitenciaNoTomada()) {
-                    ids.map((id) => rows.find((row) => row.id === id)).forEach((alumno)=>{
-                        useEffect(() => {
-                            fetch("http://localhost:3001/inasistencias/", {
-                                method: 'POST',
-                                headers: {
-                                  'Accept': 'application/json, text/plain, */*',
-                                  'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({})
-                              }).then(res => res.json())
-                                .then(res => console.log(res));
-                        }, []);
-                    })
-                    setIsPressedAsistencia(true)
-                //}
-                //else (console.log("no se puede tomar asistencia"))//! mostrar en pantalla
-            }
-            else return
-        };
+        const f = () => {
+            //if (diaCorrecto() && asitenciaNoTomada()) {
+            ausentes.map((id) => rows.find((row) => row.id === id)).forEach((alumno) => {
+                console.log(JSON.stringify({ "fecha": `${date.getFullYear()}-${("0"+(date.getMonth() + 1)).slice(-2)}-${("0"+date.getDate()).slice(-2)}`, "tipo": "Falta", "motivo": " ", "justificado": "Injustificada", "curso": id, "materia": materia, "persona": { "nombre": alumno.nombre, "apellido": alumno.apellido, "dni": alumno.dni } }))
+                fetch("http://localhost:3001/inasistencias/", {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ "fecha": `${date.getFullYear()}-${("0"+(date.getMonth() + 1)).slice(-2)}-${("0"+date.getDate()).slice(-2)}`, "tipo": "Falta", "motivo": " ", "justificado": "Injustificada", "curso": id, "materia": materia, "persona": { "nombre": alumno.nombre, "apellido": alumno.apellido, "dni": alumno.dni } })
+                    
+                }).then(res => res.json())
+                    .then(res => console.log(res));
+            })
+            //}
+            //else (console.log("no se puede tomar asistencia"))//! mostrar en pantalla
+        }
 
         return (
             <div style={{ height: 400, width: '100%' }}>
@@ -132,13 +135,13 @@ export default function CursoCard({ }) {
                     pageSize={50}
                     rowsPerPageOptions={[5]}
                     checkboxSelection
-                    onSelectionModelChange={(ids) => onRowsSelectionHandler(ids)}
+                    onSelectionModelChange={(ids) => ausentes=ids}
                 />
-                <button onClick={() => { setIsPressedAsistencia(true) }}>Tomar asistencia</button>
+                <button onClick={()=>{f()}}>Tomar asistencia</button>
             </div>
         );
     }
 
-}
 
+}
 

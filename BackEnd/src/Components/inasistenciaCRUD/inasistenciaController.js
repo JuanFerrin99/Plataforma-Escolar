@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Inasistencia = require("./inasistenciaSchema.js");
 const { default: mongoose } = require('mongoose');
-const inasistencia = require('./inasistenciaSchema.js');
 
 const errorHandler = (res) => (error) => { 
     console.log(error)                                   
@@ -14,7 +13,7 @@ const errorHandler = (res) => (error) => {
 module.exports.agregarInasistencia = (req, res) => {
     const { fecha, tipo, motivo, justificado, curso, materia, persona } = req.body;
 
-    const inasistencia = new Falta({
+    const inasistencia = new Inasistencia({
         fecha,
         tipo,
         motivo,

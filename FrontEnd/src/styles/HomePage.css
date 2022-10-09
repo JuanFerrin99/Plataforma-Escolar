@@ -35,9 +35,9 @@ body {
     
     width: 200px;
     height: 50px;
-    padding: 0px;
+    padding: 0px; 
     margin: 10px;
-    
+    /*!no usar px usar porcentaje o los relativos raros que no me acuerdo el nombre*/
     color: white;
     justify-content: center;
 
