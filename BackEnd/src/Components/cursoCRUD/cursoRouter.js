@@ -24,8 +24,19 @@ router.get('/:id/:dni', idValidator, getCursoAlumno)
 // 6 GET /cursos/
 router.get('/', getCursos)
 
-// 7 POST /cursos/:id
+//-------------------------------------- Sector resful ish -------------------------------------------------
+
+// POST /cursos/:id
 router.post('/:id', idValidator, modificacionValidator, agregarFechaAsistencia)
 
+// Evaluaciones
+// POST /cursos/:id/evaluaciones
+router.post('/:id', idValidator, agregarValidator, agregarEvaluacion)
+
+// PATCH /cursos/:id/evaluaciones
+router.post('/:id', idValidator, modificacionValidator, modificarEvaluacion)
+
+// DELETE /cursos/:id/evaluaciones
+router.post('/:id', idValidator, eliminarEvaluacion)
 
 module.exports = router;
