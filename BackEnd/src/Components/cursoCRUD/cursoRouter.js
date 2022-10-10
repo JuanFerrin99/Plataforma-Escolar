@@ -29,6 +29,7 @@ router.get('/', getCursos)
 // POST /cursos/:id
 router.post('/:id', idValidator, modificacionValidator, agregarFechaAsistencia)
 
+
 // Evaluaciones
 // POST /cursos/:id/evaluaciones
 router.post('/:id', idValidator, agregarValidator, agregarEvaluacion)
