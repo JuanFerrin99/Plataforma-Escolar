@@ -4,7 +4,7 @@ const { verifyValidation } = require("../../utils/validationUtils")
 
 module.exports.agregarValidator = [
     body("fecha")
-        .isISO8601({}).withMessage("La fecha debe tener formato yyyy-mm-dd"),
+        .isString({}).withMessage("La fecha debe ser un string y tener formato yyyy-mm-dd"),
     body("tipo")
         .isString().withMessage("El tipo debe ser un string"),
     body("motivo")
@@ -35,7 +35,7 @@ module.exports.dniValidator = [
 module.exports.modificacionValidator = [
     body("fecha")
         .optional({nullable: true})
-        .isISO8601().withMessage("La fecha debe tener formato yyyy-mm-dd"),
+        .isString().withMessage("La fecha debe ser un string y tener formato yyyy-mm-dd"),
     body("tipo")
         .optional({nullable: true})
         .isString().withMessage("El tipo debe ser un string"),

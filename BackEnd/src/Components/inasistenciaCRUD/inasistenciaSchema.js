@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var inasistencias = new Schema({
-    fecha: Date,
+    fecha: String,
     tipo: String,
     motivo: String,
     justificado: String,
