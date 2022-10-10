@@ -121,6 +121,7 @@ module.exports.getCursos = (req, res) => {
 }
 
 //------------------------------------------ POST /cursos/:id -----------------------------------------------------
+
 module.exports.agregarFechaAsistencia = (req, res) => {
     return Curso.findOneAndUpdate({ _id: req.params.id }, { $push: { fechasAsistencia: req.body.fechasAsistencia } }, { new: true })
         .then((result) => {

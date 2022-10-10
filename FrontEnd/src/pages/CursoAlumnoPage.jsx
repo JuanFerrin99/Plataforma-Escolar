@@ -31,7 +31,7 @@ export default function CursoCard({ }) {
                 setMateria(curso.materia)
                 setNotas([])
                 curso.alumnos.forEach((element, i) => {
-                    if (element.dni == dni) {
+                    if (element.dni === dni) {
                         setNotas((oldState) => [...oldState, element.calificaciones])
                     }
                 }
