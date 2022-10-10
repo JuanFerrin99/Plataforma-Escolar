@@ -40,11 +40,11 @@ export default function CursoCard({ }) {
 
     const [rows, setRows] = useState([]);
     const [date, setDate] = useState("");
-    
+
     const [loading, setLoading] = useState(true);
     const [isPressedAsistencia, setIsPressedAsistencia] = useState(false);
     const [isPressedEvaluacion, setIsPressedEvaluacion] = useState(false);
-    
+
     const location = useLocation()
     const id = location.state.idCurso  //id del curso que se esta mostrando
     let ausentes = []
@@ -110,17 +110,17 @@ export default function CursoCard({ }) {
     else if (isPressedEvaluacion === true) {//! Buscar forma de centar las cosas en sus celdas y de empujar algunos valoreas hacia la derecha para que no este tan amontonado
         const columns = [//!ver para que el final de la tabla se mueva al fondo siempre
             { field: 'fecha', headerName: 'Fecha', width: 260 },
-            { field: 'tipo', headerName: 'Tipo', width: 130 },
-            { field: 'inscripcionInicio', headerName: 'Inicio de inscripcion', width: 160 },
-            { field: 'inscripcionFin', headerName: 'Fin de inscripcion', width: 160 }
+            { field: 'tipo', headerName: 'Tipo', width: 130, editable: true, colSpan: 6 },
+            { field: 'inscripcionInicio', headerName: 'Inicio de inscripcion', width: 160, editable: true },
+            { field: 'inscripcionFin', headerName: 'Fin de inscripcion', width: 160, editable: true }
         ];
-        function getFinal () {
+        function getFinal() {
             return {
-                "id":curso.final.id,
-                "fecha":`${curso.final.fechas[0]} - ${curso.final.fechas[0]}`,
-                "tipo":"Final",
-                "inscripcionInicio":curso.final.periodoInscripcion.inicio,
-                "inscripcionFin":curso.final.periodoInscripcion.final
+                "id": curso.final.id,
+                "fecha": `${curso.final.fechas[0]} - ${curso.final.fechas[0]}`,
+                "tipo": "Final",
+                "inscripcionInicio": curso.final.periodoInscripcion.inicio,
+                "inscripcionFin": curso.final.periodoInscripcion.final
             }
         }
         return (
@@ -168,7 +168,8 @@ export default function CursoCard({ }) {
                 <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
                     <ArrowBackRoundedIcon fontSize='large' />
                 </IconButton>
-                <DataGrid
+                <div style={{ height: "100%", width: '100%' }}>
+                    <DataGrid
                     rows={rows}
                     columns={columns}
                     pageSize={50}
@@ -176,6 +177,8 @@ export default function CursoCard({ }) {
                     checkboxSelection
                     onSelectionModelChange={(ids) => ausentes = ids}
                 />
+                </div>
+
                 <button onClick={() => { functionClick() }}>Tomar asistencia</button>
             </div>
         );
