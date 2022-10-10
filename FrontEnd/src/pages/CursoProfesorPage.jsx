@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 import { Button, Card, CardActions, CardContent, Grid, Skeleton, Container } from "@mui/material";
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
-import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
+import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import AlumnoCard from "../components/AlumnoCard";
 
@@ -44,7 +44,7 @@ export default function CursoCard({ }) {
     const [alumnos, setAlumnos] = useState([]);
     const [diasCursados, setDiasCursados] = useState([]);
     const [fechasAsistencia, setFechasAsistencia] = useState([]);
-    
+
     const [rows, setRows] = useState([]);
     const [date, setDate] = useState("");
     const location = useLocation()
@@ -63,7 +63,7 @@ export default function CursoCard({ }) {
                 setAlumnos(curso.alumnos)
                 setDiasCursados(curso.periodo.dias)
                 setFechasAsistencia(curso.fechasAsistencia)
-                
+
                 setRows([])
                 setDate(new Date())
 
@@ -126,17 +126,20 @@ export default function CursoCard({ }) {
                         },
                         body: JSON.stringify({ "fecha": `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`, "tipo": "Falta", "motivo": " ", "justificado": "Injustificada", "curso": id, "materia": materia, "persona": { "nombre": alumno.nombre, "apellido": alumno.apellido, "dni": alumno.dni } })
                     })
-                    .then(res => res.json())
-                    .then(res => console.log(res))
+                        .then(res => res.json())
+                        .then(res => console.log(res))
                 })
             }
-            else{
+            else {
                 alert("No se pudo tomar asistencia")
             }
         }
+
         return (
             <div style={{ height: 400, width: '100%' }}>
-                <ArrowBackRoundedIcon color="primary" fontSize="large" onClick={()=>{console.log("dawdwa")}}  onMouseOver={({target})=>target.style.color="black"}onMouseOut={({target})=>target.style.color="primary"}/>
+                <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
+                    <ArrowBackRoundedIcon fontSize='large' />
+                </IconButton>
                 <DataGrid
                     rows={rows}
                     columns={columns}
@@ -148,5 +151,6 @@ export default function CursoCard({ }) {
                 <button onClick={() => { functionClick() }}>Tomar asistencia</button>
             </div>
         );
+
     }
 }
