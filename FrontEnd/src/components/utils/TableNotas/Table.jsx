@@ -49,6 +49,7 @@ export default function BasicTable(props) {
                     <TableHead>
                         <TableRow>
                             <TableCell>Nota</TableCell>
+                            <TableCell>Tipo</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody style={{ color: "white" }}>

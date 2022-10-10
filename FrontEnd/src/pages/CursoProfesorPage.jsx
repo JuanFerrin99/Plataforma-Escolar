@@ -4,6 +4,8 @@ import { useLocation } from "react-router-dom"
 import { Outlet } from "react-router-dom";
 import { Button, Card, CardActions, CardContent, Grid, Skeleton, Container } from "@mui/material";
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
+import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 import AddIcon from '@mui/icons-material/Add';
 import AlumnoCard from "../components/AlumnoCard";
 
@@ -49,7 +51,7 @@ export default function CursoCard({ }) {
     const id = location.state.idCurso  //id del curso que se esta mostrando
 
     const [loading, setLoading] = useState(true);
-    const [isPressed, setIsPressed] = useState(false);
+    const [isPressedAsistencia, setIsPressedAsistencia] = useState(false);
 
     let ausentes = []
 
@@ -90,16 +92,19 @@ export default function CursoCard({ }) {
     })
     const alumnosSkeleton = new Array(20).fill(<Variants />)
 
-    if (isPressed === false) {
+    if (isPressedAsistencia === false) {
         return (
             <div>
                 {materia}
-                <Button id="botonAsistencia" variant="contained" onClick={() => { setIsPressed(true) }} endIcon={<AddIcon />}>
+                <br />
+                <br />
+                <Button id="botonAsistencia" variant="contained" onClick={() => { setIsPressedAsistencia(true) }} endIcon={<AddIcon />}>
                     Tomar asistencia
                 </Button>
                 <Button id="botonParciales" variant="contained" endIcon={<AddIcon />}>
                     Parciales
                 </Button>
+                <br />
                 <Grid container spacing={3}>
                     {loading ? alumnosSkeleton : alumnosComponent}
                 </Grid>
@@ -131,6 +136,7 @@ export default function CursoCard({ }) {
         }
         return (
             <div style={{ height: 400, width: '100%' }}>
+                <ArrowBackRoundedIcon color="primary" fontSize="large" onClick={()=>{console.log("dawdwa")}}  onMouseOver={({target})=>target.style.color="black"}onMouseOut={({target})=>target.style.color="primary"}/>
                 <DataGrid
                     rows={rows}
                     columns={columns}
