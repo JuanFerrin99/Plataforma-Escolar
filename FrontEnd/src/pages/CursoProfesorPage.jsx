@@ -60,12 +60,6 @@ export default function CursoCard({ }) {
             .then(curso => {
                 setCurso(curso)
                 setAlumnos(curso.alumnos)
-<<<<<<< HEAD
-                setDiasCursados(curso.periodo.dias)
-                setFechasAsistencia(curso.fechasAsistencia)
-=======
-
->>>>>>> 9fcde24066e55995f322b23d757fbee82d5e9dcd
                 setRows([])
                 setDate(new Date())
 
@@ -146,7 +140,7 @@ export default function CursoCard({ }) {
                             'Accept': 'application/json, text/plain, */*',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ "fecha": `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`, "tipo": "Falta", "motivo": " ", "justificado": "Injustificada", "curso": id, "materia": materia, "persona": { "nombre": alumno.nombre, "apellido": alumno.apellido, "dni": alumno.dni } })
+                    body: JSON.stringify({ "fecha": `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`, "tipo": "Falta", "motivo": " ", "justificado": "Injustificada", "curso": id, "materia": curso.materia, "persona": { "nombre": alumno.nombre, "apellido": alumno.apellido, "dni": alumno.dni } })
                 })
                     .then(res => res.json())
                     .then(res => console.log(res))
