@@ -158,6 +158,20 @@ export default function CursoCard({ }) {
                         body: JSON.stringify({ "fecha": `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`, "tipo": "Falta", "motivo": " ", "justificado": "Injustificada", "curso": id, "materia": curso.materia, "persona": { "nombre": alumno.nombre, "apellido": alumno.apellido, "dni": alumno.dni } })
                     })
                 })
+                fetch(`http://localhost:3001/cursos/${id}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ "fechasAsistencia": [`${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`]})
+                })
+                .then(data => {
+                    window.location.href = "/profesor/curso"
+                })
+                .catch(error => {
+                    console.log(error)
+                })
             }
             else {
                 alert("No se pudo tomar asistencia")
@@ -170,13 +184,13 @@ export default function CursoCard({ }) {
                 </IconButton>
                 <div style={{ height: "100%", width: '100%' }}>
                     <DataGrid
-                    rows={rows}
-                    columns={columns}
-                    pageSize={50}
-                    rowsPerPageOptions={[5]}
-                    checkboxSelection
-                    onSelectionModelChange={(ids) => ausentes = ids}
-                />
+                        rows={rows}
+                        columns={columns}
+                        pageSize={50}
+                        rowsPerPageOptions={[5]}
+                        checkboxSelection
+                        onSelectionModelChange={(ids) => ausentes = ids}
+                    />
                 </div>
 
                 <button onClick={() => { functionClick() }}>Tomar asistencia</button>
