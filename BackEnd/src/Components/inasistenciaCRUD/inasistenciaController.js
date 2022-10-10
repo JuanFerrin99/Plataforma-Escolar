@@ -77,7 +77,7 @@ module.exports.getInasistencia = (req, res) => {
 //-------------------------------------------- GET /inasistencias/filtro/:dni --------------------------------------------------------------
 
 module.exports.getInasistenciaDni = (req, res) => {
-    return Inasistencia.find({ dni : req.params.dni })
+    return Inasistencia.find({ "persona.dni" : req.params.dni })
         .then((inasistencias) => {
             if(inasistencias == undefined){
                 res.status(404).json({error: "No se encontraron inasistencias"})
@@ -88,7 +88,6 @@ module.exports.getInasistenciaDni = (req, res) => {
         })
         .catch(errorHandler(res))
 }
-
 
 //-------------------------------------------- GET /inasistencias/:dni/:id --------------------------------------------------------------
 

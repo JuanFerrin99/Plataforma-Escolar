@@ -83,7 +83,6 @@ export default function CursoCard({ }) {
     const alumnosSkeleton = new Array(20).fill(<Variants />)
 
 
-
     if (isPressedAsistencia === false && isPressedEvaluacion === false) {
         return (
             <div>
@@ -143,7 +142,6 @@ export default function CursoCard({ }) {
             </div>
         );
     }
-
     else if (isPressedAsistencia === true) {
         const columns = [
             { field: 'Apellido', headerName: 'Apellido', width: 130 },
@@ -158,7 +156,7 @@ export default function CursoCard({ }) {
                             'Accept': 'application/json, text/plain, */*',
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ "fecha": `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`, "tipo": "Falta", "motivo": " ", "justificado": "Injustificada", "curso": id, "materia": curso.materia, "persona": { "nombre": alumno.nombre, "apellido": alumno.apellido, "dni": alumno.dni } })
+                        body: JSON.stringify({ "fecha": `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`, "tipo": "Falta", "motivo": " ", "justificado": "Injustificada", "curso": id, "materia": curso.materia, "persona": { "nombre": alumno.Nombre, "apellido": alumno.Apellido, "dni": alumno.id } })
                     })
                 })
                 fetch(`http://localhost:3001/cursos/${id}/`, {
@@ -171,9 +169,6 @@ export default function CursoCard({ }) {
                 })
                     .then(data => {
                         window.location.href = "/profesor/curso"
-                    })
-                    .catch(error => {
-                        console.log(error)
                     })
             }
             else {
@@ -201,7 +196,5 @@ export default function CursoCard({ }) {
                 <button onClick={() => { functionClick() }}>Tomar asistencia</button>
             </div>
         );
-
     }
-
 }
