@@ -24,7 +24,7 @@ router.get('/:id/:dni', idValidator, getCursoAlumno)
 // 6 GET /cursos/
 router.get('/', getCursos)
 
-// 7 POST /cursos/:id
+// 7 POST /cursos/:id(de la evaluacion?) //!deberia ser /cursos/:id(del curso)/evaluaciones/:id(de la evaluacion)
 router.post('/:id', idValidator, modificacionValidator, agregarFechaAsistencia)
 
 
