@@ -107,36 +107,39 @@ export default function CursoCard({ }) {
         );
     }
 
-    else if (isPressedEvaluacion === true) {//! Buscar forma de centar las cosas en sus celdas y de empujar algunos valoreas hacia la derecha para que no este tan amontonado
-        const columns = [//!ver para que el final de la tabla se mueva al fondo siempre
-            { field: 'fecha', headerName: 'Fecha', width: 260 },
-            { field: 'tipo', headerName: 'Tipo', width: 130, editable: true, colSpan: 6 },
-            { field: 'inscripcionInicio', headerName: 'Inicio de inscripcion', width: 160, editable: true },
-            { field: 'inscripcionFin', headerName: 'Fin de inscripcion', width: 160, editable: true }
+    else if (isPressedEvaluacion === true) {//! Buscar forma de centar las cosas en sus celdas
+        const columns = [
+            { field: 'fecha', headerName: 'Fecha', width: "20vh", resizable: true},
+            { field: 'tipo', headerName: 'Tipo', width: "10vh", editable: true, resizable: true},
+            { field: 'inscripcionInicio', headerName: 'Inicio de inscripcion', width: "40vh", editable: true, resizable: true},
+            { field: 'inscripcionFin', headerName: 'Fin de inscripcion', width: "30vh", editable: true, resizable: true }
         ];
         function getFinal() {
             return {
                 "id": curso.final.id,
-                "fecha": `${curso.final.fechas[0]} - ${curso.final.fechas[0]}`,
+                "fecha": `${curso.final.fechas[0]} / ${curso.final.fechas[1]}`,//! ver si son dos o maas
                 "tipo": "Final",
                 "inscripcionInicio": curso.final.periodoInscripcion.inicio,
                 "inscripcionFin": curso.final.periodoInscripcion.final
             }
         }
         return (
-            <div style={{ height: 400, width: '100%' }}>
+            <div style={{ height: "94.9vh", width: '100%' }}>
                 <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
                     <ArrowBackRoundedIcon fontSize='large' />
                 </IconButton>
-                {console.log(curso.evaluaciones.concat(getFinal()))}
-                <DataGrid
-                    rows={curso.evaluaciones.concat(getFinal())}
-                    columns={columns}
-                    pageSize={50}
-                    rowsPerPageOptions={[5]}
-                    checkboxSelection
-                    onSelectionModelChange={(ids) => ausentes = ids}
-                />
+                <div style={{ display: 'flex', height: '100%' }}>
+                    <div style={{ flexGrow: 1 }}>
+                        <DataGrid
+                            rows={curso.evaluaciones.concat(getFinal())}
+                            columns={columns}
+                            pageSize={10}
+                            rowsPerPageOptions={[5]}
+                            checkboxSelection
+                            onSelectionModelChange={(ids) => ausentes = ids}
+                        />
+                    </div>
+                </div>
             </div>
         );
     }
@@ -164,33 +167,35 @@ export default function CursoCard({ }) {
                         'Accept': 'application/json, text/plain, */*',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ "fechasAsistencia": [`${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`]})
+                    body: JSON.stringify({ "fechasAsistencia": [`${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`] })
                 })
-                .then(data => {
-                    window.location.href = "/profesor/curso"
-                })
-                .catch(error => {
-                    console.log(error)
-                })
+                    .then(data => {
+                        window.location.href = "/profesor/curso"
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
             }
             else {
                 alert("No se pudo tomar asistencia")
             }
         }
         return (
-            <div style={{ height: 400, width: '100%' }}>
+            <div style={{ height: "94.9vh", width: '100%' }}>
                 <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
                     <ArrowBackRoundedIcon fontSize='large' />
                 </IconButton>
-                <div style={{ height: "100%", width: '100%' }}>
-                    <DataGrid
-                        rows={rows}
-                        columns={columns}
-                        pageSize={50}
-                        rowsPerPageOptions={[5]}
-                        checkboxSelection
-                        onSelectionModelChange={(ids) => ausentes = ids}
-                    />
+                <div style={{ display: 'flex', height: '100%' }}>
+                    <div style={{ flexGrow: 1 }}>
+                        <DataGrid
+                            rows={rows}
+                            columns={columns}
+                            pageSize={50}
+                            rowsPerPageOptions={[5]}
+                            checkboxSelection
+                            onSelectionModelChange={(ids) => ausentes = ids}
+                        />
+                    </div>
                 </div>
 
                 <button onClick={() => { functionClick() }}>Tomar asistencia</button>
