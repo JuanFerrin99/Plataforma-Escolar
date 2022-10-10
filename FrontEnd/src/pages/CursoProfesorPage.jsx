@@ -52,6 +52,7 @@ export default function CursoCard({ }) {
 
     const [loading, setLoading] = useState(true);
     const [isPressedAsistencia, setIsPressedAsistencia] = useState(false);
+    const [isPressedEvaluacion, setIsPressedEvaluacion] = useState(false);
 
     let ausentes = []
 
@@ -63,13 +64,13 @@ export default function CursoCard({ }) {
                 setAlumnos(curso.alumnos)
                 setDiasCursados(curso.periodo.dias)
                 setFechasAsistencia(curso.fechasAsistencia)
-
                 setRows([])
                 setDate(new Date())
 
                 curso.alumnos.forEach((element) => {
                     setRows((oldState) => [...oldState, { "id": element.dni, "Apellido": element.apellido, "Nombre": element.nombre }])
                 })
+
                 setLoading(false)
             })
             .catch(error => {
@@ -92,7 +93,9 @@ export default function CursoCard({ }) {
     })
     const alumnosSkeleton = new Array(20).fill(<Variants />)
 
-    if (isPressedAsistencia === false) {
+
+
+    if (isPressedAsistencia === false && isPressedEvaluacion === false) {
         return (
             <div>
                 {materia}
@@ -101,7 +104,7 @@ export default function CursoCard({ }) {
                 <Button id="botonAsistencia" variant="contained" onClick={() => { setIsPressedAsistencia(true) }} endIcon={<AddIcon />}>
                     Tomar asistencia
                 </Button>
-                <Button id="botonParciales" variant="contained" endIcon={<AddIcon />}>
+                <Button id="botonParciales" variant="contained" onClick={() => { setIsPressedEvaluacion(true) }} endIcon={<AddIcon />}>
                     Parciales
                 </Button>
                 <br />
@@ -114,27 +117,9 @@ export default function CursoCard({ }) {
             </div>
         );
     }
-    else {
-        const functionClick = () => {
-            if (diaCorrecto() && !asitenciaNoTomada()) {
-                ausentes.map((id) => rows.find((row) => row.id === id)).forEach((alumno) => {
-                    fetch("http://localhost:3001/inasistencias/", {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json, text/plain, */*',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ "fecha": `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`, "tipo": "Falta", "motivo": " ", "justificado": "Injustificada", "curso": id, "materia": materia, "persona": { "nombre": alumno.nombre, "apellido": alumno.apellido, "dni": alumno.dni } })
-                    })
-                        .then(res => res.json())
-                        .then(res => console.log(res))
-                })
-            }
-            else {
-                alert("No se pudo tomar asistencia")
-            }
-        }
 
+
+    else if (isPressedEvaluacion === true) {
         return (
             <div style={{ height: 400, width: '100%' }}>
                 <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
@@ -148,9 +133,48 @@ export default function CursoCard({ }) {
                     checkboxSelection
                     onSelectionModelChange={(ids) => ausentes = ids}
                 />
-                <button onClick={() => { functionClick() }}>Tomar asistencia</button>
             </div>
         );
-
     }
+
+    else if (isPressedAsistencia === true) {
+        const functionClick = () => {
+            if (diaCorrecto() && !asitenciaNoTomada()) {
+                ausentes.map((id) => rows.find((row) => row.id === id)).forEach((alumno) => {
+                    fetch("http://localhost:3001/inasistencias/", {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ "fecha": `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`, "tipo": "Falta", "motivo": " ", "justificado": "Injustificada", "curso": id, "materia": materia, "persona": { "nombre": alumno.nombre, "apellido": alumno.apellido, "dni": alumno.dni } })
+                })
+                    .then(res => res.json())
+                    .then(res => console.log(res))
+            })
+
+        }
+        else {
+            alert("No se pudo tomar asistencia")
+        }
+    }
+    return (
+        <div style={{ height: 400, width: '100%' }}>
+            <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
+                <ArrowBackRoundedIcon fontSize='large' />
+            </IconButton>
+            <DataGrid
+                rows={rows}
+                columns={columns}
+                pageSize={50}
+                rowsPerPageOptions={[5]}
+                checkboxSelection
+                onSelectionModelChange={(ids) => ausentes = ids}
+                />
+            <button onClick={() => { functionClick() }}>Tomar asistencia</button>
+        </div>
+    );
+
+}
+
 }
