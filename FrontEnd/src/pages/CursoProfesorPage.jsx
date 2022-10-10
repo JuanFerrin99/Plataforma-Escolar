@@ -107,22 +107,30 @@ export default function CursoCard({ }) {
         );
     }
 
-    else if (isPressedEvaluacion === true) {
-        const columns = [
+    else if (isPressedEvaluacion === true) {//! Buscar forma de centar las cosas en sus celdas y de empujar algunos valoreas hacia la derecha para que no este tan amontonado
+        const columns = [//!ver para que el final de la tabla se mueva al fondo siempre
             { field: 'fecha', headerName: 'Fecha', width: 260 },
             { field: 'tipo', headerName: 'Tipo', width: 130 },
-            { field: 'peridoInscripcion', headerName: 'Periodo de inscripcion', width: 250 },
+            { field: 'inscripcionInicio', headerName: 'Inicio de inscripcion', width: 160 },
+            { field: 'inscripcionFin', headerName: 'Fin de inscripcion', width: 160 }
         ];
-        const getFinal = () => {
-            curso.evaluaciones.fechas.slice
+        function getFinal () {
+            return {
+                "id":curso.final.id,
+                "fecha":`${curso.final.fechas[0]} - ${curso.final.fechas[0]}`,
+                "tipo":"Final",
+                "inscripcionInicio":curso.final.periodoInscripcion.inicio,
+                "inscripcionFin":curso.final.periodoInscripcion.final
+            }
         }
         return (
             <div style={{ height: 400, width: '100%' }}>
                 <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
                     <ArrowBackRoundedIcon fontSize='large' />
                 </IconButton>
+                {console.log(curso.evaluaciones.concat(getFinal()))}
                 <DataGrid
-                    rows={curso.evaluaciones.concat(getFinal)}//!mostrar lindo usando slice y yo q se
+                    rows={curso.evaluaciones.concat(getFinal())}
                     columns={columns}
                     pageSize={50}
                     rowsPerPageOptions={[5]}
