@@ -106,12 +106,12 @@ export default function CursoCard({ }) {
         );
     }
 
-    else if (isPressedEvaluacion === true) {//! Buscar forma de centar las cosas en sus celdas
+    else if (isPressedEvaluacion === true) {//! Buscar forma de centar las cosas en sus celdas YY hacer que los anchos no esten hardcodeados YY cambiar el tpio de cuadro al pro o premiem asi funcoiona rezisable
         const columns = [
-            { field: 'fecha', headerName: 'Fecha', width: "20vh", resizable: true},
-            { field: 'tipo', headerName: 'Tipo', width: "10vh", editable: true, resizable: true},
-            { field: 'inscripcionInicio', headerName: 'Inicio de inscripcion', width: "40vh", editable: true, resizable: true},
-            { field: 'inscripcionFin', headerName: 'Fin de inscripcion', width: "30vh", editable: true, resizable: true }
+            { field: 'fecha', headerName: 'Fecha', width: 250, resizable: true},
+            { field: 'tipo', headerName: 'Tipo', width: 250, editable: true, resizable: true},
+            { field: 'inscripcionInicio', headerName: 'Inicio de inscripcion', width: 250, editable: true, resizable: true},
+            { field: 'inscripcionFin', headerName: 'Fin de inscripcion', width: 250, editable: true, resizable: true }
         ];
         function getFinal() {
             return {
