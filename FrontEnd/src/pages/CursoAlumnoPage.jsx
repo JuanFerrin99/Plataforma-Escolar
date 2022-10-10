@@ -7,7 +7,8 @@ import TableInasistencia from "../components/utils/TableInasistencia/Table"
 import TableNotas from "../components/utils/TableNotas/Table"
 
 export default function CursoCard({ }) {
-    const [inasistencias, setInasistencias] = useState([]);
+    const [materia, setMateria] = useState("")
+    const [inasistencias, setInasistencias] = useState([])
     const [notas, setNotas] = useState([]);
     const location = useLocation()
     const id = location.state.idCurso
@@ -27,6 +28,7 @@ export default function CursoCard({ }) {
         fetch(`http://localhost:3001/cursos/${id}/${dni}`)
             .then(response => response.json())
             .then(curso => {
+                setMateria(curso.materia)
                 setNotas([])
                 curso.alumnos.forEach((element, i) => {
                     if (element.dni == dni) {
@@ -42,7 +44,7 @@ export default function CursoCard({ }) {
     }, []);
     return (
         <div>
-            MATERIA
+            {materia}
             <Button id="botonInscripcion" variant="contained" endIcon={<AddIcon />}>
                 Inscribirse final
             </Button>
