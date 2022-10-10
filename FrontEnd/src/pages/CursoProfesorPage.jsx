@@ -77,9 +77,11 @@ export default function CursoCard({ }) {
 
 
     const diaCorrecto = () => {
+        console.log(diasCursados.includes(date.getDay()))
         return diasCursados.includes(date.getDay())
     }
     const asitenciaNoTomada = () => {
+        console.log(fechasAsistencia.includes(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`))
         return fechasAsistencia.includes(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
     }
 
@@ -109,7 +111,7 @@ export default function CursoCard({ }) {
     }
     else {
         const functionClick = () => {
-            if (diaCorrecto() && asitenciaNoTomada()) { //! if gamer
+            if (diaCorrecto() && !asitenciaNoTomada()) {
                 ausentes.map((id) => rows.find((row) => row.id === id)).forEach((alumno) => {
                     fetch("http://localhost:3001/inasistencias/", {
                         method: 'POST',
@@ -118,10 +120,9 @@ export default function CursoCard({ }) {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({ "fecha": `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`, "tipo": "Falta", "motivo": " ", "justificado": "Injustificada", "curso": id, "materia": materia, "persona": { "nombre": alumno.nombre, "apellido": alumno.apellido, "dni": alumno.dni } })
-
                     })
                     .then(res => res.json())
-                    .then(res => console.log(res));
+                    .then(res => console.log(res))
                 })
             }
             else{
