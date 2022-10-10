@@ -9,11 +9,6 @@ import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import AlumnoCard from "../components/AlumnoCard";
 
-const columns = [
-    { field: 'Apellido', headerName: 'Apellido', width: 130 },
-    { field: 'Nombre', headerName: 'Nombre', width: 130 },
-];
-
 
 function Variants() {
     return (
@@ -45,13 +40,13 @@ export default function CursoCard({ }) {
 
     const [rows, setRows] = useState([]);
     const [date, setDate] = useState("");
-    const location = useLocation()
-    const id = location.state.idCurso  //id del curso que se esta mostrando
-
+    
     const [loading, setLoading] = useState(true);
     const [isPressedAsistencia, setIsPressedAsistencia] = useState(false);
     const [isPressedEvaluacion, setIsPressedEvaluacion] = useState(false);
-
+    
+    const location = useLocation()
+    const id = location.state.idCurso  //id del curso que se esta mostrando
     let ausentes = []
 
     useEffect(() => {
@@ -113,6 +108,53 @@ export default function CursoCard({ }) {
     }
 
     else if (isPressedEvaluacion === true) {
+        const columns = [
+            { field: 'fecha', headerName: 'Fecha', width: 260 },
+            { field: 'tipo', headerName: 'Tipo', width: 130 },
+            { field: 'peridoInscripcion', headerName: 'Periodo de inscripcion', width: 250 },
+        ];
+        const getFinal = () => {
+            curso.evaluaciones.fechas.slice
+        }
+        return (
+            <div style={{ height: 400, width: '100%' }}>
+                <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
+                    <ArrowBackRoundedIcon fontSize='large' />
+                </IconButton>
+                <DataGrid
+                    rows={curso.evaluaciones.concat(getFinal)}//!mostrar lindo usando slice y yo q se
+                    columns={columns}
+                    pageSize={50}
+                    rowsPerPageOptions={[5]}
+                    checkboxSelection
+                    onSelectionModelChange={(ids) => ausentes = ids}
+                />
+            </div>
+        );
+    }
+
+    else if (isPressedAsistencia === true) {
+        const columns = [
+            { field: 'Apellido', headerName: 'Apellido', width: 130 },
+            { field: 'Nombre', headerName: 'Nombre', width: 130 },
+        ];
+        const functionClick = () => {
+            if (diaCorrecto() && !asitenciaNoTomada()) {
+                ausentes.map((id) => rows.find((row) => row.id === id)).forEach((alumno) => {
+                    fetch("http://localhost:3001/inasistencias/", {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json, text/plain, */*',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ "fecha": `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`, "tipo": "Falta", "motivo": " ", "justificado": "Injustificada", "curso": id, "materia": curso.materia, "persona": { "nombre": alumno.nombre, "apellido": alumno.apellido, "dni": alumno.dni } })
+                    })
+                })
+            }
+            else {
+                alert("No se pudo tomar asistencia")
+            }
+        }
         return (
             <div style={{ height: 400, width: '100%' }}>
                 <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
@@ -126,48 +168,10 @@ export default function CursoCard({ }) {
                     checkboxSelection
                     onSelectionModelChange={(ids) => ausentes = ids}
                 />
+                <button onClick={() => { functionClick() }}>Tomar asistencia</button>
             </div>
         );
+
     }
-
-    else if (isPressedAsistencia === true) {
-        const functionClick = () => {
-            if (diaCorrecto() && !asitenciaNoTomada()) {
-                ausentes.map((id) => rows.find((row) => row.id === id)).forEach((alumno) => {
-                    fetch("http://localhost:3001/inasistencias/", {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json, text/plain, */*',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ "fecha": `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`, "tipo": "Falta", "motivo": " ", "justificado": "Injustificada", "curso": id, "materia": curso.materia, "persona": { "nombre": alumno.nombre, "apellido": alumno.apellido, "dni": alumno.dni } })
-                })
-                    .then(res => res.json())
-                    .then(res => console.log(res))
-            })
-
-        }
-        else {
-            alert("No se pudo tomar asistencia")
-        }
-    }
-    return (
-        <div style={{ height: 400, width: '100%' }}>
-            <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
-                <ArrowBackRoundedIcon fontSize='large' />
-            </IconButton>
-            <DataGrid
-                rows={rows}
-                columns={columns}
-                pageSize={50}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
-                onSelectionModelChange={(ids) => ausentes = ids}
-                />
-            <button onClick={() => { functionClick() }}>Tomar asistencia</button>
-        </div>
-    );
-
-}
 
 }
