@@ -8,7 +8,8 @@ import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import AlumnoCard from "../components/AlumnoCard";
-
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 function Variants() {
     return (
@@ -33,22 +34,42 @@ function Variants() {
     );
 }
 
-
-export default function CursoCard({ }) {
+  export default function CursoCard({ }) {
     const [curso, setCurso] = useState({});
     const [alumnos, setAlumnos] = useState([]);
-
+    const [evaluaciones, setEvaluaciones] = useState([]);
+    
     const [rows, setRows] = useState([]);
     const [date, setDate] = useState("");
-
+    
     const [loading, setLoading] = useState(true);
     const [isPressedAsistencia, setIsPressedAsistencia] = useState(false);
     const [isPressedEvaluacion, setIsPressedEvaluacion] = useState(false);
-
+    
     const location = useLocation()
     const id = location.state.idCurso  //id del curso que se esta mostrando
     let ausentes = []
+    
 
+    const [snackbar, setSnackbar] = React.useState(null);
+    const ProcessRowUpdate = () =>{
+        useEffect(() => {
+            fetch(`http://localhost:3001/cursos/${id}/`)
+                .then(response => response.json())
+                .then(curso => {
+                    setSnackbar({ children: 'User successfully saved', severity: 'success' });
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        }, []);
+        
+    }
+    const handleProcessRowUpdateError = React.useCallback((error) => {
+      setSnackbar({ children: error.message, severity: 'error' });
+    }, []);
+
+    
     useEffect(() => {
         fetch(`http://localhost:3001/cursos/${id}/`)
             .then(response => response.json())
@@ -57,6 +78,14 @@ export default function CursoCard({ }) {
                 setAlumnos(curso.alumnos)
                 setRows([])
                 setDate(new Date())
+                setEvaluaciones(
+                    curso.evaluaciones.concat({
+                        "id": curso.final.id,
+                        "fecha": `${curso.final.fechas[0]} / ${curso.final.fechas[1]}`,//! ver si son dos o maas
+                        "tipo": "Final",
+                        "inscripcionInicio": curso.final.periodoInscripcion.inicio,
+                        "inscripcionFin": curso.final.periodoInscripcion.final
+                    }))
 
                 curso.alumnos.forEach((element) => {
                     setRows((oldState) => [...oldState, { "id": element.dni, "Apellido": element.apellido, "Nombre": element.nombre }])
@@ -108,20 +137,19 @@ export default function CursoCard({ }) {
 
     else if (isPressedEvaluacion === true) {//! Buscar forma de centar las cosas en sus celdas YY hacer que los anchos no esten hardcodeados YY cambiar el tpio de cuadro al pro o premiem asi funcoiona rezisable
         const columns = [
-            { field: 'fecha', headerName: 'Fecha', width: 250, resizable: true},
-            { field: 'tipo', headerName: 'Tipo', width: 250, editable: true, resizable: true},
-            { field: 'inscripcionInicio', headerName: 'Inicio de inscripcion', width: 250, editable: true, resizable: true},
-            { field: 'inscripcionFin', headerName: 'Fin de inscripcion', width: 250, editable: true, resizable: true }
+            {
+                field: 'fecha', headerName: 'Fecha', width: 250 /*, resizable: true , //ToDo con esta cosa validas lo de adentro
+                    preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
+                    const hasError = params.props.value.length < 3;
+                    return { ...params.props, error: hasError };
+                }*/
+            },
+            { field: 'tipo', headerName: 'Tipo', width: 250, editable: true /*, resizable: true */ },
+            { field: 'inscripcionInicio', headerName: 'Inicio de inscripcion', width: 250, editable: true /*, resizable: true */ },
+            { field: 'inscripcionFin', headerName: 'Fin de inscripcion', width: 250, editable: true /*, resizable: true */ }
         ];
-        function getFinal() {
-            return {
-                "id": curso.final.id,
-                "fecha": `${curso.final.fechas[0]} / ${curso.final.fechas[1]}`,//! ver si son dos o maas
-                "tipo": "Final",
-                "inscripcionInicio": curso.final.periodoInscripcion.inicio,
-                "inscripcionFin": curso.final.periodoInscripcion.final
-            }
-        }
+      
+        const handleCloseSnackbar = () => setSnackbar(null);
         return (
             <div style={{ height: "94.9vh", width: '100%' }}>
                 <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
@@ -130,14 +158,26 @@ export default function CursoCard({ }) {
                 <div style={{ display: 'flex', height: '100%' }}>
                     <div style={{ flexGrow: 1 }}>
                         <DataGrid
-                            rows={curso.evaluaciones.concat(getFinal())}
+                            rows={evaluaciones}
                             columns={columns}
                             pageSize={10}
-                            rowsPerPageOptions={[5]}
+                            rowsPerPageOptions={[5, 10, 25, 100]}
                             checkboxSelection
-                            onSelectionModelChange={(ids) => ausentes = ids}
+                            processRowUpdate={ProcessRowUpdate}
+                            onProcessRowUpdateError={handleProcessRowUpdateError}
+                            experimentalFeatures={{ newEditingApi: true }}
                         />
                     </div>
+                    {!!snackbar && (
+                        <Snackbar
+                            open
+                            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                            onClose={handleCloseSnackbar}
+                            autoHideDuration={6000}
+                        >
+                            <Alert {...snackbar} onClose={handleCloseSnackbar} />
+                        </Snackbar>
+                    )}
                 </div>
             </div>
         );
