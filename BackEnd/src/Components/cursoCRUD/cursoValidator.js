@@ -17,6 +17,8 @@ module.exports.agregarValidator = [
         .isArray().withMessage("Evaluaciones debe ser una array"),
     body("evaluaciones.*")
         .isObject({}).withMessage("Evaluaciones debe ser un array de objetos"),
+    body("final")
+        .isObject().withMessage("Final debe ser una objeto"),
     body("periodo")
         .isObject().withMessage("Periodo debe ser una objeto"),
     body("fechasAsistencia")
@@ -54,6 +56,9 @@ module.exports.modificacionValidator = [
         .isArray().withMessage("Evaluaciones debe ser un array"),
     body("evaluaciones.*")
         .isObject({}).withMessage("Evaluaciones debe ser un array de objetos"),
+    body("final")
+        .optional({nullable: true})
+        .isObject().withMessage("Final debe ser un objeto"),
     body("periodo")
         .optional({nullable: true})
         .isObject().withMessage("Periodo debe ser un objeto"),
