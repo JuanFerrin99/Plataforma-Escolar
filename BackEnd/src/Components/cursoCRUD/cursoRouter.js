@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { verificarAuth } = require('../../auth/authController.js');
-const { agregarValidator, idValidator, dniValidator, modificacionValidator } = require("./cursoValidator");
-const { agregarCurso, eliminarCurso, modificarCurso, getCurso, getCursoAlumno, getCursos } = require("./cursoController");
+const { agregarValidator, idValidator, modificacionValidator } = require("./cursoValidator");
+const { agregarCurso, eliminarCurso, modificarCurso, getCurso, getCursoAlumno, getCursos, agregarFechaAsistencia } = require("./cursoController");
 
 //router.use(verificarAuth)
 
@@ -23,5 +23,9 @@ router.get('/:id/:dni', idValidator, getCursoAlumno)
 
 // 6 GET /cursos/
 router.get('/', getCursos)
+
+// 7 POST /cursos/:id
+router.post('/:id', idValidator, modificacionValidator, agregarFechaAsistencia)
+
 
 module.exports = router;

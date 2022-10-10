@@ -66,7 +66,7 @@ module.exports.modificacionValidator = [
         .optional({nullable: true})
         .isArray().withMessage("FechasAsistencia debe ser un array"),
     body("fechasAsistencia.*")
-        .isString({}).withMessage("FechasAsistencia debe ser un array de strings"),
+        .isString().withMessage("FechasAsistencia debe ser un array de strings"),
     body("estado")
         .optional({nullable: true})
         .isString().withMessage("Estado debe ser un string"),

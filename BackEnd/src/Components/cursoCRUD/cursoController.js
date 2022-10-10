@@ -11,8 +11,8 @@ module.exports.agregarCurso = (req, res) => {
     const curso = new Curso({
         nombre,
         materia,
-        profesor, 
-        alumnos, 
+        profesor,
+        alumnos,
         evaluaciones,
         final,
         periodo,
@@ -34,30 +34,30 @@ module.exports.agregarCurso = (req, res) => {
 
 module.exports.eliminarCurso = (req, res) => {
     return Curso.deleteOne({ _id: req.params.id })
-    .then((result) => {
-        if(result.deletedCount == 1){
-            res.status(200).json(req.params.id)
-        }
-        else{
-            res.status(404).json({ error: "No se encontro el curso" })
-        }
-    })
-    .catch((error) => {
-        console.log(error)
-        res.status(500).json({ error: "Ocurrio un error" })
-    })
+        .then((result) => {
+            if (result.deletedCount == 1) {
+                res.status(200).json(req.params.id)
+            }
+            else {
+                res.status(404).json({ error: "No se encontro el curso" })
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            res.status(500).json({ error: "Ocurrio un error" })
+        })
 }
 
 //----------------------------------------------- PATCH /cursos/id ---------------------------------------------------------
 
 module.exports.modificarCurso = (req, res) => {
-    return Curso.findOneAndUpdate({ _id: req.params.id },{ nombre: req.body.nombre, materia: req.body.materia, profesor: req.body.profesor, alumnos: req.body.alumnos, evaluaciones: req.body.evaluaciones, final: req.body.final, periodo: req.bod.periodo, fechasAsistencia: req.body.fechasAsistencia, estado: req.body.estado} ,{new: true})
+    return Curso.findOneAndUpdate({ _id: req.params.id }, { nombre: req.body.nombre, materia: req.body.materia, profesor: req.body.profesor, alumnos: req.body.alumnos, evaluaciones: req.body.evaluaciones, final: req.body.final, periodo: req.body.periodo, fechasAsistencia: req.body.fechasAsistencia, estado: req.body.estado }, { new: true })
         .then((result) => {
-            if(result){
+            if (result) {
                 res.status(200).json("Se realizaron los cambios a " + req.params.id)
             }
-            else{
-                res.status(404).json({error: "No se encontro el curso"})
+            else {
+                res.status(404).json({ error: "No se encontro el curso" })
             }
         })
         .catch((error) => {
@@ -69,15 +69,15 @@ module.exports.modificarCurso = (req, res) => {
 //-------------------------------------------- GET /cursos/id --------------------------------------------------------------
 
 module.exports.getCurso = (req, res) => {
-    return Curso.findOne({_id: req.params.id})
+    return Curso.findOne({ _id: req.params.id })
         .then((curso) => {
-            if(curso == undefined){
-                res.status(404).json({error: "No se encontro el curso"})
+            if (curso == undefined) {
+                res.status(404).json({ error: "No se encontro el curso" })
             }
-            else{
+            else {
                 res.status(200).json(curso)
             }
-        })  
+        })
         .catch((error) => {
             console.log(error)
             res.status(500).json({ error: "Ocurrio un error" })
@@ -87,15 +87,15 @@ module.exports.getCurso = (req, res) => {
 //-------------------------------------------- GET /cursos/id/dni --------------------------------------------------------------
 
 module.exports.getCursoAlumno = (req, res) => {
-    return Curso.findOne({_id: req.params.id, dni: req.params.dni})
+    return Curso.findOne({ _id: req.params.id, dni: req.params.dni })
         .then((curso) => {
-            if(curso == undefined){
-                res.status(404).json({error: "No se encontro el curso"})
+            if (curso == undefined) {
+                res.status(404).json({ error: "No se encontro el curso" })
             }
-            else{
+            else {
                 res.status(200).json(curso)
             }
-        })  
+        })
         .catch((error) => {
             console.log(error)
             res.status(500).json({ error: "Ocurrio un error" })
@@ -107,13 +107,30 @@ module.exports.getCursoAlumno = (req, res) => {
 module.exports.getCursos = (req, res) => {
     return Curso.find({})
         .then((cursos) => {
-            if(cursos == undefined){
-                res.status(404).json({error: "No se encontraron los cursos"})
+            if (cursos == undefined) {
+                res.status(404).json({ error: "No se encontraron los cursos" })
             }
-            else{
+            else {
                 res.status(200).json(cursos)
             }
-        })  
+        })
+        .catch((error) => {
+            console.log(error)
+            res.status(500).json({ error: "Ocurrio un error" })
+        })
+}
+
+//------------------------------------------ POST /cursos/:id -----------------------------------------------------
+module.exports.agregarFechaAsistencia = (req, res) => {
+    return Curso.findOneAndUpdate({ _id: req.params.id }, { $push: { fechasAsistencia: req.body.fechasAsistencia } }, { new: true })
+        .then((result) => {
+            if (result) {
+                res.status(200).json("Se actualizaron las asistencias")
+            }
+            else {
+                res.status(404).json({ error: "No se encontro el curso"})
+            }
+        })
         .catch((error) => {
             console.log(error)
             res.status(500).json({ error: "Ocurrio un error" })
