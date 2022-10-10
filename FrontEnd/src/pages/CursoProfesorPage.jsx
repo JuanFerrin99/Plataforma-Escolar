@@ -40,10 +40,8 @@ function Variants() {
 
 
 export default function CursoCard({ }) {
-    const [materia, setMateria] = useState([]);
+    const [curso, setCurso] = useState({});
     const [alumnos, setAlumnos] = useState([]);
-    const [diasCursados, setDiasCursados] = useState([]);
-    const [fechasAsistencia, setFechasAsistencia] = useState([]);
 
     const [rows, setRows] = useState([]);
     const [date, setDate] = useState("");
@@ -60,10 +58,14 @@ export default function CursoCard({ }) {
         fetch(`http://localhost:3001/cursos/${id}/`)
             .then(response => response.json())
             .then(curso => {
-                setMateria(curso.materia)
+                setCurso(curso)
                 setAlumnos(curso.alumnos)
+<<<<<<< HEAD
                 setDiasCursados(curso.periodo.dias)
                 setFechasAsistencia(curso.fechasAsistencia)
+=======
+
+>>>>>>> 9fcde24066e55995f322b23d757fbee82d5e9dcd
                 setRows([])
                 setDate(new Date())
 
@@ -80,12 +82,10 @@ export default function CursoCard({ }) {
 
 
     const diaCorrecto = () => {
-        console.log(diasCursados.includes(date.getDay()))
-        return diasCursados.includes(date.getDay())
+        return curso.periodo.dias.includes(date.getDay())
     }
     const asitenciaNoTomada = () => {
-        console.log(fechasAsistencia.includes(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`))
-        return fechasAsistencia.includes(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
+        return curso.fechasAsistencia.includes(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
     }
 
     const alumnosComponent = alumnos.map((alumno, i) => {
@@ -98,7 +98,7 @@ export default function CursoCard({ }) {
     if (isPressedAsistencia === false && isPressedEvaluacion === false) {
         return (
             <div>
-                {materia}
+                {curso.materia}
                 <br />
                 <br />
                 <Button id="botonAsistencia" variant="contained" onClick={() => { setIsPressedAsistencia(true) }} endIcon={<AddIcon />}>
@@ -117,7 +117,6 @@ export default function CursoCard({ }) {
             </div>
         );
     }
-
 
     else if (isPressedEvaluacion === true) {
         return (
