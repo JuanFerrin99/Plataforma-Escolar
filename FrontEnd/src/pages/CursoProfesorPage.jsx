@@ -60,12 +60,8 @@ export default function CursoCard({ }) {
             .then(curso => {
                 setCurso(curso)
                 setAlumnos(curso.alumnos)
-<<<<<<< HEAD
                 setDiasCursados(curso.periodo.dias)
                 setFechasAsistencia(curso.fechasAsistencia)
-=======
-
->>>>>>> 9fcde24066e55995f322b23d757fbee82d5e9dcd
                 setRows([])
                 setDate(new Date())
 
