@@ -120,6 +120,7 @@ module.exports.getCursos = (req, res) => {
         })
 }
 
+//--------------------------------------------- RESTFUL ISH ----------------------------------------------------
 //------------------------------------------ POST /cursos/:id -----------------------------------------------------
 
 module.exports.agregarFechaAsistencia = (req, res) => {
@@ -127,6 +128,59 @@ module.exports.agregarFechaAsistencia = (req, res) => {
         .then((result) => {
             if (result) {
                 res.status(200).json("Se actualizaron las asistencias")
+            }
+            else {
+                res.status(404).json({ error: "No se encontro el curso"})
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            res.status(500).json({ error: "Ocurrio un error" })
+        })
+}
+
+//-------------------------------------------- EVALUACIONES -----------------------------------------------------
+//------------------------------------ POST /cursos/:id/evaluaciones
+
+module.exports.agregarEvaluacion = (req, res) => {
+    return Curso.findOneAndUpdate({ _id: req.params.id }, { $push: { evaluaciones: req.body.evaluaciones } }, { new: true })
+        .then((result) => {
+            if (result) {
+                res.status(200).json("Se agregaron las evaluaciones")
+            }
+            else {
+                res.status(404).json({ error: "No se encontro el curso"})
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            res.status(500).json({ error: "Ocurrio un error" })
+        })
+}
+
+// -------------------------------  PATCH /cursos/:id/evaluaciones/:id
+module.exports.modificarEvaluacion = (req, res) => {
+    return Curso.findOneAndUpdate({ _id: req.params.id }, { $push: { evaluaciones: req.body.evaluaciones } }, { new: true })
+        .then((result) => {
+            if (result) {
+                res.status(200).json("Se agregaron las evaluaciones")
+            }
+            else {
+                res.status(404).json({ error: "No se encontro el curso"})
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            res.status(500).json({ error: "Ocurrio un error" })
+        })
+}
+
+// ------------------------------- DELETE /cursos/:id/evaluaciones/:id
+module.exports.eliminarEvaluacion = (req, res) => {
+    return Curso.findOneAndUpdate({ _id: req.params.id }, { $push: { evaluaciones: req.body.evaluaciones } }, { new: true })
+        .then((result) => {
+            if (result) {
+                res.status(200).json("Se agregaron las evaluaciones")
             }
             else {
                 res.status(404).json({ error: "No se encontro el curso"})

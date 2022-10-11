@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { verificarAuth } = require('../../auth/authController.js');
-const { agregarValidator, idValidator, modificacionValidator } = require("./cursoValidator");
-const { agregarCurso, eliminarCurso, modificarCurso, getCurso, getCursoAlumno, getCursos, agregarFechaAsistencia } = require("./cursoController");
+const { agregarValidator, idValidator, modificacionValidator, agregarEvaluacionValidator } = require("./cursoValidator");
+const { agregarCurso, eliminarCurso, modificarCurso, getCurso, getCursoAlumno, getCursos, agregarFechaAsistencia, agregarEvaluacion, modificarEvaluacion, eliminarEvaluacion } = require("./cursoController");
 
 //router.use(verificarAuth)
 
@@ -32,12 +32,12 @@ router.post('/:id', idValidator, modificacionValidator, agregarFechaAsistencia)
 
 // Evaluaciones
 // POST /cursos/:id/evaluaciones
-router.post('/:id', idValidator, agregarValidator, agregarEvaluacion)
+router.post('/:id/evaluaciones', idValidator, agregarEvaluacionValidator, agregarEvaluacion)
 
-// PATCH /cursos/:id/evaluaciones
-router.post('/:id', idValidator, modificacionValidator, modificarEvaluacion)
+// PATCH /cursos/:id/evaluaciones/:id
+router.patch('/:id/evaluaciones/:id', idValidator, modificacionValidator, modificarEvaluacion)
 
-// DELETE /cursos/:id/evaluaciones
-router.post('/:id', idValidator, eliminarEvaluacion)
+// DELETE /cursos/:id/evaluaciones/:id
+router.delete('/:id/evaluaciones/:id', idValidator, eliminarEvaluacion)
 
 module.exports = router;

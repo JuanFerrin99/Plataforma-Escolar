@@ -72,3 +72,10 @@ module.exports.modificacionValidator = [
         .isString().withMessage("Estado debe ser un string"),
     verifyValidation
 ]
+
+
+module.exports.agregarEvaluacionValidator = [
+    body("evaluaciones")
+        .isObject().withMessage("Evaluaciones debe ser un objeto"),
+    verifyValidation
+]
