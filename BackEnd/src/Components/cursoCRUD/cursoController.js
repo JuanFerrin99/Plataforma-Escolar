@@ -158,9 +158,9 @@ module.exports.agregarEvaluacion = (req, res) => {
         })
 }
 
-// -------------------------------  PATCH /cursos/:id/evaluaciones/:id
+// -------------------------------  PATCH /cursos/:id/evaluaciones/:evaluacionId
 module.exports.modificarEvaluacion = (req, res) => {
-    return Curso.findOneAndUpdate({ _id: req.params.id }, { $push: { evaluaciones: req.body.evaluaciones } }, { new: true })
+    return Curso.findOneAndUpdate({ _id: req.params.id, "evaluaciones.id": req.params.evaluacionId }, { }, { new: true })
         .then((result) => {
             if (result) {
                 res.status(200).json("Se agregaron las evaluaciones")
@@ -175,7 +175,7 @@ module.exports.modificarEvaluacion = (req, res) => {
         })
 }
 
-// ------------------------------- DELETE /cursos/:id/evaluaciones/:id
+// ------------------------------- DELETE /cursos/:id/evaluaciones/:evaluacionId
 module.exports.eliminarEvaluacion = (req, res) => {
     return Curso.findOneAndUpdate({ _id: req.params.id }, { $push: { evaluaciones: req.body.evaluaciones } }, { new: true })
         .then((result) => {

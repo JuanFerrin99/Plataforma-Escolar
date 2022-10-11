@@ -35,9 +35,9 @@ router.post('/:id', idValidator, modificacionValidator, agregarFechaAsistencia)
 router.post('/:id/evaluaciones', idValidator, agregarEvaluacionValidator, agregarEvaluacion)
 
 // PATCH /cursos/:id/evaluaciones/:id
-router.patch('/:id/evaluaciones/:id', idValidator, modificacionValidator, modificarEvaluacion)
+router.patch('/:id/evaluaciones/:evaluacionId', idValidator, modificacionValidator, modificarEvaluacion)
 
 // DELETE /cursos/:id/evaluaciones/:id
-router.delete('/:id/evaluaciones/:id', idValidator, eliminarEvaluacion)
+router.delete('/:id/evaluaciones/:evaluacionId', idValidator, eliminarEvaluacion)
 
 module.exports = router;
