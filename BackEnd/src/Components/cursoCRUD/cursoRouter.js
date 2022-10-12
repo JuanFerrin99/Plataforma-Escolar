@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { verificarAuth } = require('../../auth/authController.js');
-const { agregarValidator, idValidator, modificacionValidator, agregarEvaluacionValidator } = require("./cursoValidator");
+const { idValidator, evaluacionIdValidator, agregarValidator, modificacionValidator, agregarEvaluacionValidator, modificarEvaluacionValidator } = require("./cursoValidator");
 const { agregarCurso, eliminarCurso, modificarCurso, getCurso, getCursoAlumno, getCursos, agregarFechaAsistencia, agregarEvaluacion, modificarEvaluacion, eliminarEvaluacion } = require("./cursoController");
 
 //router.use(verificarAuth)
@@ -35,9 +35,9 @@ router.post('/:id', idValidator, modificacionValidator, agregarFechaAsistencia)
 router.post('/:id/evaluaciones', idValidator, agregarEvaluacionValidator, agregarEvaluacion)
 
 // PATCH /cursos/:id/evaluaciones/:evaluacionId
-router.patch('/:id/evaluaciones/:evaluacionId', idValidator, modificacionValidator, modificarEvaluacion)
+router.patch('/:id/evaluaciones/:evaluacionId', idValidator, evaluacionIdValidator, modificarEvaluacionValidator, modificarEvaluacion)
 
 // DELETE /cursos/:id/evaluaciones/:evaluacionId
-router.delete('/:id/evaluaciones/:evaluacionId', idValidator, eliminarEvaluacion)
+router.delete('/:id/evaluaciones/:evaluacionId', idValidator, evaluacionIdValidator, eliminarEvaluacion)
 
 module.exports = router;

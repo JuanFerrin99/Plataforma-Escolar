@@ -2,6 +2,18 @@ const { body, query, param } = require("express-validator");
 const { verifyValidation } = require("../../utils/validationUtils")
 
 
+module.exports.idValidator = [
+    param("id")
+        .isAlphanumeric().withMessage("El id debe ser alfanumerico"),
+    verifyValidation
+]
+
+module.exports.evaluacionIdValidator = [
+    param("evaluacionId")
+        .isAlphanumeric().withMessage("evaluacionId debe ser alfanumerico"),
+    verifyValidation
+]
+
 module.exports.agregarValidator = [
     body("nombre")
         .isString().withMessage("Nombre debe ser un string"),
@@ -30,45 +42,39 @@ module.exports.agregarValidator = [
     verifyValidation
 ]
 
-module.exports.idValidator = [
-    param("id")
-        .isAlphanumeric().withMessage("El id debe ser alfanumerico"),
-    verifyValidation
-]
-
 module.exports.modificacionValidator = [
     body("nombre")
-        .optional({nullable: true})
+        .optional({ nullable: true })
         .isString().withMessage("Nombre debe ser un string"),
     body("materia")
-        .optional({nullable: true})
+        .optional({ nullable: true })
         .isString().withMessage("Materia debe ser un string"),
     body("profesor")
-        .optional({nullable: true})
+        .optional({ nullable: true })
         .isObject().withMessage("Profesor debe ser un objeto"),
     body("alumnos")
-        .optional({nullable: true})
+        .optional({ nullable: true })
         .isArray().withMessage("Alumnos debe ser un array"),
     body("alumnos.*")
         .isObject({}).withMessage("Alumnos debe ser un array de objetos"),
     body("evaluaciones")
-        .optional({nullable: true})
+        .optional({ nullable: true })
         .isArray().withMessage("Evaluaciones debe ser un array"),
     body("evaluaciones.*")
         .isObject({}).withMessage("Evaluaciones debe ser un array de objetos"),
     body("final")
-        .optional({nullable: true})
+        .optional({ nullable: true })
         .isObject().withMessage("Final debe ser un objeto"),
     body("periodo")
-        .optional({nullable: true})
+        .optional({ nullable: true })
         .isObject().withMessage("Periodo debe ser un objeto"),
     body("fechasAsistencia")
-        .optional({nullable: true})
+        .optional({ nullable: true })
         .isArray().withMessage("FechasAsistencia debe ser un array"),
     body("fechasAsistencia.*")
         .isString().withMessage("FechasAsistencia debe ser un array de strings"),
     body("estado")
-        .optional({nullable: true})
+        .optional({ nullable: true })
         .isString().withMessage("Estado debe ser un string"),
     verifyValidation
 ]
@@ -77,5 +83,15 @@ module.exports.modificacionValidator = [
 module.exports.agregarEvaluacionValidator = [
     body("evaluaciones")
         .isObject().withMessage("Evaluaciones debe ser un objeto"),
+    verifyValidation
+]
+
+module.exports.modificarEvaluacionValidator = [
+    body("tipo")
+        .optional({ nullable: true })
+        .isString().withMessage("Tipo debe ser un string"),
+    body("fecha")
+        .optional({ nullable: true })
+        .isString().withMessage("Fecha debe ser un string"),
     verifyValidation
 ]

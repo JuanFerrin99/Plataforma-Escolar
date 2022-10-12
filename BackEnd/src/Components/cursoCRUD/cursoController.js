@@ -158,9 +158,10 @@ module.exports.agregarEvaluacion = (req, res) => {
         })
 }
 
-// -------------------------------  PATCH /cursos/:id/evaluaciones/:evaluacionId
-module.exports.modificarEvaluacion = (req, res) => { //!y si enviamos la posicion del array en vez del id de evaluacion?
-    return Curso.findOneAndUpdate({ _id: req.params.id }, { $set: { "evaluaciones.posicionArray": req.body } }, { new: true })
+// ----------------------------- PATCH /cursos/:id/evaluaciones/:evaluacionId
+
+module.exports.modificarEvaluacion = (req, res) => {
+    return Curso.findOneAndUpdate({ _id: req.params.id, "evaluaciones.id": parseInt(req.params.evaluacionId) }, { $set: { "evaluaciones.$.tipo": req.body.tipo, "evaluaciones.$.fecha": req.body.fecha } }, { new: true })
         .then((result) => {
             if (result) {
                 res.status(200).json("Se modifico la evaluacion")
@@ -175,7 +176,8 @@ module.exports.modificarEvaluacion = (req, res) => { //!y si enviamos la posicio
         })
 }
 
-// ------------------------------- DELETE /cursos/:id/evaluaciones/:evaluacionId
+// --------------------------- DELETE /cursos/:id/evaluaciones/:evaluacionId
+
 module.exports.eliminarEvaluacion = (req, res) => {
     return Curso.findOneAndUpdate({ _id: req.params.id }, { $pull: { evaluaciones: { id: parseInt(req.params.evaluacionId) } } }, {new:true})
         .then((result) => {
