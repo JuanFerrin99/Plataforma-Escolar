@@ -30,14 +30,14 @@ router.get('/', getCursos)
 router.post('/:id', idValidator, modificacionValidator, agregarFechaAsistencia)
 
 
-// Evaluaciones
+//----------------------------------------- Evaluaciones
 // POST /cursos/:id/evaluaciones
 router.post('/:id/evaluaciones', idValidator, agregarEvaluacionValidator, agregarEvaluacion)
 
-// PATCH /cursos/:id/evaluaciones/:id
+// PATCH /cursos/:id/evaluaciones/:evaluacionId
 router.patch('/:id/evaluaciones/:evaluacionId', idValidator, modificacionValidator, modificarEvaluacion)
 
-// DELETE /cursos/:id/evaluaciones/:id
+// DELETE /cursos/:id/evaluaciones/:evaluacionId
 router.delete('/:id/evaluaciones/:evaluacionId', idValidator, eliminarEvaluacion)
 
 module.exports = router;

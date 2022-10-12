@@ -130,7 +130,7 @@ module.exports.agregarFechaAsistencia = (req, res) => {
                 res.status(200).json("Se actualizaron las asistencias")
             }
             else {
-                res.status(404).json({ error: "No se encontro el curso"})
+                res.status(404).json({ error: "No se encontro el curso" })
             }
         })
         .catch((error) => {
@@ -149,7 +149,7 @@ module.exports.agregarEvaluacion = (req, res) => {
                 res.status(200).json("Se agregaron las evaluaciones")
             }
             else {
-                res.status(404).json({ error: "No se encontro el curso"})
+                res.status(404).json({ error: "No se encontro el curso" })
             }
         })
         .catch((error) => {
@@ -159,14 +159,14 @@ module.exports.agregarEvaluacion = (req, res) => {
 }
 
 // -------------------------------  PATCH /cursos/:id/evaluaciones/:evaluacionId
-module.exports.modificarEvaluacion = (req, res) => {
-    return Curso.findOneAndUpdate({ _id: req.params.id, "evaluaciones.id": req.params.evaluacionId }, { }, { new: true })
+module.exports.modificarEvaluacion = (req, res) => { //!y si enviamos la posicion del array en vez del id de evaluacion?
+    return Curso.findOneAndUpdate({ _id: req.params.id }, { $set: { "evaluaciones.posicionArray": req.body } }, { new: true })
         .then((result) => {
             if (result) {
-                res.status(200).json("Se agregaron las evaluaciones")
+                res.status(200).json("Se modifico la evaluacion")
             }
             else {
-                res.status(404).json({ error: "No se encontro el curso"})
+                res.status(404).json({ error: "No se encontro el curso" })
             }
         })
         .catch((error) => {
@@ -177,13 +177,13 @@ module.exports.modificarEvaluacion = (req, res) => {
 
 // ------------------------------- DELETE /cursos/:id/evaluaciones/:evaluacionId
 module.exports.eliminarEvaluacion = (req, res) => {
-    return Curso.findOneAndUpdate({ _id: req.params.id }, { $push: { evaluaciones: req.body.evaluaciones } }, { new: true })
+    return Curso.findOneAndUpdate({ _id: req.params.id }, { $pull: { evaluaciones: { id: parseInt(req.params.evaluacionId) } } }, {new:true})
         .then((result) => {
             if (result) {
-                res.status(200).json("Se agregaron las evaluaciones")
+                res.status(200).json("Se elimino la evaluacion")
             }
             else {
-                res.status(404).json({ error: "No se encontro el curso"})
+                res.status(404).json({ error: "No se encontro el curso" })
             }
         })
         .catch((error) => {
