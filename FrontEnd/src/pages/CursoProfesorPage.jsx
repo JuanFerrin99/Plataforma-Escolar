@@ -1,15 +1,33 @@
 import * as React from 'react';
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom"
+import { useEffect, useState, useRef } from "react";
+import { useLocation, useParams } from "react-router-dom"
 import { Outlet } from "react-router-dom";
 import { Button, Card, CardActions, CardContent, Grid, Skeleton, Container } from "@mui/material";
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import {
+    DataGrid,
+    gridPageCountSelector,
+    gridPageSelector,
+    useGridApiContext,
+    useGridSelector,
+} from '@mui/x-data-grid';
+import Pagination from '@mui/material/Pagination';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
+import CreateIcon from '@mui/icons-material/Create';
 import AlumnoCard from "../components/AlumnoCard";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import ClearIcon from '@mui/icons-material/Clear';
+import "../styles/bordes.css"
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+
+//*------------------------------------cosas inutiles que deberian estar en otros archivos porque ocupan mucho espacio 
+//toDo importar las cosas inutiles de algun utils
+
+//skeleton 
+//toDo importarlo en ves de estar copiandolo por todos lados
 
 function Variants() {
     return (
@@ -34,42 +52,101 @@ function Variants() {
     );
 }
 
-  export default function CursoCard({ }) {
+
+//dibujo lindo de no hay rows
+const StyledGridOverlay = styled('div')(({ theme }) => ({
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+    '& .ant-empty-img-1': {
+        fill: theme.palette.mode === 'light' ? '#aeb8c2' : '#262626',
+    },
+    '& .ant-empty-img-2': {
+        fill: theme.palette.mode === 'light' ? '#f5f5f7' : '#595959',
+    },
+    '& .ant-empty-img-3': {
+        fill: theme.palette.mode === 'light' ? '#dce0e6' : '#434343',
+    },
+    '& .ant-empty-img-4': {
+        fill: theme.palette.mode === 'light' ? '#fff' : '#1c1c1c',
+    },
+    '& .ant-empty-img-5': {
+        fillOpacity: theme.palette.mode === 'light' ? '0.8' : '0.08',
+        fill: theme.palette.mode === 'light' ? '#f5f5f5' : '#fff',
+    },
+}));
+
+function CustomNoRowsOverlay() {
+    return (
+        <StyledGridOverlay>
+            <svg
+                width="120"
+                height="100"
+                viewBox="0 0 184 152"
+                aria-hidden
+                focusable="false"
+            >
+                <g fill="none" fillRule="evenodd">
+                    <g transform="translate(24 31.67)">
+                        <ellipse
+                            className="ant-empty-img-5"
+                            cx="67.797"
+                            cy="106.89"
+                            rx="67.797"
+                            ry="12.668"
+                        />
+                        <path
+                            className="ant-empty-img-1"
+                            d="M122.034 69.674L98.109 40.229c-1.148-1.386-2.826-2.225-4.593-2.225h-51.44c-1.766 0-3.444.839-4.592 2.225L13.56 69.674v15.383h108.475V69.674z"
+                        />
+                        <path
+                            className="ant-empty-img-2"
+                            d="M33.83 0h67.933a4 4 0 0 1 4 4v93.344a4 4 0 0 1-4 4H33.83a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4z"
+                        />
+                        <path
+                            className="ant-empty-img-3"
+                            d="M42.678 9.953h50.237a2 2 0 0 1 2 2V36.91a2 2 0 0 1-2 2H42.678a2 2 0 0 1-2-2V11.953a2 2 0 0 1 2-2zM42.94 49.767h49.713a2.262 2.262 0 1 1 0 4.524H42.94a2.262 2.262 0 0 1 0-4.524zM42.94 61.53h49.713a2.262 2.262 0 1 1 0 4.525H42.94a2.262 2.262 0 0 1 0-4.525zM121.813 105.032c-.775 3.071-3.497 5.36-6.735 5.36H20.515c-3.238 0-5.96-2.29-6.734-5.36a7.309 7.309 0 0 1-.222-1.79V69.675h26.318c2.907 0 5.25 2.448 5.25 5.42v.04c0 2.971 2.37 5.37 5.277 5.37h34.785c2.907 0 5.277-2.421 5.277-5.393V75.1c0-2.972 2.343-5.426 5.25-5.426h26.318v33.569c0 .617-.077 1.216-.221 1.789z"
+                        />
+                    </g>
+                    <path
+                        className="ant-empty-img-3"
+                        d="M149.121 33.292l-6.83 2.65a1 1 0 0 1-1.317-1.23l1.937-6.207c-2.589-2.944-4.109-6.534-4.109-10.408C138.802 8.102 148.92 0 161.402 0 173.881 0 184 8.102 184 18.097c0 9.995-10.118 18.097-22.599 18.097-4.528 0-8.744-1.066-12.28-2.902z"
+                    />
+                    <g className="ant-empty-img-4" transform="translate(149.65 15.383)">
+                        <ellipse cx="20.654" cy="3.167" rx="2.849" ry="2.815" />
+                        <path d="M5.698 5.63H0L2.898.704zM9.259.704h4.985V5.63H9.259z" />
+                    </g>
+                </g>
+            </svg>
+            <Box sx={{ mt: 1 }}>No Rows</Box>
+        </StyledGridOverlay>
+    );
+}
+
+export default function CursoCard({ }) {
+    const gridRef = useRef();
     const [curso, setCurso] = useState({});
     const [alumnos, setAlumnos] = useState([]);
     const [evaluaciones, setEvaluaciones] = useState([]);
-    
+
     const [rows, setRows] = useState([]);
     const [date, setDate] = useState("");
-    
+
     const [loading, setLoading] = useState(true);
     const [isPressedAsistencia, setIsPressedAsistencia] = useState(false);
     const [isPressedEvaluacion, setIsPressedEvaluacion] = useState(false);
-    
+
     const location = useLocation()
     const id = location.state.idCurso  //id del curso que se esta mostrando
     let ausentes = []
-    
+
 
     const [snackbar, setSnackbar] = React.useState(null);
-    const ProcessRowUpdate = () =>{
-        useEffect(() => {
-            fetch(`http://localhost:3001/cursos/${id}/`)
-                .then(response => response.json())
-                .then(curso => {
-                    setSnackbar({ children: 'User successfully saved', severity: 'success' });
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-        }, []);
-        
-    }
-    const handleProcessRowUpdateError = React.useCallback((error) => {
-      setSnackbar({ children: error.message, severity: 'error' });
-    }, []);
 
-    
+    //* Llamada principal
+
     useEffect(() => {
         fetch(`http://localhost:3001/cursos/${id}/`)
             .then(response => response.json())
@@ -98,19 +175,96 @@ function Variants() {
             })
     }, []);
 
+    //* Patch
 
-    const diaCorrecto = () => {
-        return curso.periodo.dias.includes(date.getDay())
+    const ProcessRowUpdate = (props) => {
+        fetch(`http://localhost:3001/cursos/${id}/evaluaciones/${props.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "fecha": props.fecha, "tipo": props.tipo })
+        })
+            .then(res => { //toDo checkear si lo encontro o no y cambiar el mensaje
+                setSnackbar({ children: 'User successfully saved', severity: 'success' });
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
-    const asitenciaNoTomada = () => {
-        return curso.fechasAsistencia.includes(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
+
+    //* Delete
+
+    const renderDetailsButton = (params) => {
+        return (
+            //?import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'; logo de tacho en vez de cruz
+            <IconButton color="primary" aria-label="borrar" onClick={() => {
+                fetch(`http://localhost:3001/cursos/${id}/evaluaciones/${params.row.id}`, { method: 'DELETE' })//toDo checkear si lo encontro o no y cambiar el mensaje
+                    .then(res => {
+                        if (res) {
+                            let rows = evaluaciones.slice()                        //al usar un slice vacio rows pasa a tener una copia de evaluaciones
+                            rows = rows.filter(row => row.id !== params.row.id)   //filter devuelve un array con todas las rows exepto la de params(la que llamo a la funcion y por ende queremos borrar)
+                            setEvaluaciones(rows)                                //reemplazar las rows actuales con las nuevas sin la que se quiere borrar, al ser un state la tabla se actualiza con los nuevos valores
+                            setSnackbar({ children: 'Evaluacion borrada', severity: 'error' });
+                        }
+                        else (console.log("i am the res", res))//! mensaje gamer
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            }}>
+                <ClearIcon
+                    fontSize="medium"
+                //style={{ marginLeft: 16 }}
+                >
+                </ClearIcon>
+            </IconButton>
+
+
+        )
     }
+
+    const handleProcessRowUpdateError = React.useCallback((error) => {
+        setSnackbar({ children: error.message, severity: 'error' });
+    }, []);
+
+
+
+    //custom pagination
+    function CustomPagination(newRow) {
+        const apiRef = useGridApiContext();
+        const page = useGridSelector(apiRef, gridPageSelector);
+        const pageCount = useGridSelector(apiRef, gridPageCountSelector);
+        return (
+            //?import AddIcon from '@mui/icons-material/Add';
+            <div style={{ width: "100%" }}>
+                <div style={{ float: "left" }}>
+                    <IconButton color="primary" aria-label="crear fila" onClick={() => {let r = evaluaciones.slice(); r.push({id:10/*SISTEMA DE CREAR ID*/}); return setEvaluaciones(r)}}>{/*forma copada q no sirve  setEvaluaciones(evaluaciones.slice().concat[{}])*/} 
+                        <CreateIcon fontSize='large' />
+                    </IconButton>
+                </div>
+                <div style={{ float: "right", padding: "8px" }}>
+                    <Pagination
+                        color="primary"
+                        count={pageCount}
+                        page={page + 1}
+                        onChange={(event, value) => apiRef.current.setPage(value - 1)}
+                    />
+                </div>
+
+            </div>
+
+        );
+    }
+
 
     const alumnosComponent = alumnos.map((alumno, i) => {
         return <AlumnoCard key={alumno._id} id={id} nombre={alumno.nombre} apellido={alumno.apellido} dni={alumno.dni} />
     })
     const alumnosSkeleton = new Array(20).fill(<Variants />)
 
+    //* Vista Base
 
     if (isPressedAsistencia === false && isPressedEvaluacion === false) {
         return (
@@ -135,10 +289,12 @@ function Variants() {
         );
     }
 
+    //* Vista Evaluaciones
+
     else if (isPressedEvaluacion === true) {//! Buscar forma de centar las cosas en sus celdas YY hacer que los anchos no esten hardcodeados YY cambiar el tpio de cuadro al pro o premiem asi funcoiona rezisable
         const columns = [
             {
-                field: 'fecha', headerName: 'Fecha', width: 250 /*, resizable: true , //ToDo con esta cosa validas lo de adentro
+                field: 'fecha', headerName: 'Fecha', width: 250, editable: true /*, resizable: true , //ToDo con esta cosa validas lo de adentro
                     preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
                     const hasError = params.props.value.length < 3;
                     return { ...params.props, error: hasError };
@@ -146,25 +302,32 @@ function Variants() {
             },
             { field: 'tipo', headerName: 'Tipo', width: 250, editable: true /*, resizable: true */ },
             { field: 'inscripcionInicio', headerName: 'Inicio de inscripcion', width: 250, editable: true /*, resizable: true */ },
-            { field: 'inscripcionFin', headerName: 'Fin de inscripcion', width: 250, editable: true /*, resizable: true */ }
+            { field: 'inscripcionFin', headerName: 'Fin de inscripcion', width: 1000, editable: true /*, resizable: true */ },
+            { field: 'boton', headerName: '', suppressRowClickSelection: true, width: 200, renderCell: (e) => { return renderDetailsButton(e) } }
+
         ];
-      
+
         const handleCloseSnackbar = () => setSnackbar(null);
         return (
-            <div style={{ height: "94.9vh", width: '100%' }}>
+            <div style={{ height: "95%", width: '100%', position: 'fixed', bottom: "5%", }}>
                 <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
                     <ArrowBackRoundedIcon fontSize='large' />
                 </IconButton>
                 <div style={{ display: 'flex', height: '100%' }}>
                     <div style={{ flexGrow: 1 }}>
                         <DataGrid
+                            //?customizar cartel de rows selected =  https://stackoverflow.com/questions/65668602/react-material-ui-grid-footer-change (no se como borrarlo igual)
+                            ref={gridRef}
                             rows={evaluaciones}
                             columns={columns}
                             pageSize={10}
-                            rowsPerPageOptions={[5, 10, 25, 100]}
-                            checkboxSelection
-                            processRowUpdate={ProcessRowUpdate}
+                            enterMovesDown={true}
+                            processRowUpdate={ProcessRowUpdate} //! no sale de modo de editar aunque apretes enter, tab, etc
                             onProcessRowUpdateError={handleProcessRowUpdateError}
+                            components={{
+                                Pagination: CustomPagination,
+                                NoRowsOverlay: CustomNoRowsOverlay
+                            }}
                             experimentalFeatures={{ newEditingApi: true }}
                         />
                     </div>
@@ -182,11 +345,18 @@ function Variants() {
             </div>
         );
     }
+    //* Vista Asistencias
     else if (isPressedAsistencia === true) {
         const columns = [
             { field: 'Apellido', headerName: 'Apellido', width: 130 },
             { field: 'Nombre', headerName: 'Nombre', width: 130 },
         ];
+        const diaCorrecto = () => {
+            return curso.periodo.dias.includes(date.getDay())
+        }
+        const asitenciaNoTomada = () => {
+            return curso.fechasAsistencia.includes(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`)
+        }
         const functionClick = () => {
             if (diaCorrecto() && !asitenciaNoTomada()) {
                 ausentes.map((id) => rows.find((row) => row.id === id)).forEach((alumno) => {

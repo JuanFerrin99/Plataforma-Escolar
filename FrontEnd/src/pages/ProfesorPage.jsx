@@ -45,7 +45,7 @@ export default function AlumnoPage() {
                 setDni(profesor.dni)
                 setCursos(profesor.cursos)
                 setLoading(false)
-                fetch(`http://localhost:3001/inasistencias/filtro/${dni}/`)
+                fetch(`http://localhost:3001/inasistencias/filtro/${profesor.dni}/`)
                     .then(response => response.json())
                     .then(res => {
                         setInasistencias(res)
@@ -53,27 +53,27 @@ export default function AlumnoPage() {
                     .catch(error => {
                         console.log(error)
                     })
-                    
-                    
-                })
-            }, [])
-        const cursosComponent = cursos.map((curso, i) => {
-            return <CursoCard key={curso.id} id={curso.id} materia={curso.materia} dni={dni}/>
-        })
 
-        const cursosSkeleton = new Array(20).fill(<Variants />)
-        return (
-            <div>
-                <TableInasistencia inasistencia = {inasistencias} />
-                <br />
-                <Grid container spacing={3}>
-                    {loading ? cursosSkeleton : cursosComponent}
-                </Grid>
-                <Container>
-                    <Outlet />
-                </Container>
 
-            </div>
-        )
+            })
+    }, [])
+    const cursosComponent = cursos.map((curso, i) => {
+        return <CursoCard key={curso.id} id={curso.id} materia={curso.materia} dni={dni} />
+    })
 
-    }
+    const cursosSkeleton = new Array(20).fill(<Variants />)
+    return (
+        <div>
+            <TableInasistencia inasistencia={inasistencias} />
+            <br />
+            <Grid container spacing={3}>
+                {loading ? cursosSkeleton : cursosComponent}
+            </Grid>
+            <Container>
+                <Outlet />
+            </Container>
+
+        </div>
+    )
+
+}
