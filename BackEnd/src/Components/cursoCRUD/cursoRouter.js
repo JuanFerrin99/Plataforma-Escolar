@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { verificarAuth } = require('../../auth/authController.js');
 const { idValidator, evaluacionIdValidator, notaIdValidator, dniValidator, agregarValidator, modificacionValidator, agregarEvaluacionValidator, modificarEvaluacionValidator, agregarCalificacionValidator, modificarCalificacionValidator } = require("./cursoValidator");
-const { agregarCurso, eliminarCurso, modificarCurso, getCurso, getCursoAlumno, getCursos, agregarFechaAsistencia, agregarEvaluacion, modificarEvaluacion, eliminarEvaluacion, agregarCalificacion, modificarCalificacion } = require("./cursoController");
+const { agregarCurso, eliminarCurso, modificarCurso, getCurso, getCursoAlumno, getCursos, agregarFechaAsistencia, agregarEvaluacion, modificarEvaluacion, eliminarEvaluacion, agregarCalificacion, modificarCalificacion, eliminarCalificacion } = require("./cursoController");
 
 //router.use(verificarAuth)
 
@@ -49,7 +49,7 @@ router.post('/:id/alumnos/:dni/calificaciones', idValidator, dniValidator, agreg
 router.patch('/:id/alumnos/:dni/calificaciones/:notaId', idValidator, dniValidator, notaIdValidator, modificarCalificacionValidator, modificarCalificacion)
 
 // DELETE /cursos/:id/alumnos/:dni/calificaciones/:notaId
-//router.delete('/:id/alumnos/:dni/calificaciones/:notaId', idValidator, notaIdValidator, dniValidator, eliminarCalificacion)
+router.delete('/:id/alumnos/:dni/calificaciones/:notaId', idValidator, notaIdValidator, dniValidator, eliminarCalificacion)
 
 
 module.exports = router;
