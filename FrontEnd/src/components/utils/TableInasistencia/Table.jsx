@@ -1,11 +1,15 @@
 import * as React from "react";
+
 import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
+import TableBody from "@mui/material/TableBody";
+import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+
 import Paper from "@mui/material/Paper";
+import ClearIcon from '@mui/icons-material/Clear';
+import IconButton from '@mui/material/IconButton';
 import "./Table.css";
 
 
@@ -24,7 +28,9 @@ const makeStyle = (status) => {
 	}
 }
 
-export default function BasicTable(props) {
+export default function BasicTable(inasists) {
+	const [inasists, setInasists] = useState([]);
+	set
 	let total = 0;
 	const getPesoFalta = (tipo) => {
 		if (tipo === "Tarde") {
@@ -35,6 +41,12 @@ export default function BasicTable(props) {
 		}
 		else { return 0 }
 	}
+
+	const handleDelete = (postIndex) => {
+		setInasists((prevPosts) =>
+		  prevPosts.filter((_, index) => index !== postIndex)
+		);
+	  };
 
 	return (
 		<div className="Table">
@@ -50,12 +62,11 @@ export default function BasicTable(props) {
 							<TableCell align="left">Tipo</TableCell>
 							<TableCell align="left">Total</TableCell>
 							<TableCell align="left">Justificacion</TableCell>
-							<TableCell align="left"></TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody style={{ color: "white" }}>
-						
-						{props.inasistencia.map((elem) => (
+
+						{inasists.map((elem,i) => (
 							<TableRow
 								key={elem._id}
 								sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -65,6 +76,11 @@ export default function BasicTable(props) {
 								<TableCell align="left">{total = total + getPesoFalta(elem.tipo)}</TableCell>
 								<TableCell align="left">
 									<span className="status" style={makeStyle(elem.justificado)}>{elem.justificado}</span>
+								</TableCell>
+								<TableCell align="left">
+									<IconButton color="default" aria-label="crear fila" onClick={() => {handleDelete(i)}}>
+										<ClearIcon fontSize='medium' />
+									</IconButton>
 								</TableCell>
 							</TableRow>
 						))}

@@ -306,7 +306,10 @@ export default function CursoCard({ }) {
                 <div style={{ width: '100%'}}>
                     <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
                         <ArrowBackRoundedIcon fontSize='large' />
-                    </IconButton>
+                    </IconButton>{/*
+                curso.alumnos.forEach((element) => {
+                    setRows((oldState) => [...oldState, { "id": element.dni, "Apellido": element.apellido, "Nombre": element.nombre }])
+                })USAR ESTO*/}
                     <IconButton color="primary" aria-label="crear fila" onClick={() => { let r = evaluaciones.slice(); r.push({ id: 10/*SISTEMA DE CREAR ID*/ }); return setEvaluaciones(r) }}>{/*forma copada q no sirve  setEvaluaciones(evaluaciones.slice().concat[{}])*/}
                         <CreateIcon fontSize='large' />
                     </IconButton>
