@@ -4,15 +4,25 @@ const { verifyValidation } = require("../../utils/validationUtils")
 
 module.exports.idValidator = [
     param("id")
-        .isAlphanumeric().withMessage("El id debe ser alfanumerico"),
+        .isAlphanumeric().withMessage("id debe ser alfanumerico"),
     verifyValidation
 ]
-
 module.exports.evaluacionIdValidator = [
     param("evaluacionId")
         .isAlphanumeric().withMessage("evaluacionId debe ser alfanumerico"),
     verifyValidation
 ]
+module.exports.notaIdValidator = [
+    param("notaId")
+        .isAlphanumeric().withMessage("notaId debe ser alfanumerico"),
+    verifyValidation
+]
+module.exports.dniValidator = [
+    param("dni")
+        .isInt().withMessage("dni debe ser un int"),
+    verifyValidation
+]
+
 
 module.exports.agregarValidator = [
     body("nombre")
@@ -41,7 +51,6 @@ module.exports.agregarValidator = [
         .isString().withMessage("Estado debe ser un string"),
     verifyValidation
 ]
-
 module.exports.modificacionValidator = [
     body("nombre")
         .optional({ nullable: true })
@@ -85,7 +94,6 @@ module.exports.agregarEvaluacionValidator = [
         .isObject().withMessage("Evaluaciones debe ser un objeto"),
     verifyValidation
 ]
-
 module.exports.modificarEvaluacionValidator = [
     body("tipo")
         .optional({ nullable: true })
@@ -93,5 +101,17 @@ module.exports.modificarEvaluacionValidator = [
     body("fecha")
         .optional({ nullable: true })
         .isString().withMessage("Fecha debe ser un string"),
+    verifyValidation
+]
+
+
+module.exports.agregarCalificacionValidator = [
+    body("calificacion")
+        .isObject().withMessage("Calificacion debe ser un objeto"),
+    verifyValidation
+]
+module.exports.modificarCalificacionValidator = [
+    body("nota")
+        .isInt().withMessage("Nota debe ser un int"),
     verifyValidation
 ]

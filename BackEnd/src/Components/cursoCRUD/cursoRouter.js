@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { verificarAuth } = require('../../auth/authController.js');
-const { idValidator, evaluacionIdValidator, agregarValidator, modificacionValidator, agregarEvaluacionValidator, modificarEvaluacionValidator } = require("./cursoValidator");
-const { agregarCurso, eliminarCurso, modificarCurso, getCurso, getCursoAlumno, getCursos, agregarFechaAsistencia, agregarEvaluacion, modificarEvaluacion, eliminarEvaluacion } = require("./cursoController");
+const { idValidator, evaluacionIdValidator, notaIdValidator, dniValidator, agregarValidator, modificacionValidator, agregarEvaluacionValidator, modificarEvaluacionValidator, agregarCalificacionValidator, modificarCalificacionValidator } = require("./cursoValidator");
+const { agregarCurso, eliminarCurso, modificarCurso, getCurso, getCursoAlumno, getCursos, agregarFechaAsistencia, agregarEvaluacion, modificarEvaluacion, eliminarEvaluacion, agregarCalificacion, modificarCalificacion } = require("./cursoController");
 
 //router.use(verificarAuth)
 
@@ -24,7 +24,7 @@ router.get('/:id/:dni', idValidator, getCursoAlumno)
 // 6 GET /cursos/
 router.get('/', getCursos)
 
-//-------------------------------------- Sector resful ish -------------------------------------------------
+//-------------------------------------- Sector restful-ish -------------------------------------------------
 
 // POST /cursos/:id
 router.post('/:id', idValidator, modificacionValidator, agregarFechaAsistencia)
@@ -39,6 +39,17 @@ router.patch('/:id/evaluaciones/:evaluacionId', idValidator, evaluacionIdValidat
 
 // DELETE /cursos/:id/evaluaciones/:evaluacionId
 router.delete('/:id/evaluaciones/:evaluacionId', idValidator, evaluacionIdValidator, eliminarEvaluacion)
+
+
+//----------------------------------------- Calificaciones
+// POST /cursos/:id/alumnos/:dni/calificaciones
+router.post('/:id/alumnos/:dni/calificaciones', idValidator, dniValidator, agregarCalificacionValidator, agregarCalificacion)
+
+// PATCH /cursos/:id/alumnos/:dni/calificaciones/:notaId
+router.patch('/:id/alumnos/:dni/calificaciones/:notaId', idValidator, dniValidator, notaIdValidator, modificarCalificacionValidator, modificarCalificacion)
+
+// DELETE /cursos/:id/alumnos/:dni/calificaciones/:notaId
+//router.delete('/:id/alumnos/:dni/calificaciones/:notaId', idValidator, notaIdValidator, dniValidator, eliminarCalificacion)
 
 
 module.exports = router;
