@@ -143,10 +143,10 @@ module.exports.agregarFechaAsistencia = (req, res) => {
 //------------------------------------ POST /cursos/:id/evaluaciones
 
 module.exports.agregarEvaluacion = (req, res) => {
-    return Curso.findOneAndUpdate({ _id: req.params.id }, { $push: { evaluaciones: req.body.evaluaciones } }, { new: true })
+    return Curso.findOneAndUpdate({ _id: req.params.id }, { $push: { evaluaciones: req.body.evaluacion } }, { new: true })
         .then((result) => {
             if (result) {
-                res.status(200).json("Se agregaron las evaluaciones")
+                res.status(200).json("Se agrego la evaluacion")
             }
             else {
                 res.status(404).json({ error: "No se encontro el curso" })
@@ -182,7 +182,7 @@ module.exports.eliminarEvaluacion = (req, res) => {
     return Curso.findOneAndUpdate({ _id: req.params.id }, { $pull: { evaluaciones: { id: parseInt(req.params.evaluacionId) } } }, { new: true })
         .then((result) => {
             if (result) {
-                res.status(200).json("Se elimino la evaluacion") //TODO: mejorar comprobacion de respuesta
+                res.status(200).json("Se elimino la evaluacion")
             }
             else {
                 res.status(404).json({ error: "No se encontro el curso" })
@@ -193,6 +193,62 @@ module.exports.eliminarEvaluacion = (req, res) => {
             res.status(500).json({ error: "Ocurrio un error" })
         })
 }
+
+//--------------------------------------------------- FINALES -----------------------------------------------------
+//------------------------------------------ POST /cursos/:id/finales
+
+module.exports.agregarFinal = (req, res) => {
+    return Curso.findOneAndUpdate({ _id: req.params.id }, { $push: { finales: req.body.final } }, { new: true })
+        .then((result) => {
+            if (result) {
+                res.status(200).json("Se agrego el final")
+            }
+            else {
+                res.status(404).json({ error: "No se encontro el curso" })
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            res.status(500).json({ error: "Ocurrio un error" })
+        })
+}
+
+// ------------------------------------- PATCH /cursos/:id/finales/:finalnId
+
+module.exports.modificarFinal = (req, res) => {
+    return Curso.findOneAndUpdate({ _id: req.params.id, "finales.id": parseInt(req.params.finalId) }, { $set: { "finales.$.fecha": req.body.fecha, "finales.$.fechasInscripcion": req.body.fechaInscipcion, "finales.$.alumnosInscriptos": req.body.alumnosInscripctos } }, { new: true })
+        .then((result) => {
+            if (result) {
+                res.status(200).json("Se modifico el final")
+            }
+            else {
+                res.status(404).json({ error: "No se encontro el curso" })
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            res.status(500).json({ error: "Ocurrio un error" })
+        })
+}
+
+// ------------------------------------- DELETE /cursos/:id/finales/:finalId
+
+module.exports.eliminarFinal = (req, res) => {
+    return Curso.findOneAndUpdate({ _id: req.params.id }, { $pull: { finales: { id: parseInt(req.params.finalId) } } }, { new: true })
+        .then((result) => {
+            if (result) {
+                res.status(200).json("Se elimino el final")
+            }
+            else {
+                res.status(404).json({ error: "No se encontro el curso" })
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            res.status(500).json({ error: "Ocurrio un error" })
+        })
+}
+
 //-------------------------------------------- CALIFICACIONES -----------------------------------------------------
 //------------------------------ POST /cursos/:id/alumno/:dni/calificaciones
 
@@ -241,8 +297,9 @@ module.exports.modificarCalificacion = (req, res) => {
 module.exports.eliminarCalificacion = (req, res) => {
     return Curso.findOneAndUpdate({ _id: req.params.id, "alumnos.dni": parseInt(req.params.dni) }, { $pull: { "alumnos.$.calificaciones": { id: parseInt(req.params.notaId) } } }, { new: true })
         .then((result) => {
+            console.log(result)
             if (result) {
-                res.status(200).json("Se elimino la calificacion") //TODO: mejorar comprobacion de respuesta
+                res.status(200).json("Se elimino la calificacion")
             }
             else {
                 res.status(404).json({ error: "No se encontro el curso" })

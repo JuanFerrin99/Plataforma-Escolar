@@ -1,8 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const { verificarAuth } = require('../../auth/authController.js');
-const { idValidator, evaluacionIdValidator, notaIdValidator, dniValidator, agregarValidator, modificacionValidator, agregarEvaluacionValidator, modificarEvaluacionValidator, agregarCalificacionValidator, modificarCalificacionValidator } = require("./cursoValidator");
-const { agregarCurso, eliminarCurso, modificarCurso, getCurso, getCursoAlumno, getCursos, agregarFechaAsistencia, agregarEvaluacion, modificarEvaluacion, eliminarEvaluacion, agregarCalificacion, modificarCalificacion, eliminarCalificacion } = require("./cursoController");
+
+//PARAMS
+const { idValidator, evaluacionIdValidator, finalIdValidator, notaIdValidator, dniValidator } = require("./cursoValidator");
+
+//VALIDATORS
+const { agregarValidator, modificacionValidator } = require("./cursoValidator");
+const { agregarEvaluacionValidator, modificarEvaluacionValidator } = require("./cursoValidator");
+const { agregarFinalValidator, modificarFinalValidator } = require("./cursoValidator");
+const { agregarCalificacionValidator, modificarCalificacionValidator } = require("./cursoValidator");
+
+//FUNCTIONS
+const { agregarCurso, eliminarCurso, modificarCurso, getCurso, getCursoAlumno, getCursos, agregarFechaAsistencia } = require("./cursoController");
+const { agregarEvaluacion, modificarEvaluacion, eliminarEvaluacion } = require("./cursoController");
+const { agregarFinal, modificarFinal, eliminarFinal } = require("./cursoController");
+const { agregarCalificacion, modificarCalificacion, eliminarCalificacion } = require("./cursoController");
+
 
 //router.use(verificarAuth)
 
@@ -24,13 +38,13 @@ router.get('/:id/:dni', idValidator, getCursoAlumno)
 // 6 GET /cursos/
 router.get('/', getCursos)
 
-//-------------------------------------- Sector restful-ish -------------------------------------------------
+//---------------------------------------- Sector restful-ish ----------------------------------------------
 
 // POST /cursos/:id
 router.post('/:id', idValidator, modificacionValidator, agregarFechaAsistencia)
 
 
-//----------------------------------------- Evaluaciones
+//------------------------------------------- Evaluaciones
 // POST /cursos/:id/evaluaciones
 router.post('/:id/evaluaciones', idValidator, agregarEvaluacionValidator, agregarEvaluacion)
 
@@ -39,6 +53,17 @@ router.patch('/:id/evaluaciones/:evaluacionId', idValidator, evaluacionIdValidat
 
 // DELETE /cursos/:id/evaluaciones/:evaluacionId
 router.delete('/:id/evaluaciones/:evaluacionId', idValidator, evaluacionIdValidator, eliminarEvaluacion)
+
+
+//--------------------------------------------- Finales
+// POST /cursos/:id/finales
+router.post('/:id/finales', idValidator, agregarFinalValidator, agregarFinal)
+
+// PATCH /cursos/:id/finales/:finalId
+router.patch('/:id/finales/:finalId', idValidator, finalIdValidator, modificarFinalValidator, modificarFinal)
+
+// DELETE /cursos/:id/finales/:finalId
+router.delete('/:id/finales/:finalId', idValidator, finalIdValidator, eliminarFinal)
 
 
 //----------------------------------------- Calificaciones

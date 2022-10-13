@@ -8,7 +8,7 @@ var cursos = new Schema({
     profesor: Object,  /* nombre: String, apellido: String, dni: int */
     alumnos: [Object], /* nombre: String, apellido: String, dni: int, calificaciones: Object */
     evaluaciones: [Object], /* id: int, tipo: String, fecha: Date */
-    final: Object, /* id: int, fechas: [String], periodoInscripcion: Object */
+    finales: [Object], /* id: int, fecha: String, fechasInscripcion: Object, alumnosInscriptos: [int] */
     periodo: Object, /* año: int, cuatrimestre: String , dias: [String], horario: String */
     fechasAsistencia: [String],
     estado: String
