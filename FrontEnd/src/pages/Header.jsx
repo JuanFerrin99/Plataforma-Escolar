@@ -13,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Outlet } from "react-router-dom";
+import { color } from '@mui/system';
 //import '../styles/paginas/HomePage.css';
 const pages = [{"nombre":'Institucional',"camino":'/'}, {"nombre":'Inscripcion',"camino":'/'}, {"nombre":"Carrera","camino":"/"}, {"nombre":'Cursos',"camino":'/'}, {"nombre":'Acceso',"camino":'/login'}];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -41,9 +42,9 @@ export default function ResponsiveAppBar () {
   return (
     <div>
         <div>
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
+    <AppBar position="static" sx={{backgroundColor: "transparent", boxShadow:"none", position:"fixed"}}>
+      <Container maxWidth="xl" >
+        <Toolbar disableGutters >
           <AdbIcon sx={{ display: { xs: 'none', md: 'fleBoxx' }, mr: 1 }} />
           <Typography
             variant="h6"
@@ -123,7 +124,7 @@ export default function ResponsiveAppBar () {
               <Button
                 key={page.nombre}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'white', display: 'block'}}
               >
                 {page.nombre}
               </Button>
