@@ -112,7 +112,7 @@ function CustomNoRowsOverlay() {
                     </g>
                     <path
                         className="ant-empty-img-3"
-                        d="M149.121 33.292l-6.83 2.65a1 1 0 0 1-1.317-1.23l1.937-6.207c-2.589-2.944-4.109-6.534-4.109-10.408C138.802 8.102 148.92 0 161.402 0 173.881 0 184 8.102 184 18.097c0 9.995-10.118 18.097-22.599 18.097-4.528 0-8.744-1.066-12.28-2.902z"
+                        d="M149.121 33.292l-6.83 2.65ax1 1 0 0 1-1.317-1.23l1.937-6.207c-2.589-2.944-4.109-6.534-4.109-10.408C138.802 8.102 148.92 0 161.402 0 173.881 0 184 8.102 184 18.097c0 9.995-10.118 18.097-22.599 18.097-4.528 0-8.744-1.066-12.28-2.902z"
                     />
                     <g className="ant-empty-img-4" transform="translate(149.65 15.383)">
                         <ellipse cx="20.654" cy="3.167" rx="2.849" ry="2.815" />
@@ -129,8 +129,8 @@ export default function CursoCard({ }) {
     const gridRef = useRef();
     const [curso, setCurso] = useState({});
     const [alumnos, setAlumnos] = useState([]);
-    const [evaluaciones, setEvaluaciones] = useState([]);
 
+    const [evaluaciones, setEvaluaciones] = useState([]);
     const [rows, setRows] = useState([]);
     const [date, setDate] = useState("");
 
@@ -151,18 +151,11 @@ export default function CursoCard({ }) {
         fetch(`http://localhost:3001/cursos/${id}/`)
             .then(response => response.json())
             .then(curso => {
+                console.log("cursos")
                 setCurso(curso)
                 setAlumnos(curso.alumnos)
                 setRows([])
                 setDate(new Date())
-                setEvaluaciones(
-                    curso.evaluaciones.concat({
-                        "id": curso.final.id,
-                        "fecha": `${curso.final.fechas[0]} / ${curso.final.fechas[1]}`,//! ver si son dos o maas
-                        "tipo": "Final",
-                        "inscripcionInicio": curso.final.periodoInscripcion.inicio,
-                        "inscripcionFin": curso.final.periodoInscripcion.final
-                    }))
 
                 curso.alumnos.forEach((element) => {
                     setRows((oldState) => [...oldState, { "id": element.dni, "Apellido": element.apellido, "Nombre": element.nombre }])
@@ -175,7 +168,7 @@ export default function CursoCard({ }) {
             })
     }, []);
 
-    //* Patch
+    //* Patch evaluaciones
 
     const ProcessRowUpdate = (props) => {
         fetch(`http://localhost:3001/cursos/${id}/evaluaciones/${props.id}`, {
@@ -194,7 +187,7 @@ export default function CursoCard({ }) {
             })
     }
 
-    //* Delete
+    //* Delete evaluaciones
 
     const renderDetailsButton = (params) => {
         return (
@@ -225,12 +218,13 @@ export default function CursoCard({ }) {
         )
     }
 
+
     const handleProcessRowUpdateError = React.useCallback((error) => {
         setSnackbar({ children: error.message, severity: 'error' });
     }, []);
 
 
-
+    //toDo post en el back para crear un objeto vacio
     //custom pagination
     function CustomPagination(newRow) {
         const apiRef = useGridApiContext();
@@ -239,11 +233,6 @@ export default function CursoCard({ }) {
         return (
             //?import AddIcon from '@mui/icons-material/Add';
             <div style={{ width: "100%" }}>
-                <div style={{ float: "left" }}>
-                    <IconButton color="primary" aria-label="crear fila" onClick={() => {let r = evaluaciones.slice(); r.push({id:10/*SISTEMA DE CREAR ID*/}); return setEvaluaciones(r)}}>{/*forma copada q no sirve  setEvaluaciones(evaluaciones.slice().concat[{}])*/} 
-                        <CreateIcon fontSize='large' />
-                    </IconButton>
-                </div>
                 <div style={{ float: "right", padding: "8px" }}>
                     <Pagination
                         color="primary"
@@ -300,37 +289,73 @@ export default function CursoCard({ }) {
                     return { ...params.props, error: hasError };
                 }*/
             },
-            { field: 'tipo', headerName: 'Tipo', width: 250, editable: true /*, resizable: true */ },
-            { field: 'inscripcionInicio', headerName: 'Inicio de inscripcion', width: 250, editable: true /*, resizable: true */ },
-            { field: 'inscripcionFin', headerName: 'Fin de inscripcion', width: 1000, editable: true /*, resizable: true */ },
+            { field: 'tipo', headerName: 'Tipo', width: 250, editable: true /*, resizable: true */ },//toDo validar que no cree un final en la sona de notas y una nota en la zpna de final
             { field: 'boton', headerName: '', suppressRowClickSelection: true, width: 200, renderCell: (e) => { return renderDetailsButton(e) } }
-
+        ];
+        const columnsFinal = [
+            { field: 'fecha', headerName: 'Fecha', width: 250 },
+            { field: 'inscripcionInicio', headerName: 'Inicio de inscripcion', width: 250/*, resizable: true */ },
+            { field: 'inscripcionFin', headerName: 'Fin de inscripcion', width: 400/*, resizable: true */ }
         ];
 
+
         const handleCloseSnackbar = () => setSnackbar(null);
+        console.log("")
         return (
-            <div style={{ height: "95%", width: '100%', position: 'fixed', bottom: "5%", }}>
-                <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
-                    <ArrowBackRoundedIcon fontSize='large' />
-                </IconButton>
-                <div style={{ display: 'flex', height: '100%' }}>
-                    <div style={{ flexGrow: 1 }}>
-                        <DataGrid
-                            //?customizar cartel de rows selected =  https://stackoverflow.com/questions/65668602/react-material-ui-grid-footer-change (no se como borrarlo igual)
-                            ref={gridRef}
-                            rows={evaluaciones}
-                            columns={columns}
-                            pageSize={10}
-                            enterMovesDown={true}
-                            processRowUpdate={ProcessRowUpdate} //! no sale de modo de editar aunque apretes enter, tab, etc
-                            onProcessRowUpdateError={handleProcessRowUpdateError}
-                            components={{
-                                Pagination: CustomPagination,
-                                NoRowsOverlay: CustomNoRowsOverlay
-                            }}
-                            experimentalFeatures={{ newEditingApi: true }}
-                        />
-                    </div>
+            <div style={{ height: "100vh", width: '100%'}}>
+                <div style={{ width: '100%'}}>
+                    <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
+                        <ArrowBackRoundedIcon fontSize='large' />
+                    </IconButton>
+                    <IconButton color="primary" aria-label="crear fila" onClick={() => { let r = evaluaciones.slice(); r.push({ id: 10/*SISTEMA DE CREAR ID*/ }); return setEvaluaciones(r) }}>{/*forma copada q no sirve  setEvaluaciones(evaluaciones.slice().concat[{}])*/}
+                        <CreateIcon fontSize='large' />
+                    </IconButton>
+                </div>
+                <div style={{ height: '46%' }}>
+
+                    <DataGrid
+                        //?customizar cartel de rows selected =  https://stackoverflow.com/questions/65668602/react-material-ui-grid-footer-change (no se como borrarlo igual)
+                        ref={gridRef}
+                        rows={evaluaciones}
+                        columns={columns}
+                        pageSize={10}
+                        enterMovesDown={true}
+                        processRowUpdate={ProcessRowUpdate} //! no sale de modo de editar aunque apretes enter, tab, etc
+                        onProcessRowUpdateError={handleProcessRowUpdateError}
+                        components={{
+                            Pagination: CustomPagination,
+                            NoRowsOverlay: CustomNoRowsOverlay
+                        }}
+                        experimentalFeatures={{ newEditingApi: true }}
+                    />
+
+                    {!!snackbar && (
+                        <Snackbar
+                            open
+                            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                            onClose={handleCloseSnackbar}
+                            autoHideDuration={6000}
+                        >
+                            <Alert {...snackbar} onClose={handleCloseSnackbar} />
+                        </Snackbar>
+                    )}
+                </div>
+                <div style={{ height: '45%', width:"100%", bottom:"0%", position:"fixed"}}>
+                <p style={{ textAlign: "center", fontSize: "18px", backgroundColor: "lightGrey" }}>Finales</p>
+
+                    <DataGrid
+                        rows={curso.final}
+                        columns={columnsFinal}
+                        pageSize={10}
+                        enterMovesDown={true}
+                        onProcessRowUpdateError={handleProcessRowUpdateError}
+                        components={{
+                            Pagination: CustomPagination,
+                            NoRowsOverlay: CustomNoRowsOverlay
+                        }}
+                        experimentalFeatures={{ newEditingApi: true }}
+                    />
+
                     {!!snackbar && (
                         <Snackbar
                             open
