@@ -142,7 +142,6 @@ export default function CursoCard() {
         fetch(`http://localhost:3001/cursos/${id}/`)
             .then(response => response.json())
             .then(curso => {
-                console.log("cursos")
                 setCurso(curso)
                 setAlumnos(curso.alumnos)
                 setRows([])
@@ -338,7 +337,7 @@ export default function CursoCard() {
                     <p style={{ textAlign: "center", fontSize: "18px", backgroundColor: "lightGrey" }}>Finales</p>
 
                     <DataGrid
-                        rows={curso.final}
+                        rows={curso.finales}
                         columns={columnsFinal}
                         pageSize={10}
                         enterMovesDown={true}
