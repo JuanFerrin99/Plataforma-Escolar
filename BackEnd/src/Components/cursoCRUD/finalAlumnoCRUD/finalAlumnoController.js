@@ -7,7 +7,7 @@ const { default: mongoose } = require('mongoose');
 // ------------------------------------------- PATCH /cursos/:id/:dni
 
 module.exports.modificarFinal = (req, res) => {
-    return Curso.findOneAndUpdate({ _id: req.params.id, "alumnos.dni": parseInt(req.params.dni) }, { $set: { "alumnos.$.final": req.body.final } })
+    return Curso.findOneAndUpdate({ _id: req.params.id, "alumnos.dni": parseInt(req.params.dni) }, { $set: { "alumnos.$.final.id": req.body.id, "alumnos.$.final.nota": req.body.nota } })
         .then((result) => {
             if (result) {
                 res.status(200).json("Se modifico el final")
