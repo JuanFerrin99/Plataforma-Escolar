@@ -291,7 +291,6 @@ export default function CursoCard() {
 
 
         const handleCloseSnackbar = () => setSnackbar(null);
-        console.log("")
         return (
             <div style={{ height: "100vh", width: '100%' }}>
                 <div style={{ width: '100%' }}>
