@@ -9,6 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
+import { useLocation } from "react-router-dom"
 import "./Table.css";
 
 const makeStyle = (status) => {
@@ -35,6 +36,7 @@ const makeStyle = (status) => {
 export default function BasicTable(props) {
     const [notas, setNotas] = useState([]);
 	const [s, setS] = useState(true);
+    const location = useLocation()
 	useEffect(() => {
 		if(s){//toDO checkear que si no hay notas que no se quede cargando infinitamente y consuma mucho
 			setNotas(getArray(props))
@@ -43,15 +45,14 @@ export default function BasicTable(props) {
 		}
 	});
 
-	const handleDelete = (postIndex) => {
-        fetch("http://localhost:3001/inasistencias/", {
+	const handleDelete = (postIndex,idNota) => {
+            fetch(`http://localhost:3001/cursos/${location.state.idCurso}/alumnos/${location.state.dni}/calificaciones/${idNota}`, {
             method: 'DELETE',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            },
         })
-		setNotas(prevPosts =>prevPosts.filter((_, index) => index !== postIndex))
+        .then(data => {
+            setNotas(prevPosts =>prevPosts.filter((_, index) => index !== postIndex))
+        })
+
 	}
 	
     function getArray(p) {
@@ -84,7 +85,7 @@ export default function BasicTable(props) {
                                 <TableCell component="th" scope="row"> {nota.nota} </TableCell>
                                 <TableCell component="th" scope="row"> {nota.tipo} </TableCell>
                                 <TableCell align="left">
-									<IconButton color="default" aria-label="crear fila" onClick={() => {handleDelete(i)}}>
+									<IconButton color="default" aria-label="crear fila" onClick={() => {handleDelete(i,nota.id)}}>
 										<ClearIcon fontSize='medium' />
 									</IconButton>
 								</TableCell>
