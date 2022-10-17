@@ -7,26 +7,6 @@ module.exports.idValidator = [
         .isAlphanumeric().withMessage("id debe ser alfanumerico"),
     verifyValidation
 ]
-module.exports.evaluacionIdValidator = [
-    param("evaluacionId")
-        .isAlphanumeric().withMessage("evaluacionId debe ser alfanumerico"),
-    verifyValidation
-]
-module.exports.finalIdValidator = [
-    param("finalId")
-        .isAlphanumeric().withMessage("finalId debe ser alfanumerico"),
-    verifyValidation
-]
-module.exports.notaIdValidator = [
-    param("notaId")
-        .isAlphanumeric().withMessage("notaId debe ser alfanumerico"),
-    verifyValidation
-]
-module.exports.dniValidator = [
-    param("dni")
-        .isInt().withMessage("dni debe ser un int"),
-    verifyValidation
-]
 
 
 module.exports.agregarValidator = [
@@ -90,57 +70,5 @@ module.exports.modificacionValidator = [
     body("estado")
         .optional({ nullable: true })
         .isString().withMessage("Estado debe ser un string"),
-    verifyValidation
-]
-
-
-module.exports.agregarEvaluacionValidator = [
-    body("evaluacion")
-        .isObject().withMessage("Evaluacion debe ser un objeto"),
-    verifyValidation
-]
-module.exports.modificarEvaluacionValidator = [
-    body("tipo")
-        .optional({ nullable: true })
-        .isString().withMessage("Tipo debe ser un string"),
-    body("fecha")
-        .optional({ nullable: true })
-        .isString().withMessage("Fecha debe ser un string"),
-    verifyValidation
-]
-
-
-module.exports.agregarFinalValidator = [
-    body("final")
-        .isObject().withMessage("Final debe ser un objeto"),
-    verifyValidation
-]
-module.exports.modificarFinalValidator = [
-    body("fecha")
-        .optional({ nullable: true })
-        .isString().withMessage("Fecha debe ser un string"),
-    body("fechasInscripcion")
-        .optional({ nullable: true })
-        .isObject().withMessage("FechasInscripcion debe ser un objeto"),
-    body("alumnosInscriptos")
-        .optional({ nullable: true })
-        .isArray().withMessage("AlumnosInscriptos debe ser un array"),
-    body("alumnosInscriptos.*")
-        .isInt().withMessage("AlumnosInscriptos debe ser un array de ints"),
-    body("id")
-        .optional({ nullable: true })
-        .isInt().withMessage("id debe ser un int"),
-    verifyValidation
-]
-
-
-module.exports.agregarCalificacionValidator = [
-    body("calificacion")
-        .isObject().withMessage("Calificacion debe ser un objeto"),
-    verifyValidation
-]
-module.exports.modificarCalificacionValidator = [
-    body("nota")
-        .isInt().withMessage("Nota debe ser un int"),
     verifyValidation
 ]
