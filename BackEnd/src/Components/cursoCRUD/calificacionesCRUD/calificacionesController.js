@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Curso = require("./cursoSchema.js");
+const Curso = require("../cursoSchema.js");
 const { default: mongoose } = require('mongoose');
 
 
