@@ -1,15 +1,9 @@
 import * as React from 'react';
 import { useEffect, useState, useRef } from "react";
-import { useLocation, useParams } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 import { Outlet } from "react-router-dom";
 import { Button, Card, CardActions, CardContent, Grid, Skeleton, Container } from "@mui/material";
-import {
-    DataGrid,
-    gridPageCountSelector,
-    gridPageSelector,
-    useGridApiContext,
-    useGridSelector,
-} from '@mui/x-data-grid';
+import { DataGrid, gridPageCountSelector, gridPageSelector, useGridApiContext, useGridSelector } from '@mui/x-data-grid';
 import Pagination from '@mui/material/Pagination';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import IconButton from '@mui/material/IconButton';
@@ -24,10 +18,7 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 
 //*------------------------------------cosas inutiles que deberian estar en otros archivos porque ocupan mucho espacio 
-//toDo importar las cosas inutiles de algun utils
-
-//skeleton 
-//toDo importarlo en ves de estar copiandolo por todos lados
+//toDo importar las cosas inutiles de algun utils y evitar repeticion
 
 function Variants() {
     return (
@@ -125,7 +116,7 @@ function CustomNoRowsOverlay() {
     );
 }
 
-export default function CursoCard({ }) {
+export default function CursoCard() {
     const gridRef = useRef();
     const [curso, setCurso] = useState({});
     const [alumnos, setAlumnos] = useState([]);
@@ -139,7 +130,7 @@ export default function CursoCard({ }) {
     const [isPressedEvaluacion, setIsPressedEvaluacion] = useState(false);
 
     const location = useLocation()
-    const id = location.state.idCurso  //id del curso que se esta mostrando
+    const id = location.state.idCurso
     let ausentes = []
 
 
@@ -196,12 +187,12 @@ export default function CursoCard({ }) {
                 fetch(`http://localhost:3001/cursos/${id}/evaluaciones/${params.row.id}`, { method: 'DELETE' })//toDo checkear si lo encontro o no y cambiar el mensaje
                     .then(res => {
                         if (res) {
-                            let rows = evaluaciones.slice()                        //al usar un slice vacio rows pasa a tener una copia de evaluaciones
-                            rows = rows.filter(row => row.id !== params.row.id)   //filter devuelve un array con todas las rows exepto la de params(la que llamo a la funcion y por ende queremos borrar)
-                            setEvaluaciones(rows)                                //reemplazar las rows actuales con las nuevas sin la que se quiere borrar, al ser un state la tabla se actualiza con los nuevos valores
+                            let rows = evaluaciones.slice()
+                            rows = rows.filter(row => row.id !== params.row.id)
+                            setEvaluaciones(rows)
                             setSnackbar({ children: 'Evaluacion borrada', severity: 'error' });
                         }
-                        else (console.log("i am the res", res))//! mensaje gamer
+                        else (alert("No se pudo borrar la evaluacion"))
                     })
                     .catch(error => {
                         console.log(error)
@@ -280,7 +271,7 @@ export default function CursoCard({ }) {
 
     //* Vista Evaluaciones
 
-    else if (isPressedEvaluacion === true) {//! Buscar forma de centar las cosas en sus celdas YY hacer que los anchos no esten hardcodeados YY cambiar el tpio de cuadro al pro o premiem asi funcoiona rezisable
+    else if (isPressedEvaluacion === true) { //! Buscar forma de centrar las cosas en sus celdas, hacer que los anchos no esten hardcodeados y cambiar el tipo de cuadro al pro o premium asi funciona rezisable
         const columns = [
             {
                 field: 'fecha', headerName: 'Fecha', width: 250, editable: true /*, resizable: true , //ToDo con esta cosa validas lo de adentro
@@ -289,7 +280,7 @@ export default function CursoCard({ }) {
                     return { ...params.props, error: hasError };
                 }*/
             },
-            { field: 'tipo', headerName: 'Tipo', width: 250, editable: true /*, resizable: true */ },//toDo validar que no cree un final en la sona de notas y una nota en la zpna de final
+            { field: 'tipo', headerName: 'Tipo', width: 250, editable: true /*, resizable: true */ }, //toDo validar que no cree un final en la sona de notas y una nota en la zpna de final
             { field: 'boton', headerName: '', suppressRowClickSelection: true, width: 200, renderCell: (e) => { return renderDetailsButton(e) } }
         ];
         const columnsFinal = [
@@ -302,8 +293,8 @@ export default function CursoCard({ }) {
         const handleCloseSnackbar = () => setSnackbar(null);
         console.log("")
         return (
-            <div style={{ height: "100vh", width: '100%'}}>
-                <div style={{ width: '100%'}}>
+            <div style={{ height: "100vh", width: '100%' }}>
+                <div style={{ width: '100%' }}>
                     <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
                         <ArrowBackRoundedIcon fontSize='large' />
                     </IconButton>{/*
@@ -343,8 +334,8 @@ export default function CursoCard({ }) {
                         </Snackbar>
                     )}
                 </div>
-                <div style={{ height: '45%', width:"100%", bottom:"0%", position:"fixed"}}>
-                <p style={{ textAlign: "center", fontSize: "18px", backgroundColor: "lightGrey" }}>Finales</p>
+                <div style={{ height: '45%', width: "100%", bottom: "0%", position: "fixed" }}>
+                    <p style={{ textAlign: "center", fontSize: "18px", backgroundColor: "lightGrey" }}>Finales</p>
 
                     <DataGrid
                         rows={curso.final}
