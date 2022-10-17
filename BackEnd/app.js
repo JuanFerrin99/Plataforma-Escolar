@@ -15,7 +15,7 @@ var routeCurso = require('./src/Components/cursoCRUD/cursoRouter')
     var routeCalificaciones = require('./src/Components/cursoCRUD/calificacionesCRUD/calificacionesRouter')
     var routeEvaluaciones = require('./src/Components/cursoCRUD/evaluacionesCRUD/evaluacionesRouter')
     var routeFinales = require('./src/Components/cursoCRUD/finalesCRUD/finalesRouter')
-    //var route = require('./src/Components/cursoCRUD/cursoRouter')
+    var routeFinalAlumno = require('./src/Components/cursoCRUD/finalAlumnoCRUD/finalAlumnoRouter')
 
 var routeAlumno = require('./src/Components/alumnoCRUD/alumnoRouter')
 var routeProfesor = require('./src/Components/profesorCRUD/profesorRouter')
@@ -52,5 +52,6 @@ app.use('/cursos/', routeCurso)
     app.use('/cursos/', routeCalificaciones)
     app.use('/cursos/', routeEvaluaciones)
     app.use('/cursos/', routeFinales)
+    app.use('/cursos/', routeFinalAlumno)
 
 module.exports = app;
