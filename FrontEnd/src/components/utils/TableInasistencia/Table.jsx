@@ -6,7 +6,7 @@ import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
-
+import { useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
 import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
@@ -28,9 +28,9 @@ const makeStyle = (status) => {
 	}
 }
 
-export default function BasicTable(inasists) {
+export default function BasicTable(props) {
 	const [inasists, setInasists] = useState([]);
-	set
+	setInasists(props)
 	let total = 0;
 	const getPesoFalta = (tipo) => {
 		if (tipo === "Tarde") {
