@@ -6,10 +6,7 @@ import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
-import { useEffect, useState } from "react";
 import Paper from "@mui/material/Paper";
-import ClearIcon from '@mui/icons-material/Clear';
-import IconButton from '@mui/material/IconButton';
 import "./Table.css";
 
 
@@ -29,8 +26,6 @@ const makeStyle = (status) => {
 }
 
 export default function BasicTable(props) {
-	const [inasists, setInasists] = useState([]);
-	setInasists(props)
 	let total = 0;
 	const getPesoFalta = (tipo) => {
 		if (tipo === "Tarde") {
@@ -41,13 +36,6 @@ export default function BasicTable(props) {
 		}
 		else { return 0 }
 	}
-
-	const handleDelete = (postIndex) => {
-		setInasists((prevPosts) =>
-		  prevPosts.filter((_, index) => index !== postIndex)
-		);
-	  };
-
 	return (
 		<div className="Table">
 			<h3>Inasistencias</h3>
@@ -65,8 +53,7 @@ export default function BasicTable(props) {
 						</TableRow>
 					</TableHead>
 					<TableBody style={{ color: "white" }}>
-
-						{inasists.map((elem,i) => (
+						{props.inasistencia.map((elem,i) => (
 							<TableRow
 								key={elem._id}
 								sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -76,11 +63,6 @@ export default function BasicTable(props) {
 								<TableCell align="left">{total = total + getPesoFalta(elem.tipo)}</TableCell>
 								<TableCell align="left">
 									<span className="status" style={makeStyle(elem.justificado)}>{elem.justificado}</span>
-								</TableCell>
-								<TableCell align="left">
-									<IconButton color="default" aria-label="crear fila" onClick={() => {handleDelete(i)}}>
-										<ClearIcon fontSize='medium' />
-									</IconButton>
 								</TableCell>
 							</TableRow>
 						))}
