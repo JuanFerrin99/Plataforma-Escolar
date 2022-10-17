@@ -3,10 +3,10 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom"
-import TableInasistencia from "../components/utils/TableInasistencia/Table"
+import TableInasistencia from "../components/utils/TableInasistenciav2/Table"
 import TableNotas from "../components/utils/TableNotas/Table"
 
-export default function CursoCard({ }) {
+export default function CursoCard({}) {
     const [inasistencias, setInasistencias] = useState([]);
     const [notas, setNotas] = useState([]);
     const location = useLocation()
@@ -17,6 +17,10 @@ export default function CursoCard({ }) {
         fetch(`http://localhost:3001/inasistencias/${dni}/${id}`)
             .then(response => response.json())
             .then(res => {
+                let id = 0
+                res.map((inasistencia)=>{
+                    inasistencia.id = id++
+                })
                 setInasistencias(res)
             })
             .catch(error => {
@@ -44,7 +48,6 @@ export default function CursoCard({ }) {
     return (
         <div>
             <TableInasistencia inasistencia={inasistencias} />
-            <TableNotas notas={notas} />
         </div>
     );
 }

@@ -117,6 +117,7 @@ function CustomNoRowsOverlay() {
 }
 
 export default function CursoCard() {
+    //! si vas para atras pierde el state
     const gridRef = useRef();
     const [curso, setCurso] = useState({});
     const [alumnos, setAlumnos] = useState([]);
