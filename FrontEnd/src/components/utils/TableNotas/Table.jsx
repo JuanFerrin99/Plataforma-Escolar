@@ -44,6 +44,13 @@ export default function BasicTable(props) {
 	});
 
 	const handleDelete = (postIndex) => {
+        fetch("http://localhost:3001/inasistencias/", {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+        })
 		setNotas(prevPosts =>prevPosts.filter((_, index) => index !== postIndex))
 	}
 	

@@ -403,7 +403,7 @@ export default function CursoCard() {
             else {
                 alert("No se pudo tomar asistencia")
             }
-        }
+        }//! tipo no esta ahi 
         return (
             <div style={{ height: "94.9vh", width: '100%' }}>
                 <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
