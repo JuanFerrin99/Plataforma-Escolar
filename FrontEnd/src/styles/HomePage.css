@@ -1,26 +1,23 @@
 
 
 #a{
-    background-image: linear-gradient(to bottom, #03194a57, #03194a), url(https://ise.com.ar/wp-content/uploads/2020/10/ISE-Savio-Electronica-scaled.jpg);
+    background-image: linear-gradient(to bottom, #010e2969, #010e29), url(https://ise.com.ar/wp-content/uploads/2020/10/ISE-Savio-Electronica-scaled.jpg);
     background-image: no-repeat;
     background-image: fixed;
     background-image: center;
     background-size: cover;
 
-    padding: 0%;
-    margin: 0%;
-    height: 100%;
+    background-color: #010e29;
 
-    width: 100vw;
+    width: 98.9vw;
     height: 100vh;
     z-index: 900;
 }
 
 #infoInicio {
-    width: 100%;
-
-    padding: 10%;    
-    margin: 0%;
+    padding-left: 10%;    
+    padding-top: 14%;
+    height: 67%;
 
     color: white;
     font-family: system-ui;
@@ -45,7 +42,7 @@
     width: 15vw;
     height: 7vh;
     padding: 0px; 
-    margin-right: 10px;
+    margin-right: 1%;
     justify-content: center;
 
     border-radius: 24px;
@@ -59,17 +56,80 @@
 
 
 #contacto {
-    height: 200px;
     width: 100%;
     padding: 0px;
     margin: 0px;
-    background-color: #031A4A;
+    background-color: #010e29;
+    overflow: hidden;
     color: white;
+    font-family: system-ui;
+    font-weight: lighter;
 }
 
-#carrucel-div {
-    padding: 10px;
-    margin: 10px;
+#info{
+    width: 40vw;
+    height: 50vh;
+    float:left;
+    margin-left: 3%;
+    margin-top: 3%;
+}
+
+iframe{
+    float: right;
+    margin: 3%;
+    width: 50vw;
+    height: 50vh;
+    border:0;
+}
+
+#info h1{
+    font-size: 3vw;
+}
+#info p{
+    font-size: 1.5vw;
+    line-height: 140%;
+    text-align: right;
+    margin-top: 12%;
+}
+
+.slider {
     width: 100%;
-    height: 200px;
+    background-color: #010e29;
+    color: white;
+    font-family: system-ui;
+    font-weight: lighter;
+    text-align: center;
+}
+.slider h1{
+    color: #01c4ff;
+    font-size: 2.5vw;
+}
+.slider p{
+    font-size: 1.5vw;
+    line-height: 50%;
+}
+
+.slider #botonInfo{
+    align-items: center;
+    appearance: none;
+    background-color: transparent;
+    
+    width: 7vw;
+    height: 6vh;
+    padding: 0px; 
+    justify-content: center;
+
+    border-radius: 24px;
+    border-style:groove;
+    border-color: white;
+
+    color: white;
+    font-family: system-ui;
+    font-size: 100%;
+}
+
+@media screen and (max-width: 200px) {
+    #a{
+        width: 100vw;
+    }
 }
