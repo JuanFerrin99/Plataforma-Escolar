@@ -25,7 +25,7 @@ router.get('/:id/:dni', idValidator, getCursoAlumno)
 // 6 GET /cursos/
 router.get('/', getCursos)
 
-
+// ---------------------------------------------- Tomar Asistencia -----------------------------------------------
 // POST /cursos/:id
 router.post('/:id', idValidator, modificacionValidator, agregarFechaAsistencia)
 
