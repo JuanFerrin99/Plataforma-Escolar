@@ -9,9 +9,13 @@ var corsAllowed = ["http://localhost:3000"]
 
 /*-------------------------------------routes-------------------------------------*/
 var routeCarrera = require('./src/Components/carreraCRUD/carreraRouter')
-var routeCurso = require('./src/Components/cursoCRUD/cursoRouter')
 var routeInasistencia = require('./src/Components/inasistenciaCRUD/inasistenciaRouter');
 var routeMateria = require('./src/Components/materiaCRUD/materiaRouter');
+var routeCurso = require('./src/Components/cursoCRUD/cursoRouter')
+    var routeCalificaciones = require('./src/Components/cursoCRUD/calificacionesCRUD/calificacionesRouter')
+    var routeEvaluaciones = require('./src/Components/cursoCRUD/evaluacionesCRUD/evaluacionesRouter')
+    var routeFinales = require('./src/Components/cursoCRUD/finalesCRUD/finalesRouter')
+    //var route = require('./src/Components/cursoCRUD/cursoRouter')
 
 var routeAlumno = require('./src/Components/alumnoCRUD/alumnoRouter')
 var routeProfesor = require('./src/Components/profesorCRUD/profesorRouter')
@@ -42,8 +46,11 @@ app.use('/profesores/', routeProfesor)
 app.use('/secretario/', routeSecretario)
 
 app.use('/carreras/', routeCarrera)
-app.use('/cursos/', routeCurso)
 app.use('/inasistencias/', routeInasistencia);
 app.use('/materias/', routeMateria);
+app.use('/cursos/', routeCurso)
+    app.use('/cursos/', routeCalificaciones)
+    app.use('/cursos/', routeEvaluaciones)
+    app.use('/cursos/', routeFinales)
 
 module.exports = app;
