@@ -3,7 +3,7 @@ const router = express.Router();
 const { verificarAuth } = require('../../../auth/authController.js');
 
 const { idValidator, finalIdValidator, agregarFinalValidator, modificarFinalValidator } = require("./finalesValidator");
-const { agregarFinal, modificarFinal, eliminarFinal } = require("./finalController");
+const { agregarFinal, modificarFinal, eliminarFinal } = require("./finalesController");
 
 
 // POST /cursos/:id/finales

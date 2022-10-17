@@ -1,5 +1,5 @@
 const { body, query, param } = require("express-validator");
-const { verifyValidation } = require("../../utils/validationUtils")
+const { verifyValidation } = require("../../../utils/validationUtils")
 
 
 module.exports.idValidator = [
