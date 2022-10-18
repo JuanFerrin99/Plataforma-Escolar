@@ -39,15 +39,16 @@ export default function AlumnoPage() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`http://localhost:3001/profesores/filtro/${Cookies.get("mail")}`)
+        fetch(`http://localhost:3001/profesores/filtro/${Cookies.get("mail")}`,{credentials:"include"})
             .then(response => response.json())
             .then(profesor => {
                 setDni(profesor.dni)
                 setCursos(profesor.cursos)
                 setLoading(false)
-                fetch(`http://localhost:3001/inasistencias/filtro/${profesor.dni}/`)
+                fetch(`http://localhost:3001/inasistencias/filtro/${profesor.dni}/`,{credentials:"include"})
                     .then(response => response.json())
                     .then(res => {
+                        console.log(res)
                         setInasistencias(res)
                     })
                     .catch(error => {
