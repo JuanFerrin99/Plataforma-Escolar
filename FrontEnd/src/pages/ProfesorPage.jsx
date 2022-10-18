@@ -48,7 +48,6 @@ export default function AlumnoPage() {
                 fetch(`http://localhost:3001/inasistencias/filtro/${profesor.dni}/`,{credentials:"include"})
                     .then(response => response.json())
                     .then(res => {
-                        console.log(res)
                         setInasistencias(res)
                     })
                     .catch(error => {

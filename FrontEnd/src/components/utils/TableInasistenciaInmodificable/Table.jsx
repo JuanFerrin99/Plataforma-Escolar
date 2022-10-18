@@ -159,6 +159,7 @@ export default function TableInasistencias(props) {
 				<DataGrid
 					ref={gridRef}
 					rows={faltas}
+					getRowId={(row) => row._id} 
 					columns={columns}
 					pageSize={10}
 					enterMovesDown={true}
