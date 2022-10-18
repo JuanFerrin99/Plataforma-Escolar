@@ -10,8 +10,7 @@ const { body } = require("express-validator");
 
 //-------------------------TOKEN-------------------------
 
-const { createToken } = require("../utils/tokenUtils")
-const { checkToken } = require("../utils/tokenUtils.js")
+const { createToken, verifyToken } = require("../utils/tokenUtils")
 
 //-----------------------------------------------FIREBASE----------------------------------------------------------------------------------------------
 
@@ -154,20 +153,34 @@ module.exports.sendLoginResponse = (req, res) => {
     })
 }
 
-module.exports.verificarAuth = async (req, res, next) => {
-    const authorizationHeader = req.headers.authorization;
-    if (authorizationHeader != undefined) {
-        const token = authorizationHeader.replace("Bearer ", "");
-        const resultado = await checkToken(token)
-
-        if (!resultado) {
-            res.status(401).json({ error: "Token invalido" });
-        }
-        else {
+module.exports.verificarRol = (roles) => async (req, res, next) => {
+    try {
+        const usuario = await verifyToken(req.cookies.token);
+        if (roles.find((rol) => rol === usuario.body.rol)) {
             next()
         }
+        else {
+            res.status(401).json({ error: "Unauthorized" })
+        }
     }
-    else {
+    catch (err) {
         res.status(401).json({ error: "Token no provisto" })
     }
 }
+
+/*
+module.exports.verificarIdentidad = (roles) => async (req, res, next) => {
+    try {
+        const usuario = await verifyToken(req.cookies.token);
+        if (roles.find((rol) => rol === usuario.body.rol)) {
+            next()
+        }
+        else {
+            res.status(401).json({ error: "Unauthorized" })
+        }
+    }
+    catch (err) {
+        res.status(401).json({ error: "Token no provisto" })
+    }
+}
+*/

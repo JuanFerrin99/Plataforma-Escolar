@@ -2,9 +2,9 @@ const jwt = require("jsonwebtoken")
 const config = require("../../config/default.json")
 
 
-function verifyToken(token, key) {
+module.exports.verifyToken = (token) => {
     return new Promise((resolve, reject) =>
-        jwt.verify(token, key, (err, decoded) => {
+        jwt.verify(token, config.authentication.jwtSecret, (err, decoded) => {
             if (err) reject(err);
             else resolve(decoded);
         })
@@ -18,15 +18,4 @@ module.exports.createToken = (body) => {
             resolve(token)
         });
     })
-}
-
-module.exports.checkToken = async (token) => {
-    try {
-        const contenido = await verifyToken(token, jwtSecret);
-        //hacer mis cosas
-        return true;
-    }
-    catch (err) {
-        return false
-    }
 }
