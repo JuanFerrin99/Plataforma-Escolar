@@ -111,20 +111,24 @@ function CustomNoRowsOverlay() {
 	);
 }
 
-//props.inasistencias
 export default function CursoCard(props) {
 	const [loading, setLoading] = useState(true);//toDo que muestre loding skeleton
 	const [snackbar, setSnackbar] = useState(null);
-
-	//temp
-	const [evaluaciones, setEvaluaciones] = useState([]);
-	//
-
+	const [faltas, setFaltas] = useState([]);
+	const [s, setS] = useState(true);
 	const gridRef = useRef();
 	const location = useLocation()
 	const id = location.state.idCurso
 
-	//* Patch evaluaciones
+	useEffect(() => {
+		if(s){//toDO checkear que si al estar la coleccion esta vacia que no se quede cargando infinitamente y consuma mucho
+			setFaltas(props.inasistencia)
+			if(faltas.length == 0){return undefined}
+			else{setS(false)}
+		}
+	});
+
+	//* Patch faltas
 	const ProcessRowUpdate = (props) => {
 		fetch(`http://localhost:3001/inasistencias/${props._id}`, {
 			method: 'PATCH',
@@ -142,6 +146,7 @@ export default function CursoCard(props) {
 				}
 			)
 			.then(res => { //toDo checkear si lo encontro o no y cambiar el mensaje
+				console.log(res,typeof props.justificado)//! falta updatear las rows
 				setSnackbar({ children: 'User successfully saved', severity: 'success' });
 			})
 			.catch(error => {
@@ -149,17 +154,16 @@ export default function CursoCard(props) {
 			})
 	}
 
-	//* Delete evaluaciones
+	//* Delete faltas
 	const renderDetailsButton = (params) => {
 		return (
 			<IconButton color="primary" aria-label="borrar" onClick={() => {
-				console.log(params)
-				fetch(`http://localhost:3001/inasistencias/${params.row.id}`, { method: 'DELETE' })//toDo checkear si lo encontro o no y cambiar el mensaje
+				fetch(`http://localhost:3001/inasistencias/${params.row._id}`, { method: 'DELETE' })//toDo checkear si lo encontro o no y cambiar el mensaje
 					.then(res => {
 						if (res) {
-							let rows = evaluaciones.slice()
+							let rows = faltas.slice()
 							rows = rows.filter(row => row.id !== params.row.id)
-							setEvaluaciones(rows)
+							setFaltas(rows)
 							setSnackbar({ children: 'Evaluacion borrada', severity: 'error' });
 						}
 						else (alert("No se pudo borrar la evaluacion"))
@@ -228,7 +232,7 @@ export default function CursoCard(props) {
 				<IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
 					<ArrowBackRoundedIcon fontSize='large' />
 				</IconButton>
-				<IconButton color="primary" aria-label="crear fila" onClick={() => { let r = evaluaciones.slice(); r.push({ id: props.insistencia.id + 1 }); return setEvaluaciones(r) }}>
+				<IconButton color="primary" aria-label="crear fila" onClick={() => { let r = faltas.slice(); r.push({ id: props.insistencia.id + 1 }); return setFaltas(r) }}>
 					<CreateIcon fontSize='large' />
 				</IconButton>
 			</div>
@@ -236,7 +240,7 @@ export default function CursoCard(props) {
 			<div style={{ height: '46%' }}>
 				<DataGrid
 					ref={gridRef}
-					rows={props.inasistencia}
+					rows={faltas}
 					columns={columns}
 					pageSize={10}
 					enterMovesDown={true}
