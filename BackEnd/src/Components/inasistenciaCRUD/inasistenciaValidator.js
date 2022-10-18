@@ -44,7 +44,7 @@ module.exports.modificacionValidator = [
         .isString().withMessage("El motivo debe ser un string"),
     body("justificado")
         .optional({nullable: true})
-        .isBoolean().withMessage("Justificado debe ser un string"),
+        .isString().withMessage("Justificado debe ser un string"),
     body("curso")
         .optional({nullable: true})
         .isString().withMessage("Curso debe ser un string"),
