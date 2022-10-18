@@ -160,7 +160,7 @@ module.exports.verificarAuth = async (req, res, next) => {
         const token = authorizationHeader.replace("Bearer ", "");
         const resultado = await checkToken(token)
 
-        if (resultado == false) {
+        if (!resultado) {
             res.status(401).json({ error: "Token invalido" });
         }
         else {
