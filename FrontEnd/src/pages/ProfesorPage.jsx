@@ -1,5 +1,5 @@
 import { Button, Card, CardActions, CardContent, Grid, Skeleton, Container } from "@mui/material";
-import TableInasistencia from "../components/utils/TableInasistencia/Table"
+import TableInasistencia from "../components/utils/TableInasistenciaInmodificable/Table"
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
@@ -64,7 +64,7 @@ export default function AlumnoPage() {
     const cursosSkeleton = new Array(20).fill(<Variants />)
     return (
         <div>
-            <TableInasistencia inasistencia={inasistencias} />
+            <TableInasistencia inasistencia={inasistencias}/>
             <br />
             <Grid container spacing={3}>
                 {loading ? cursosSkeleton : cursosComponent}

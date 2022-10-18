@@ -111,14 +111,14 @@ function CustomNoRowsOverlay() {
 	);
 }
 
-export default function TableInasistencias(props) {
+export default function TableInasistencias(props,idCurso) {
 	const [loading, setLoading] = useState(true);//toDo que muestre loding skeleton
 	const [snackbar, setSnackbar] = useState(null);
 	const [faltas, setFaltas] = useState([]);
 	const [s, setS] = useState(true);
 	const gridRef = useRef();
-	const location = useLocation()
-	const id = location.state.idCurso
+	const id = idCurso
+
 
 	useEffect(() => {
 		if(s){//toDO checkear que si al estar la coleccion esta vacia que no se quede cargando infinitamente y consuma mucho

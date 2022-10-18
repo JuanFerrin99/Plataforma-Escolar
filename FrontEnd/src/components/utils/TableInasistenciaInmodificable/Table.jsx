@@ -1,15 +1,11 @@
 import * as React from 'react';
 import { useEffect, useState, useRef } from "react";
-import { useLocation } from "react-router-dom"
 import { Card, CardActions, CardContent, Grid, Skeleton, Container } from "@mui/material";
 import { DataGrid, gridPageCountSelector, gridPageSelector, useGridApiContext, useGridSelector } from '@mui/x-data-grid';
 import Pagination from '@mui/material/Pagination';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import IconButton from '@mui/material/IconButton';
 import CreateIcon from '@mui/icons-material/Create';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
-import ClearIcon from '@mui/icons-material/Clear';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 
@@ -111,86 +107,20 @@ function CustomNoRowsOverlay() {
 	);
 }
 
-export default function TableNotas(props) {
+export default function TableInasistencias(props) {
 	const [loading, setLoading] = useState(true);//toDo que muestre loding skeleton
-	const [snackbar, setSnackbar] = useState(null);
-	const [notas, setNotas] = useState([]);
+	const [faltas, setFaltas] = useState([]);
 	const [s, setS] = useState(true);
 	const gridRef = useRef();
-	const id = props.idCurso
-	const dni = props.dniAlumno
-	
+
 
 	useEffect(() => {
 		if(s){//toDO checkear que si al estar la coleccion esta vacia que no se quede cargando infinitamente y consuma mucho
-			setNotas(props.notas)
-			if(notas.length == 0){return undefined}
+			setFaltas(props.inasistencia)
+			if(faltas.length == 0){return undefined}
 			else{setS(false)}
 		}
 	});
-
-	//* Patch notas
-	const ProcessRowUpdate = (props) => {
-		fetch(`http://localhost:3001/cursos/${id}/alumnos/${dni}/calificaciones/${props._id}`, {
-			method: 'PATCH',
-			headers: {
-				'Accept': 'application/json, text/plain, */*',
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(
-				{
-				fecha: props.fecha,
-				justificado: props.justificado,
-				motivo: props.motivo,
-				tipo: props.tipo,
-				_id: props._id})
-				}
-			)
-			.then(res => { //toDo checkear si lo encontro o no y cambiar el mensaje
-				setSnackbar({ children: 'User successfully saved', severity: 'success' });
-			})
-			.catch(error => {
-				console.log(error)
-			})
-	}
-
-	//* Delete notas
-	const renderDetailsButton = (params) => {
-		return (
-			<IconButton color="primary" aria-label="borrar" onClick={() => {
-				fetch(`http://localhost:3001/cursos/${id}/alumnos/${dni}/calificaciones/${params.row._id}`, { method: 'DELETE' })//toDo checkear si lo encontro o no y cambiar el mensaje
-					.then(res => {
-						if (res) {
-							let rows = notas.slice() 
-							rows = rows.filter(row => row.id !== params.row.id)
-							setNotas(rows)
-							setSnackbar({ children: 'Evaluacion borrada', severity: 'error' });
-						}
-						else (alert("No se pudo borrar la evaluacion"))
-					})
-					.catch(error => {
-						console.log(error)
-					})
-			}}>
-				<ClearIcon
-					fontSize="medium"
-				//style={{ marginLeft: 16 }}
-				>
-				</ClearIcon>
-			</IconButton>
-
-
-		)
-	}
-
-	//*snackbar error
-	const handleProcessRowUpdateError = React.useCallback((error) => {
-		setSnackbar({ children: error.message, severity: 'error' });
-	}, []);
-
-	//*cerrar snackbar
-	const handleCloseSnackbar = () => setSnackbar(null);
-
 
 	//*custom pagination
 	function CustomPagination(newRow) {
@@ -216,54 +146,28 @@ export default function TableNotas(props) {
 
 	//* rows y columns
 	const columns = [
-		{ field: 'fecha', headerName: 'Fecha', width: 250, editable: true },
-		{ field: 'tipo', headerName: 'Tipo', width: 250, editable: true },
-		{ field: 'justificado', headerName: 'Justificado', width: 250, editable: true },
-		{ field: 'motivo', headerName: 'Motivo', width: 250, editable: true },
-		{ field: 'total', headerName: 'Total', width: 250, editable: true },
-		{ field: 'boton', headerName: '', suppressRowClickSelection: true, width: 200, renderCell: (e) => { return renderDetailsButton(e) } }
+		{ field: 'fecha', headerName: 'Fecha', width: 250},
+		{ field: 'tipo', headerName: 'Tipo', width: 250},
+		{ field: 'justificado', headerName: 'Justificado', width: 250},
+		{ field: 'motivo', headerName: 'Motivo', width: 250},
+		{ field: 'total', headerName: 'Total', width: 250},
 	];
 
 	//*  Return
 	return (
-		<div style={{ height: "100vh", width: '100%' }}>
-
-			<div style={{ width: '100%' }}>
-				<IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
-					<ArrowBackRoundedIcon fontSize='large' />
-				</IconButton>
-				<IconButton color="primary" aria-label="crear fila" onClick={() => { let r = notas.slice(); r.push({ id: props.insistencia.id + 1 }); return setNotas(r) }}>
-					<CreateIcon fontSize='large' />
-				</IconButton>
-			</div>
-
-			<div style={{ height: '46%' }}>
+		<div style={{ height: "55vh", width: '100%' }}>
 				<DataGrid
 					ref={gridRef}
-					rows={notas}
+					rows={faltas}
 					columns={columns}
 					pageSize={10}
 					enterMovesDown={true}
-					processRowUpdate={ProcessRowUpdate}
-					onProcessRowUpdateError={handleProcessRowUpdateError}
 					components={{
 						Pagination: CustomPagination,
 						NoRowsOverlay: CustomNoRowsOverlay
 					}}
 					experimentalFeatures={{ newEditingApi: true }}
 				/>
-				{!!snackbar && (
-					<Snackbar
-						open
-						anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-						onClose={handleCloseSnackbar}
-						autoHideDuration={6000}
-					>
-						<Alert {...snackbar} onClose={handleCloseSnackbar} />
-					</Snackbar>
-				)}
-			</div>
-
 		</div>
 	);
 }

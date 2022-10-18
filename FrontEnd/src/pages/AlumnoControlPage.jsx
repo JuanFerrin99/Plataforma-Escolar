@@ -47,8 +47,8 @@ export default function CursoCard({}) {
 
     return (
         <div>
-            <TableInasistencia inasistencia={inasistencias} />//Todo el nombre deberia estar en plural pero hay que cambiar todo
-            <TableNotas notas={notas} />
+            <TableInasistencia inasistencia={inasistencias} idCurso={id} dniAlumno = {dni}/>//Todo el nombre deberia estar en plural pero hay que cambiar todo
+            <TableNotas notas={notas} idCurso={id} dniAlumno = {dni}/>
         </div>
     );
 }
