@@ -14,7 +14,7 @@ export default function CursoCard({}) {
     const dni = location.state.dni // dni alumno
 
     useEffect(() => {
-        fetch(`http://localhost:3001/inasistencias/${dni}/${id}`)
+        fetch(`http://localhost:3001/inasistencias/${dni}/${id}`,{credentials:"include"})//todo esto pero en todos los feteches
             .then(response => response.json())
             .then(res => {
                 let id = 0

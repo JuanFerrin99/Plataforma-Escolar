@@ -111,13 +111,13 @@ function CustomNoRowsOverlay() {
 	);
 }
 
-export default function TableInasistencias(props,idCurso) {
+export default function TableInasistencias(props) {
 	const [loading, setLoading] = useState(true);//toDo que muestre loding skeleton
 	const [snackbar, setSnackbar] = useState(null);
 	const [faltas, setFaltas] = useState([]);
 	const [s, setS] = useState(true);
 	const gridRef = useRef();
-	const id = idCurso
+	const id = props.idCurso
 
 
 	useEffect(() => {
