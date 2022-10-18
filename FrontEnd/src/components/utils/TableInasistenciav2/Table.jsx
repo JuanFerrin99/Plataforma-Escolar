@@ -146,7 +146,6 @@ export default function CursoCard(props) {
 				}
 			)
 			.then(res => { //toDo checkear si lo encontro o no y cambiar el mensaje
-				console.log(res,typeof props.justificado)//! falta updatear las rows
 				setSnackbar({ children: 'User successfully saved', severity: 'success' });
 			})
 			.catch(error => {

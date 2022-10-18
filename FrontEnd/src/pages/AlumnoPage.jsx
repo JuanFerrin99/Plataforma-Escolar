@@ -55,7 +55,7 @@ export default function AlumnoPage() {
     
     const cursosSkeleton = new Array(20).fill(<Variants />)
     
-    
+    if(Cookies.get("rol")!="alumno"){alert("ru")}
     return (
         <div>
             <Button id="botonInscripcion" variant="contained" endIcon={<AddIcon/>}>
