@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { verificarRol, verificarIdentidad } = require('../../auth/authController.js');
+const { verificarRol, verificarIdentidad } = require('../../../auth/authController.js');
 
 const { idValidator, evaluacionIdValidator, agregarEvaluacionValidator, modificarEvaluacionValidator } = require("./evaluacionesValidator");
 const { agregarEvaluacion, modificarEvaluacion, eliminarEvaluacion } = require("./evaluacionesController");
