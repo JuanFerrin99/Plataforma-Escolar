@@ -119,8 +119,7 @@ export default function TableNotas(props) {
 	const gridRef = useRef();
 	const id = props.idCurso
 	const dni = props.dniAlumno
-	
-
+	console.log(JSON.stringify(props))
 	useEffect(() => {
 		if(s){//toDO checkear que si al estar la coleccion esta vacia que no se quede cargando infinitamente y consuma mucho
 			setNotas(props.notas)

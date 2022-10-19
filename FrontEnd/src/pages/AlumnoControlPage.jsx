@@ -31,10 +31,10 @@ export default function CursoCard({}) {
             fetch(`http://localhost:3001/cursos/${id}/${dni}`)
             .then(response => response.json())
             .then(curso => {
-                setNotas([])
+                setNotas([])//todo//!
                 curso.alumnos.forEach((element, i) => {
                     if (element.dni == dni) {
-                        setNotas((oldState) => [...oldState, element.calificaciones])
+                        setNotas((oldState) => [...oldState, ...element.calificaciones])
                     }
                 }
                 )
