@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { verificarAuth } = require('../../auth/authController');
+const { verificarRol, verificarIdentidad } = require('../../auth/authController.js');
 const { agregarAlumno, eliminarAlumno, modificarAlumno, getAlumno, getAlumnoEmail } = require('./adminController');
 const { agregarValidator, idValidator, mailValidator, modificacionValidator } = require("./adminValidator");
 
-//router.use(verificarAuth)
+router.use(verificarRol(["admin"]))
 
 // 1 POST /admins/
 router.post('/', agregarValidator, agregarAdmin);

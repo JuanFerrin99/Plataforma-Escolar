@@ -7,19 +7,19 @@ const { agregarInasistencia, eliminarInasistencia, modificarInasistencia, getIna
 //router.use(verificarIdentidad)
 
 // 1 POST /inasistencias/
-router.post('/', agregarValidator, agregarInasistencia);
+router.post('/', verificarRol(["profesor", "secretario", "admin"]), agregarValidator, agregarInasistencia);
 
 // 2 DELETE /inasistencias/:id
-router.delete('/:id', idValidator, eliminarInasistencia);
+router.delete('/:id', verificarRol(["secretario", "admin"]), idValidator, eliminarInasistencia);
 
 // 3 PATCH /inasistencias/:id
-router.patch('/:id', idValidator, modificacionValidator, modificarInasistencia);
+router.patch('/:id', verificarRol(["secretario", "admin"]), idValidator, modificacionValidator, modificarInasistencia);
 
 // 4 GET /inasistencias/:id
 router.get('/:id', idValidator, getInasistencia);
 
 // 5 GET /inasistencias/filtro/:dni
-router.get('/filtro/:dni', verificarRol(["alumno", "profesor", "secretario"]), dniValidator, getInasistenciaDni);
+router.get('/filtro/:dni', dniValidator, getInasistenciaDni);
 
 // 6 GET /inasistencias/:dni/:id
 router.get('/:dni/:id', dniValidator, idValidator, getInasistenciaAlumnoCurso);

@@ -167,20 +167,3 @@ module.exports.verificarRol = (roles) => async (req, res, next) => {
         res.status(401).json({ error: "Token no provisto" })
     }
 }
-
-/*
-module.exports.verificarIdentidad = (roles) => async (req, res, next) => {
-    try {
-        const usuario = await verifyToken(req.cookies.token);
-        if (roles.find((rol) => rol === usuario.body.rol)) {
-            next()
-        }
-        else {
-            res.status(401).json({ error: "Unauthorized" })
-        }
-    }
-    catch (err) {
-        res.status(401).json({ error: "Token no provisto" })
-    }
-}
-*/

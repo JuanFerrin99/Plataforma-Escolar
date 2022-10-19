@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { verificarAuth } = require('../../auth/authController.js');
+const { verificarRol, verificarIdentidad } = require('../../auth/authController.js');
 
 const { idValidator, agregarValidator, modificacionValidator } = require("./cursoValidator");
 const { agregarCurso, eliminarCurso, modificarCurso, getCurso, getCursoAlumno, getCursos, agregarFechaAsistencia } = require("./cursoController");
@@ -8,13 +8,13 @@ const { agregarCurso, eliminarCurso, modificarCurso, getCurso, getCursoAlumno, g
 //router.use(verificarAuth)
 
 // 1 POST /cursos/
-router.post('/', agregarValidator, agregarCurso);
+router.post('/', verificarRol(["secretario", "admin"]), agregarValidator, agregarCurso);
 
 // 2 DELETE /cursos/:id
-router.delete('/:id', idValidator, eliminarCurso);
+router.delete('/:id', verificarRol(["secretario", "admin"]), idValidator, eliminarCurso);
 
 // 3 PATCH /cursos/:id
-router.patch('/:id', idValidator, modificacionValidator, modificarCurso);
+router.patch('/:id', verificarRol(["profesor", "secretario", "admin"]), idValidator, modificacionValidator, modificarCurso);
 
 // 4 GET /cursos/:id
 router.get('/:id', idValidator, getCurso)
@@ -27,7 +27,7 @@ router.get('/', getCursos)
 
 // ---------------------------------------------- Tomar Asistencia -----------------------------------------------
 // POST /cursos/:id
-router.post('/:id', idValidator, modificacionValidator, agregarFechaAsistencia)
+router.post('/:id', verificarRol(["profesor"]), idValidator, modificacionValidator, agregarFechaAsistencia)
 
 
 module.exports = router;
