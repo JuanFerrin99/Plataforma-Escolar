@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom"
-import TableInasistencia from "../components/utils/TableInasistenciaInmodificable/Table"
-import TableNotas from "../components/utils/TableNotas/Table"
-import TableFinales from "../components/utils/TableFinales/Table"
+import TableInasistencia from "../../components/utils/TableInasistenciaInmodificable/Table"
+import TableNotas from "../../components/utils/TableNotas/Table"
+import TableFinales from "../../components/utils/TableFinales/Table"
 
 export default function CursoCard() {
     const [inasistencias, setInasistencias] = useState([]);

@@ -1,6 +1,6 @@
 import Carousel from "react-material-ui-carousel";
 import { makeStyles } from "@material-ui/core";
-import '../styles/HomePage.css';
+import '../../styles/pages/HomePage.css';
 const items = [
     {
         name: "Solicita ahora tu beca",

@@ -1,12 +1,10 @@
 import { Button, Card, CardActions, CardContent, Grid, Skeleton, Container } from "@mui/material";
-import TableInasistencia from "../components/utils/TableInasistenciaInmodificable/Table"
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import CursoCard from "../components/CursoCard";
-import "../styles/AlumnoPage.css";
+import CursoCard from "../../components/cards/CursoCard";
+import "../../styles/pages/AlumnoPage.css";
 import Cookies from "js-cookie";
-
 
 
 function Variants() {
@@ -34,39 +32,35 @@ function Variants() {
 
 export default function AlumnoPage() {
     const [cursos, setCursos] = useState([]);
-    const [inasistencias, setInasistencias] = useState([]);
     const [dni, setDni] = useState(0);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`http://localhost:3001/profesores/filtro/${Cookies.get("mail")}`,{credentials:"include"})
-            .then(response => response.json())
-            .then(profesor => {
-                setDni(profesor.dni)
-                setCursos(profesor.cursos)
-                setLoading(false)
-                fetch(`http://localhost:3001/inasistencias/filtro/${profesor.dni}/`,{credentials:"include"})
-                    .then(response => response.json())
-                    .then(res => {
-                        setInasistencias(res)
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
-
-
-            })
-    }, [])
+        fetch(`http://localhost:3001/alumnos/filtro/${Cookies.get("mail")}`)
+        .then(response => response.json())
+        .then(alumno => {
+            setCursos(alumno.cursosActivos)
+            setDni(alumno.dni)
+            setLoading(false)
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    },[])
+    
+    
     const cursosComponent = cursos.map((curso, i) => {
-        return <CursoCard key={curso.id} id={curso.id} materia={curso.materia} dni={dni} />
+        return <CursoCard key={curso.id} id={curso.id} materia={curso.nombre} dni={dni} />
     })
-
+    
     const cursosSkeleton = new Array(20).fill(<Variants />)
+    
+    if(Cookies.get("rol")!="alumno"){alert("ru")}
     return (
         <div>
-            <TableInasistencia inasistencia={inasistencias}/>
-            <br />
-            <p> flechita atras en alumnos no funciona</p>
+            <Button id="botonInscripcion" variant="contained" endIcon={<AddIcon/>}>
+                Inscribirse materia
+            </Button>
             <Grid container spacing={3}>
                 {loading ? cursosSkeleton : cursosComponent}
             </Grid>
@@ -76,5 +70,5 @@ export default function AlumnoPage() {
 
         </div>
     )
-
+    
 }

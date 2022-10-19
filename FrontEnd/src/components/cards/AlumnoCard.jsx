@@ -5,9 +5,8 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import VistaCurso from './VistaCurso';
 import { Link } from 'react-router-dom';
-import AddIcon from '@mui/icons-material/Add';
+
 
 export default function cursoCard({ id, nombre, apellido, dni}) {
     return (

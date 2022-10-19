@@ -1,7 +1,7 @@
-import '../styles/HomePage.css';
+import '../styles/pages/HomePage.css';
 import { Container } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import Carrusel from "../components/Carrusel"
+import Carrusel from "../components/home/Carrusel"
 export default function Hub() {
     return (
         <body id="a">

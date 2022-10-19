@@ -1,6 +1,6 @@
-import "../styles/SecretarioPage.css";
-import MainDash from "../components/SecretarioComps/MainDash/MainDash";
-import Sidebar from "../components/SecretarioComps/Sidebar";
+import MainDash from "../../components/SecretarioComps/MainDash/MainDash";
+import Sidebar from "../../components/SecretarioComps/Sidebar";
+import "../../styles/pages/SecretarioPage.css";
 
 export default function Hub() {
     return (

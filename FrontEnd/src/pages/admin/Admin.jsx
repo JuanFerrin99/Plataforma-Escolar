@@ -1,6 +1,6 @@
-import "../styles/AdminPage.css";
-import MainDash from "../components/AdminComps/MainDash/MainDash";
-import Sidebar from "../components/AdminComps/Sidebar";
+import "../../styles/pages/AdminPage.css";
+import MainDash from "../../components/AdminComps/MainDash/MainDash";
+import Sidebar from "../../components/AdminComps/Sidebar";
 
 export default function Hub() {
     return (

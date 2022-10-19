@@ -4,18 +4,18 @@ import { useLocation } from "react-router-dom"
 import { Outlet } from "react-router-dom";
 import { Button, Card, CardActions, CardContent, Grid, Skeleton, Container } from "@mui/material";
 import { DataGrid, gridPageCountSelector, gridPageSelector, useGridApiContext, useGridSelector } from '@mui/x-data-grid';
+import { styled } from '@mui/material/styles';
 import Pagination from '@mui/material/Pagination';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import CreateIcon from '@mui/icons-material/Create';
-import AlumnoCard from "../components/AlumnoCard";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import ClearIcon from '@mui/icons-material/Clear';
-import "../styles/bordes.css"
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import AlumnoCard from "../../components/cards/AlumnoCard";
+import "../../styles/bordes.css"
 
 //*------------------------------------cosas inutiles que deberian estar en otros archivos porque ocupan mucho espacio 
 //toDo importar las cosas inutiles de algun utils y evitar repeticion

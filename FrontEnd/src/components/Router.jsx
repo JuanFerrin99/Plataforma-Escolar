@@ -1,14 +1,17 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import ResponsiveAppBar from "../pages/Header"
+import LoginPage from "../pages/Login"
 import HomePage from "../pages/HomePage"
-import AlumnoPage from "../pages/AlumnoPage"
-import ProfesorPage from "../pages/ProfesorPage"
-import SecretarioPage from "../pages/SecretarioPage"
-import AdminPage from "../pages/AdminPage"
-import CursoAlumnoPage from "../pages/CursoAlumnoPage"
-import CursoProfesorPage from "../pages/CursoProfesorPage"
-import AlumnoControlPage from "../pages/AlumnoControlPage"
-import LoginPage from "../pages/LoginPage"
+
+import AdminPage from "../pages/admin/Admin"
+import SecretarioPage from "../pages/secretario/Secretario"
+
+import AlumnoPage from "../pages/alumno/Alumno"
+    import CursoAlumnoPage from "../pages/alumno/CursoControl"  
+    
+import ProfesorPage from "../pages/profesor/Profesor"
+    import CursoProfesorPage from "../pages/profesor/CursoControl"
+    import AlumnoControlPage from "../pages/profesor/AlumnoControl"
 
 
 export default function Router() {
