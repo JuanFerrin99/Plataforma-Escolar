@@ -5,7 +5,7 @@ const config = require("../../config/default.json")
 const uri = config.mongodbUri;
 
 module.exports.connectToDB = function (suffix = "", params = {}) {
-    return mongoose.connect(`${uri}-${suffix}`, params);
+    return mongoose.connect(`${uri}`, params);
 }
 
 module.exports.disconnectDB = function () {

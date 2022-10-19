@@ -1,0 +1,93 @@
+[{
+  "_id": {
+    "$oid": "6320c137f4e49413d16e89c0"
+  },
+  "fecha": "2022-03-01",
+  "tipo": "Tarde",
+  "motivo": "-",
+  "justificado": "Injustificada",
+  "curso": "6335eed14fda6c2aa027fdb6",
+  "materia": "Fisica",
+  "persona": {
+    "nombre": "Santiago",
+    "apellido": "Patiño",
+    "dni": 23456789
+  }
+},{
+  "_id": {
+    "$oid": "6335fa074fda6c2aa027fdb8"
+  },
+  "fecha": "2022-04-01",
+  "tipo": "Falta",
+  "motivo": "Covid",
+  "justificado": "Justificada",
+  "curso": "6320bfc1f4e49413d16e89bd",
+  "materia": "Matematica",
+  "persona": {
+    "nombre": "Santiago",
+    "apellido": "Patiño",
+    "dni": 45749908
+  }
+},{
+  "_id": {
+    "$oid": "6335fa154fda6c2aa027fdb9"
+  },
+  "fecha": "2022-04-02",
+  "tipo": "Falta",
+  "motivo": "Covid",
+  "justificado": "Justificada",
+  "curso": "6320bfc1f4e49413d16e89bd",
+  "materia": "Matematica",
+  "persona": {
+    "nombre": "Santiago",
+    "apellido": "Patiño",
+    "dni": 45749908
+  }
+},{
+  "_id": {
+    "$oid": "6335fb164fda6c2aa027fdba"
+  },
+  "fecha": "2022-04-01",
+  "tipo": "Falta",
+  "motivo": "Covid",
+  "justificado": "Justificada",
+  "curso": "6320bfc1f4e49413d16e89bd",
+  "materia": "Matematica",
+  "persona": {
+    "nombre": "Juan",
+    "apellido": "Ferrin",
+    "dni": 45156489
+  }
+},{
+  "_id": {
+    "$oid": "6347309fba9447979a4ee6d4"
+  },
+  "fecha": "2022-10-12",
+  "tipo": "Falta",
+  "motivo": " ",
+  "justificado": "Injustificada",
+  "curso": "6320bfc1f4e49413d16e89bd",
+  "materia": "Matematica",
+  "persona": {
+    "nombre": "Santiago",
+    "apellido": "Patiño",
+    "dni": 45749908
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6347309fba9447979a4ee6d6"
+  },
+  "fecha": "2022-10-12",
+  "tipo": "Falta",
+  "motivo": " ",
+  "justificado": "Injustificada",
+  "curso": "6320bfc1f4e49413d16e89bd",
+  "materia": "Matematica",
+  "persona": {
+    "nombre": "Emanuel",
+    "apellido": "Ruiz",
+    "dni": 15456123
+  },
+  "__v": 0
+}]

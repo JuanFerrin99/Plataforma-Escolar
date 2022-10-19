@@ -1,0 +1,31 @@
+[{
+  "_id": {
+    "$oid": "6320c137f4e49413d16e89c0"
+  },
+  "nombre": "Ingenieria Informatica",
+  "duracion": 5,
+  "materias": [
+    "Matematica, Fisica, Programacion, Electronica, Lengua"
+  ],
+  "tipo": "Carrera"
+},{
+  "_id": {
+    "$oid": "6335d5704fda6c2aa027fdb1"
+  },
+  "nombre": "Lic. Ciencia de la computacion",
+  "duracion": 6,
+  "materias": [
+    "Matematica, Matematica2, Algebra, Ingles, Fisica, Programacion, Electronica, Lengua"
+  ],
+  "tipo": "Carrera"
+},{
+  "_id": {
+    "$oid": "6335d5a74fda6c2aa027fdb2"
+  },
+  "nombre": "Ingenieria Quimica?",
+  "duracion": 4,
+  "materias": [
+    "Matematica, Matematica2, Algebra, Ingles, Fisica, Quimica, Lengua"
+  ],
+  "tipo": "Carrera"
+}]

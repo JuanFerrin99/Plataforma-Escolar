@@ -1,0 +1,89 @@
+[{
+  "_id": {
+    "$oid": "6320c137f4e49413d16e89c0"
+  },
+  "nombre": "Matematica",
+  "duracion": "Cuatrimestral",
+  "correlativas": [],
+  "final": "True"
+},{
+  "_id": {
+    "$oid": "6335d3fc4fda6c2aa027fda7"
+  },
+  "nombre": "Fisica",
+  "duracion": "Cuatrimestral",
+  "correlativas": [],
+  "final": "True"
+},{
+  "_id": {
+    "$oid": "6335d4074fda6c2aa027fda8"
+  },
+  "nombre": "Quimica",
+  "duracion": "Cuatrimestral",
+  "correlativas": [],
+  "final": "True"
+},{
+  "_id": {
+    "$oid": "6335d4114fda6c2aa027fda9"
+  },
+  "nombre": "Matematica 2",
+  "duracion": "Cuatrimestral",
+  "correlativas": [],
+  "final": "True"
+},{
+  "_id": {
+    "$oid": "6335d41d4fda6c2aa027fdaa"
+  },
+  "nombre": "Ingles",
+  "duracion": "Cuatrimestral",
+  "correlativas": [],
+  "final": "True"
+},{
+  "_id": {
+    "$oid": "6335d4254fda6c2aa027fdab"
+  },
+  "nombre": "Algebra",
+  "duracion": "Cuatrimestral",
+  "correlativas": [],
+  "final": "True"
+},{
+  "_id": {
+    "$oid": "6335d4404fda6c2aa027fdac"
+  },
+  "nombre": "Electronica",
+  "duracion": "Anual",
+  "correlativas": [],
+  "final": "True"
+},{
+  "_id": {
+    "$oid": "6335d4554fda6c2aa027fdad"
+  },
+  "nombre": "Logica",
+  "duracion": "Anual",
+  "correlativas": [],
+  "final": "True"
+},{
+  "_id": {
+    "$oid": "6335d46d4fda6c2aa027fdae"
+  },
+  "nombre": "Diseño Grafico",
+  "duracion": "Anual",
+  "correlativas": [],
+  "final": "False"
+},{
+  "_id": {
+    "$oid": "6335d4f14fda6c2aa027fdaf"
+  },
+  "nombre": "Programacion",
+  "duracion": "Anual",
+  "correlativas": [],
+  "final": "True"
+},{
+  "_id": {
+    "$oid": "6335d51d4fda6c2aa027fdb0"
+  },
+  "nombre": "Lengua",
+  "duracion": "Cuatrimestral",
+  "correlativas": [],
+  "final": "True"
+}]

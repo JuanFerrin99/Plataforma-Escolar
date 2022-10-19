@@ -1,0 +1,134 @@
+[{
+  "_id": {
+    "$oid": "6320bfc1f4e49413d16e89bd"
+  },
+  "materia": "Matematica",
+  "profesor": {
+    "nombre": "Julio",
+    "apellido": "Patiño",
+    "dni": 23456789
+  },
+  "alumnos": [
+    {
+      "nombre": "Santiago",
+      "apellido": "Patiño",
+      "dni": 45749908,
+      "calificaciones": [
+        {
+          "id": 1,
+          "nota": 6,
+          "tipo": "Parcial"
+        }
+      ]
+    },
+    {
+      "nombre": "Emanuel",
+      "apellido": "Ruiz",
+      "dni": 15456123,
+      "calificaciones": [
+        {
+          "id": 1,
+          "nota": 8,
+          "tipo": "Parcial"
+        }
+      ]
+    }
+  ],
+  "periodo": {
+    "año": 2022,
+    "cuatrimestre": "ambos",
+    "horario": "Mañana",
+    "dias": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "estado": "Activa",
+  "fechasAsistencia": [
+    "2022-10-10",
+    "2022-10-12"
+  ],
+  "final": {
+    "fechas": [
+      "2022-10-10"
+    ],
+    "id": 2,
+    "periodoInscripcion": {
+      "inicio": "2022-10-01",
+      "final": "2022-10-09"
+    }
+  },
+  "evaluaciones": []
+},{
+  "_id": {
+    "$oid": "6335eed14fda6c2aa027fdb6"
+  },
+  "materia": "Fisica",
+  "profesor": {
+    "nombre": "Julio",
+    "apellido": "Patiño",
+    "dni": 23456789
+  },
+  "alumnos": [
+    {
+      "nombre": "Santiago",
+      "apellido": "Patiño",
+      "dni": 45749908,
+      "calificaciones": [
+        {
+          "id": 1,
+          "nota": 6,
+          "tipo": "Parcial"
+        }
+      ]
+    },
+    {
+      "nombre": "Emanuel",
+      "apellido": "Ruiz",
+      "dni": 15456123,
+      "calificaciones": [
+        {
+          "id": 1,
+          "nota": 8,
+          "tipo": "Parcial"
+        }
+      ]
+    }
+  ],
+  "periodo": {
+    "año": 2022,
+    "cuatrimestre": "ambos",
+    "horario": "Mañana",
+    "dias": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "estado": "Activa",
+  "fechasAsistencia": [
+    "2022-02-22"
+  ],
+  "final": {
+    "fechas": [
+      "2022-10-10"
+    ],
+    "id": 2,
+    "periodoInscripcion": {
+      "inicio": "2022-10-01",
+      "final": "2022-10-09"
+    }
+  },
+  "evaluaciones": [
+    {
+      "id": 1,
+      "tipo": "Parcial",
+      "fecha": "2022-09-13"
+    }
+  ]
+}]

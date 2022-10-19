@@ -1,0 +1,119 @@
+[{
+  "_id": {
+    "$oid": "6320c137f4e49413d16e89c0"
+  },
+  "nombre": "Julio",
+  "apellido": "Patiño",
+  "dni": 23456789,
+  "fechaNacimiento": "1993-02-22",
+  "telefono": 1145785962,
+  "mail": "profesor@gmail.com",
+  "titulos": [
+    "Secundario",
+    "Terciario"
+  ],
+  "datosResidencia": {
+    "pais": "Argentina",
+    "provincia": "Buenos Aires",
+    "localidad": "CABA",
+    "domicilio": "Simbron 4062",
+    "codigoPostal": 1431
+  },
+  "fechaIngreso": "2000-01-01",
+  "rol": "profesor",
+  "cursos": [
+    {
+      "id": {
+        "$oid": "6320bfc1f4e49413d16e89bd"
+      },
+      "materia": "Matematica"
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "6335e8c24fda6c2aa027fdb3"
+  },
+  "nombre": "Juliana",
+  "apellido": "Ramirez",
+  "dni": 27896752,
+  "fechaNacimiento": "1996-06-22",
+  "telefono": 1156798032,
+  "mail": "profesor2@gmail.com",
+  "titulos": [
+    "Secundario",
+    "Universitario"
+  ],
+  "datosResidencia": {
+    "pais": "Argentina",
+    "provincia": "Buenos Aires",
+    "localidad": "CABA",
+    "domicilio": "Calle 4062",
+    "codigoPostal": 1431
+  },
+  "fechaIngreso": "2000-01-01",
+  "rol": "profesor",
+  "cursos": [
+    1,
+    2,
+    3
+  ]
+},{
+  "_id": {
+    "$oid": "6335e9144fda6c2aa027fdb4"
+  },
+  "nombre": "Joaquin",
+  "apellido": "Perez",
+  "dni": 34765421,
+  "fechaNacimiento": "1993-08-29",
+  "telefono": 1156423189,
+  "mail": "profesor3@gmail.com",
+  "titulos": [
+    "Secundario",
+    "Universitario"
+  ],
+  "datosResidencia": {
+    "pais": "Argentina",
+    "provincia": "Buenos Aires",
+    "localidad": "CABA",
+    "domicilio": "Calle 9875",
+    "codigoPostal": 1431
+  },
+  "fechaIngreso": "2000-01-01",
+  "rol": "profesor",
+  "cursos": [
+    1,
+    2,
+    3
+  ]
+},{
+  "_id": {
+    "$oid": "6335eb564fda6c2aa027fdb5"
+  },
+  "nombre": "Juan",
+  "apellido": "Ferrin",
+  "dni": 45156489,
+  "fechaNacimiento": "2000-08-29",
+  "telefono": 1178632168,
+  "mail": "profesor4@gmail.com",
+  "titulos": [
+    "Secundario",
+    "Universitario"
+  ],
+  "datosResidencia": {
+    "pais": "Argentina",
+    "provincia": "Buenos Aires",
+    "localidad": "CABA",
+    "domicilio": "Calle 9875",
+    "codigoPostal": 1431
+  },
+  "fechaIngreso": "2000-01-01",
+  "rol": "profesor",
+  "cursos": [
+    {
+      "id": {
+        "$oid": "6320bfc1f4e49413d16e89bd"
+      },
+      "materia": "Matematica"
+    }
+  ]
+}]
