@@ -11,8 +11,10 @@ module.exports.agregarValidator = [
         .isLength({min:1}).withMessage("Apellido no puede quedar vacio"),
     body("dni")
         .isInt({min:1, max: 99999999}).withMessage("Dni debe ser un int y estar comprendido entre 1 y 99999999"),
-        body("mail")
+    body("mail")
         .isEmail().withMessage("Mail debe tener formato de mail valido"),
+    body("rol")
+        .isString().withMessage("Apellido debe ser un string"),
     verifyValidation
 ]
 
@@ -40,7 +42,9 @@ module.exports.modificacionValidator = [
     body("dni")
         .optional({nullable: true})
         .isInt({min:1, max: 99999999}).withMessage("Dni debe ser un int y estar comprendido entre 1 y 99999999"),
-        body("mail")
+    body("mail")
         .isEmail().withMessage("Mail debe tener formato de mail valido"),
+    body("rol")
+        .isString().withMessage("Rol debe ser un string"),
     verifyValidation
 ]

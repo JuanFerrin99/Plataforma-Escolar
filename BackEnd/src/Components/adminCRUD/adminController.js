@@ -6,12 +6,13 @@ const { default: mongoose } = require('mongoose');
 //--------------------------------------- POST /admins/ ------------------------------------------------------------------
 
 module.exports.agregarAdmin = (req, res) => {
-    const { nombre, apellido, mail} = req.body;
+    const { nombre, apellido, mail, rol} = req.body;
 
     const admin = new Admin({
     nombre, 
     apellido, 
-    mail
+    mail,
+    rol
     });
 
     admin.save()
@@ -46,7 +47,7 @@ module.exports.eliminarAdmin = (req, res) => {
 //----------------------------------------- PATCH /admins/id----------------------------------------------------------------------
 
 module.exports.modificarAdmin = (req, res) => {
-    return Admin.findOneAndUpdate({ _id: req.params.id },{ nombre: req.body.nombre, apellido: req.body.apellido, mail: req.body.mail } ,{new: true})
+    return Admin.findOneAndUpdate({ _id: req.params.id },{ nombre: req.body.nombre, apellido: req.body.apellido, mail: req.body.mail, rol: req.body.rol } ,{new: true})
         .then((result) => {
             if(result){
                 res.status(200).json("Se realizaron los cambios a " + req.params.id)
