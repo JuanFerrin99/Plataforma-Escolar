@@ -285,8 +285,8 @@ export default function CursoCard() {
         ];
         const columnsFinal = [
             { field: 'fecha', headerName: 'Fecha', width: 250 },
-            { field: 'inscripcionInicio', headerName: 'Inicio de inscripcion', width: 250/*, resizable: true */ },
-            { field: 'inscripcionFin', headerName: 'Fin de inscripcion', width: 400/*, resizable: true */ }
+            { field: 'inicio', headerName: 'Inicio de inscripcion', width: 250/*, resizable: true */ },
+            { field: 'final', headerName: 'Fin de inscripcion', width: 400/*, resizable: true */ }
         ];
 
 
@@ -305,11 +305,10 @@ export default function CursoCard() {
                     </IconButton>
                 </div>
                 <div style={{ height: '46%' }}>
-
                     <DataGrid
                         //?customizar cartel de rows selected =  https://stackoverflow.com/questions/65668602/react-material-ui-grid-footer-change (no se como borrarlo igual)
                         ref={gridRef}
-                        rows={evaluaciones}
+                        rows={curso.evaluaciones}
                         columns={columns}
                         pageSize={10}
                         enterMovesDown={true}
