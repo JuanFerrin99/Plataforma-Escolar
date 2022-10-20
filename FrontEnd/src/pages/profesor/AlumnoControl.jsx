@@ -8,7 +8,7 @@ import TableFinales from "../../components/utils/TableFinales/Table"
 export default function CursoCard() {
     const [inasistencias, setInasistencias] = useState([]);
     const [notas, setNotas] = useState([]);
-    const [final, setFinal] = useState([]);
+    const [finales, setFinales] = useState([]);
     const location = useLocation()
     const id = location.state.idCurso // id curso
     const dni = location.state.dni // dni alumno
@@ -30,7 +30,7 @@ export default function CursoCard() {
             .then(response => response.json())
             .then(curso => {
                 setNotas([])
-                setFinal(curso.final)
+                setFinales(curso.finales)
                 curso.alumnos.forEach((element, i) => {
                     if (element.dni === dni) {
                         setNotas((oldState) => [...oldState, ...element.calificaciones])
@@ -48,7 +48,7 @@ export default function CursoCard() {
     return (
         <div>
             <TableNotas notas={notas} idCurso={id} dniAlumno = {dni}/>
-            <TableFinales final={final} idCurso={id} dniAlumno = {dni}/>
+            <TableFinales finales={finales} idCurso={id} dniAlumno = {dni}/>
             <TableInasistencia inasistencia={inasistencias} idCurso={id} dniAlumno = {dni}/>{/* el nombre deberia estar en plural pero hay que cambiar todo */}
 
         </div>
