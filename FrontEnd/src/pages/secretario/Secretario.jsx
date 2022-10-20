@@ -7,7 +7,6 @@ export default function Hub() {
         <div className="App">
             <div className="AppGlass">
                     <Sidebar />
-                    <MainDash />
             </div>
         </div>
     );

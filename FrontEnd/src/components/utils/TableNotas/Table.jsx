@@ -127,6 +127,8 @@ export default function TableNotas(props) {
 		}
 	});
 
+	
+
 	//* Patch notas
 	const ProcessRowUpdate = (props) => {
 		fetch(`http://localhost:3001/cursos/${id}/alumnos/${dni}/calificaciones/${props._id}`, {
@@ -214,17 +216,15 @@ export default function TableNotas(props) {
 
 	//* rows y columns
 	const columns = [
+		{ field: 'nota', headerName: 'Nota', width: 250, editable: true },
 		{ field: 'fecha', headerName: 'Fecha', width: 250, editable: true },
 		{ field: 'tipo', headerName: 'Tipo', width: 250, editable: true },
-		{ field: 'justificado', headerName: 'Justificado', width: 250, editable: true },
-		{ field: 'motivo', headerName: 'Motivo', width: 250, editable: true },
-		{ field: 'total', headerName: 'Total', width: 250, editable: true },
 		{ field: 'boton', headerName: '', suppressRowClickSelection: true, width: 200, renderCell: (e) => { return renderDetailsButton(e) } }
 	];
 
 	//*  Return
 	return (
-		<div style={{ height: "65vh", width: '100%' }}>
+		<div style={{ height: "66vh", width: '100%' }}>
 
 			<div style={{ width: '100%'}}>
 				<IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
