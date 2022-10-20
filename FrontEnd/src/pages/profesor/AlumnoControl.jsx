@@ -26,7 +26,7 @@ export default function CursoCard() {
             })
         }, []);
         useEffect(() => {
-            fetch(`http://localhost:3001/cursos/${id}/${dni}`)
+            fetch(`http://localhost:3001/cursos/${id}`)
             .then(response => response.json())
             .then(curso => {
                 setNotas([])

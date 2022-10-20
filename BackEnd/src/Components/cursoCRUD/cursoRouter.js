@@ -3,7 +3,7 @@ const router = express.Router();
 const { verificarRol, verificarIdentidad } = require('../../auth/authController.js');
 
 const { idValidator, agregarValidator, modificacionValidator } = require("./cursoValidator");
-const { agregarCurso, eliminarCurso, modificarCurso, getCurso, getCursoAlumno, getCursos, agregarFechaAsistencia } = require("./cursoController");
+const { agregarCurso, eliminarCurso, modificarCurso, getCurso, getCursos, agregarFechaAsistencia } = require("./cursoController");
 
 //router.use(verificarAuth)
 
@@ -19,10 +19,7 @@ router.patch('/:id', verificarRol(["profesor", "secretario", "admin"]), idValida
 // 4 GET /cursos/:id
 router.get('/:id', idValidator, getCurso)
 
-// 5 GET /cursos/:id/:dni
-router.get('/:id/:dni', idValidator, getCursoAlumno)
-
-// 6 GET /cursos/
+// 5 GET /cursos/
 router.get('/', getCursos)
 
 // ---------------------------------------------- Tomar Asistencia -----------------------------------------------
