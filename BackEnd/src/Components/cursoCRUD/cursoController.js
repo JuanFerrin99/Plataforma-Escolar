@@ -87,7 +87,7 @@ module.exports.getCurso = (req, res) => {
 //-------------------------------------------- GET /cursos/id/dni --------------------------------------------------------------
 
 module.exports.getCursoAlumno = (req, res) => {
-    return Curso.findOne({ _id: req.params.id, dni: req.params.dni })
+    return Curso.findOne({ _id: req.params.id, dni: parseInt(req.params.dni) })
         .then((curso) => {
             if (curso == undefined) {
                 res.status(404).json({ error: "No se encontro el curso" })

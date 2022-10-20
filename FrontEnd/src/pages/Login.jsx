@@ -53,7 +53,7 @@ export default function SignIn() {
             .then(jwt => {
                 window.location.href = `/${Cookies.get("rol")}`
             })
-            .catch(e => console.log(e + "daw"));
+            .catch(e => console.log(e));
     }
     const handleResetPassword = () => {
         const options = {
@@ -63,7 +63,7 @@ export default function SignIn() {
         axios.post("http://localhost:3001/login/password/reset", { email: email }, options)
             .then(jwt => {
             })
-            .catch(e => console.log(e + "daw"));
+            .catch(e => console.log(e));
     }
 
     function cambiarContraseña(props) {
