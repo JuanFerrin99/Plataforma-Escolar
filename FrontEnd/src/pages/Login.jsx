@@ -91,7 +91,7 @@ export default function SignIn() {
                             alignItems: 'center',
                         }}
                     >
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                        <Avatar sx={{ m: 1, bgcolor: '#01c4ff' }}>
                             <LockOutlinedIcon />
                         </Avatar>
                         <Typography component="h1" variant="h5">
@@ -107,6 +107,7 @@ export default function SignIn() {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                                variant='standard'
                                 autoFocus
                             />
                             <TextField
@@ -118,6 +119,7 @@ export default function SignIn() {
                                 label="Password"
                                 type="password"
                                 id="password"
+                                variant='standard'
                                 autoComplete="current-password"
                             />
                             <Button

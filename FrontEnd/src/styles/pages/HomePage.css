@@ -114,8 +114,8 @@ iframe{
     appearance: none;
     background-color: transparent;
     
-    width: 7vw;
-    height: 6vh;
+    width: 6vw;
+    height: 5vh;
     padding: 0px; 
     justify-content: center;
 
@@ -133,3 +133,4 @@ iframe{
         width: 100vw;
     }
 }
+
