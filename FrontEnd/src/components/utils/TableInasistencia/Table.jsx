@@ -163,9 +163,9 @@ export default function TableInasistencias(props) {
 							let rows = faltas.slice()
 							rows = rows.filter(row => row.id !== params.row.id)
 							setFaltas(rows)
-							setSnackbar({ children: 'Evaluacion borrada', severity: 'error' });
+							setSnackbar({ children: 'Inasistencia borrada', severity: 'error' });
 						}
-						else (alert("No se pudo borrar la evaluacion"))
+						else (alert("No se pudo borrar la inasistencia"))
 					})
 					.catch(error => {
 						console.log(error)
