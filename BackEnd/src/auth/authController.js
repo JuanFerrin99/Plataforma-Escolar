@@ -155,7 +155,7 @@ module.exports.sendLoginResponse = (req, res) => {
 
 module.exports.verificarRol = (roles) => async (req, res, next) => {
     try {
-        const usuario = await verifyToken(req.cookies.token);
+        const usuario = await verifyToken(req.cookies.token)
         if (roles.find((rol) => rol === usuario.body.rol)) {
             next()
         }

@@ -161,22 +161,22 @@ export default function CursoCard() {
     }, []);
 
     const handleNewRow = () => {
-        let copia = evaluaciones
-        let evaluacion = JSON.stringify(
-            {
-                id: evaluaciones[-1].id + 1,
-                fecha: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
-                tipo: " ",
-            })
-        copia.push({ evaluacion })
+        let copia = evaluaciones.slice()
+        let evaluacion = {
+            id: copia[copia.length - 1].id + 1,
+            fecha: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+            tipo: " ",
+        }
+        copia.push(evaluacion)
 
         fetch(`http://localhost:3001/cursos/${id}/evaluaciones/`, {
+            credentials: "include",
             method: 'POST',
             headers: {
                 'Accept': 'application/json, text/plain, */*',
                 'Content-Type': 'application/json'
             },
-            body: evaluacion
+            body: JSON.stringify({ "evaluacion": evaluacion })
         })
             .then(res => {
                 setEvaluaciones(copia)
@@ -190,6 +190,7 @@ export default function CursoCard() {
 
     const ProcessRowUpdate = (props) => {
         fetch(`http://localhost:3001/cursos/${id}/evaluaciones/${props.id}`, {
+            credentials: "include",
             method: 'PATCH',
             headers: {
                 'Accept': 'application/json, text/plain, */*',
@@ -214,7 +215,7 @@ export default function CursoCard() {
                 fetch(`http://localhost:3001/cursos/${id}/evaluaciones/${params.row.id}`, { method: 'DELETE' })//toDo checkear si lo encontro o no y cambiar el mensaje
                     .then(res => {
                         if (res) {
-                            let rows = evaluaciones
+                            let rows = evaluaciones.slice()
                             rows = rows.filter(row => row.id !== params.row.id)
                             setEvaluaciones(rows)
                             setSnackbar({ children: 'Evaluacion borrada', severity: 'error' });

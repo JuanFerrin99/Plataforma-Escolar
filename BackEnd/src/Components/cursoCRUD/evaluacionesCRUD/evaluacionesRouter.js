@@ -8,7 +8,7 @@ const { agregarEvaluacion, modificarEvaluacion, eliminarEvaluacion } = require("
 router.use(verificarRol(["profesor", "admin"]))
 
 // POST /cursos/:id/evaluaciones
-router.post('/:id/evaluaciones', idValidator, agregarEvaluacionValidator, agregarEvaluacion)
+router.post('/:id/evaluaciones', idValidator, agregarEvaluacion)
 
 // PATCH /cursos/:id/evaluaciones/:evaluacionId
 router.patch('/:id/evaluaciones/:evaluacionId', idValidator, evaluacionIdValidator, modificarEvaluacionValidator, modificarEvaluacion)
