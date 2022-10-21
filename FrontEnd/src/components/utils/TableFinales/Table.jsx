@@ -119,11 +119,11 @@ export default function TableNotas(props) {
 
 	useEffect(() => {
 		if(s){//toDO checkear que si al estar la coleccion esta vacia que no se quede cargando infinitamente y consuma mucho
-			setNotas(props.final)
+			setNotas(props.finales)
 			if(notas.length === 0){return undefined}
 			else{setS(false)}
 		}
-	},[s,props.final,notas.length]);
+	},[s,props.finales,notas.length]);
 
 	//*custom pagination
 	function CustomPagination(newRow) {

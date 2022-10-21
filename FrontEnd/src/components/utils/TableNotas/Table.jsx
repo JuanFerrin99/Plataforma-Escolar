@@ -120,12 +120,14 @@ export default function TableNotas(props) {
 	const id = props.idCurso
 	const dni = props.dniAlumno
 	useEffect(() => {
-		if(s){//toDO checkear que si al estar la coleccion esta vacia que no se quede cargando infinitamente y consuma mucho
+		if (s) {//toDO checkear que si al estar la coleccion esta vacia que no se quede cargando infinitamente y consuma mucho
 			setNotas(props.notas)
-			if(notas.length == 0){return undefined}
-			else{setS(false)}
+			if (notas.length == 0) { return undefined }
+			else { setS(false) }
 		}
 	});
+
+
 
 	//* Patch notas
 	const ProcessRowUpdate = (props) => {
@@ -137,13 +139,14 @@ export default function TableNotas(props) {
 			},
 			body: JSON.stringify(
 				{
-				fecha: props.fecha,
-				justificado: props.justificado,
-				motivo: props.motivo,
-				tipo: props.tipo,
-				_id: props._id})
-				}
-			)
+					fecha: props.fecha,
+					justificado: props.justificado,
+					motivo: props.motivo,
+					tipo: props.tipo,
+					_id: props._id
+				})
+		}
+		)
 			.then(res => { //toDo checkear si lo encontro o no y cambiar el mensaje
 				setSnackbar({ children: 'User successfully saved', severity: 'success' });
 			})
@@ -159,7 +162,7 @@ export default function TableNotas(props) {
 				fetch(`http://localhost:3001/cursos/${id}/alumnos/${dni}/calificaciones/${params.row._id}`, { method: 'DELETE' })//toDo checkear si lo encontro o no y cambiar el mensaje
 					.then(res => {
 						if (res) {
-							let rows = notas.slice() 
+							let rows = notas.slice()
 							rows = rows.filter(row => row.id !== params.row.id)
 							setNotas(rows)
 							setSnackbar({ children: 'Evaluacion borrada', severity: 'error' });
@@ -214,19 +217,17 @@ export default function TableNotas(props) {
 
 	//* rows y columns
 	const columns = [
+		{ field: 'nota', headerName: 'Nota', width: 250, editable: true },
 		{ field: 'fecha', headerName: 'Fecha', width: 250, editable: true },
 		{ field: 'tipo', headerName: 'Tipo', width: 250, editable: true },
-		{ field: 'justificado', headerName: 'Justificado', width: 250, editable: true },
-		{ field: 'motivo', headerName: 'Motivo', width: 250, editable: true },
-		{ field: 'total', headerName: 'Total', width: 250, editable: true },
 		{ field: 'boton', headerName: '', suppressRowClickSelection: true, width: 200, renderCell: (e) => { return renderDetailsButton(e) } }
 	];
 
 	//*  Return
 	return (
-		<div style={{ height: "65vh", width: '100%' }}>
+		<div style={{ height: "66vh", width: '100%' }}>
 
-			<div style={{ width: '100%'}}>
+			<div style={{ width: '100%' }}>
 				<IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
 					<ArrowBackRoundedIcon fontSize='large' />
 				</IconButton>

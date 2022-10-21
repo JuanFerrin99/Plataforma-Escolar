@@ -145,6 +145,7 @@ export default function CursoCard() {
             .then(curso => {
                 setCurso(curso)
                 setAlumnos(curso.alumnos)
+                setEvaluaciones(curso.evaluaciones)
                 setRows([])
                 setDate(new Date())
 
@@ -159,10 +160,37 @@ export default function CursoCard() {
             })
     }, []);
 
+    const handleNewRow = () => {
+        let copia = evaluaciones.slice()
+        let evaluacion = {
+            id: copia[copia.length - 1].id + 1,
+            fecha: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+            tipo: " ",
+        }
+        copia.push(evaluacion)
+
+        fetch(`http://localhost:3001/cursos/${id}/evaluaciones/`, {
+            credentials: "include",
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "evaluacion": evaluacion })
+        })
+            .then(res => {
+                setEvaluaciones(copia)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
     //* Patch evaluaciones
 
     const ProcessRowUpdate = (props) => {
         fetch(`http://localhost:3001/cursos/${id}/evaluaciones/${props.id}`, {
+            credentials: "include",
             method: 'PATCH',
             headers: {
                 'Accept': 'application/json, text/plain, */*',
@@ -285,8 +313,8 @@ export default function CursoCard() {
         ];
         const columnsFinal = [
             { field: 'fecha', headerName: 'Fecha', width: 250 },
-            { field: 'inscripcionInicio', headerName: 'Inicio de inscripcion', width: 250/*, resizable: true */ },
-            { field: 'inscripcionFin', headerName: 'Fin de inscripcion', width: 400/*, resizable: true */ }
+            { field: 'inicio', headerName: 'Inicio de inscripcion', width: 250/*, resizable: true */ },
+            { field: 'final', headerName: 'Fin de inscripcion', width: 400/*, resizable: true */ }
         ];
 
 
@@ -300,16 +328,15 @@ export default function CursoCard() {
                 curso.alumnos.forEach((element) => {
                     setRows((oldState) => [...oldState, { "id": element.dni, "Apellido": element.apellido, "Nombre": element.nombre }])
                 })USAR ESTO*/}
-                    <IconButton color="primary" aria-label="crear fila" onClick={() => { let r = evaluaciones.slice(); r.push({ id: 10/*SISTEMA DE CREAR ID*/ }); return setEvaluaciones(r) }}>{/*forma copada q no sirve  setEvaluaciones(evaluaciones.slice().concat[{}])*/}
+                    <IconButton color="primary" aria-label="crear fila" onClick={() => { handleNewRow() }}>
                         <CreateIcon fontSize='large' />
                     </IconButton>
                 </div>
                 <div style={{ height: '46%' }}>
-
                     <DataGrid
                         //?customizar cartel de rows selected =  https://stackoverflow.com/questions/65668602/react-material-ui-grid-footer-change (no se como borrarlo igual)
                         ref={gridRef}
-                        rows={evaluaciones}
+                        rows={curso.evaluaciones}
                         columns={columns}
                         pageSize={10}
                         enterMovesDown={true}

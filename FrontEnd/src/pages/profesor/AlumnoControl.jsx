@@ -8,7 +8,7 @@ import TableFinales from "../../components/utils/TableFinales/Table"
 export default function CursoCard() {
     const [inasistencias, setInasistencias] = useState([]);
     const [notas, setNotas] = useState([]);
-    const [final, setFinal] = useState([]);
+    const [finales, setFinales] = useState([]);
     const location = useLocation()
     const id = location.state.idCurso // id curso
     const dni = location.state.dni // dni alumno
@@ -26,15 +26,24 @@ export default function CursoCard() {
             })
         });
         useEffect(() => {
-            fetch(`http://localhost:3001/cursos/${id}/${dni}`)
+            let p = ""
+            let tempNotas = []
+            fetch(`http://localhost:3001/cursos/${id}`)
             .then(response => response.json())
             .then(curso => {
                 setNotas([])
-                setFinal(curso.final)
+                setFinales(curso.finales)
                 curso.alumnos.forEach((element, i) => {
                     if (element.dni === dni) {
-                        setNotas((oldState) => [...oldState, ...element.calificaciones])
+                        tempNotas = [...notas, ...element.calificaciones]
+                        setNotas(tempNotas.map((elem) => {
+                            p = curso.evaluaciones.find(e => e.id == elem.id)
+                            elem.fecha = p.fecha
+                            elem.tipo = p.tipo
+                            return elem
+                        }))
                     }
+
                 }
                 )
             }
@@ -48,9 +57,7 @@ export default function CursoCard() {
     return (
         <div>
             <TableNotas notas={notas} idCurso={id} dniAlumno = {dni}/>
-            <TableFinales final={final} idCurso={id} dniAlumno = {dni}/>
-            <TableInasistencia inasistencia={inasistencias} idCurso={id} dniAlumno = {dni}/>{/* el nombre deberia estar en plural pero hay que cambiar todo */}
-
+            <TableFinales finales={finales} idCurso={id} dniAlumno = {dni}/>
         </div>
     );
 }

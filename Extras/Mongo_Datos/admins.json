@@ -5,10 +5,5 @@
   "nombre": "Santiago",
   "apellido": "Patiño",
   "mail": "admin@gmail.com",
-  "rol": "admin",
-  "instance": {
-    "nombre": "Santiago",
-    "apellido": "Patiño",
-    "mail": "admin@gmail.com"
-  }
+  "rol": "admin"
 }]

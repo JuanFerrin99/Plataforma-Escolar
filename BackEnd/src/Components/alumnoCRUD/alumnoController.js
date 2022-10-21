@@ -89,7 +89,7 @@ module.exports.getAlumno = (req, res) => {
         })
 }
 
-//------------------------------------------GET /alumnos/filtro/dni-------------------------------------------
+//------------------------------------------GET /alumnos/filtro/mail-------------------------------------------
 
 module.exports.getAlumnoMail = (req, res) => {
     return Alumno.findOne({mail: req.params.mail})

@@ -53,7 +53,7 @@ export default function SignIn() {
             .then(jwt => {
                 window.location.href = `/${Cookies.get("rol")}`
             })
-            .catch(e => console.log(e + "daw"));
+            .catch(e => console.log(e));
     }
     const handleResetPassword = () => {
         const options = {
@@ -63,7 +63,7 @@ export default function SignIn() {
         axios.post("http://localhost:3001/login/password/reset", { email: email }, options)
             .then(jwt => {
             })
-            .catch(e => console.log(e + "daw"));
+            .catch(e => console.log(e));
     }
 
     function cambiarContraseña(props) {
@@ -91,7 +91,7 @@ export default function SignIn() {
                             alignItems: 'center',
                         }}
                     >
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                        <Avatar sx={{ m: 1, bgcolor: '#01c4ff' }}>
                             <LockOutlinedIcon />
                         </Avatar>
                         <Typography component="h1" variant="h5">
@@ -107,6 +107,7 @@ export default function SignIn() {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                                variant='standard'
                                 autoFocus
                             />
                             <TextField
@@ -118,6 +119,7 @@ export default function SignIn() {
                                 label="Password"
                                 type="password"
                                 id="password"
+                                variant='standard'
                                 autoComplete="current-password"
                             />
                             <Button

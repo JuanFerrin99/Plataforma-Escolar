@@ -22,7 +22,11 @@ import img3 from "../imgs/img3.png";
 export const SidebarData = [
   {
     icon: UilCircuit,
-    heading: "Inicio",
+    heading: "Inicio"
+  },
+  {
+    icon: UilPackage,
+    heading: 'Inscripciones'
   },
   {
     icon: UilClipboardAlt,
@@ -33,16 +37,12 @@ export const SidebarData = [
     heading: "Profesores",
   },
   {
-    icon: UilPackage,
-    heading: 'Comprobar inscripciones'
-  },
-  {
     icon: UilChart,
     heading: 'Finales'
   },
   {
     icon: UilChart,
-    heading: 'Administrar faltas'
+    heading: 'Cursos'
   },
 ];
 
