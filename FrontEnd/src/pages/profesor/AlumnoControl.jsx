@@ -24,7 +24,7 @@ export default function CursoCard() {
             .catch(error => {
                 console.log(error)
             })
-        }, []);
+        });
         useEffect(() => {
             fetch(`http://localhost:3001/cursos/${id}/${dni}`)
             .then(response => response.json())
@@ -42,7 +42,7 @@ export default function CursoCard() {
             .catch(error => {
                 console.log(error)
             })
-        }, []);
+        });
 //? tuve que dejar table notas al principio porque es el unico que tiene el go back button cosa que habria que arreglar 
 //todo el goBack boton deberia esta afuera de la table
     return (

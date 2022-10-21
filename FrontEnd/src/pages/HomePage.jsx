@@ -13,7 +13,7 @@ export default function Hub() {
                 <button>CARRERA</button>
                 <button>CURSOS</button>
             </div>
-
+            
             <div id="carrucel_div"><Carrusel /></div>
             <div id="contacto">
                 <div id="info">
