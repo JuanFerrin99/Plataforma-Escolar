@@ -3,8 +3,8 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom"
-import TableInasistencia from "../../components/utils/TableInasistencia/Table"
-import TableNotas from "../../components/utils/TableNotas/Table"
+import TableInasistencia from "../../components/utils/TableInasistenciaInmodificable/Table"
+import TableNotas from "../../components/utils/TableNotasInmodificable/Table"
 
 export default function CursoCard({ }) {
     const [materia, setMateria] = useState("")
@@ -15,7 +15,7 @@ export default function CursoCard({ }) {
     const dni = location.state.dni
 
     useEffect(() => {
-        fetch(`http://localhost:3001/inasistencias/${dni}/${id}`)
+        fetch(`http://localhost:3001/inasistencias/${dni}/${id}`,{credentials: "include"})
             .then(response => response.json())
             .then(res => {
                 setInasistencias(res)
@@ -25,14 +25,14 @@ export default function CursoCard({ }) {
             })
     }, []);
     useEffect(() => {
-        fetch(`http://localhost:3001/cursos/${id}`)
+        fetch(`http://localhost:3001/cursos/${id}`,{credentials: "include"})
             .then(response => response.json())
             .then(curso => {
                 setMateria(curso.materia)
                 setNotas([])
                 curso.alumnos.forEach((element, i) => {
                     if (element.dni === dni) {
-                        setNotas((oldState) => [...oldState, element.calificaciones])
+                        setNotas((oldState) => [...oldState, ...element.calificaciones])
                     }
                 }
                 )

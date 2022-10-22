@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useEffect, useState, useRef } from "react";
-import { useLocation } from "react-router-dom"
 import { Card, CardActions, CardContent, Grid, Skeleton, Container } from "@mui/material";
 import { DataGrid, gridPageCountSelector, gridPageSelector, useGridApiContext, useGridSelector } from '@mui/x-data-grid';
 import Pagination from '@mui/material/Pagination';
@@ -113,12 +112,9 @@ function CustomNoRowsOverlay() {
 
 export default function TableNotas(props) {
 	const [loading, setLoading] = useState(true);//toDo que muestre loding skeleton
-	const [snackbar, setSnackbar] = useState(null);
 	const [notas, setNotas] = useState([]);
 	const [s, setS] = useState(true);
 	const gridRef = useRef();
-	const id = props.idCurso
-	const dni = props.dniAlumno
 	useEffect(() => {
 		if (s) {//toDO checkear que si al estar la coleccion esta vacia que no se quede cargando infinitamente y consuma mucho
 			setNotas(props.notas)
@@ -126,97 +122,6 @@ export default function TableNotas(props) {
 			else { setS(false) }
 		}
 	});
-
-	    //* Create evaluaciones
-		const handleNewRow = () => {
-			let copia = notas.slice()
-			let evaluacion = {
-				id: copia[copia.length - 1].id + 1,
-				nota: 0,
-				tipo: " ",
-			}
-			copia.push(evaluacion)
-	
-			fetch(`http://localhost:3001/cursos/${id}/alumnos/${dni}/calificaciones/`, {
-				credentials: "include",
-				method: 'POST',
-				headers: {
-					'Accept': 'application/json, text/plain, */*',
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ "calificacion": evaluacion })
-			})
-				.then(res => {
-					setNotas(copia)
-				})
-				.catch(error => {
-					console.log(error)
-				})
-		}
-
-	//* Patch notas
-	const ProcessRowUpdate = (props) => {
-		fetch(`http://localhost:3001/cursos/${id}/alumnos/${dni}/calificaciones/${props._id}`, {
-			method: 'PATCH',
-			headers: {
-				'Accept': 'application/json, text/plain, */*',
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(
-				{
-					fecha: props.fecha,
-					justificado: props.justificado,
-					motivo: props.motivo,
-					tipo: props.tipo,
-					_id: props._id
-				})
-		}
-		)
-			.then(res => { //toDo checkear si lo encontro o no y cambiar el mensaje
-				setSnackbar({ children: 'User successfully saved', severity: 'success' });
-			})
-			.catch(error => {
-				console.log(error)
-			})
-	}
-
-	//* Delete notas
-	const renderDetailsButton = (params) => {
-		return (
-			<IconButton color="primary" aria-label="borrar" onClick={() => {
-				fetch(`http://localhost:3001/cursos/${id}/alumnos/${dni}/calificaciones/${params.row._id}`, { method: 'DELETE' ,credentials: 'include'})//toDo checkear si lo encontro o no y cambiar el mensaje
-					.then(res => {
-						if (res) {
-							let rows = notas.slice()
-							rows = rows.filter(row => row.id !== params.row.id)
-							setNotas(rows)
-							setSnackbar({ children: 'Evaluacion borrada', severity: 'error' });
-						}
-						else (alert("No se pudo borrar la evaluacion"))
-					})
-					.catch(error => {
-						console.log(error)
-					})
-			}}>
-				<ClearIcon
-					fontSize="medium"
-				//style={{ marginLeft: 16 }}
-				>
-				</ClearIcon>
-			</IconButton>
-
-
-		)
-	}
-
-	//*snackbar error
-	const handleProcessRowUpdateError = React.useCallback((error) => {
-		setSnackbar({ children: error.message, severity: 'error' });
-	}, []);
-
-	//*cerrar snackbar
-	const handleCloseSnackbar = () => setSnackbar(null);
-
 
 	//*custom pagination
 	function CustomPagination(newRow) {
@@ -244,8 +149,7 @@ export default function TableNotas(props) {
 	const columns = [
 		{ field: 'nota', headerName: 'Nota', width: 250, editable: true },
 		{ field: 'fecha', headerName: 'Fecha', width: 250, editable: true },
-		{ field: 'tipo', headerName: 'Tipo', width: 250, editable: true },
-		{ field: 'boton', headerName: '', suppressRowClickSelection: true, width: 200, renderCell: (e) => { return renderDetailsButton(e) } }
+		{ field: 'tipo', headerName: 'Tipo', width: 250, editable: true }
 	];
 
 	//*  Return
@@ -256,9 +160,6 @@ export default function TableNotas(props) {
 				<IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
 					<ArrowBackRoundedIcon fontSize='large' />
 				</IconButton>
-				<IconButton color="primary" aria-label="crear fila" onClick={() => { handleNewRow() }}>
-					<CreateIcon fontSize='large' />
-				</IconButton>
 			</div>
 
 			<div style={{ height: '90%' }}>
@@ -266,26 +167,13 @@ export default function TableNotas(props) {
 					ref={gridRef}
 					rows={notas}
 					columns={columns}
-					pageSize={10}
 					enterMovesDown={true}
-					processRowUpdate={ProcessRowUpdate}
-					onProcessRowUpdateError={handleProcessRowUpdateError}
 					components={{
 						Pagination: CustomPagination,
 						NoRowsOverlay: CustomNoRowsOverlay
 					}}
 					experimentalFeatures={{ newEditingApi: true }}
 				/>
-				{!!snackbar && (
-					<Snackbar
-						open
-						anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-						onClose={handleCloseSnackbar}
-						autoHideDuration={6000}
-					>
-						<Alert {...snackbar} onClose={handleCloseSnackbar} />
-					</Snackbar>
-				)}
 			</div>
 
 		</div>

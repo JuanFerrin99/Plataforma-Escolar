@@ -18,7 +18,7 @@ router.patch('/:id', verificarRol(["admin"]), idValidator, modificacionValidator
 // 4 GET /secretarios/:id
 router.get('/:id', idValidator, getSecretario);
 
-// 5 GET filtro mail /secretario/:mail
-router.get('/:mail', idValidator, getSecretarioMail);
+// 5 GET filtro mail /secretarios/:mail
+router.get('/filtro/:mail', getSecretarioMail);
 
 module.exports = router;

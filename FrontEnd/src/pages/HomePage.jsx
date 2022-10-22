@@ -7,6 +7,7 @@ export default function Hub() {
         <body id="a">
 
             <div id="infoInicio">
+                <h1>apreta f12 por favor</h1>
                 <h1>Instituto Manuel Savio</h1>
                 <p>Carrera de Técnico Superior en electrónica</p>
                 <p>Título Oficial de validez Nacional</p>

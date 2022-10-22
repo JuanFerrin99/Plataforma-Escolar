@@ -1,22 +1,17 @@
 import React, { useState } from "react";
 import "./Sidebar.css";
-import Logo from "./imgs/nicePic.png";
-import { UilSignOutAlt } from "@iconscout/react-unicons";
-import { SidebarData } from "./Data/Data";
+import Logo from "../imgs/nicePic.png";
+import { SidebarData } from "../Data/Data";
 import { UilBars } from "@iconscout/react-unicons";
 import { motion } from "framer-motion";
+//import { UilSignOutAlt } from "@iconscout/react-unicons";
 
-export default function Sidebar() {
-	const [selected, setSelected] = useState(0);
+export default function Sidebar({indexChanger, index}) {
 	const [expanded, setExpaned] = useState(true)
 
 	const sidebarVariants = {
-		true: {
-			left: '0'
-		},
-		false: {
-			left: '-60%'
-		}
+		true: {left: '0'},
+		false: {left: '-60%'}
 	}
 	
 	return (
@@ -35,22 +30,23 @@ export default function Sidebar() {
 					</span>
 				</div>
 				<div className="menu">
-					{SidebarData.map((item, index) => {
+					{SidebarData.map((item, i) => {
 						return (
 							<div
-								className={selected === index ? "menuItem active" : "menuItem"}
-								key={index}
-								onClick={() => setSelected(index)}
+								className={index === i ? "menuItem active" : "menuItem"}
+								key={i}
+								onClick={() => {indexChanger(i)}}
 							>
 								<item.icon />
 								<span>{item.heading}</span>
 							</div>
 						);
 					})}
-
-				{/*		Sign out botton			<div className="menuItem">
+					{/* 	Sign out botton
+					<div className="menuItem">
 						<UilSignOutAlt onClick={=}/>
-					</div>*/}
+					</div>
+					*/}
 				</div>
 			</motion.div>
 		</>

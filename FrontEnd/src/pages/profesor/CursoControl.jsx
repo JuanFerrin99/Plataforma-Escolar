@@ -131,7 +131,11 @@ export default function CursoCard() {
     const [isPressedEvaluacion, setIsPressedEvaluacion] = useState(false);
 
     const location = useLocation()
-    const id = location.state.idCurso
+    const id = location.state.idCurso//Todo al parecer podes pasar valores por url con este codigo, asi que habria que usar es oen ves de state asi funciona la flecha para atars en alumno
+    /*
+    import { useParams } from 'react-router-dom'
+    const { slug } = useParams()
+    */
     let ausentes = []
 
 
@@ -160,6 +164,7 @@ export default function CursoCard() {
             })
     }, []);
 
+    //* Create evaluaciones
     const handleNewRow = () => {
         let copia = evaluaciones.slice()
         let evaluacion = {
@@ -336,7 +341,7 @@ export default function CursoCard() {
                     <DataGrid
                         //?customizar cartel de rows selected =  https://stackoverflow.com/questions/65668602/react-material-ui-grid-footer-change (no se como borrarlo igual)
                         ref={gridRef}
-                        rows={curso.evaluaciones}
+                        rows={evaluaciones}
                         columns={columns}
                         pageSize={10}
                         enterMovesDown={true}

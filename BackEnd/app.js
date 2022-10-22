@@ -43,7 +43,7 @@ app.use('/login/', AuthRouter);
 
 app.use('/alumnos/', routeAlumno)
 app.use('/profesores/', routeProfesor)
-app.use('/secretario/', routeSecretario)
+app.use('/secretarios/', routeSecretario)
 
 app.use('/carreras/', routeCarrera)
 app.use('/inasistencias/', routeInasistencia);

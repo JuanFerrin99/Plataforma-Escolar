@@ -38,11 +38,15 @@ export const SidebarData = [
   },
   {
     icon: UilChart,
-    heading: 'Finales'
+    heading: 'Cursos'
   },
   {
     icon: UilChart,
-    heading: 'Cursos'
+    heading: 'Finales'
+  },
+  {
+    icon: UilSignOutAlt,
+    heading: 'Cerrar sesion'
   },
 ];
 

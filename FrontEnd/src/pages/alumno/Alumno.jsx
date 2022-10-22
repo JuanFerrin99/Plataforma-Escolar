@@ -36,7 +36,7 @@ export default function AlumnoPage() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`http://localhost:3001/alumnos/filtro/${Cookies.get("mail")}`)
+        fetch(`http://localhost:3001/alumnos/filtro/${Cookies.get("mail")}`,{credentials:"include"})
         .then(response => response.json())
         .then(alumno => {
             setCursos(alumno.cursosActivos)
