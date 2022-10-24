@@ -19,7 +19,7 @@ router.patch('/:id', verificarRol(["secretario", "admin"]), idValidator, modific
 router.get('/:id', idValidator, getAlumno);
 
 // 5 GET /alumnos/
-router.get('/alumnos', getAlumnos);
+router.get('/', getAlumnos);
 
 // 6 GET /filtroEmail /alumnos/:mail
 router.get('/filtro/:mail', mailValidator, getAlumnoMail);
