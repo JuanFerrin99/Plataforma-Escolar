@@ -149,9 +149,9 @@ export default function TableNotas(props) {
 
 	//* rows y columns
 	const columns = [
-		{ field: 'fecha', headerName: 'Fecha', width: 250 },
-		{ field: 'inicio', headerName: 'Inicio periodo de inscripcion', width: 250 },
-		{ field: 'final', headerName: 'fin periodo de inscripcion', width: 250 }
+		{ field: 'fecha', headerName: 'Fecha', flex: 1 },
+		{ field: 'inicio', headerName: 'Inicio periodo de inscripcion', flex: 1 },
+		{ field: 'final', headerName: 'fin periodo de inscripcion', flex: 1 }
 	];
 
 	//*  Return

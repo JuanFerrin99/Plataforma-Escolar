@@ -121,9 +121,9 @@ export default function TableInasistencias(props) {
 
 
 	useEffect(() => {
-		if(s){//toDO checkear que si al estar la coleccion esta vacia que no se quede cargando infinitamente y consuma mucho
+		if(s){ //toDO checkear que si al estar la coleccion esta vacia que no se quede cargando infinitamente y consuma mucho
 			setFaltas(props.inasistencia)
-			if(faltas.length == 0){return undefined}
+			if(faltas.length === 0){return undefined}
 			else{setS(false)}
 		}
 	});
@@ -216,12 +216,12 @@ export default function TableInasistencias(props) {
 
 	//* rows y columns
 	const columns = [
-		{ field: 'fecha', headerName: 'Fecha', width: 250, editable: true },
-		{ field: 'tipo', headerName: 'Tipo', width: 250, editable: true },
-		{ field: 'justificado', headerName: 'Justificado', width: 250, editable: true },
-		{ field: 'motivo', headerName: 'Motivo', width: 250, editable: true },
-		{ field: 'total', headerName: 'Total', width: 250, editable: true },
-		{ field: 'boton', headerName: '', suppressRowClickSelection: true, width: 200, renderCell: (e) => { return renderDetailsButton(e) } }
+		{ field: 'fecha', headerName: 'Fecha', flex: 1, editable: true },
+		{ field: 'tipo', headerName: 'Tipo', flex: 1, editable: true },
+		{ field: 'justificado', headerName: 'Justificado', flex: 1, editable: true },
+		{ field: 'motivo', headerName: 'Motivo', flex: 1, editable: true },
+		{ field: 'total', headerName: 'Total', flex: 1, editable: true },
+		{ field: 'boton', headerName: '', suppressRowClickSelection: true, flex: 0.1, renderCell: (e) => { return renderDetailsButton(e) } }
 	];
 
 	//*  Return

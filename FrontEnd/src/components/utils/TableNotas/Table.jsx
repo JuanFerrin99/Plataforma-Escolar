@@ -127,32 +127,32 @@ export default function TableNotas(props) {
 		}
 	});
 
-	    //* Create evaluaciones
-		const handleNewRow = () => {
-			let copia = notas.slice()
-			let evaluacion = {
-				id: copia[copia.length - 1].id + 1,
-				nota: 0,
-				tipo: " ",
-			}
-			copia.push(evaluacion)
-	
-			fetch(`http://localhost:3001/cursos/${id}/alumnos/${dni}/calificaciones/`, {
-				credentials: "include",
-				method: 'POST',
-				headers: {
-					'Accept': 'application/json, text/plain, */*',
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ "calificacion": evaluacion })
-			})
-				.then(res => {
-					setNotas(copia)
-				})
-				.catch(error => {
-					console.log(error)
-				})
+	//* Create evaluaciones
+	const handleNewRow = () => {
+		let copia = notas.slice()
+		let evaluacion = {
+			id: copia[copia.length - 1].id + 1,
+			nota: 0,
+			tipo: " ",
 		}
+		copia.push(evaluacion)
+
+		fetch(`http://localhost:3001/cursos/${id}/alumnos/${dni}/calificaciones/`, {
+			credentials: "include",
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json, text/plain, */*',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ "calificacion": evaluacion })
+		})
+			.then(res => {
+				setNotas(copia)
+			})
+			.catch(error => {
+				console.log(error)
+			})
+	}
 
 	//* Patch notas
 	const ProcessRowUpdate = (props) => {
@@ -185,7 +185,7 @@ export default function TableNotas(props) {
 	const renderDetailsButton = (params) => {
 		return (
 			<IconButton color="primary" aria-label="borrar" onClick={() => {
-				fetch(`http://localhost:3001/cursos/${id}/alumnos/${dni}/calificaciones/${params.row._id}`, { method: 'DELETE' , credentials: 'include'})
+				fetch(`http://localhost:3001/cursos/${id}/alumnos/${dni}/calificaciones/${params.row._id}`, { method: 'DELETE', credentials: 'include' })
 					.then(res => {
 						if (res) {
 							let rows = notas.slice()
@@ -243,10 +243,10 @@ export default function TableNotas(props) {
 
 	//* rows y columns
 	const columns = [
-		{ field: 'nota', headerName: 'Nota', width: 250, editable: true },
-		{ field: 'fecha', headerName: 'Fecha', width: 250, editable: true },
-		{ field: 'tipo', headerName: 'Tipo', width: 250, editable: true },
-		{ field: 'boton', headerName: '', suppressRowClickSelection: true, width: 200, renderCell: (e) => { return renderDetailsButton(e) } }
+		{ field: 'nota', headerName: 'Nota', flex: 1, editable: true },
+		{ field: 'fecha', headerName: 'Fecha', flex: 1, editable: true },
+		{ field: 'tipo', headerName: 'Tipo', flex: 1, editable: true },
+		{ field: 'boton', headerName: '', suppressRowClickSelection: true, flex: 0.1, renderCell: (e) => { return renderDetailsButton(e) } }
 	];
 
 	//*  Return

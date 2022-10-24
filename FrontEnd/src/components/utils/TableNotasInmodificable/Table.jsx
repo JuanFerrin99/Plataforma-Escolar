@@ -1,14 +1,10 @@
 import * as React from 'react';
 import { useEffect, useState, useRef } from "react";
-import { Card, CardActions, CardContent, Grid, Skeleton, Container } from "@mui/material";
+import { Card, CardActions, CardContent, Grid, Skeleton } from "@mui/material";
 import { DataGrid, gridPageCountSelector, gridPageSelector, useGridApiContext, useGridSelector } from '@mui/x-data-grid';
 import Pagination from '@mui/material/Pagination';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import IconButton from '@mui/material/IconButton';
-import CreateIcon from '@mui/icons-material/Create';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
-import ClearIcon from '@mui/icons-material/Clear';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 
@@ -147,9 +143,9 @@ export default function TableNotas(props) {
 
 	//* rows y columns
 	const columns = [
-		{ field: 'nota', headerName: 'Nota', width: 250, editable: true },
-		{ field: 'fecha', headerName: 'Fecha', width: 250, editable: true },
-		{ field: 'tipo', headerName: 'Tipo', width: 250, editable: true }
+		{ field: 'nota', headerName: 'Nota', flex: 1, editable: true },
+		{ field: 'fecha', headerName: 'Fecha', flex: 1, editable: true },
+		{ field: 'tipo', headerName: 'Tipo', flex: 1, editable: true }
 	];
 
 	//*  Return
@@ -175,7 +171,6 @@ export default function TableNotas(props) {
 					experimentalFeatures={{ newEditingApi: true }}
 				/>
 			</div>
-
 		</div>
 	);
 }

@@ -108,14 +108,14 @@ function CustomNoRowsOverlay() {
 }
 
 export default function TableInasistencias(props) {
-	const [loading, setLoading] = useState(true);//toDo que muestre loding skeleton
+	const [loading, setLoading] = useState(true); //toDo que muestre loding skeleton
 	const [faltas, setFaltas] = useState([]);
 	const [s, setS] = useState(true);
 	const gridRef = useRef();
 
 
 	useEffect(() => {
-		if(s){//toDO checkear que si al estar la coleccion esta vacia que no se quede cargando infinitamente y consuma mucho
+		if(s){ //toDO checkear que si al estar la coleccion esta vacia que no se quede cargando infinitamente y consuma mucho
 			setFaltas(props.inasistencia)
 			if(faltas.length == 0){return undefined}
 			else{setS(false)}
@@ -146,11 +146,11 @@ export default function TableInasistencias(props) {
 
 	//* rows y columns
 	const columns = [
-		{ field: 'fecha', headerName: 'Fecha', width: 250},
-		{ field: 'tipo', headerName: 'Tipo', width: 250},
-		{ field: 'justificado', headerName: 'Justificado', width: 250},
-		{ field: 'motivo', headerName: 'Motivo', width: 250},
-		{ field: 'total', headerName: 'Total', width: 250},
+		{ field: 'fecha', headerName: 'Fecha', flex: 1},
+		{ field: 'tipo', headerName: 'Tipo', flex: 1},
+		{ field: 'justificado', headerName: 'Justificado', flex: 1},
+		{ field: 'motivo', headerName: 'Motivo', flex: 1},
+		{ field: 'total', headerName: 'Total', flex: 1},
 	];
 
 	//*  Return
