@@ -4,11 +4,12 @@ const request = require("supertest")(app);
 const Materia = require("../Components/materiaCRUD/materiaSchema");
 const { connectTestDB, disconnectTestDB } = require("../utils/testUtils");
 const { materia1, materia2, materiaError } = require("./fixtures/materiaFixture");
-const { token } = require("../utils/token.js");
 
-
+let token;
 beforeAll(async () => {
     await connectTestDB("Testing")
+
+    //hardcodear un login que funcione con las funciones actuales
 })
 
 
