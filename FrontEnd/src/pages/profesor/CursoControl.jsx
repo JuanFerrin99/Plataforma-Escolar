@@ -131,7 +131,7 @@ export default function CursoCard() {
     const [isPressedEvaluacion, setIsPressedEvaluacion] = useState(false);
 
     const location = useLocation()
-    const id = location.state.idCurso//Todo al parecer podes pasar valores por url con este codigo, asi que habria que usar es oen ves de state asi funciona la flecha para atars en alumno
+    const id = location.state.idCurso //Todo al parecer podes pasar valores por url con este codigo, asi que habria que usar es oen ves de state asi funciona la flecha para atars en alumno
     /*
     import { useParams } from 'react-router-dom'
     const { slug } = useParams()
@@ -299,22 +299,16 @@ export default function CursoCard() {
 
     //* Vista Evaluaciones
 
-    else if (isPressedEvaluacion === true) { //! Buscar forma de centrar las cosas en sus celdas, hacer que los anchos no esten hardcodeados y cambiar el tipo de cuadro al pro o premium asi funciona rezisable
+    else if (isPressedEvaluacion === true) {
         const columns = [
-            {
-                field: 'fecha', headerName: 'Fecha', flex: 1, editable: true /*, resizable: true ,
-                    preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
-                    const hasError = params.props.value.length < 3;
-                    return { ...params.props, error: hasError };
-                }*/
-            },
-            { field: 'tipo', headerName: 'Tipo', flex: 1, editable: true }, 
-            { field: 'boton', headerName: '', suppressRowClickSelection: true, flex: 0.1, renderCell: (e) => { return renderDetailsButton(e) } }
+            { field: 'fecha', headerName: 'Fecha', flex: 1, headerAlign: 'center', editable: true },
+            { field: 'tipo', headerName: 'Tipo', flex: 1, headerAlign: 'center', editable: true },
+            { field: 'boton', headerName: '', suppressRowClickSelection: true, flex: 0.1, headerAlign: 'center', renderCell: (e) => { return renderDetailsButton(e) } }
         ];
         const columnsFinal = [
-            { field: 'fecha', headerName: 'Fecha', flex: 1 },
-            { field: 'inicio', headerName: 'Inicio de inscripcion', flex: 1 },
-            { field: 'final', headerName: 'Fin de inscripcion', flex: 1 }
+            { field: 'fecha', headerName: 'Fecha', flex: 1, headerAlign: 'center' },
+            { field: 'inicio', headerName: 'Inicio de inscripcion', flex: 1, headerAlign: 'center' },
+            { field: 'final', headerName: 'Fin de inscripcion', flex: 1, headerAlign: 'center' }
         ];
 
 
@@ -324,10 +318,7 @@ export default function CursoCard() {
                 <div style={{ width: '100%' }}>
                     <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
                         <ArrowBackRoundedIcon fontSize='large' />
-                    </IconButton>{/*
-                curso.alumnos.forEach((element) => {
-                    setRows((oldState) => [...oldState, { "id": element.dni, "Apellido": element.apellido, "Nombre": element.nombre }])
-                })USAR ESTO*/}
+                    </IconButton>
                     <IconButton color="primary" aria-label="crear fila" onClick={() => { handleNewRow() }}>
                         <CreateIcon fontSize='large' />
                     </IconButton>
@@ -340,7 +331,7 @@ export default function CursoCard() {
                         columns={columns}
                         pageSize={10}
                         enterMovesDown={true}
-                        processRowUpdate={ProcessRowUpdate} //! no sale de modo de editar aunque apretes enter, tab, etc
+                        processRowUpdate={ProcessRowUpdate} //! no sale de modo de editar aunque apretes enter, tab
                         onProcessRowUpdateError={handleProcessRowUpdateError}
                         components={{
                             Pagination: CustomPagination,
@@ -393,8 +384,8 @@ export default function CursoCard() {
     //* Vista Asistencias
     else if (isPressedAsistencia === true) {
         const columns = [
-            { field: 'Apellido', headerName: 'Apellido', width: 130 },
-            { field: 'Nombre', headerName: 'Nombre', width: 130 },
+            { field: 'Apellido', headerName: 'Apellido', flex: 1 },
+            { field: 'Nombre', headerName: 'Nombre', flex: 1 },
         ];
         const diaCorrecto = () => {
             return curso.periodo.dias.includes(date.getDay())
@@ -431,7 +422,7 @@ export default function CursoCard() {
             else {
                 alert("No se pudo tomar asistencia")
             }
-        }//! tipo no esta ahi 
+        }
         return (
             <div style={{ height: "94.9vh", width: '100%' }}>
                 <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>

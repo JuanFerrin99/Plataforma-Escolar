@@ -11,7 +11,7 @@ module.exports.agregarValidator = [
         .isLength({min: 5, max: 13}).withMessage("Duracion debe tener como minimo 5 caracteres y maximo 13"),
     body("correlativas")
         .optional({nullable: true})
-        .isArray({min:1}).withMessage("Correlativas debe ser un array con minimo un elemento"),
+        .isArray().withMessage("Correlativas debe ser un array"),
     body("final")
         .isBoolean().withMessage("Final debe ser un boolean"),
     body("correlativas.*")
