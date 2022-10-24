@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from 'react-router-dom'
 import MainDash from "../../components/administrativos/MainDash/MainDash";
 import Sidebar from "../../components/administrativos/Sidebar/Sidebar";
 import "../../styles/pages/SecretarioPage.css";
 
 //!deje el boton de cerrar sesion porque el ultimo elemento de el array se manda al fondo y no se como sacarlo
 
-export default function Hub() {
+export default function Hub(props) {
     const [index, setIndex] = useState(0);
     return (
         <div className="App">
@@ -16,4 +17,3 @@ export default function Hub() {
         </div>
     );
 }
-

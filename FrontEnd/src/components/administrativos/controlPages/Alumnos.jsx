@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect, useState } from "react";
 import { Card, CardActions, CardContent, Grid, Skeleton } from "@mui/material";
-import AlumnoCard from "../../cards/AlumnoCard";
+import AlumnoCard from "../../cards/AlumnoCardSecretario";
 
 function Variants() {
 	return (
@@ -27,11 +27,15 @@ function Variants() {
 }
 
 export default function Alumnos() {
-    const [alumnos, setAlumnos] = useState([]);
+	const [alumnos, setAlumnos] = useState([]);
+	const [alumno, setAlumno] = useState({});
 	const [loading, setLoading] = useState(true);
 
+
+
+
 	useEffect(() => {
-		fetch(`http://localhost:3001/alumnos/`,{credentials:'include'})
+		fetch(`http://localhost:3001/alumnos/`, { credentials: 'include' })
 			.then(response => response.json())
 			.then(alumnos => {
 				setAlumnos(alumnos)
@@ -43,16 +47,26 @@ export default function Alumnos() {
 	}, []);
 
 	const alumnosComponent = alumnos.map((alumno, i) => {
-		return <AlumnoCard key={alumno._id} nombre={alumno.nombre} apellido={alumno.apellido} dni={alumno.dni} />
+		return <AlumnoCard key={alumno._id} setAlumno={setAlumno} alumno={alumno} />
 	})
 
 	const alumnosSkeleton = new Array(20).fill(<Variants />)
 
-	return (
-		<div>
-			<Grid container spacing={3}>
-				{loading ? alumnosSkeleton : alumnosComponent}
-			</Grid>
-		</div>
-	)
+	if (Object.keys(alumno).length === 0) {
+		return (
+			<div>
+				<Grid container spacing={3}>
+					{loading ? alumnosSkeleton : alumnosComponent}
+				</Grid>
+			</div>
+		)
+	}
+	else {
+		return (
+			<div>
+				
+			</div>
+		)
+
+	}
 }

@@ -10,14 +10,13 @@ import Cursos from "../controlPages/Cursos"
 import Finales from "../controlPages/Finales"
 import CerrarSesion from "../controlPages/CerrarSesion"
 
-export default function MainDash({ index }) {
+export default function MainDash({index}) {
     const [paginas, setPaginas] = useState([]);
-
     useEffect(() => {
         fetch(`http://localhost:3001/secretarios/filtro/${Cookies.get("mail")}`, { credentials: "include" })
             .then(response => response.json())
             .then(secretario => {
-                setPaginas([<Home dni={secretario.dni} />, <Inscripciones />, <Alumnos />, <Profesores />, <Cursos />, <Finales />,<CerrarSesion/>])
+                setPaginas([<Home dni={secretario.dni} />, <Inscripciones />, <Alumnos/>, <Profesores />, <Cursos />, <Finales />,<CerrarSesion/>])
             })
             .catch(error => {
                 console.log(error)

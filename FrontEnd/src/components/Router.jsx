@@ -29,6 +29,7 @@ export default function Router() {
                         <Route path="/profesor/curso" element= { <CursoProfesorPage /> } />
                         <Route path="/profesor/curso/alumno" element= { <AlumnoControlPage /> } />
                     <Route path="/secretario" element= { <SecretarioPage /> } />
+                        <Route path="/secretario/alumno/:id" element= { <SecretarioPage origen ={2}/> } />
                     <Route path="/admin" element= { <AdminPage /> } />
             </Routes>
         </BrowserRouter>
