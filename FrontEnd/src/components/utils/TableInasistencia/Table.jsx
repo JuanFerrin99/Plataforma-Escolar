@@ -131,6 +131,7 @@ export default function TableInasistencias(props) {
 	//* Patch faltas
 	const ProcessRowUpdate = (props) => {
 		fetch(`http://localhost:3001/inasistencias/${props._id}`, {
+			credentials: "include",
 			method: 'PATCH',
 			headers: {
 				'Accept': 'application/json, text/plain, */*',
@@ -157,7 +158,7 @@ export default function TableInasistencias(props) {
 	const renderDetailsButton = (params) => {
 		return (
 			<IconButton color="primary" aria-label="borrar" onClick={() => {
-				fetch(`http://localhost:3001/inasistencias/${params.row._id}`, { method: 'DELETE' })//toDo checkear si lo encontro o no y cambiar el mensaje
+				fetch(`http://localhost:3001/inasistencias/${params.row._id}`, { credentials: "include", method: 'DELETE' })//toDo checkear si lo encontro o no y cambiar el mensaje
 					.then(res => {
 						if (res) {
 							let rows = faltas.slice()

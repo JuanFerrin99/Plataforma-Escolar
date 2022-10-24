@@ -14,7 +14,7 @@ export default function CursoCard() {
     useEffect(() => {
             let tempNotas = []
             let p = ""
-            fetch(`http://localhost:3001/cursos/${id}`,{credentials: "include"})
+            fetch(`http://localhost:3001/cursos/${id}`, {credentials: "include"})
             .then(response => response.json())
             .then(curso => {
                 setNotas([])

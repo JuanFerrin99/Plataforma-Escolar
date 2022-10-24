@@ -15,7 +15,7 @@ export default function CursoCard({ }) {
     const dni = location.state.dni
 
     useEffect(() => {
-        fetch(`http://localhost:3001/inasistencias/${dni}/${id}`,{credentials: "include"})
+        fetch(`http://localhost:3001/inasistencias/${dni}/${id}`, {credentials: "include"})
             .then(response => response.json())
             .then(res => {
                 setInasistencias(res)
@@ -25,7 +25,7 @@ export default function CursoCard({ }) {
             })
     }, []);
     useEffect(() => {
-        fetch(`http://localhost:3001/cursos/${id}`,{credentials: "include"})
+        fetch(`http://localhost:3001/cursos/${id}`, {credentials: "include"})
             .then(response => response.json())
             .then(curso => {
                 setMateria(curso.materia)

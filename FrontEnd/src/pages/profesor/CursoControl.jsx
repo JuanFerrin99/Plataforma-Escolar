@@ -216,7 +216,7 @@ export default function CursoCard() {
     const renderDetailsButton = (params) => {
         return (
             <IconButton color="primary" aria-label="borrar" onClick={() => {
-                fetch(`http://localhost:3001/cursos/${id}/evaluaciones/${params.row.id}`, { method: 'DELETE' })
+                fetch(`http://localhost:3001/cursos/${id}/evaluaciones/${params.row.id}`, { credentials: "include", method: 'DELETE' })
                     .then(res => {
                         if (res) {
                             let rows = evaluaciones.slice()
@@ -302,19 +302,19 @@ export default function CursoCard() {
     else if (isPressedEvaluacion === true) { //! Buscar forma de centrar las cosas en sus celdas, hacer que los anchos no esten hardcodeados y cambiar el tipo de cuadro al pro o premium asi funciona rezisable
         const columns = [
             {
-                field: 'fecha', headerName: 'Fecha', width: 350, editable: true /*, resizable: true ,
+                field: 'fecha', headerName: 'Fecha', flex: 1, editable: true /*, resizable: true ,
                     preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
                     const hasError = params.props.value.length < 3;
                     return { ...params.props, error: hasError };
                 }*/
             },
-            { field: 'tipo', headerName: 'Tipo', width: 350, editable: true /*, resizable: true */ }, 
-            { field: 'boton', headerName: '', suppressRowClickSelection: true, width: 60, renderCell: (e) => { return renderDetailsButton(e) } }
+            { field: 'tipo', headerName: 'Tipo', flex: 1, editable: true }, 
+            { field: 'boton', headerName: '', suppressRowClickSelection: true, flex: 0.1, renderCell: (e) => { return renderDetailsButton(e) } }
         ];
         const columnsFinal = [
-            { field: 'fecha', headerName: 'Fecha', width: 250 },
-            { field: 'inicio', headerName: 'Inicio de inscripcion', width: 250/*, resizable: true */ },
-            { field: 'final', headerName: 'Fin de inscripcion', width: 400/*, resizable: true */ }
+            { field: 'fecha', headerName: 'Fecha', flex: 1 },
+            { field: 'inicio', headerName: 'Inicio de inscripcion', flex: 1 },
+            { field: 'final', headerName: 'Fin de inscripcion', flex: 1 }
         ];
 
 
@@ -406,6 +406,7 @@ export default function CursoCard() {
             if (diaCorrecto() && !asitenciaNoTomada()) {
                 ausentes.map((id) => rows.find((row) => row.id === id)).forEach((alumno) => {
                     fetch("http://localhost:3001/inasistencias/", {
+                        credentials: "include",
                         method: 'POST',
                         headers: {
                             'Accept': 'application/json, text/plain, */*',
@@ -415,6 +416,7 @@ export default function CursoCard() {
                     })
                 })
                 fetch(`http://localhost:3001/cursos/${id}/`, {
+                    credentials: "include",
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json, text/plain, */*',

@@ -157,6 +157,7 @@ export default function TableNotas(props) {
 	//* Patch notas
 	const ProcessRowUpdate = (props) => {
 		fetch(`http://localhost:3001/cursos/${id}/alumnos/${dni}/calificaciones/${props._id}`, {
+			credentials: "include",
 			method: 'PATCH',
 			headers: {
 				'Accept': 'application/json, text/plain, */*',
@@ -184,7 +185,7 @@ export default function TableNotas(props) {
 	const renderDetailsButton = (params) => {
 		return (
 			<IconButton color="primary" aria-label="borrar" onClick={() => {
-				fetch(`http://localhost:3001/cursos/${id}/alumnos/${dni}/calificaciones/${params.row._id}`, { method: 'DELETE' ,credentials: 'include'})//toDo checkear si lo encontro o no y cambiar el mensaje
+				fetch(`http://localhost:3001/cursos/${id}/alumnos/${dni}/calificaciones/${params.row._id}`, { method: 'DELETE' , credentials: 'include'})
 					.then(res => {
 						if (res) {
 							let rows = notas.slice()
