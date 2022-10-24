@@ -215,9 +215,8 @@ export default function CursoCard() {
 
     const renderDetailsButton = (params) => {
         return (
-            //?import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'; logo de tacho en vez de cruz
             <IconButton color="primary" aria-label="borrar" onClick={() => {
-                fetch(`http://localhost:3001/cursos/${id}/evaluaciones/${params.row.id}`, { method: 'DELETE' })//toDo checkear si lo encontro o no y cambiar el mensaje
+                fetch(`http://localhost:3001/cursos/${id}/evaluaciones/${params.row.id}`, { method: 'DELETE' })
                     .then(res => {
                         if (res) {
                             let rows = evaluaciones.slice()
@@ -237,8 +236,6 @@ export default function CursoCard() {
                 >
                 </ClearIcon>
             </IconButton>
-
-
         )
     }
 
@@ -247,8 +244,6 @@ export default function CursoCard() {
         setSnackbar({ children: error.message, severity: 'error' });
     }, []);
 
-
-    //toDo post en el back para crear un objeto vacio
     //custom pagination
     function CustomPagination(newRow) {
         const apiRef = useGridApiContext();
@@ -307,14 +302,14 @@ export default function CursoCard() {
     else if (isPressedEvaluacion === true) { //! Buscar forma de centrar las cosas en sus celdas, hacer que los anchos no esten hardcodeados y cambiar el tipo de cuadro al pro o premium asi funciona rezisable
         const columns = [
             {
-                field: 'fecha', headerName: 'Fecha', width: 250, editable: true /*, resizable: true , //ToDo con esta cosa validas lo de adentro
+                field: 'fecha', headerName: 'Fecha', width: 350, editable: true /*, resizable: true ,
                     preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
                     const hasError = params.props.value.length < 3;
                     return { ...params.props, error: hasError };
                 }*/
             },
-            { field: 'tipo', headerName: 'Tipo', width: 250, editable: true /*, resizable: true */ }, //toDo validar que no cree un final en la sona de notas y una nota en la zpna de final
-            { field: 'boton', headerName: '', suppressRowClickSelection: true, width: 200, renderCell: (e) => { return renderDetailsButton(e) } }
+            { field: 'tipo', headerName: 'Tipo', width: 350, editable: true /*, resizable: true */ }, 
+            { field: 'boton', headerName: '', suppressRowClickSelection: true, width: 60, renderCell: (e) => { return renderDetailsButton(e) } }
         ];
         const columnsFinal = [
             { field: 'fecha', headerName: 'Fecha', width: 250 },

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { verificarRol, verificarIdentidad } = require('../../auth/authController.js');
-const { agregarAlumno, eliminarAlumno, modificarAlumno, getAlumno, getAlumnoMail } = require('./alumnoController');
+const { agregarAlumno, eliminarAlumno, modificarAlumno, getAlumno, getAlumnos, getAlumnoMail } = require('./alumnoController');
 const { agregarValidator, idValidator, mailValidator, modificacionValidator } = require("./alumnoValidator");
 
 //router.use(verificarAuth)
@@ -18,7 +18,10 @@ router.patch('/:id', verificarRol(["secretario", "admin"]), idValidator, modific
 // 4 GET /alumnos/:id
 router.get('/:id', idValidator, getAlumno);
 
-// 5 GET filtroEmail /alumnos/:mail
+// 5 GET /alumnos/
+router.get('/alumnos', getAlumnos);
+
+// 6 GET /filtroEmail /alumnos/:mail
 router.get('/filtro/:mail', mailValidator, getAlumnoMail);
 
 
