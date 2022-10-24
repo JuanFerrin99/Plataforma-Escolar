@@ -1,20 +1,23 @@
 import Carousel from "react-material-ui-carousel";
-import { makeStyles } from "@material-ui/core";
+
 import '../../styles/pages/HomePage.css';
 const items = [
     {
+        key:"1",
         name: "Solicita ahora tu beca",
         description: "Beca 50% Ciclo Lectivo 2023. 10 Cuotas de Marzo a Diciembre"
     },
     {
+        key:"2",
         name: "Tus Primeros Pasos en Electrónica",
         description: "Unite a los Cursos Cortos de Electrónica Básica del ISE"
     },{
+        key:"3",
         name: "Conocé el instituto",
-        description: "Desde 1962, el Instituto Superior de Electrónica formó más de 5.000 profesionales electrónicos."
+        description: "Desde 1962, el Instituto Superior de Electrónica formó más de 5.000 profesionales electrónicos"
     }
 ];
-const useStyles = makeStyles((theme) => ({}));
+
 export default function App() {
   return (
     <div className="Carousel">
@@ -34,8 +37,8 @@ export default function App() {
         >
           {items.map((element, index) => (
             <>
-            <h1 key={index}>{element.name}</h1>
-            <p key={index}>{element.description}</p>
+            <h1 key={element.key}>{element.name}</h1>
+            <p key={element.key}>{element.description}</p>
             <button id="botonInfo">+ INFO</button>
             </>
           ))}
