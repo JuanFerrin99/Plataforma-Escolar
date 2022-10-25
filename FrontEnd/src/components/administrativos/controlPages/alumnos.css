@@ -1,0 +1,9 @@
+#info > div{
+margin: 2%;
+float:left;
+
+}
+#info{
+    height: 100vh;
+    width: 80vw;
+}

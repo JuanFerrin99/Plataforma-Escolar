@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from 'react-router-dom'
+import React, { useState } from "react";
 import MainDash from "../../components/administrativos/MainDash/MainDash";
 import Sidebar from "../../components/administrativos/Sidebar/Sidebar";
 import "../../styles/pages/SecretarioPage.css";

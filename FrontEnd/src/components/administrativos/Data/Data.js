@@ -41,10 +41,6 @@ export const SidebarData = [
     heading: 'Cursos'
   },
   {
-    icon: UilChart,
-    heading: 'Finales'
-  },
-  {
     icon: UilSignOutAlt,
     heading: 'Cerrar sesion'
   },

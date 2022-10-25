@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { verificarRol, verificarIdentidad } = require('../../auth/authController.js');
-const { agregarProfesor, eliminarProfesor, modificarProfesor, getProfesor, getProfesorMail } = require('./profesorController');
+const { agregarProfesor, eliminarProfesor, modificarProfesor, getProfesor,getProfesores, getProfesorMail } = require('./profesorController');
 const { agregarValidator, idValidator, mailValidator, modificacionValidator } = require("./profesorValidator");
 
 
@@ -19,5 +19,9 @@ router.get('/:id', idValidator, getProfesor);
 
 // 5 GET filtro mail /profesores/:mail
 router.get('/filtro/:mail', mailValidator, getProfesorMail);
+
+// 6 GET /profesores/
+router.get('/', getProfesores);
+
 
 module.exports = router;
