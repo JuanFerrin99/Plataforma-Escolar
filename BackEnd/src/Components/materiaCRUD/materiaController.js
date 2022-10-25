@@ -7,7 +7,7 @@ const { findOne } = require('./materiaSchema.js');
 //------------------------------------ POST /materias/ ------------------------------------------------------------------
 
 module.exports.agregarMateria = (req, res) => {
-    const { nombre, duracion, correlativas, final } = req.body;
+    const { nombre, duracion, correlativas, final } = req.body
 
     const materia = new Materia({
     nombre,
