@@ -6,7 +6,7 @@ var materias = new Schema({
     nombre: String,
     duracion: String,
     correlativas: [String],
-    final: Boolean
+    final: String
 });
 
 

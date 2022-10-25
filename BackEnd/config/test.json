@@ -1,5 +1,5 @@
 {
-    "mongodbUri": "mongodb://localhost:27017/Testing",
+    "mongodbUri": "mongodb://localhost:27017/Plataforma-Escolar-Testing",
     "authentication": {
         "jwtSecret": "a35e2c7060d2fed4bfb95c703f8a9f55c0d7f3a54919e101cc18beff11c4066f"
     }

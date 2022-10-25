@@ -13,7 +13,7 @@ module.exports.agregarValidator = [
         .optional({nullable: true})
         .isArray().withMessage("Correlativas debe ser un array"),
     body("final")
-        .isBoolean().withMessage("Final debe ser un boolean"),
+        .isString().withMessage("Final debe ser un string"),
     body("correlativas.*")
         .isString({}).withMessage("Correlativas deben ser un array de strings"),
     verifyValidation
@@ -41,6 +41,6 @@ module.exports.modificacionValidator = [
         .isString({}).withMessage("Correlativas deben ser un array de strings"),
     body("final")
         .optional({nullable: true})
-        .isBoolean().withMessage("Final debe ser un boolean"),
+        .isString().withMessage("Final debe ser un string"),
     verifyValidation
 ]
