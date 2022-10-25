@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import { Card, CardActions, CardContent, Grid, Skeleton } from "@mui/material";
 import AlumnoCard from "../../cards/AlumnoCardSecretario";
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import "./alumnos.css"
+import { grey } from '@mui/material/colors';
 
 function Variants() {
 	return (
@@ -75,51 +76,78 @@ export default function Alumnos() {
 					<TextField id="standard-basic" value={alumno.apellido} label="Apellido" variant="standard" />
 				</div>
 				<div>
-					<TextField id="standard-basic" value={alumno.dni}  label="DNI" variant="standard" />
+					<TextField id="standard-basic" value={alumno.dni} label="DNI" variant="standard" />
 				</div>
 				<div>
-					<TextField id="standard-basic" value={alumno.fechaNacimiento}  label="Fecha de Nacimiento" variant="standard" />
+					<TextField id="standard-basic" value={alumno.fechaNacimiento} label="Fecha de Nacimiento" variant="standard" />
 				</div>
 				<div>
-					<TextField id="standard-basic" value={alumno.telefono}  label="Telefono" variant="standard" />
+					<TextField id="standard-basic" value={alumno.telefono} label="Telefono" variant="standard" />
 				</div>
 				<div>
-					<TextField id="standard-basic" value={alumno.mail}  label="Mail" variant="standard" />
+					<TextField id="standard-basic" value={alumno.mail} label="Mail" variant="standard" />
 				</div>
 				<div>
-					<TextField id="standard-basic" value={alumno.rol}  label="Rol" variant="standard" />
+					<TextField id="standard-basic" value={alumno.rol} label="Rol" variant="standard" />
 				</div>
 				<div>
-					<TextField id="standard-basic" value={alumno.fechaIngreso}  label="Fecha de ingreso" variant="standard" />
+					<TextField id="standard-basic" value={alumno.fechaIngreso} label="Fecha de ingreso" variant="standard" />
 				</div>
 				<div>
-					<TextField id="standard-basic" value={alumno.datosNacimiento.pais}  label="Pais de nacimiento" variant="standard" />
+					<TextField id="standard-basic" value={alumno.datosNacimiento.pais} label="Pais de nacimiento" variant="standard" />
 				</div>
 				<div>
-					<TextField id="standard-basic" value={alumno.datosNacimiento.localidad}  label="Localidad de nacimiento" variant="standard" />
+					<TextField id="standard-basic" value={alumno.datosNacimiento.localidad} label="Localidad de nacimiento" variant="standard" />
 				</div>
 				<div>
-					<TextField id="standard-basic" value={alumno.datosResidencia.pais}  label="Pais de residencia" variant="standard" />
+					<TextField id="standard-basic" value={alumno.datosResidencia.pais} label="Pais de residencia" variant="standard" />
 				</div>
 				<div>
-					<TextField id="standard-basic" value={alumno.datosResidencia.provincia}  label="Provincia de residencia" variant="standard" />
+					<TextField id="standard-basic" value={alumno.datosResidencia.provincia} label="Provincia de residencia" variant="standard" />
 				</div>
 				<div>
-					<TextField id="standard-basic" value={alumno.datosResidencia.localidad}  label="Localidad de residencia" variant="standard" />
+					<TextField id="standard-basic" value={alumno.datosResidencia.localidad} label="Localidad de residencia" variant="standard" />
 				</div>
 				<div>
-					<TextField id="standard-basic" value={alumno.datosResidencia.domicilio}  label="Domicilio" variant="standard" />
+					<TextField id="standard-basic" value={alumno.datosResidencia.domicilio} label="Domicilio" variant="standard" />
 				</div>
 				<div>
-					<TextField id="standard-basic" value={alumno.datosResidencia.codigoPostal}  label="Codigo postal" variant="standard" />
+					<TextField id="standard-basic" value={alumno.datosResidencia.codigoPostal} label="Codigo postal" variant="standard" />
 				</div>
-				{alumno.titulos.map((titulo)=>{
-									<div>
-									<TextField id="standard-basic" value={alumno.datosResidencia.codigoPostal}  label="Codigo postal" variant="standard" />
-								</div>
-				})}
+				<div>
+
+					{alumno.titulos.map((titulo, i) => {
+						return (
+							<div>
+								<TextField id="standard-basic" value={titulo} label={`Titulo ${i + 1}`} variant="standard" />
+							</div>
+						)
+					})
+					}
+				</div>
+				<div>
+
+					{alumno.cursosActivos.map((curso, i) => {
+						return (
+							<div>
+								<TextField id="standard-basic" value={curso.nombre} label={`Curso activo ${i + 1}`} variant="standard" />
+							</div>
+						)
+					})
+					}
+				</div>
+				<div>
+					<p>Carrera</p>
+					{alumno.carrera.materias.map((materia, i) => {
+						return (
+							<div>
+								<TextField id="standard-basic" value={materia.nombre} label={`Materia terminada ${i + 1}`} variant="standard" />
+							</div>
+						)
+					})
+					}
+				</div>
 			</Box>
 		);
-
 	}
 }
