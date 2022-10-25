@@ -29,7 +29,7 @@ module.exports.agregarMateria = (req, res) => {
 //------------------------------------  DELETE /materias/id ------------------------------------------------------------------
 
 module.exports.eliminarMateria = (req, res) => {
-    return Materia.deleteOne({ nombre: req.params.nombre })
+    return Materia.deleteOne({ _id: req.params.id })
     .then((result) => {
         if(result.deletedCount == 1){
             res.status(200).json(req.params.nombre)
@@ -47,7 +47,7 @@ module.exports.eliminarMateria = (req, res) => {
 //----------------------------------------- PATCH /materias/id----------------------------------------------------------------------
 
 module.exports.modificarMateria = (req, res) => {
-    return Materia.findOneAndUpdate({ nombre: req.params.nombre },{ nombre: req.body.nombre, duracion: req.body.duracion, correlativas: req.body.correlativas, final: req.body.final} ,{new: true})
+    return Materia.findOneAndUpdate({ _id: req.params.id },{ nombre: req.body.nombre, duracion: req.body.duracion, correlativas: req.body.correlativas, final: req.body.final} ,{new: true})
         .then((result) => {
             if(result){
                 res.status(200).json("Se realizaron los cambios a " + req.params.nombre)
@@ -65,7 +65,7 @@ module.exports.modificarMateria = (req, res) => {
 //------------------------------------------- GET /materias/id ------------------------------------------------------------
 
 module.exports.getMateria = (req, res) => {
-    return Materia.findOne({_id: req.params.id})
+    return Materia.findOne({ _id: req.params.id })
         .then((materia) => {
             if(materia == undefined){
                 res.status(404).json({error: "No se encontro la materia"})

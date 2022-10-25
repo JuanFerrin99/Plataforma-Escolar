@@ -6,10 +6,19 @@ module.exports.materia1 = {
 };
 
 module.exports.materia2 = {
+    _id: "6335eed14fda6c2aa027fdb6",
     nombre: "Algebra",
     duracion: "Cuatrimestral",
     correlativas: [],
     final: "False"
+};
+
+module.exports.materia2Modified = {
+    "_id": "6335eed14fda6c2aa027fdb6",
+    "nombre": "Algebra",
+    "duracion": "Anual",
+    "correlativas": [],
+    "final": "False"
 };
 
 module.exports.materiaError = {
