@@ -28,6 +28,7 @@ function Variants() {
 
 export default function Alumnos() {
 	const [alumnos, setAlumnos] = useState([]);
+	const [titulos, setTitulos] = useState([]);
 	const [alumno, setAlumno] = useState({});
 	const [isShown, setIsShown] = useState(false);
 	const [loading, setLoading] = useState(true);
@@ -42,6 +43,14 @@ export default function Alumnos() {
 		let valorUpdateado = { [firstKey]: event.target.value }
 		setAlumno(current => ({ ...current, ...valorUpdateado }))
 		setIsShown(current => !current);
+	}
+
+	const changeHandlerComplex = (value, firstKey, setter) => {
+		let valorUpdateado = { [firstKey]: [...titulos, ...value] }
+		setAlumno(current => ({ ...current, ...valorUpdateado }))
+		setIsShown(current => !current);
+		setter([...current, ...value])
+
 	}
 
 	const changeObjectHandler = (event, firstKey, secondKey) => {
@@ -130,11 +139,11 @@ export default function Alumnos() {
 				</div>
 
 				<div>
-
+				
 					{alumno.titulos.map((titulo, i) => {
 						return (
 							<div>
-								<TextField id="standard-basic" defaultValue={titulo} label={`Titulo ${i + 1}`} variant="standard" />
+								<TextField id="standard-basic" defaultValue={titulo}onBlur={e => changeHandlerComplex(e, "titulos", setTitulos)} lonKeyPress={e => onEnter(e)} label={`Titulo ${i + 1}`} variant="standard" />
 							</div>
 						)
 					})
@@ -145,7 +154,7 @@ export default function Alumnos() {
 					{alumno.cursosActivos.map((curso, i) => {
 						return (
 							<div>
-								<TextField id="standard-basic" defaultValue={curso.nombre} label={`Curso activo ${i + 1}`} variant="standard" />
+								<TextField id="standard-basic" defaultValue={curso.nombre} onBlur={e => changeHandlerComplex(e, "titulos", setTitulos)} lonKeyPress={e => onEnter(e)} label={`Curso activo ${i + 1}`} variant="standard" />
 							</div>
 						)
 					})
