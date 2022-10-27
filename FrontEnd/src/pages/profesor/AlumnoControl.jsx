@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom"
-import TableNotas from "../../components/utils/TableNotas/Table"
-import TableFinales from "../../components/utils/TableFinales/Table"
+import TableNotas from "../../components/tables/TableNotas/Table"
+import TableFinales from "../../components/tables/TableFinales/Table"
 
 export default function CursoCard() {
     const [notas, setNotas] = useState([]);

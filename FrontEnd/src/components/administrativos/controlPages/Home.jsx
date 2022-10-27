@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Table from "../../utils/TableInasistenciaInmodificable/Table.jsx";
+import Table from "../../tables/TableInasistenciaInmodificable/Table.jsx";
 
 export default function Home({dni}) {
     const [inasistencias, setInasistencias] = useState([])

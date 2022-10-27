@@ -1,12 +1,7 @@
-import React from 'react'
-import { useEffect, useState } from "react";
-import { Card, CardActions, CardContent, Grid, Skeleton } from "@mui/material";
+import React, { useEffect, useState, useRef } from 'react'
+import { Card, CardActions, CardContent, Grid, Skeleton, Box, Button, TextField } from "@mui/material";
 import AlumnoCard from "../../cards/AlumnoCardSecretario";
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import TextField from '@mui/material/TextField';
 import "./alumnos.css"
-import { grey } from '@mui/material/colors';
 
 function Variants() {
 	return (
@@ -34,10 +29,30 @@ function Variants() {
 export default function Alumnos() {
 	const [alumnos, setAlumnos] = useState([]);
 	const [alumno, setAlumno] = useState({});
+	const [isShown, setIsShown] = useState(false);
 	const [loading, setLoading] = useState(true);
 
+	const onEnter = (event) => {
+		if (event.code === "Enter") {
+			document.activeElement.blur()
+		}
+	}
 
+	const changeHandler = (event, firstKey) => {
+		let valorUpdateado = { [firstKey]: event.target.value }
+		setAlumno(current => ({ ...current, ...valorUpdateado }))
+		setIsShown(current => !current);
+	}
 
+	const changeObjectHandler = (event, firstKey, secondKey) => {
+		setAlumno(current => {
+			let copia = current
+			let res = {}
+			copia[firstKey][secondKey] = event.target.value
+			return ({ ...current, ...copia[firstKey] })
+		})
+		setIsShown(current => !current);
+	}
 
 	useEffect(() => {
 		fetch(`http://localhost:3001/alumnos/`, { credentials: 'include' })
@@ -50,6 +65,8 @@ export default function Alumnos() {
 				console.log(error)
 			})
 	}, []);
+
+	useEffect(() => { console.log(alumno) }, [alumno])
 
 	const alumnosComponent = alumnos.map((alumno, i) => {
 		return <AlumnoCard key={alumno._id} setAlumno={setAlumno} alumno={alumno} />
@@ -70,56 +87,54 @@ export default function Alumnos() {
 		return (
 			<Box id="info">
 				<div>
-					<TextField id="standard-basic" value={alumno.nombre} label="Nombre" variant="standard" />
+					<TextField id="standard-basic" defaultValue={alumno.nombre} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "nombre")} label="Nombre" variant="standard" />
 				</div>
 				<div>
-					<TextField id="standard-basic" value={alumno.apellido} label="Apellido" variant="standard" />
+					<TextField id="standard-basic" defaultValue={alumno.apellido} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "apellido")} label="Apellido" variant="standard" />
 				</div>
 				<div>
-					<TextField id="standard-basic" value={alumno.dni} label="DNI" variant="standard" />
+					<TextField id="standard-basic" defaultValue={alumno.dni} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "dni")} label="DNI" variant="standard" />
 				</div>
 				<div>
-					<TextField id="standard-basic" value={alumno.fechaNacimiento} label="Fecha de Nacimiento" variant="standard" />
+					<TextField id="standard-basic" defaultValue={alumno.fechaNacimiento} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "fechaNacimiento")} label="Fecha de Nacimiento" variant="standard" />
 				</div>
 				<div>
-					<TextField id="standard-basic" value={alumno.telefono} label="Telefono" variant="standard" />
+					<TextField id="standard-basic" defaultValue={alumno.telefono} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "telefono")} label="Telefono" variant="standard" />
 				</div>
 				<div>
-					<TextField id="standard-basic" value={alumno.mail} label="Mail" variant="standard" />
+					<TextField id="standard-basic" defaultValue={alumno.mail} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "mail")} label="Mail" variant="standard" />
 				</div>
 				<div>
-					<TextField id="standard-basic" value={alumno.rol} label="Rol" variant="standard" />
+					<TextField id="standard-basic" defaultValue={alumno.rol} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "rol")} label="Rol" variant="standard" />
 				</div>
 				<div>
-					<TextField id="standard-basic" value={alumno.fechaIngreso} label="Fecha de ingreso" variant="standard" />
+					<TextField id="standard-basic" defaultValue={alumno.fechaIngreso} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "fechaIngreso")} label="Fecha de ingreso" variant="standard" />
 				</div>
+				{() => {
+					return (
+						<div>
+							<p>Datos de nacimiento</p>
+							<div><TextField id="standard-basic" defaultValue={alumno.datosNacimiento.pais} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e,"datosNacimiento","pais")} label="Pais de nacimiento" variant="standard" /></div>
+							<div><TextField id="standard-basic" defaultValue={alumno.datosNacimiento.localidad} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e,"datosNacimiento","localidad")} label="Localidad de nacimiento" variant="standard" /></div>
+						</div>
+					)
+				}}
+
 				<div>
-					<TextField id="standard-basic" value={alumno.datosNacimiento.pais} label="Pais de nacimiento" variant="standard" />
+					<p>Datos de residencia</p>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.pais} onKeyPress={e => onEnter(e)} label="Pais de residencia" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.provincia} onKeyPress={e => onEnter(e)} label="Provincia de residencia" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.localidad} onKeyPress={e => onEnter(e)} label="Localidad de residencia" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.domicilio} onKeyPress={e => onEnter(e)} label="Domicilio" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.codigoPostal} onKeyPress={e => onEnter(e)} label="Codigo postal" variant="standard" /></div>
 				</div>
-				<div>
-					<TextField id="standard-basic" value={alumno.datosNacimiento.localidad} label="Localidad de nacimiento" variant="standard" />
-				</div>
-				<div>
-					<TextField id="standard-basic" value={alumno.datosResidencia.pais} label="Pais de residencia" variant="standard" />
-				</div>
-				<div>
-					<TextField id="standard-basic" value={alumno.datosResidencia.provincia} label="Provincia de residencia" variant="standard" />
-				</div>
-				<div>
-					<TextField id="standard-basic" value={alumno.datosResidencia.localidad} label="Localidad de residencia" variant="standard" />
-				</div>
-				<div>
-					<TextField id="standard-basic" value={alumno.datosResidencia.domicilio} label="Domicilio" variant="standard" />
-				</div>
-				<div>
-					<TextField id="standard-basic" value={alumno.datosResidencia.codigoPostal} label="Codigo postal" variant="standard" />
-				</div>
+
 				<div>
 
 					{alumno.titulos.map((titulo, i) => {
 						return (
 							<div>
-								<TextField id="standard-basic" value={titulo} label={`Titulo ${i + 1}`} variant="standard" />
+								<TextField id="standard-basic" defaultValue={titulo} label={`Titulo ${i + 1}`} variant="standard" />
 							</div>
 						)
 					})
@@ -130,7 +145,7 @@ export default function Alumnos() {
 					{alumno.cursosActivos.map((curso, i) => {
 						return (
 							<div>
-								<TextField id="standard-basic" value={curso.nombre} label={`Curso activo ${i + 1}`} variant="standard" />
+								<TextField id="standard-basic" defaultValue={curso.nombre} label={`Curso activo ${i + 1}`} variant="standard" />
 							</div>
 						)
 					})
@@ -141,12 +156,15 @@ export default function Alumnos() {
 					{alumno.carrera.materias.map((materia, i) => {
 						return (
 							<div>
-								<TextField id="standard-basic" value={materia.nombre} label={`Materia terminada ${i + 1}`} variant="standard" />
+								<TextField id="standard-basic" defaultValue={materia.nombre} label={`Materia terminada ${i + 1}`} variant="standard" />
 							</div>
 						)
 					})
 					}
 				</div>
+
+				{isShown && <Button variant="contained">Guardar cambios</Button>}
+
 			</Box>
 		);
 	}

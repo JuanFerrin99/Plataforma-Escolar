@@ -1,5 +1,5 @@
 import { Card, CardActions, CardContent, Grid, Skeleton, Container } from "@mui/material";
-import TableInasistencia from "../../components/utils/TableInasistenciaInmodificable/Table"
+import TableInasistencia from "../../components/tables/TableInasistenciaInmodificable/Table"
 
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";

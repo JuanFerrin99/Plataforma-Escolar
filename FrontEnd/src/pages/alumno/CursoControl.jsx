@@ -3,8 +3,8 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom"
-import TableInasistencia from "../../components/utils/TableInasistenciaInmodificable/Table"
-import TableNotas from "../../components/utils/TableNotasInmodificable/Table"
+import TableInasistencia from "../../components/tables/TableInasistenciaInmodificable/Table"
+import TableNotas from "../../components/tables/TableNotasInmodificable/Table"
 
 export default function CursoCard({ }) {
     const [materia, setMateria] = useState("")
