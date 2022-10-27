@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { verificarRol, verificarIdentidad } = require('../../auth/authController.js');
 const { agregarValidator, idValidator, modificacionValidator } = require("./carreraValidator");
-const { agregarCarrera, eliminarCarrera, modificarCarrera, getCarrera } = require("./carreraController");
+const { agregarCarrera, eliminarCarrera, modificarCarrera, getCarrera, getCarreras } = require("./carreraController");
 
 //router.use(verificarAuth)
 
@@ -17,5 +17,8 @@ router.patch('/:id', verificarRol(["secretario", "admin"]), idValidator, modific
 
 // 4 GET /carreras/:id
 router.get('/:id', idValidator, getCarrera);
+
+// 5 GET /carreras/
+router.get('/', getCarreras);
 
 module.exports = router;

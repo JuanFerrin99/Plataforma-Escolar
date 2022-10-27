@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card, CardActions, CardContent, Grid, Skeleton, Box, Button, TextField } from "@mui/material";
 import AlumnoCard from "../../cards/AlumnoCardSecretario";
 import "./alumnos.css"
@@ -30,8 +30,11 @@ export default function Alumnos() {
 	const [alumnos, setAlumnos] = useState([]);
 	const [titulos, setTitulos] = useState([]);
 	const [cursosActivos, setCursosActivos] = useState([]);
+	const [carreras, setCarreras] = useState([]);
 	const [alumno, setAlumno] = useState({});
 	const [isShown, setIsShown] = useState(false);
+	const [entre1, setEntre1] = useState(false);
+	const [entre2, setEntre2] = useState(false);
 	const [loading, setLoading] = useState(true);
 
 	const onEnter = (event) => {
@@ -43,14 +46,14 @@ export default function Alumnos() {
 	const changeHandler = (event, firstKey) => {
 		let valorUpdateado = { [firstKey]: event.target.value }
 		setAlumno(current => ({ ...current, ...valorUpdateado }))
-		setIsShown(current => !current);
+		setIsShown(current => true);
 	}
 
 	const changeHandlerComplex = (value, firstKey, setter) => {
 		let valorUpdateado = { [firstKey]: [...titulos, ...value] }
 		setAlumno(current => ({ ...current, ...valorUpdateado }))
-		setIsShown(current => !current);
-		setter(current=>[...current, ...value])
+		setIsShown(current => true);
+		setter(current => [...current, ...value])
 
 	}
 
@@ -61,36 +64,79 @@ export default function Alumnos() {
 			copia[firstKey][secondKey] = event.target.value
 			return ({ ...current, ...copia[firstKey] })
 		})
-		setIsShown(current => !current);
+		setIsShown(current => true);
 	}
+	const handleClick = () =>{//todo crear endpoint put en ves de patch
+		let a = Object.assign({}, alumno)
+		delete a._id 
+        fetch(`http://localhost:3001/alumnos/${alumno._id}/`, {
+            credentials: "include",
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+			
+            body: JSON.stringify(a)
 
+        })
+            .then(res => {
+                setIsShown(current => false);
+            })
+            .catch(error => {
+                console.log(error)
+            })
+	}
 	useEffect(() => {
 		fetch(`http://localhost:3001/alumnos/`, { credentials: 'include' })
 			.then(response => response.json())
 			.then(alumnos => {
 				setAlumnos(alumnos)
 				setLoading(false)
-					fetch(`http://localhost:3001/cursos/${alumnos.cursosActivos}`, { credentials: 'include' })
-						.then(response => response.json())
-						.then(cursos => {
-							cursos.alumnos.forEach((alumno)=>{
-
-							})
-						})
-						.catch(error => {
-							console.log(error)
-						})
-				
 			})
 			.catch(error => {
 				console.log(error)
 			})
 	}, []);
 
+	useEffect(() => {
+		if (Object.keys(alumno).length > 0 && !entre1) {
+			setEntre1(true)
+			fetch(`http://localhost:3001/cursos/`, { credentials: 'include' })
+				.then(response => response.json())
+				.then(cursos => {
+					cursos.forEach(curso => {
+						if (alumno.cursosActivos.includes(curso._id)) {
+							setCursosActivos(current => [...current, { nombre: `${curso.materia} ${curso.periodo.año}`, id: curso._id }])
+						}
+					})
+				})
+				.catch(error => {
+					console.log(error)
+				})
+		}
+	}, [alumno]);
 
+	useEffect(() => {
+		if (Object.keys(alumno).length > 0 && !entre2) {
+			setEntre2(true)
+			fetch(`http://localhost:3001/carreras/`, { credentials: 'include' })
+				.then(response => response.json())
+				.then(carreras => {
+					alumno.carrera.forEach(carreraAlumno => {
+						carreras.forEach((carrera) => {
+							if (carrera._id === carreraAlumno.id) {
+								setCarreras(current => [...current, { nombre: carrera.nombre, id: carrera._id, materiasAprobadas: carreraAlumno.materiasAprobadas }])
+							}
+						})
 
-
-	useEffect(() => { console.log(alumno) }, [alumno])
+					})
+				})
+				.catch(error => {
+					console.log(error)
+				})
+		}
+	}, [alumno]);
 
 	const alumnosComponent = alumnos.map((alumno, i) => {
 		return <AlumnoCard key={alumno._id} setAlumno={setAlumno} alumno={alumno} />
@@ -107,9 +153,10 @@ export default function Alumnos() {
 			</div>
 		)
 	}
-	else {
+	else {//todo boton para atars
 		return (
 			<Box id="info">
+				goback button aca
 				<div>
 					<TextField id="standard-basic" defaultValue={alumno.nombre} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "nombre")} label="Nombre" variant="standard" />
 				</div>
@@ -134,17 +181,16 @@ export default function Alumnos() {
 				<div>
 					<TextField id="standard-basic" defaultValue={alumno.fechaIngreso} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "fechaIngreso")} label="Fecha de ingreso" variant="standard" />
 				</div>
-				{() => {
-					return (
-						<div>
-							<p>Datos de nacimiento</p>
-							<div><TextField id="standard-basic" defaultValue={alumno.datosNacimiento.pais} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosNacimiento", "pais")} label="Pais de nacimiento" variant="standard" /></div>
-							<div><TextField id="standard-basic" defaultValue={alumno.datosNacimiento.localidad} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosNacimiento", "localidad")} label="Localidad de nacimiento" variant="standard" /></div>
-						</div>
-					)
-				}}
 
-				<div>
+
+				<div style={{ backgroundColor: "lightgray" }}>
+					<p>Datos de nacimiento</p>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosNacimiento.pais} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosNacimiento", "pais")} label="Pais de nacimiento" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosNacimiento.localidad} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosNacimiento", "localidad")} label="Localidad de nacimiento" variant="standard" /></div>
+				</div>
+
+
+				<div style={{ backgroundColor: "lightgray" }}>
 					<p>Datos de residencia</p>
 					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.pais} onKeyPress={e => onEnter(e)} label="Pais de residencia" variant="standard" /></div>
 					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.provincia} onKeyPress={e => onEnter(e)} label="Provincia de residencia" variant="standard" /></div>
@@ -153,8 +199,8 @@ export default function Alumnos() {
 					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.codigoPostal} onKeyPress={e => onEnter(e)} label="Codigo postal" variant="standard" /></div>
 				</div>
 
-				<div>
-
+				<div style={{ backgroundColor: "lightgray" }}>
+					<p>titulos</p>
 					{alumno.titulos.map((titulo, i) => {
 						return (
 							<div>
@@ -164,30 +210,37 @@ export default function Alumnos() {
 					})
 					}
 				</div>
-				<div>
-
-					{alumno.cursosActivos.map((curso, i) => {
+				<div style={{ backgroundColor: "lightgray" }}>
+					<p>cursos activos</p>
+					{cursosActivos.map((cursoActivo, i) => {
 						return (
 							<div>
-								<TextField id="standard-basic" defaultValue={curso.nombre} inputProps={{ readOnly: true }} label={`Curso activo ${i + 1}`} variant="standard" />
+								<TextField id="standard-basic" defaultValue={cursoActivo.nombre} inputProps={{ readOnly: true }} label={`Curso ${i + 1}`} variant="standard" />
 							</div>
 						)
 					})
 					}
 				</div>
-				<div>
+				<div style={{ backgroundColor: "lightgray" }}>
 					<p>Carrera</p>
-					{alumno.carrera.materias.map((materia, i) => {
+					{carreras.map((carrera, i) => {
+
 						return (
 							<div>
-								<TextField id="standard-basic" defaultValue={materia.nombre} label={`Materia terminada ${i + 1}`} variant="standard" />
+								<TextField id="standard-basic" defaultValue={carrera.nombre} inputProps={{ readOnly: true }} label={`Carrera ${i + 1}`} variant="standard" />
+								{carrera.materiasAprobadas.map((materia, i) => {
+									return (
+										<TextField id="standard-basic" defaultValue={materia} inputProps={{ readOnly: true }} label={`materia aprobadas ${i + 1}`} variant="standard" />
+
+									)
+								})}
 							</div>
 						)
 					})
 					}
 				</div>
 
-				{isShown && <Button variant="contained">Guardar cambios</Button>}
+				{isShown && <Button variant="contained" onClick={handleClick}>Guardar cambios</Button>}
 
 			</Box>
 		);

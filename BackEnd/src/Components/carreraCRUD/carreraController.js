@@ -78,3 +78,20 @@ module.exports.getCarrera = (req, res) => {
             res.status(500).json({ error: "Ocurrio un error" })
         })
 }
+//-------------------------------------------- GET /carreras --------------------------------------------------------------
+
+module.exports.getCarreras = (req, res) => {
+    return Carrera.find({})
+        .then((carrera) => {
+            if(carrera == undefined){
+                res.status(404).json({error: "No se encontro la carrera"})
+            }
+            else{
+                res.status(200).json(carrera)
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            res.status(500).json({ error: "Ocurrio un error" })
+        })
+}
