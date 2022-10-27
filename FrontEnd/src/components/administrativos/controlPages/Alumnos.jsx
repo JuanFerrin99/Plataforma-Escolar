@@ -29,6 +29,7 @@ function Variants() {
 export default function Alumnos() {
 	const [alumnos, setAlumnos] = useState([]);
 	const [titulos, setTitulos] = useState([]);
+	const [cursosActivos, setCursosActivos] = useState([]);
 	const [alumno, setAlumno] = useState({});
 	const [isShown, setIsShown] = useState(false);
 	const [loading, setLoading] = useState(true);
@@ -49,7 +50,7 @@ export default function Alumnos() {
 		let valorUpdateado = { [firstKey]: [...titulos, ...value] }
 		setAlumno(current => ({ ...current, ...valorUpdateado }))
 		setIsShown(current => !current);
-		setter([...current, ...value])
+		setter(current=>[...current, ...value])
 
 	}
 
@@ -69,11 +70,25 @@ export default function Alumnos() {
 			.then(alumnos => {
 				setAlumnos(alumnos)
 				setLoading(false)
+					fetch(`http://localhost:3001/cursos/${alumnos.cursosActivos}`, { credentials: 'include' })
+						.then(response => response.json())
+						.then(cursos => {
+							cursos.alumnos.forEach((alumno)=>{
+
+							})
+						})
+						.catch(error => {
+							console.log(error)
+						})
+				
 			})
 			.catch(error => {
 				console.log(error)
 			})
 	}, []);
+
+
+
 
 	useEffect(() => { console.log(alumno) }, [alumno])
 
@@ -123,8 +138,8 @@ export default function Alumnos() {
 					return (
 						<div>
 							<p>Datos de nacimiento</p>
-							<div><TextField id="standard-basic" defaultValue={alumno.datosNacimiento.pais} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e,"datosNacimiento","pais")} label="Pais de nacimiento" variant="standard" /></div>
-							<div><TextField id="standard-basic" defaultValue={alumno.datosNacimiento.localidad} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e,"datosNacimiento","localidad")} label="Localidad de nacimiento" variant="standard" /></div>
+							<div><TextField id="standard-basic" defaultValue={alumno.datosNacimiento.pais} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosNacimiento", "pais")} label="Pais de nacimiento" variant="standard" /></div>
+							<div><TextField id="standard-basic" defaultValue={alumno.datosNacimiento.localidad} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosNacimiento", "localidad")} label="Localidad de nacimiento" variant="standard" /></div>
 						</div>
 					)
 				}}
@@ -139,11 +154,11 @@ export default function Alumnos() {
 				</div>
 
 				<div>
-				
+
 					{alumno.titulos.map((titulo, i) => {
 						return (
 							<div>
-								<TextField id="standard-basic" defaultValue={titulo}onBlur={e => changeHandlerComplex(e, "titulos", setTitulos)} lonKeyPress={e => onEnter(e)} label={`Titulo ${i + 1}`} variant="standard" />
+								<TextField id="standard-basic" defaultValue={titulo} onBlur={e => changeHandlerComplex(e, "titulos", setTitulos)} onKeyPress={e => onEnter(e)} label={`Titulo ${i + 1}`} variant="standard" />
 							</div>
 						)
 					})
@@ -154,7 +169,7 @@ export default function Alumnos() {
 					{alumno.cursosActivos.map((curso, i) => {
 						return (
 							<div>
-								<TextField id="standard-basic" defaultValue={curso.nombre} onBlur={e => changeHandlerComplex(e, "titulos", setTitulos)} lonKeyPress={e => onEnter(e)} label={`Curso activo ${i + 1}`} variant="standard" />
+								<TextField id="standard-basic" defaultValue={curso.nombre} inputProps={{ readOnly: true }} label={`Curso activo ${i + 1}`} variant="standard" />
 							</div>
 						)
 					})

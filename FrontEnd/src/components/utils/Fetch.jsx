@@ -1,17 +1,16 @@
 import { useEffect } from 'react'
 
 const FetchGet = (url) => {
-    useEffect(()=>(
-        fetch(URL, {credentials: 'include'})
+    return fetch(url, { credentials: 'include' })
         .then(response => response.json())
-        .then(res => {
-            return res
-        })
-        .catch(error => {
-            console.log(error)
-        })
-    ),[])
+        .then(res => res.results)
+        .catch(error => { console.log(error) })
 }
+/* Para accederlo
+
+    func('https://randomuser.me/api/?results=10')
+        .then(users => console.log(users))  
+        .catch(err => /* handle errors */
 
 
-export default {FetchGet}
+export default { FetchGet }
