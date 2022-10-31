@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Card, CardActions, CardContent, Grid, Skeleton, Box, Button, TextField } from "@mui/material";
+import { Card, CardActions, CardContent, Grid, Skeleton, Box, Button, TextField, IconButton } from "@mui/material";
+import CreateIcon from '@mui/icons-material/Create';
+import ClearIcon from '@mui/icons-material/Clear';
 import AlumnoCard from "../../cards/AlumnoCardSecretario";
 import "./alumnos.css"
 
@@ -39,16 +41,16 @@ export default function Alumnos() {
 
 	const focusInCurrentTarget = ({ relatedTarget, currentTarget }) => {
 		if (relatedTarget === null) return false;
-		
+
 		var node = relatedTarget.parentNode;
-			  
+
 		while (node !== null) {
-		  if (node === currentTarget) return true;
-		  node = node.parentNode;
+			if (node === currentTarget) return true;
+			node = node.parentNode;
 		}
-	  
+
 		return false;
-	  }
+	}
 	const onEnter = (event) => {
 		if (event.code === "Enter") {
 			document.activeElement.blur()
@@ -64,8 +66,8 @@ export default function Alumnos() {
 
 		if (!focusInCurrentTarget(value)) {
 			let t = titulos
-			t.splice(t.indexOf(titulo),1,value.target.value)
-			setAlumno(current => ({ ...current, ...{ [firstKey]: t} }))
+			t.splice(t.indexOf(titulo), 1, value.target.value)
+			setAlumno(current => ({ ...current, ...{ [firstKey]: t } }))
 			setter(t)
 			setIsShown(true);
 		}
@@ -81,27 +83,44 @@ export default function Alumnos() {
 		})
 		setIsShown(current => true);
 	}
-	const handleClick = () =>{//todo crear endpoint put en ves de patch
+	const handleClick = () => {//todo crear endpoint put en ves de patch
 		let a = Object.assign({}, alumno)
-		delete a._id 
-        fetch(`http://localhost:3001/alumnos/${alumno._id}/`, {
-            credentials: "include",
-            method: 'PATCH',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            },
-			
-            body: JSON.stringify(a)
+		delete a._id
+		fetch(`http://localhost:3001/alumnos/${alumno._id}/`, {
+			credentials: "include",
+			method: 'PATCH',
+			headers: {
+				'Accept': 'application/json, text/plain, */*',
+				'Content-Type': 'application/json'
+			},
 
-        })
-            .then(res => {
-                setIsShown(current => false);
-            })
-            .catch(error => {
-                console.log(error)
-            })
+			body: JSON.stringify(a)
+
+		})
+			.then(res => {
+				setIsShown(current => false);
+			})
+			.catch(error => {
+				console.log(error)
+			})
 	}
+
+	const handleCreateTitulo = () => {
+		setAlumno(current => ({ ...current, ...{ titulos: [...titulos,""]} }))
+		setTitulos(current =>[...current,""])
+		setIsShown(true);
+	}
+
+	const handleDeleteTitulo = (titulo) => {
+		if(titulo !== undefined){
+			let t = titulos
+			t.splice(t.indexOf(titulo), 1)
+			setAlumno(current => ({ ...current, titulos : t }))
+			setTitulos(t)
+			setIsShown(true);
+		}
+	}
+
 	useEffect(() => {
 		fetch(`http://localhost:3001/alumnos/`, { credentials: 'include' })
 			.then(response => response.json())
@@ -208,11 +227,11 @@ export default function Alumnos() {
 
 				<div style={{ backgroundColor: "lightgray" }}>
 					<p>Datos de residencia</p>
-					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.pais} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "pais")}label="Pais de residencia" variant="standard" /></div>
-					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.provincia} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "provincia")}label="Provincia de residencia" variant="standard" /></div>
-					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.localidad} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "localidad")}label="Localidad de residencia" variant="standard" /></div>
-					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.domicilio} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "domicilio")}label="Domicilio" variant="standard" /></div>
-					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.codigoPostal} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "codigoPostal")}label="Codigo postal" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.pais} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "pais")} label="Pais de residencia" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.provincia} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "provincia")} label="Provincia de residencia" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.localidad} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "localidad")} label="Localidad de residencia" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.domicilio} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "domicilio")} label="Domicilio" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.codigoPostal} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "codigoPostal")} label="Codigo postal" variant="standard" /></div>
 				</div>
 
 				<div style={{ backgroundColor: "lightgray" }}>
@@ -220,22 +239,31 @@ export default function Alumnos() {
 					{titulos.map((titulo, i) => {
 						return (
 							<div>
-								<TextField id="standard-basic" defaultValue={titulo} onKeyPress={e => onEnter(e)}  onBlur={e => changeHandlerComplex(e, "titulos", setTitulos,titulo)} label={`Titulo ${i + 1}`} variant="standard" />
+								<TextField id="standard-basic" defaultValue={titulo} onKeyPress={e => onEnter(e)} onBlur={e => changeHandlerComplex(e, "titulos", setTitulos, titulo)} label={`Titulo ${i + 1}`} variant="standard" />
+								<IconButton color="primary" aria-label="borrar" onClick={()=>{handleDeleteTitulo(titulo)}}>
+									<ClearIcon fontSize='small' ></ClearIcon>
+								</IconButton>
 							</div>
 						)
 					})
 					}
+					<IconButton color="primary" aria-label="crear fila" onClick={()=>{handleCreateTitulo()}}>
+						<CreateIcon fontSize='small' />
+					</IconButton>
 				</div>
 				<div style={{ backgroundColor: "lightgray" }}>
 					<p>cursos activos</p>
 					{cursosActivos.map((cursoActivo, i) => {
-						return (
-							<div>
-								<TextField id="standard-basic" defaultValue={cursoActivo.nombre} inputProps={{ readOnly: true }} label={`Curso ${i + 1}`} variant="standard" />
-							</div>
-						)
-					})
-					}
+						return (<div><TextField id="standard-basic" defaultValue={cursoActivo.nombre} inputProps={{ readOnly: true }} label={`Curso ${i + 1}`} variant="standard" />
+							<IconButton color="primary" aria-label="borrar" onClick={handleDeleteTitulo()}>
+								<ClearIcon fontSize='small' ></ClearIcon>
+							</IconButton>
+						</div>)
+					})}
+
+					<IconButton color="primary" aria-label="crear fila" onClick={handleCreateTitulo}>
+						<CreateIcon fontSize='small' />
+					</IconButton>
 				</div>
 				<div style={{ backgroundColor: "lightgray" }}>
 					<p>Carrera</p>
