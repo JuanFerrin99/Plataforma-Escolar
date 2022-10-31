@@ -88,7 +88,7 @@ io.on("connection", socket => {
     });
 
     socket.on('new input', (object) => {
-        //io.emit('new input', object)
+        //io.to(socket.id). emit("event", data);
     });
 
     socket.on('disconnect', () => {
