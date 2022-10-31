@@ -50,8 +50,8 @@ export default function Profesors() {
 			fetch(`http://localhost:3001/cursos/`, { credentials: 'include' })
 				.then(response => response.json())
 				.then(cursos => {
+					setTitulos(profesor.titulos)
 					cursos.forEach(curso => {
-
 						if (profesor.cursos.some(c => c.id === curso._id)) {
 							setCursos(current => [...current, { nombre: `${curso.materia} ${curso.periodo.año}`, id: curso._id }])
 						}
@@ -88,12 +88,14 @@ export default function Profesors() {
 		setIsShown(true);
 	}
 
-	const changeHandlerComplex = (value, firstKey, setter) => {
+	const changeHandlerComplex = (value, firstKey, setter, titulo) => {
+
 		if (!focusInCurrentTarget(value)) {
-			let valorUpdateado = { [firstKey]: [...titulos, value] }
-			setProfesor(current => ({ ...current, ...valorUpdateado }))
+			let t = titulos
+			t.splice(t.indexOf(titulo),1,value.target.value)
+			setProfesor(current => ({ ...current, ...{ [firstKey]: t} }))
+			setter(t)
 			setIsShown(true);
-			setter(current => [...current, value])
 		}
 
 	}
@@ -110,7 +112,6 @@ export default function Profesors() {
 	const handleClick = () => {//todo crear endpoint put en ves de patch
 		let a = Object.assign({}, profesor)
 		delete a._id
-		console.log(a)
 		fetch(`http://localhost:3001/profesores/${profesor._id}/`, {
 			credentials: "include",
 			method: 'PATCH',
@@ -118,7 +119,6 @@ export default function Profesors() {
 				'Accept': 'application/json, text/plain, */*',
 				'Content-Type': 'application/json'
 			},
-
 			body: JSON.stringify(a)
 
 		})
@@ -168,12 +168,12 @@ export default function Profesors() {
 					<div><TextField id="standard-basic" defaultValue={profesor.datosResidencia.domicilio} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "domicilio")} label="Domicilio" variant="standard" /></div>
 					<div><TextField id="standard-basic" defaultValue={profesor.datosResidencia.codigoPostal} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "codigoPostal")} label="Codigo postal" variant="standard" /></div>
 				</div>
-				<div style={{ backgroundColor: "lightgray" }} onBlur={e => changeHandlerComplex(e, "titulos", setTitulos)}>
+				<div style={{ backgroundColor: "lightgray" }}>
 					<p>titulos</p>
-					{profesor.titulos.map((titulo, i) => {
+					{titulos.map((titulo, i) => {
 						return (
 							<div>
-								<TextField id="standard-basic" defaultValue={titulo} onKeyPress={e => onEnter(e)} label={`Titulo ${i + 1}`} variant="standard" />
+								<TextField id="standard-basic" defaultValue={titulo} onKeyPress={e => onEnter(e)}  onBlur={e => changeHandlerComplex(e, "titulos", setTitulos,titulo)} label={`Titulo ${i + 1}`} variant="standard" />
 							</div>
 						)
 					})
@@ -196,4 +196,4 @@ export default function Profesors() {
 		)
 
 	}
-}
+} 

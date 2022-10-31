@@ -60,13 +60,15 @@ export default function Alumnos() {
 		setIsShown(true);
 	}
 
-	const changeHandlerComplex = (value, firstKey, setter) => {
+	const changeHandlerComplex = (value, firstKey, setter, titulo) => {
+
 		if (!focusInCurrentTarget(value)) {
-			let valorUpdateado = { [firstKey]: [...titulos, value] }
-			setAlumno(current => ({ ...current, ...valorUpdateado }))
+			let t = titulos
+			t.splice(t.indexOf(titulo),1,value.target.value)
+			setAlumno(current => ({ ...current, ...{ [firstKey]: t} }))
+			setter(t)
 			setIsShown(true);
-			setter(current => [...current, value])		
-		  }
+		}
 
 	}
 
@@ -136,6 +138,7 @@ export default function Alumnos() {
 			fetch(`http://localhost:3001/carreras/`, { credentials: 'include' })
 				.then(response => response.json())
 				.then(carreras => {
+					setTitulos(alumno.titulos)
 					alumno.carrera.forEach(carreraAlumno => {
 						carreras.forEach((carrera) => {
 							if (carrera._id === carreraAlumno.id) {
@@ -212,12 +215,12 @@ export default function Alumnos() {
 					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.codigoPostal} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "codigoPostal")}label="Codigo postal" variant="standard" /></div>
 				</div>
 
-				<div style={{ backgroundColor: "lightgray" }} onBlur={e => changeHandlerComplex(e, "titulos", setTitulos)}>
+				<div style={{ backgroundColor: "lightgray" }}>
 					<p>titulos</p>
-					{alumno.titulos.map((titulo, i) => {
+					{titulos.map((titulo, i) => {
 						return (
 							<div>
-								<TextField id="standard-basic" defaultValue={titulo} onKeyPress={e => onEnter(e)}  label={`Titulo ${i + 1}`} variant="standard" />
+								<TextField id="standard-basic" defaultValue={titulo} onKeyPress={e => onEnter(e)}  onBlur={e => changeHandlerComplex(e, "titulos", setTitulos,titulo)} label={`Titulo ${i + 1}`} variant="standard" />
 							</div>
 						)
 					})
