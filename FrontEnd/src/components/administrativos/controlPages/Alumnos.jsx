@@ -37,23 +37,36 @@ export default function Alumnos() {
 	const [entre2, setEntre2] = useState(false);
 	const [loading, setLoading] = useState(true);
 
+	const focusInCurrentTarget = ({ relatedTarget, currentTarget }) => {
+		if (relatedTarget === null) return false;
+		
+		var node = relatedTarget.parentNode;
+			  
+		while (node !== null) {
+		  if (node === currentTarget) return true;
+		  node = node.parentNode;
+		}
+	  
+		return false;
+	  }
 	const onEnter = (event) => {
 		if (event.code === "Enter") {
 			document.activeElement.blur()
 		}
 	}
-
 	const changeHandler = (event, firstKey) => {
 		let valorUpdateado = { [firstKey]: event.target.value }
 		setAlumno(current => ({ ...current, ...valorUpdateado }))
-		setIsShown(current => true);
+		setIsShown(true);
 	}
 
 	const changeHandlerComplex = (value, firstKey, setter) => {
-		let valorUpdateado = { [firstKey]: [...titulos, ...value] }
-		setAlumno(current => ({ ...current, ...valorUpdateado }))
-		setIsShown(current => true);
-		setter(current => [...current, ...value])
+		if (!focusInCurrentTarget(value)) {
+			let valorUpdateado = { [firstKey]: [...titulos, value] }
+			setAlumno(current => ({ ...current, ...valorUpdateado }))
+			setIsShown(true);
+			setter(current => [...current, value])		
+		  }
 
 	}
 
@@ -192,19 +205,19 @@ export default function Alumnos() {
 
 				<div style={{ backgroundColor: "lightgray" }}>
 					<p>Datos de residencia</p>
-					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.pais} onKeyPress={e => onEnter(e)} label="Pais de residencia" variant="standard" /></div>
-					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.provincia} onKeyPress={e => onEnter(e)} label="Provincia de residencia" variant="standard" /></div>
-					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.localidad} onKeyPress={e => onEnter(e)} label="Localidad de residencia" variant="standard" /></div>
-					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.domicilio} onKeyPress={e => onEnter(e)} label="Domicilio" variant="standard" /></div>
-					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.codigoPostal} onKeyPress={e => onEnter(e)} label="Codigo postal" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.pais} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "pais")}label="Pais de residencia" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.provincia} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "provincia")}label="Provincia de residencia" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.localidad} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "localidad")}label="Localidad de residencia" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.domicilio} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "domicilio")}label="Domicilio" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.codigoPostal} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "codigoPostal")}label="Codigo postal" variant="standard" /></div>
 				</div>
 
-				<div style={{ backgroundColor: "lightgray" }}>
+				<div style={{ backgroundColor: "lightgray" }} onBlur={e => changeHandlerComplex(e, "titulos", setTitulos)}>
 					<p>titulos</p>
 					{alumno.titulos.map((titulo, i) => {
 						return (
 							<div>
-								<TextField id="standard-basic" defaultValue={titulo} onBlur={e => changeHandlerComplex(e, "titulos", setTitulos)} onKeyPress={e => onEnter(e)} label={`Titulo ${i + 1}`} variant="standard" />
+								<TextField id="standard-basic" defaultValue={titulo} onKeyPress={e => onEnter(e)}  label={`Titulo ${i + 1}`} variant="standard" />
 							</div>
 						)
 					})

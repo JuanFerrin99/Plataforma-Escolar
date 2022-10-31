@@ -2,7 +2,7 @@
 module.exports.fetchGet = (url) => {
     return fetch(`http://localhost:3001/${url}`, { credentials: 'include' })
         .then(response => response.json())
-        .then(res => res.results)
+        .then(res => res)
         .catch(error => { console.log(error) })
 }
 
