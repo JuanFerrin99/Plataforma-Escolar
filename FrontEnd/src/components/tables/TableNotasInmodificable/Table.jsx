@@ -7,8 +7,9 @@ import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import io from '../../../../node_modules/socket.io/client-dist/socket.io.js'
+const socket = io()
 
-//Todo todos los mensajes de error estan en la pagina de evaluaciones
 //* skeleton
 function Variants() {
 	return (
@@ -33,7 +34,7 @@ function Variants() {
 	);
 }
 
-//*dibujo lindo de no hay rows
+//*dibujo no hay rows
 const StyledGridOverlay = styled('div')(({ theme }) => ({
 	display: 'flex',
 	flexDirection: 'column',
@@ -111,13 +112,20 @@ export default function TableNotas(props) {
 	const [notas, setNotas] = useState([]);
 	const [s, setS] = useState(true);
 	const gridRef = useRef();
+
 	useEffect(() => {
-		if (s) {//toDO checkear que si al estar la coleccion esta vacia que no se quede cargando infinitamente y consuma mucho
+		if (s) { //toDO checkear que si al estar la coleccion vacia que no se quede cargando infinitamente
 			setNotas(props.notas)
-			if (notas.length == 0) { return undefined }
+			if (notas.length === 0) { return undefined }
 			else { setS(false) }
 		}
 	});
+
+	/*useEffect(() => {
+		socket.on('new input', function (object) {
+			setNotas(current => [...current, object])
+		});
+	}, [socket]);*/
 
 	//*custom pagination
 	function CustomPagination(newRow) {
@@ -135,9 +143,7 @@ export default function TableNotas(props) {
 						onChange={(event, value) => apiRef.current.setPage(value - 1)}
 					/>
 				</div>
-
 			</div>
-
 		);
 	}
 
