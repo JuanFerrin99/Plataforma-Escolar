@@ -7,8 +7,7 @@ import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import io from '../../../../node_modules/socket.io/client-dist/socket.io.js'
-const socket = io()
+//const socket = io('http://localhost:3001')
 
 //* skeleton
 function Variants() {
@@ -121,12 +120,6 @@ export default function TableNotas(props) {
 		}
 	});
 
-	/*useEffect(() => {
-		socket.on('new input', function (object) {
-			setNotas(current => [...current, object])
-		});
-	}, [socket]);*/
-
 	//*custom pagination
 	function CustomPagination(newRow) {
 		const apiRef = useGridApiContext();
@@ -149,9 +142,9 @@ export default function TableNotas(props) {
 
 	//* rows y columns
 	const columns = [
-		{ field: 'nota', headerName: 'Nota', flex: 1, editable: true },
-		{ field: 'fecha', headerName: 'Fecha', flex: 1, editable: true },
-		{ field: 'tipo', headerName: 'Tipo', flex: 1, editable: true }
+		{ field: 'nota', headerName: 'Nota', flex: 1 },
+		{ field: 'fecha', headerName: 'Fecha', flex: 1 },
+		{ field: 'tipo', headerName: 'Tipo', flex: 1 }
 	];
 
 	//*  Return

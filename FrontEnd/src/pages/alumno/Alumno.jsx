@@ -5,7 +5,8 @@ import { Outlet } from "react-router-dom";
 import CursoCard from "../../components/cards/CursoCard";
 import "../../styles/pages/AlumnoPage.css";
 import Cookies from "js-cookie";
-
+import socket from '../../components/utils/Socket'
+socket.emit('connected') //Mandar un objeto identificatorio 
 
 function Variants() {
     return (

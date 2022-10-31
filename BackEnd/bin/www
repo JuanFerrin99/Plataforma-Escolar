@@ -2,6 +2,7 @@ const app = require('../app');
 const debug = require('debug')('TP_API:server');
 const http = require('http');
 const { connectToDB } = require('../src/utils/dbUtils');
+const { handleIo, deleteIo } = require('../src/utils/sockets');
 
 
 const port = normalizePort(process.env.PORT || '3001');
@@ -71,16 +72,27 @@ function onListening() {
 
 //----------------------------------------------- WEB SOCKETS ----------------------------------------------------
 
-const io = require("socket.io")(server);
+options = {
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"]
+    }
+}
+
+const io = require("socket.io")(server, options);
 
 io.on("connection", socket => {
-    console.log('User connected')
+    socket.on('connected', () => {
+        handleIo(socket)
+        console.log('User connected');
+    });
 
     socket.on('new input', (object) => {
-        io.emit('new input', object)
+        //io.emit('new input', object)
     });
 
     socket.on('disconnect', () => {
+        deleteIo(socket)
         console.log('User disconnected');
     });
 })
