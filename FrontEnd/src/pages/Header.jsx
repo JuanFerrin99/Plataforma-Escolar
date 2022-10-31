@@ -13,7 +13,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { Outlet } from "react-router-dom";
 import Slide from '@mui/material/Slide';
 
-const pages = [{"nombre":'Institucional',"camino":'/'}, {"nombre":'Inscripcion',"camino":'/'}, {"nombre":"Carrera","camino":"/"}, {"nombre":'Cursos',"camino":'/'}, {"nombre":'Acceso',"camino":'/login'}];
+const pages = [{"nombre":'Institucional',"camino":'/informacion'}, {"nombre":'Inscripcion',"camino":'/'}, {"nombre":"Carrera","camino":"/"}, {"nombre":'Cursos',"camino":'/'}, {"nombre":'Acceso',"camino":'/login'}];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export default function ResponsiveAppBar () {

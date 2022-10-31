@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import ResponsiveAppBar from "../pages/Header"
 import LoginPage from "../pages/Login"
 import HomePage from "../pages/HomePage"
+import Info from "../pages/InfoInstitucional"
+
 
 import AdminPage from "../pages/admin/Admin"
 import SecretarioPage from "../pages/secretario/Secretario"
@@ -21,7 +23,8 @@ export default function Router() {
                 <Route element={<ResponsiveAppBar />} >
                     <Route path="/" element= { <HomePage /> } />
                     <Route path="/login" element= { <LoginPage /> } />
-                    <Route path="/inscripcion" element= { <HomePage /> } />                     
+                    <Route path="/inscripcion" element= { <HomePage /> } />
+                    <Route path="/informacion" element= { <Info /> } />                        
                 </Route>
                     <Route path="/alumno" element= { <AlumnoPage/> } />
                         <Route path="/alumno/curso" element= { <CursoAlumnoPage /> } />
