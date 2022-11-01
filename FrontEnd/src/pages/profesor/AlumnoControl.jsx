@@ -29,18 +29,13 @@ export default function CursoCard() {
                             return elem
                         }))
                     }
-
-                }
-                )
-            }
-            )
+                })
+            })
             .catch(error => {
                 console.log(error)
             })
         },[]);//todo si algun use effect se queda en loop infinito es por que tiene un setVar adentro cuando pasa eso hay que pasar un [] como segundo arg para que no se renderize despues de la primera ves
 
-//? tuve que dejar table notas al principio porque es el unico que tiene el go back button cosa que habria que arreglar 
-//todo el goBack boton deberia esta afuera de la table
     return (
         <div>
             <TableNotas notas={notas} idCurso={id} dniAlumno = {dni}/>

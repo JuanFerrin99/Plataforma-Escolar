@@ -112,7 +112,7 @@ function CustomNoRowsOverlay() {
 }
 
 export default function TableNotas(props) {
-	const [loading, setLoading] = useState(true);//toDo que muestre loding skeleton
+	const [loading, setLoading] = useState(true) //toDo que muestre loding skeleton
 	const [snackbar, setSnackbar] = useState(null);
 	const [notas, setNotas] = useState([]);
 	const [s, setS] = useState(true);
@@ -120,23 +120,15 @@ export default function TableNotas(props) {
 	const id = props.idCurso
 	const dni = props.dniAlumno
 	useEffect(() => {
-		if (s) {//toDO checkear que si al estar la coleccion esta vacia que no se quede cargando infinitamente y consuma mucho
+		if (s) {
 			setNotas(props.notas)
-			if (notas.length == 0) { return undefined }
+			if (notas.length === 0) { return undefined }
 			else { setS(false) }
 		}
 	});
 
 	//* Create evaluaciones
 	const handleNewRow = () => {
-		let copia = notas.slice()
-		let evaluacion = {
-			id: copia[copia.length - 1].id + 1,
-			nota: 0,
-			tipo: " ",
-		}
-		copia.push(evaluacion)
-
 		fetch(`http://localhost:3001/cursos/${id}/alumnos/${dni}/calificaciones/`, {
 			credentials: "include",
 			method: 'POST',
@@ -144,19 +136,21 @@ export default function TableNotas(props) {
 				'Accept': 'application/json, text/plain, */*',
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ "calificacion": evaluacion })
+			body: JSON.stringify({
+				"calificacion": {
+					id: notas[notas.length - 1].id + 1,	//!Linkear id con su evaluacion
+					nota: 0
+				}
+			})
 		})
-			.then(res => {
-				setNotas(copia)
-			})
-			.catch(error => {
-				console.log(error)
-			})
+			.then(res => setNotas(current => [...current, {
+				id: notas[notas.length - 1].id + 1  //!Linkear id con su evaluacion
+			}]))
 	}
 
 	//* Patch notas
 	const ProcessRowUpdate = (props) => {
-		fetch(`http://localhost:3001/cursos/${id}/alumnos/${dni}/calificaciones/${props._id}`, {
+		fetch(`http://localhost:3001/cursos/${id}/alumnos/${dni}/calificaciones/${props.id}`, {
 			credentials: "include",
 			method: 'PATCH',
 			headers: {
@@ -165,11 +159,8 @@ export default function TableNotas(props) {
 			},
 			body: JSON.stringify(
 				{
-					fecha: props.fecha,
-					justificado: props.justificado,
-					motivo: props.motivo,
-					tipo: props.tipo,
-					_id: props._id
+					_id: props._id,
+					nota: props.nota
 				})
 		}
 		)
