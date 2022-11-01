@@ -24,7 +24,7 @@ export  const changeHandler = (event, firstKey, setAlumno, setIsShown) => {
     setIsShown(true);
 }
 
-export  const changeHandlerComplex = (value, firstKey, setter, titulo, setAlumno, setIsShown, titulos) => {
+export const changeHandlerComplex = (value, firstKey, setter, titulo, setAlumno, setIsShown, titulos) => {
 
     if (!focusInCurrentTarget(value)) {
         let t = titulos
@@ -35,7 +35,7 @@ export  const changeHandlerComplex = (value, firstKey, setter, titulo, setAlumno
     }
 
 }
-export  const changeObjectHandler = (event, firstKey, secondKey, setIsShown,setAlumno) => {
+export const changeObjectHandler = (event, firstKey, secondKey, setIsShown,setAlumno) => {
     setAlumno(current => {
         let copia = current
         let res = {}
@@ -45,19 +45,19 @@ export  const changeObjectHandler = (event, firstKey, secondKey, setIsShown,setA
     setIsShown(true);
 }
 //* handle create
-export  const handleCreateTitulo = (setAlumno, setTitulos,setIsShown,titulos) => {
+export const handleCreateTitulo = (setAlumno, setTitulos,setIsShown,titulos) => {
     setAlumno(current => ({ ...current, ...{ titulos: [...titulos, ""] } }))
     setTitulos(current => [...current, ""])
     setIsShown(true);
 }
 
-export  const handleCreate = (key, setter, values, setIsShown, setAlumno) => {
+export const handleCreate = (key, setter, values, setIsShown, setAlumno) => {
     setAlumno(current => ({ ...current, ...{ [key]: [...values, ""] } }))
     setter(current => [...current, ""])
     setIsShown(true);
 }
 //* handle delete
-export  const handleDelete = (instance, key, setter, values, setIsShown, setAlumno) => {
+export const handleDelete = (instance, key, setter, values, setIsShown, setAlumno) => {
     if (instance !== undefined) {
         let t = []
         t = values
@@ -67,7 +67,7 @@ export  const handleDelete = (instance, key, setter, values, setIsShown, setAlum
         setIsShown(true);
     }
 }
-export  const handleDeleteAlt = (instance, key, setter,setterAlumno, values, setIsShown) => {
+export const handleDeleteAlt = (instance, key, setter,setterAlumno, values, setIsShown) => {
     if (instance !== undefined) {
         let t = []
         t = values
@@ -80,7 +80,7 @@ export  const handleDeleteAlt = (instance, key, setter,setterAlumno, values, set
     }
 }
 
-export  const handleDeleteTitulo = (titulo, setIsShown, titulos, setAlumno, setTitulos) => {
+export const handleDeleteTitulo = (titulo, setIsShown, titulos, setAlumno, setTitulos) => {
     if (titulo !== undefined) {
         let t = []
         t = titulos

@@ -1,6 +1,6 @@
-import React from 'react'
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 import { Card, CardActions, CardContent, Grid, Skeleton } from "@mui/material";
+import { fetchGet } from "../../utils/Fetch"
 import CursosCard from "../../cards/CursoCard";
 
 function Variants() {
@@ -31,28 +31,23 @@ export default function Alumnos() {
 	const [curso, setCurso] = useState({});
 	const [loading, setLoading] = useState(true);
 
-
-
-
+	//* Fetch Principal
 	useEffect(() => {
-		fetch(`http://localhost:3001/cursos/`, { credentials: 'include' })
-			.then(response => response.json())
+		fetchGet(`cursos`)
 			.then(cursos => {
 				setCursos(cursos)
 				setLoading(false)
 			})
-			.catch(error => {
-				console.log(error)
-			})
+			.catch(err => console.log(err))
 	}, []);
 
-	const cursosComponent = cursos.map((curso, i) => {
-		return <CursosCard key={curso._id} setCurso={setCurso} curso={curso} />
-	})
-
-	const cursosSkeleton = new Array(20).fill(<Variants />)
+	
+	//*------------------------------------Vista Base--------------------------------------------
 
 	if (Object.keys(curso).length === 0) {
+		const cursosComponent = cursos.map((curso, i) => {
+			return <CursosCard key={curso._id} setCurso={setCurso} curso={curso} />})
+		const cursosSkeleton = new Array(20).fill(<Variants />)
 		return (
 			<div>
 				<Grid width={"100vw"}container spacing={3}>
@@ -61,6 +56,8 @@ export default function Alumnos() {
 			</div>
 		)
 	}
+	//*------------------------------------Vista Curso--------------------------------------------
+
 	else {
 		return (
 			<div>
