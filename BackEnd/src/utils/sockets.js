@@ -1,12 +1,18 @@
-const sockets = []
+const sockets = {}
 
-module.exports.handleIo = function(io){
-    sockets.push(io)
+
+module.exports.newSocket = function (mail, id) {
+    sockets[mail] = id
+}
+module.exports.deleteSocket = function (id) {
+    delete sockets[getKeyByValue(sockets, id)]
 }
 
-module.exports.deleteIo = function(io){
-    index = sockets.indexOf(io)
-    if(index != -1){
-        sockets.splice(index, 1)
-    }
+module.exports.handleSocket = function (mail) {
+    return sockets[mail]
+}
+
+
+function getKeyByValue(object, value) {
+    return Object.keys(object).find(key => object[key] === value);
 }

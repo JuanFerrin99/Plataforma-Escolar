@@ -2,7 +2,7 @@ const app = require('../app');
 const debug = require('debug')('TP_API:server');
 const http = require('http');
 const { connectToDB } = require('../src/utils/dbUtils');
-const { handleIo, deleteIo } = require('../src/utils/sockets');
+const { newSocket, deleteSocket, handleSocket} = require('../src/utils/sockets');
 
 
 const port = normalizePort(process.env.PORT || '3001');
@@ -82,17 +82,20 @@ options = {
 const io = require("socket.io")(server, options);
 
 io.on("connection", socket => {
-    socket.on('connected', () => {
-        handleIo(socket)
+    socket.on('connected', (mail) => {
+        newSocket(mail, socket.id)
         console.log('User connected');
     });
 
-    socket.on('new input', (object) => {
-        //io.to(socket.id). emit("event", data);
+    socket.on('new nota', (mail, nota) => {
+        socketMail = handleSocket(mail)
+        if(socketMail != undefined){
+            io.to(socketMail).emit("agregar nota", nota)
+        }
     });
 
     socket.on('disconnect', () => {
-        deleteIo(socket)
+        deleteSocket(socket.id)
         console.log('User disconnected');
-    });
+    })
 })

@@ -1,8 +1,16 @@
 import * as React from 'react';
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom"
+import Cookies from "js-cookie";
 import TableNotas from "../../components/tables/TableNotas/Table"
 import TableFinales from "../../components/tables/TableFinales/Table"
+import socket from '../../components/utils/Socket'
+socket.emit('connected', Cookies.get("mail"))
+socket.emit('new nota', 'profesor@gmail.com', 10)
+
+socket.on('agregar nota', function(nota) {
+    alert(nota)
+});
 
 export default function CursoCard() {
     const [notas, setNotas] = useState([]);
