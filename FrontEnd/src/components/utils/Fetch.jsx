@@ -34,14 +34,9 @@ module.exports.fetchPatch = (url, body) => {
 module.exports.fetchDelete = (url) => {
     return fetch(`${prefijo}${url}`, {
         credentials: 'include',
-        method: 'PATCH'
+        method: 'DELETE'
     })
         .then(response => response.json())
         .then(res => res)
         .catch(error => { console.log(error) })
 }
-/* Para accederlo
- 
-    func('https://randomuser.me/api/?results=10')
-        .then(users => console.log(users))  
-        .catch(err => /* handle errors */
