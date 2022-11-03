@@ -2,7 +2,7 @@ const app = require('../app');
 const debug = require('debug')('TP_API:server');
 const http = require('http');
 const { connectToDB } = require('../src/utils/dbUtils');
-const { newSocket, deleteSocket, handleSocket} = require('../src/utils/sockets');
+const { newSocket, deleteSocket, handleSocket } = require('../src/utils/sockets');
 
 
 const port = normalizePort(process.env.PORT || '3001');
@@ -80,22 +80,35 @@ options = {
 }
 
 const io = require("socket.io")(server, options);
+const sockets = {}
 
 io.on("connection", socket => {
     socket.on('connected', (mail) => {
-        newSocket(mail, socket.id)
+        //newSocket(mail, socket)
+        sockets[mail] = socket.id
         console.log('User connected');
     });
-
-    socket.on('new nota', (mail, nota) => {
+    /*
+    socket.on('nuevo curso', (mail, nota) => {
         socketMail = handleSocket(mail)
-        if(socketMail != undefined){
+        if (socketMail != undefined) {
             io.to(socketMail).emit("agregar nota", nota)
         }
     });
-
+    */
     socket.on('disconnect', () => {
-        deleteSocket(socket.id)
+        //deleteSocket(socket)
+        delete sockets[getKeyByValue(sockets, socket.id)]
         console.log('User disconnected');
     })
 })
+
+function getKeyByValue(object, value) {
+    return Object.keys(object).find(key => object[key] === value);
+}
+
+module.exports.funcionEmit = function (mail, datosCurso) {
+    if (sockets[mail] != undefined) {
+        io.to(sockets[mail]).emit("nuevo curso", datosCurso)
+    }
+}

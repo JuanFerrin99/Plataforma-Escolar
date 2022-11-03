@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Curso = require("./cursoSchema.js");
+const { funcionEmit } = require('../../../bin/www')
 const { default: mongoose } = require('mongoose');
 
 //------------------------------------------------ POST /cursos/ -----------------------------------------------------------
@@ -18,15 +19,16 @@ module.exports.agregarCurso = (req, res) => {
         periodo,
         fechasAsistencia,
         estado
-    });
+    })
 
     curso.save()
         .then((curso) => {
             res.status(201).json(curso)
+            funcionEmit(profesor.mail, curso)
         })
         .catch(error => {
-            console.log(error)
             res.status(500).json({ error: "Ocurrio un error" })
+            console.log(error)
         })
 }
 

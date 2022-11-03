@@ -11,6 +11,9 @@ module.exports.deleteSocket = function (id) {
 module.exports.handleSocket = function (mail) {
     return sockets[mail]
 }
+module.exports.emitSocket = function(){
+    
+}
 
 
 function getKeyByValue(object, value) {
