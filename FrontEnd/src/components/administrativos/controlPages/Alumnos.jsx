@@ -4,7 +4,7 @@ import { handleDeleteTitulo, handleDeleteAlt, handleDelete, handleCreate, handle
 import CreateIcon from '@mui/icons-material/Create';
 import ClearIcon from '@mui/icons-material/Clear';
 import AlumnoCard from "../../cards/AlumnoCardSecretario";
-import "./alumnos.css"
+import "../../../styles/administrativos/alumnos.css"
 
 function Variants() {
 	return (

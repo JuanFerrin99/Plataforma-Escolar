@@ -1,3 +1,4 @@
+import { height } from "@mui/system";
 import React, { useState } from "react";
 import MainDash from "../../components/administrativos/MainDash/MainDash";
 import Sidebar from "../../components/administrativos/Sidebar/Sidebar";
@@ -9,7 +10,7 @@ export default function Hub(props) {
     const [index, setIndex] = useState(0);
     return (
         <div className="App">
-            <div className="AppGlass">
+            <div style={{padding:0, height:"100vh"}} className="AppGlass">
                     <Sidebar indexChanger={setIndex} index={index} />
                     <MainDash index={index} />
             </div>

@@ -1,27 +1,37 @@
-import { Grid } from '@mui/material';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Card, CardActions, CardContent, Grid, Button, IconButton, Typography } from "@mui/material";
+import ClearIcon from '@mui/icons-material/Clear';
+import { fetchDelete } from "../utils/Fetch"
 
-
-export default function cursoCard({ curso, setCurso}) {
+export default function cursoCard({ curso, setCurso, setCursos }) {
+    //!mover boton de borrar a a la derecah de manera mas reponsive (tipo float right)
     return (
-        <Grid item xs={3} margin={2.5}>
-            <Card sx={{ minWidth: 300 }}>
+        <Grid Grid item xs={2.5} margin={"1%"} >
+            <Card sx={{ width:"20vw"}}>
                 <CardContent>
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                         {curso.periodo.año}
                     </Typography>
                     <Typography variant="h5" component="div">
                         {curso.materia}
-                    </Typography> 
+                    </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button onClick={()=>{setCurso(curso)}} size="small">Ir a curso</Button>
+                    <Button onClick={() => { setCurso(curso) }} size="small">Ir a curso</Button>
+                    <IconButton color="primary"  aria-label="borrar" onClick={() => {
+                        setCursos(current => {
+                            let copy = current.slice()
+                            copy.splice(copy.indexOf(curso), 1)
+                            fetchDelete(`cursos/${curso._id}`)
+                                .then(res => {
+                                    setCurso([])
+                                })
+                                .catch(err => console.log(err))
+                                return copy
+                            })
+                    }}>
+                        <ClearIcon fontSize='small' ></ClearIcon>
+                    </IconButton>
                 </CardActions>
             </Card>
         </Grid>
