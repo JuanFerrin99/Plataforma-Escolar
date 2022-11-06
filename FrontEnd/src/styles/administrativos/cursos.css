@@ -1,0 +1,16 @@
+#vistaGrande > div{
+    color: midnightblue;
+    text-align: center;
+    padding: 1%;
+    border-radius: 0% 0% 0% 0% / 0% 0% 0% 0% ;
+    box-shadow: 14px 14px rgba(0,0,0,.15);
+    transition: all .4s ease;
+  }
+  #vistaGrande > TextField{
+    color: #AACCFF;
+  }
+  #vistaGrande > div:hover {
+    border-radius: 0% 0% 20% 20% / 0% 0% 1% 1% ;
+    box-shadow: 7px 7px rgba(0,0,0,.25);
+  }
+  
