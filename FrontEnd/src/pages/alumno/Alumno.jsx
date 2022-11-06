@@ -50,7 +50,7 @@ export default function AlumnoPage() {
     
     
     const cursosComponent = cursos.map((curso, i) => {
-        return <CursoCard key={curso.id} id={curso.id} curso={curso} dni={dni} />
+        return <CursoCard key={curso.id} curso={curso} dni={dni} />
     })
     
     const cursosSkeleton = new Array(20).fill(<Variants />)

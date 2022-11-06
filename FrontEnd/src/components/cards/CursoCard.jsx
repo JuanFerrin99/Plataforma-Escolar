@@ -8,17 +8,18 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 
 
-export default function cursoCard({ curso, setCurso }) {
+export default function cursoCard({ curso, dni }) {
+
     return (
         <Grid item xs={3} margin={2.5}>
             <Card sx={{ minWidth: 300 }}>
                 <CardContent>
                     <Typography variant="h5" component="div">
-                        {`${curso.materia}${curso.periodo.año}`}
+                        {`${curso.nombre}`}
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button onClick={()=>{setCurso(curso)}} size="small">Ir a alumno</Button>
+                    <Button LinkComponent={Link} to={`curso`} state={{idCurso : curso.id, dni : dni}} size="small">Ir a curso</Button>
                 </CardActions>
             </Card>
         </Grid>
