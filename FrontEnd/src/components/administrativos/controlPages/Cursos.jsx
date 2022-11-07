@@ -7,7 +7,11 @@ import AddIcon from '@mui/icons-material/AddRounded';
 import { fetchGet, fetchPatch, fetchPost } from "../../utils/Fetch"
 import CursosCard from "../../cards/CursoCardSecretario";
 import "../../../styles/administrativos/cursos.css"
-import Create from '@mui/icons-material/Create';
+import Create from '@mui/icons-material/Create'
+import Cookies from "js-cookie";
+import socket from '../../../components/utils/Socket'
+socket.emit('connected', Cookies.get("mail"))
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -137,7 +141,7 @@ export default function Cursos() {
 			setChecked(false)
 		}
 		const handleCreateCurso = () => {
-			let cursoBase =
+			const cursoBase =
 			{
 				"materia": createValues.materia,
 				"profesor": {
@@ -155,7 +159,8 @@ export default function Cursos() {
 				"estado": "Activa",
 				"fechasAsistencia": [],
 				"evaluaciones": [],
-				"finales": []
+				"finales": [],
+				"mail": createValues.profesor.mail
 			}
 			fetchPost(`cursos/`, cursoBase)
 				.then(res => {
@@ -370,12 +375,8 @@ export default function Cursos() {
 					})
 					}
 				</div>
-
 				{isShown && <Button variant="contained" onClick={handleClick}>Guardar cambios</Button>}
 			</div>
 		)
-
-
 	}
-
 }

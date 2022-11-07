@@ -6,7 +6,8 @@ import { Outlet } from "react-router-dom";
 import CursoCard from "../../components/cards/CursoCard";
 import Cookies from "js-cookie";
 import "../../styles/pages/AlumnoPage.css";
-
+import socket from '../../components/utils/Socket'
+socket.emit('connected', Cookies.get("mail"))
 
 
 function Variants() {
@@ -38,14 +39,21 @@ export default function AlumnoPage() {
     const [dni, setDni] = useState(0);
     const [loading, setLoading] = useState(true);
 
+    socket.on('nuevo curso', function (curso) {
+        setCursos(current => ([...current, {
+            id: curso._id,
+            materia: curso.materia
+        }]))
+    })
+
     useEffect(() => {
-        fetch(`http://localhost:3001/profesores/filtro/${Cookies.get("mail")}`,{credentials:"include"})
+        fetch(`http://localhost:3001/profesores/filtro/${Cookies.get("mail")}`, { credentials: "include" })
             .then(response => response.json())
             .then(profesor => {
                 setDni(profesor.dni)
                 setCursos(profesor.cursos)
                 setLoading(false)
-                fetch(`http://localhost:3001/inasistencias/filtro/${profesor.dni}/`,{credentials:"include"})
+                fetch(`http://localhost:3001/inasistencias/filtro/${profesor.dni}/`, { credentials: "include" })
                     .then(response => response.json())
                     .then(res => {
                         setInasistencias(res)
@@ -64,7 +72,7 @@ export default function AlumnoPage() {
     const cursosSkeleton = new Array(20).fill(<Variants />)
     return (
         <div>
-            <TableInasistencia inasistencia={inasistencias}/>
+            <TableInasistencia inasistencia={inasistencias} />
             <br />
             <p> flechita atras en alumnos no funciona</p>
             <Grid container spacing={3}>
