@@ -82,6 +82,12 @@ export const handleCreateTitulo = (setGeneralInstance, setTitulos, setIsShown, t
     setTitulos(current => [...current, ""])
     setIsShown(true);
 }
+//* handle create
+export const handleCreateMateria = (setGeneralInstance, setTitulos, setIsShown, titulos) => {
+    setGeneralInstance(current => ({ ...current, ...{ materias: [...titulos, ""] } }))
+    setTitulos(current => [...current, ""])
+    setIsShown(true);
+}
 export const handleCreateFinal = (setCurso, setIsShown, lastId) => {
     setCurso(current => ({ ...current, ...{ finales: [...current.finales, { "fecha": "2022-00-00", "id": lastId + 1, "alumnosInscriptos": [{ "dni": 80808080, "nota": 0 }], "final": "2022-12-31", "inicio": "2022-12-31" }] } }))
     setIsShown(true);
@@ -121,6 +127,17 @@ export const handleDeleteTitulo = (titulo, setIsShown, titulos, setGeneralInstan
         t = titulos
         t.splice(t.indexOf(titulo), 1)
         setGeneralInstance(current => ({ ...current, titulos: t }))
+        setTitulos(t)
+        setIsShown(true);
+    }
+}
+export const handleDeleteMateria = (titulo, setIsShown, titulos, setGeneralInstance, setTitulos) => {
+    if (titulo !== undefined) {
+        let t = []
+        t = titulos
+        t.splice(t.indexOf(titulo), 1)
+        console.log(t)
+        setGeneralInstance(current => ({ ...current, materias: t }))
         setTitulos(t)
         setIsShown(true);
     }
