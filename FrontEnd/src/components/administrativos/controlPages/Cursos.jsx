@@ -73,7 +73,7 @@ export default function Cursos() {
 	});
 	const [createValues, setCreateValues] = useState({
 		materia: "",
-		profesor: {},
+		profesor: "",
 		duracion: "",
 		dias: [],
 		horario: "",
@@ -133,7 +133,7 @@ export default function Cursos() {
 				})
 				.catch(err => console.log(err))
 
-			setCardStyle(current => ({ ...current, height: "45vh", width: "29vw", borderRadius: "0.5%", }))
+			setCardStyle(current => ({ ...current, height: "60vh", width: "32vw", borderRadius: "0.5%", }))
 			setChecked(false)
 		}
 		const handleCreateCurso = () => {
@@ -170,7 +170,7 @@ export default function Cursos() {
 			return (
 				<div style={{ height: "100%", width: '100%' }}>
 
-					<Box sx={{ width: "30vw", margin: " 7% 3% 2.5%", float: "left" }}>
+					<Box sx={{ width: "30vw", margin: " 7% 0% 2.5%", float: "left" }}>
 						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
 							<InputLabel id="demo-simple-select-label">Materia</InputLabel>
 							<Select
@@ -201,7 +201,7 @@ export default function Cursos() {
 						</FormControl>
 					</Box>
 
-					<Box sx={{ width: "30vw", margin: "3% 3%", float: "left" }}>
+					<Box sx={{ width: "30vw", margin: "3% 0%", float: "left" }}>
 						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
 							<InputLabel id="demo-simple-select-label">Duracion</InputLabel>
 							<Select
@@ -265,7 +265,7 @@ export default function Cursos() {
 		return (
 			<div style={{ paddingTop: "3%", paddingLeft: "3%", width: "auto" }}>
 				<div>
-					<Grid width={"100vw"} container spacing={3}>
+					<Grid width={"auto"} container spacing={1}>
 						{loading ? cursosSkeleton : cursosComponent}
 					</Grid>
 				</div>

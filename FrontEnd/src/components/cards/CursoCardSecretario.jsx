@@ -7,12 +7,12 @@ export default function cursoCard({ curso, setCurso, setCursos }) {
     //!mover boton de borrar a a la derecah de manera mas reponsive (tipo float right)
     return (
         <Grid Grid item xs={2.5} margin={"1%"} >
-            <Card sx={{ width:"20vw"}}>
-                <CardContent>
+            <Card sx={{ width:"15vw", height:"18vh"}}>
+                <CardContent sx={{padding:"3%"}}>
                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                         {curso.periodo.año}
                     </Typography>
-                    <Typography variant="h5" component="div">
+                    <Typography variant="h6" component="div">
                         {curso.materia}
                     </Typography>
                 </CardContent>
