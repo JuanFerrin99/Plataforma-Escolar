@@ -1,22 +1,24 @@
+body{
+	background: #fafafa;
+}
 
-  #imgHero{
-    width: 98.9vw;
-    height: 55vh;
-  
-  }
+#imgHero {
+	width: 98.9vw;
+	height: 55vh;
 
-  #encabezado {
-    position: absolute;
-    top: 30vh;
-    left: 5vw;
-    padding: 2vw;
-    background: #fafafa;
-  }
+}
 
-  #textoInfo{
-    position: absolute;
-    top: 55vh;
-    left: 40vw;
-    background: #fafafa;
-  }
-  
+#encabezado {
+	position: absolute;
+	top: 30vh;
+	left: 5vw;
+	padding: 2vw;
+	background: white;
+}
+
+#textoInfo {
+	position: absolute;
+	top: 55vh;
+	left: 40vw;
+	background: #fafafa;
+}
