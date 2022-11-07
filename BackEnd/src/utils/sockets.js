@@ -7,12 +7,10 @@ class PrivateSocket {
         this.io.on("connection", socket => {
             socket.on('connected', (mail) => {
                 this.sockets[mail] = socket.id
-                console.log(this.sockets)
             })
 
             socket.on('disconnect', () => {
                 delete this.sockets[getKeyByValue(this.sockets, socket.id)]
-                console.log(this.sockets)
             })
         })
     }
