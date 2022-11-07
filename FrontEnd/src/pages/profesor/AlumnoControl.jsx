@@ -10,7 +10,7 @@ socket.emit('new nota', 'profesor@gmail.com', 10)
 
 socket.on('agregar nota', function(nota) {
     alert(nota)
-});
+})
 
 export default function CursoCard() {
     const [notas, setNotas] = useState([]);

@@ -1,3 +1,8 @@
+
+export const getDay = (dayIndex) => { return ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][dayIndex] }
+
+export const getDayIndex = (day) => { return ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].indexOf(day) }
+
 //* Unfocus with enter
 export const focusInCurrentTarget = ({ relatedTarget, currentTarget }) => {
     if (relatedTarget === null) return false;
@@ -18,75 +23,130 @@ export const onEnter = (event) => {
     }
 }
 //* Modify handlers
-export  const changeHandler = (event, firstKey, setAlumno, setIsShown) => {
+export const changeHandler = (event, firstKey, setGeneralInstance, setIsShown) => {
     let valorUpdateado = { [firstKey]: event.target.value }
-    setAlumno(current => ({ ...current, ...valorUpdateado }))
+    setGeneralInstance(current => ({ ...current, ...valorUpdateado }))
     setIsShown(true);
 }
 
-export const changeHandlerComplex = (value, firstKey, setter, titulo, setAlumno, setIsShown, titulos) => {
+export const changeHandlerComplex = (value, firstKey, setter, original, setGeneralInstance, setIsShown, instances) => {
 
     if (!focusInCurrentTarget(value)) {
-        let t = titulos
-        t.splice(t.indexOf(titulo), 1, value.target.value)
-        setAlumno(current => ({ ...current, ...{ [firstKey]: t } }))
+        let t = instances
+        t.splice(t.indexOf(original), 1, value.target.value)
+        setGeneralInstance(current => ({ ...current, ...{ [firstKey]: t } }))
         setter(t)
         setIsShown(true);
     }
 
 }
-export const changeObjectHandler = (event, firstKey, secondKey, setIsShown,setAlumno) => {
-    setAlumno(current => {
+
+export const changeHandleDia = (value, firstKey, secondKey, dia, setCurso, dias, setIsShown) => {
+    if (!focusInCurrentTarget(value)) {
+        let t = dias
+        t.splice(t.indexOf(getDayIndex(dia)), 1, value.target.value)
+        setCurso(current => ({ ...current, ...{ [firstKey]: current.periodo, ...{ [secondKey]: t } } }))
+        setIsShown(true);
+    }
+
+}
+
+export const changeObjectHandler = (event, firstKey, secondKey, setGeneralInstance, setIsShown) => {
+    setGeneralInstance(current => {
         let copia = current
-        let res = {}
         copia[firstKey][secondKey] = event.target.value
         return ({ ...current, ...copia[firstKey] })
     })
     setIsShown(true);
 }
-//* handle create
-export const handleCreateTitulo = (setAlumno, setTitulos,setIsShown,titulos) => {
-    setAlumno(current => ({ ...current, ...{ titulos: [...titulos, ""] } }))
-    setTitulos(current => [...current, ""])
+export const changeObjectHandlerInArray = (event, firstKey, secondKey, index, setGeneralInstance, setIsShown) => {
+    setGeneralInstance(current => {
+        let copia = current
+        copia[firstKey][index][secondKey] = event.target.value
+        return ({ ...current, ...copia[firstKey] })
+    })
+    setIsShown(true);
+}
+export const changeObjectHandlerInArrayComplex = (event, firstKey, secondKey, thirdKey, index, setGeneralInstance, setIsShown) => {
+    setGeneralInstance(current => {
+        let copia = current
+        copia[firstKey][index][secondKey][thirdKey] = event.target.value
+        return ({ ...current, ...copia[firstKey] })
+    })
     setIsShown(true);
 }
 
-export const handleCreate = (key, setter, values, setIsShown, setAlumno) => {
-    setAlumno(current => ({ ...current, ...{ [key]: [...values, ""] } }))
+//* handle create
+export const handleCreateTitulo = (setGeneralInstance, setTitulos, setIsShown, titulos) => {
+    setGeneralInstance(current => ({ ...current, ...{ titulos: [...titulos, ""] } }))
+    setTitulos(current => [...current, ""])
+    setIsShown(true);
+}
+export const handleCreateFinal = (setCurso, setIsShown, lastId) => {
+    setCurso(current => ({ ...current, ...{ finales: [...current.finales, { "fecha": "2022-00-00", "id": lastId + 1, "alumnosInscriptos": [{ "dni": 80808080, "nota": 0 }], "final": "2022-12-31", "inicio": "2022-12-31" }] } }))
+    setIsShown(true);
+}
+export const handleCreate = (key, setter, values, setIsShown, setGeneralInstance) => {
+    setGeneralInstance(current => ({ ...current, ...{ [key]: [...values, ""] } }))
     setter(current => [...current, ""])
     setIsShown(true);
 }
 //* handle delete
-export const handleDelete = (instance, key, setter, values, setIsShown, setAlumno) => {
+export const handleDelete = (instance, key, setter, values, setIsShown, setGeneralInstance) => {
     if (instance !== undefined) {
         let t = []
         t = values
         t.splice(t.indexOf(instance), 1)
-        setAlumno(current => ({ ...current, [key]: t }))
+        setGeneralInstance(current => ({ ...current, [key]: t }))
         setter(t)
         setIsShown(true);
     }
 }
-export const handleDeleteAlt = (instance, key, setter,setterAlumno, values, setIsShown) => {
+export const handleDeleteAlt = (instance, key, setter, setterAlumno, values, setIsShown) => {
     if (instance !== undefined) {
         let t = []
         t = values
         t.splice(t.indexOf(instance), 1)
         let tx = []
         tx.map(elem => elem.id)
-        setterAlumno(current => ({ ...current, [key] : tx}))
+        setterAlumno(current => ({ ...current, [key]: tx }))
         setter(t)
         setIsShown(true);
     }
 }
 
-export const handleDeleteTitulo = (titulo, setIsShown, titulos, setAlumno, setTitulos) => {
+export const handleDeleteTitulo = (titulo, setIsShown, titulos, setGeneralInstance, setTitulos) => {
     if (titulo !== undefined) {
         let t = []
         t = titulos
         t.splice(t.indexOf(titulo), 1)
-        setAlumno(current => ({ ...current, titulos: t }))
+        setGeneralInstance(current => ({ ...current, titulos: t }))
         setTitulos(t)
         setIsShown(true);
     }
+}
+export const handleDeleteAlumnos = (setIsShown, alumnos, dni, setCurso) => {
+    if (dni !== undefined) {
+        setCurso(current => ({ ...current, ...{ alumnos: alumnos.filter(alumno => alumno.dni !== dni) } }))
+        setIsShown(true);
+    }
+}
+
+export const handleDeleteAlumnosFinal = (alumno, curso, final, setCurso, setIsShown) => {
+    if (alumno !== undefined) {
+        let finales = curso.finales
+        let alumnos = final.alumnosInscriptos
+        finales.splice(finales.indexOf(final), 1)
+        alumnos.splice(alumnos.indexOf(alumno.dni), 1)
+        final.alumnosInscriptos = alumnos
+        finales.push(final)
+        setCurso(current => ({ ...current, finales: finales }))
+        setIsShown(true);
+    }
+}
+export const handleDeleteFinal = (setCurso, finales, setIsShown, id) => {
+    let copy = finales
+    copy.splice(id, 1)
+    setCurso(current => ({...current, finales : copy }))
+    setIsShown(true);
 }

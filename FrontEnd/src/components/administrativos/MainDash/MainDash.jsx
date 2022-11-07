@@ -8,6 +8,7 @@ import Alumnos from "../controlPages/Alumnos"
 import Profesores from "../controlPages/Profesores"
 import Cursos from "../controlPages/Cursos"
 import CerrarSesion from "../controlPages/CerrarSesion"
+import Carreras from "../controlPages/Carreras"
 
 export default function MainDash({index}) {
     const [paginas, setPaginas] = useState([]);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Card, CardActions, CardContent, Grid, Skeleton, Box, Button, TextField, IconButton} from "@mui/material";
-import { handleDeleteTitulo, handleDeleteAlt, handleDelete, handleCreate, handleCreateTitulo, changeObjectHandler, changeHandlerComplex, changeHandler, onEnter} from "../../utils/administrativos"
+import { handleDeleteTitulo, handleCreateTitulo, changeObjectHandler, changeHandlerComplex, changeHandler, onEnter} from "../../utils/administrativos"
 import CreateIcon from '@mui/icons-material/Create';
 import ClearIcon from '@mui/icons-material/Clear';
 import ProfesorCard from "../../cards/ProfesorCardSecretario";

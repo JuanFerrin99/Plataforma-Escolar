@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { verificarRol, verificarIdentidad } = require('../../auth/authController.js');
 const { agregarValidator, idValidator, modificacionValidator } = require("./materiaValidator");
-const { agregarMateria, eliminarMateria, modificarMateria, getMateria} = require("./materiaController");
+const { agregarMateria, eliminarMateria, modificarMateria, getMateria, getMaterias} = require("./materiaController");
 
 // 1 POST /materias/
 router.post('/', verificarRol(["secretario", "admin"]), agregarValidator, agregarMateria);
@@ -15,5 +15,8 @@ router.patch('/:id', verificarRol(["secretario", "admin"]), idValidator, modific
 
 // 4 GET /materias/:id
 router.get('/:id', idValidator, getMateria);
+
+// 5 GET /materias/
+router.get('/', getMaterias);
 
 module.exports = router;
