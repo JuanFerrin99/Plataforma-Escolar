@@ -7,15 +7,14 @@ const { default: mongoose } = require('mongoose');
 //------------------------------------------------ POST /cursos/ -----------------------------------------------------------
 
 module.exports.agregarCurso = (req, res) => {
-    const { nombre, materia, profesor, alumnos, evaluaciones, final, periodo, fechasAsistencia, estado } = req.body;
+    const { materia, profesor, alumnos, evaluaciones, finales, periodo, fechasAsistencia, estado } = req.body;
 
     const curso = new Curso({
-        nombre,
         materia,
         profesor,
         alumnos,
         evaluaciones,
-        final,
+        finales,
         periodo,
         fechasAsistencia,
         estado
@@ -53,7 +52,7 @@ module.exports.eliminarCurso = (req, res) => {
 //----------------------------------------------- PATCH /cursos/id ---------------------------------------------------------
 
 module.exports.modificarCurso = (req, res) => {
-    return Curso.findOneAndUpdate({ _id: req.params.id }, { nombre: req.body.nombre, materia: req.body.materia, profesor: req.body.profesor, alumnos: req.body.alumnos, evaluaciones: req.body.evaluaciones, finales: req.body.finales, periodo: req.body.periodo, fechasAsistencia: req.body.fechasAsistencia, estado: req.body.estado }, { new: true })
+    return Curso.findOneAndUpdate({ _id: req.params.id }, { materia: req.body.materia, profesor: req.body.profesor, alumnos: req.body.alumnos, evaluaciones: req.body.evaluaciones, finales: req.body.finales, periodo: req.body.periodo, fechasAsistencia: req.body.fechasAsistencia, estado: req.body.estado }, { new: true })
         .then((result) => {
             if (result) {
                 res.status(200).json("Se realizaron los cambios a " + req.params.id)

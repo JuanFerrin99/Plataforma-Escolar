@@ -10,8 +10,6 @@ module.exports.idValidator = [
 
 
 module.exports.agregarValidator = [
-    body("nombre")
-        .isString().withMessage("Nombre debe ser un string"),
     body("materia")
         .isString().withMessage("Materia debe ser un string"),
     body("profesor")
@@ -24,8 +22,10 @@ module.exports.agregarValidator = [
         .isArray().withMessage("Evaluaciones debe ser una array"),
     body("evaluaciones.*")
         .isObject({}).withMessage("Evaluaciones debe ser un array de objetos"),
-    body("final")
-        .isObject().withMessage("Final debe ser una objeto"),
+    body("finales")
+        .isArray().withMessage("Finales debe ser un array"),
+    body("finales.*")
+        .isObject().withMessage("Finales debe ser un array de objetos"),
     body("periodo")
         .isObject().withMessage("Periodo debe ser una objeto"),
     body("fechasAsistencia")
@@ -37,9 +37,6 @@ module.exports.agregarValidator = [
     verifyValidation
 ]
 module.exports.modificacionValidator = [
-    body("nombre")
-        .optional({ nullable: true })
-        .isString().withMessage("Nombre debe ser un string"),
     body("materia")
         .optional({ nullable: true })
         .isString().withMessage("Materia debe ser un string"),
@@ -56,9 +53,11 @@ module.exports.modificacionValidator = [
         .isArray().withMessage("Evaluaciones debe ser un array"),
     body("evaluaciones.*")
         .isObject({}).withMessage("Evaluaciones debe ser un array de objetos"),
-    body("final")
+    body("finales")
         .optional({ nullable: true })
-        .isObject().withMessage("Final debe ser un objeto"),
+        .isArray().withMessage("Finales debe ser un array"),
+    body("finales.*")
+        .isObject({}).withMessage("Finales debe ser un array de objetos"),
     body("periodo")
         .optional({ nullable: true })
         .isObject().withMessage("Periodo debe ser un objeto"),

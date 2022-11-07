@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var cursos = new Schema({
-    nombre: String,
     materia: String,
     profesor: Object,  /* nombre: String, apellido: String, dni: int */
     alumnos: [Object], /* nombre: String, apellido: String, dni: int, calificaciones: [Object], final: Object */
