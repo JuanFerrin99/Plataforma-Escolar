@@ -79,3 +79,20 @@ module.exports.getMateria = (req, res) => {
             res.status(500).json({ error: "Ocurrio un error" })
         })
 }
+//------------------------------------------- GET /materias/ ------------------------------------------------------------
+
+module.exports.getMaterias = (req, res) => {
+    return Materia.find()
+        .then((materias) => {
+            if(materias == undefined){
+                res.status(404).json({error: "No se encontro la materia"})
+            }
+            else{
+                res.status(200).json(materias)
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            res.status(500).json({ error: "Ocurrio un error" })
+        })
+}

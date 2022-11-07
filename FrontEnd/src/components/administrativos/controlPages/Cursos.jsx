@@ -4,7 +4,7 @@ import { getDay, changeObjectHandlerInArrayComplex, handleDeleteFinal, changeObj
 import CreateIcon from '@mui/icons-material/Create';
 import ClearIcon from '@mui/icons-material/Clear';
 import AddIcon from '@mui/icons-material/AddRounded';
-import { fetchGet, fetchPatch } from "../../utils/Fetch"
+import { fetchGet, fetchPatch, fetchPost } from "../../utils/Fetch"
 import CursosCard from "../../cards/CursoCardSecretario";
 import "../../../styles/administrativos/cursos.css"
 import Create from '@mui/icons-material/Create';
@@ -55,6 +55,8 @@ function Variants() {
 export default function Cursos() {
 	const [cursos, setCursos] = useState([]);
 	const [curso, setCurso] = useState({});
+	const [materias, setMaterias] = useState([]);
+	const [profesores, setProfesores] = useState([]);
 	const [diasSeleccionados, setDiasSeleccionados] = useState([]);
 	const [isShown, setIsShown] = useState(false);
 	const [loading, setLoading] = useState(true);
@@ -71,7 +73,7 @@ export default function Cursos() {
 	});
 	const [createValues, setCreateValues] = useState({
 		materia: "",
-		profesor: "",
+		profesor: {},
 		duracion: "",
 		dias: [],
 		horario: "",
@@ -116,15 +118,54 @@ export default function Cursos() {
 			return <CursosCard key={curso._id} setCurso={setCurso} setCursos={setCursos} curso={curso} />
 		})
 		const cursosSkeleton = new Array(20).fill(<Variants />)
-		const handleCreate = () => {
+		const handleCreateClick = () => {
+			fetchGet(`materias/`)
+				.then(materias => {
+					setMaterias(materias)
+					setLoading(false)
+				})
+				.catch(err => console.log(err))
+
+			fetchGet(`profesores/`)
+				.then(profesores => {
+					setProfesores(profesores)
+					setLoading(false)
+				})
+				.catch(err => console.log(err))
+
 			setCardStyle(current => ({ ...current, height: "45vh", width: "29vw", borderRadius: "0.5%", }))
 			setChecked(false)
 		}
 		const handleCreateCurso = () => {
-			setCardStyle(current => ({ ...current, height: "6vh", width: "6vh", borderRadius: "20%"}))
+			let cursoBase =
+			{
+				"materia": createValues.materia,
+				"profesor": {
+					"nombre": createValues.profesor.nombre,
+					"apellido": createValues.profesor.apellido,
+					"dni": createValues.profesor.dni
+				},
+				"alumnos": [],
+				"periodo": {
+					"año": new Date().getFullYear(),
+					"cuatrimestre": createValues.duracion,
+					"horario": createValues.horario,
+					"dias": [createValues.horario]
+				},
+				"estado": "Activa",
+				"fechasAsistencia": [],
+				"evaluaciones": [],
+				"finales": []
+			}
+			fetchPost(`cursos/`, cursoBase)
+				.then(res => {
+					setIsShown(false);
+				})
+				.catch(err => console.log(err))
 			setChecked(true)
+			setCardStyle(current => ({ ...current, height: "6vh", width: "6vh", borderRadius: "20%" }))
 		}
-		
+
 		const createCursoComponent = () => {//todo gettear todas las materias del back en ves de hardcodearlas
 			return (
 				<div style={{ height: "100%", width: '100%' }}>
@@ -139,9 +180,9 @@ export default function Cursos() {
 								label="Materia"
 								onChange={(e) => handleChange(e, 'materia')}
 							>
-								<MenuItem value={"matematica"}>Matematica</MenuItem>
-								<MenuItem value={"fisica"}>Fisica</MenuItem>
-								<MenuItem value={"lengua"}>Lengua</MenuItem>
+								{materias.map((materia) => (
+									<MenuItem value={materia.nombre}>{materia.nombre}</MenuItem>
+								))}
 							</Select>
 						</FormControl>
 						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
@@ -153,8 +194,9 @@ export default function Cursos() {
 								label="Profesor"
 								onChange={(e) => handleChange(e, 'profesor')}
 							>
-								<MenuItem value={"pepoRoberto"}>Pepo Roberto</MenuItem>
-								<MenuItem value={"yoqueseIdk"}>yoquese idk</MenuItem>
+								{profesores.map((profesor) => (
+									<MenuItem value={profesor}>{`${profesor.apellido}, ${profesor.nombre}`}</MenuItem>
+								))}
 							</Select>
 						</FormControl>
 					</Box>
@@ -169,7 +211,7 @@ export default function Cursos() {
 								label="Duracion"
 								onChange={(e) => handleChange(e, 'duracion')}
 							>
-								<MenuItem value={"anual"}>Anual</MenuItem>
+								<MenuItem value={"ambos"}>Anual</MenuItem>
 								<MenuItem value={"primer"}>1er cuatrimestre</MenuItem>
 								<MenuItem value={"segundo"}>2do cuatrimestre</MenuItem>
 							</Select>
@@ -212,8 +254,8 @@ export default function Cursos() {
 							</Select>
 						</FormControl>
 					</Box>
-					<div style={{ display: "flex", position:"relative",justifyContent: "center", width:"29vw", height:"25%"}}>
-						<Button style={{ position:"absolute", bottom:0,width:"20vw"}} variant="outlined" startIcon={<CreateIcon />} onClick = {()=>{handleCreateCurso()}}>
+					<div style={{ display: "flex", position: "relative", justifyContent: "center", width: "29vw", height: "25%" }}>
+						<Button style={{ position: "absolute", bottom: 0, width: "20vw" }} variant="outlined" startIcon={<CreateIcon />} onClick={() => { handleCreateCurso() }}>
 							Crear
 						</Button>
 					</div>
@@ -233,7 +275,7 @@ export default function Cursos() {
 							<CardContent sx={{ height: "100%", width: '100%' }}>{createCursoComponent()}</CardContent>
 							:
 							<CardActions>
-								<IconButton color="primary" aria-label="crear fila" onClick={() => handleCreate()}>
+								<IconButton color="primary" aria-label="crear fila" onClick={() => handleCreateClick()}>
 									<AddIcon style={{ fontSize: "2.5vw" }} />
 								</IconButton>
 							</CardActions>
