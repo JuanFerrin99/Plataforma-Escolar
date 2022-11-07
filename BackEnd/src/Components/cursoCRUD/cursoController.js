@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const Curso = require("./cursoSchema.js");
-const { funcionEmit } = require('../../../bin/www')
 const { default: mongoose } = require('mongoose');
+const SOCKET = require('../../utils/sockets')
 
 //------------------------------------------------ POST /cursos/ -----------------------------------------------------------
 
 module.exports.agregarCurso = (req, res) => {
-    const { materia, profesor, alumnos, evaluaciones, finales, periodo, fechasAsistencia, estado } = req.body;
+    const { materia, profesor, alumnos, evaluaciones, finales, periodo, fechasAsistencia, estado, mail } = req.body
 
     const curso = new Curso({
         materia,
@@ -23,7 +23,7 @@ module.exports.agregarCurso = (req, res) => {
     curso.save()
         .then((curso) => {
             res.status(201).json(curso)
-            funcionEmit(profesor.mail, curso)
+            SOCKET.getInstance().emitCurso(mail, curso)
         })
         .catch(error => {
             res.status(500).json({ error: "Ocurrio un error" })

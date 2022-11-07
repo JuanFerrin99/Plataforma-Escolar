@@ -1,18 +1,38 @@
-const sockets = {}
+class PrivateSocket {
+    constructor() { }
+    initServer(server, options) {
+        this.io = require("socket.io")(server, options)
+        this.sockets = {}
 
+        this.io.on("connection", socket => {
+            socket.on('connected', (mail) => {
+                this.sockets[mail] = socket.id
+                console.log(this.sockets)
+            })
 
-module.exports.newSocket = function (mail, id) {
-    sockets[mail] = id
+            socket.on('disconnect', () => {
+                delete this.sockets[getKeyByValue(this.sockets, socket.id)]
+                console.log(this.sockets)
+            })
+        })
+    }
+    emitCurso(mail, curso) {
+        this.io.to(this.sockets[mail]).emit("nuevo curso", curso)
+    }
 }
-module.exports.deleteSocket = function (id) {
-    delete sockets[getKeyByValue(sockets, id)]
-}
-
-module.exports.handleSocket = function (mail) {
-    return sockets[mail]
-}
-
 
 function getKeyByValue(object, value) {
     return Object.keys(object).find(key => object[key] === value);
 }
+class Socket {
+    constructor() {
+        throw new Error('Use Singleton.getInstance()');
+    }
+    static getInstance() {
+        if (!Socket.instance) {
+            Socket.instance = new PrivateSocket()
+        }
+        return Socket.instance;
+    }
+}
+module.exports = Socket;
