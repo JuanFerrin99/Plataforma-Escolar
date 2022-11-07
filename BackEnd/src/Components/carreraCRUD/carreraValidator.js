@@ -10,7 +10,7 @@ module.exports.agregarValidator = [
     body("materias")
         .isArray({min: 1}).withMessage("Materias debe ser un array"),
     body("materias.*")
-        .isObject({}).withMessage("Materias debe ser un array de objetos con 1 como minimo"),
+        .isString({}).withMessage("Materias debe ser un array de strings"),
     body("tipo")
         .isString({}).withMessage("Tipo debe ser un string"),
     verifyValidation
@@ -33,7 +33,7 @@ module.exports.modificacionValidator = [
         .optional({nullable: true})
         .isArray().withMessage("Materias debe ser un array"),
     body("materias.*")
-        .isObject({min: 1}).withMessage("Materias debe ser un array de objetos con 1 como minimo"),
+        .isString().withMessage("Materias debe ser un array de strings"),
     body("tipo")
         .optional({nullable: true})
         .isString().withMessage("Tipo debe ser un string"),

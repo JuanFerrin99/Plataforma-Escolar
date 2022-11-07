@@ -16,7 +16,7 @@ export default function MainDash({index}) {
         fetch(`http://localhost:3001/secretarios/filtro/${Cookies.get("mail")}`, { credentials: "include" })
             .then(response => response.json())
             .then(secretario => {
-                setPaginas([<Home dni={secretario.dni} />, <Inscripciones />, <Alumnos/>, <Profesores />, <Cursos />,<CerrarSesion/>])
+                setPaginas([<Home dni={secretario.dni} />, <Inscripciones />, <Alumnos/>, <Profesores />, <Cursos />,<Carreras/>, <CerrarSesion/>])
             })
             .catch(error => {
                 console.log(error)

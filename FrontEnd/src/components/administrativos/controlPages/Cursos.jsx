@@ -269,7 +269,7 @@ export default function Cursos() {
 						{loading ? cursosSkeleton : cursosComponent}
 					</Grid>
 				</div>
-				<div style={{ paddingLeft: "2%" }}>
+				<div style={{ paddingLeft: "2%"}}>
 					<Card sx={cardStyle}>
 						{!checked ?
 							<CardContent sx={{ height: "100%", width: '100%' }}>{createCursoComponent()}</CardContent>
