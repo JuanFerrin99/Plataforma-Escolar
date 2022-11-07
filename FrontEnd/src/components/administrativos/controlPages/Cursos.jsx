@@ -165,8 +165,12 @@ export default function Cursos() {
 			fetchPost(`cursos/`, cursoBase)
 				.then(res => {
 					setIsShown(false);
+					fetchPatch(`profesores/${createValues.profesor._id}`, { cursos: [...createValues.profesor.cursos, { id: res._id, materia: cursoBase.materia }] })
+						.then()
+						.catch(err => console.log(err))
 				})
 				.catch(err => console.log(err))
+
 			setChecked(true)
 			setCardStyle(current => ({ ...current, height: "6vh", width: "6vh", borderRadius: "20%" }))
 		}
@@ -274,7 +278,7 @@ export default function Cursos() {
 						{loading ? cursosSkeleton : cursosComponent}
 					</Grid>
 				</div>
-				<div style={{ paddingLeft: "2%"}}>
+				<div style={{ paddingLeft: "2%" }}>
 					<Card sx={cardStyle}>
 						{!checked ?
 							<CardContent sx={{ height: "100%", width: '100%' }}>{createCursoComponent()}</CardContent>
