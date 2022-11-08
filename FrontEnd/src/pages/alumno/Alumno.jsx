@@ -36,28 +36,28 @@ export default function AlumnoPage() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`http://localhost:3001/alumnos/filtro/${Cookies.get("mail")}`, {credentials:"include"})
-        .then(response => response.json())
-        .then(alumno => {
-            setCursos(alumno.cursosActivos)
-            setDni(alumno.dni)
-            setLoading(false)
-        })
-        .catch(error => {
-            console.log(error)
-        })
-    },[])
-    
-    
+        fetch(`http://localhost:3001/alumnos/filtro/${Cookies.get("mail")}`, { credentials: "include" })
+            .then(response => response.json())
+            .then(alumno => {
+                setCursos(alumno.cursosActivos)
+                setDni(alumno.dni)
+                setLoading(false)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }, [])
+
+
     const cursosComponent = cursos.map((curso, i) => {
-        return <CursoCard key={curso.id} nombre={curso.nombre } id={curso.id} dni={dni} />
+        return <CursoCard key={curso.id} nombre={curso.nombre} id={curso.id} dni={dni} />
     })
-    
+
     const cursosSkeleton = new Array(20).fill(<Variants />)
-    
+
     return (
         <div>
-            <Button id="botonInscripcion" variant="contained" endIcon={<AddIcon/>}>
+            <Button id="botonInscripcion" variant="contained" endIcon={<AddIcon />}>
                 Inscribirse materia
             </Button>
             <Grid container spacing={3}>
@@ -69,5 +69,5 @@ export default function AlumnoPage() {
 
         </div>
     )
-    
+
 }
