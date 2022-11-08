@@ -7,6 +7,7 @@ import CursoCard from "../../components/cards/CursoCard";
 import Cookies from "js-cookie";
 import "../../styles/pages/AlumnoPage.css";
 import socket from '../../components/utils/Socket'
+import { fetchGet } from '../../components/utils/Fetch'
 socket.emit('connected', Cookies.get("mail"))
 
 
@@ -47,13 +48,13 @@ export default function AlumnoPage() {
     })
 
     useEffect(() => {
-        fetch(`http://localhost:3001/profesores/filtro/${Cookies.get("mail")}`, { credentials: "include" })
+        fetchGet(`profesores/filtro/${Cookies.get("mail")}`)
             .then(response => response.json())
             .then(profesor => {
                 setDni(profesor.dni)
                 setCursos(profesor.cursos)
                 setLoading(false)
-                fetch(`http://localhost:3001/inasistencias/filtro/${profesor.dni}/`, { credentials: "include" })
+                fetch(`inasistencias/filtro/${profesor.dni}/`)
                     .then(response => response.json())
                     .then(res => {
                         setInasistencias(res)
@@ -61,8 +62,6 @@ export default function AlumnoPage() {
                     .catch(error => {
                         console.log(error)
                     })
-
-
             })
     }, [])
     const cursosComponent = cursos.map((curso, i) => {
@@ -79,8 +78,6 @@ export default function AlumnoPage() {
             <Container>
                 <Outlet />
             </Container>
-
         </div>
     )
-
 }

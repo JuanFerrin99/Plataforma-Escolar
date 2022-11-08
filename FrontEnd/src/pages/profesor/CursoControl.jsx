@@ -16,6 +16,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import Box from '@mui/material/Box';
 import AlumnoCard from "../../components/cards/AlumnoCard";
 import "../../styles/bordes.css"
+import { fetchGet, fetchPost, fetchPatch, fetchDelete } from '../../components/utils/Fetch'
 
 //*------------------------------------cosas inutiles que deberian estar en otros archivos porque ocupan mucho espacio 
 
@@ -129,12 +130,12 @@ export default function CursoCard() {
     const [isPressedEvaluacion, setIsPressedEvaluacion] = useState(false);
 
     const location = useLocation()
-    const id = location.state.idCurso 
+    const id = location.state.idCurso
     /*
     import { useParams } from 'react-router-dom'
     const { slug } = useParams()
     */
-   //todo pasar parametros por url
+    //todo pasar parametros por url
     let ausentes = []
 
 
@@ -143,7 +144,7 @@ export default function CursoCard() {
     //* Llamada principal
 
     useEffect(() => {
-        fetch(`http://localhost:3001/cursos/${id}/`)
+        fetchGet(`cursos/${id}/`)
             .then(response => response.json())
             .then(curso => {
                 setCurso(curso)
@@ -173,15 +174,7 @@ export default function CursoCard() {
         }
         copia.push(evaluacion)
 
-        fetch(`http://localhost:3001/cursos/${id}/evaluaciones/`, {
-            credentials: "include",
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ "evaluacion": evaluacion })
-        })
+        fetchPost(`cursos/${id}/evaluaciones/`, { "evaluacion": evaluacion })
             .then(res => {
                 setEvaluaciones(copia)
             })
@@ -193,15 +186,7 @@ export default function CursoCard() {
     //* Patch evaluaciones
 
     const ProcessRowUpdate = (props) => {
-        fetch(`http://localhost:3001/cursos/${id}/evaluaciones/${props.id}`, {
-            credentials: "include",
-            method: 'PATCH',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ "fecha": props.fecha, "tipo": props.tipo })
-        })
+        fetchPatch(`cursos/${id}/evaluaciones/${props.id}`, { "fecha": props.fecha, "tipo": props.tipo })
             .then(res => { //toDo checkear si lo encontro o no y cambiar el mensaje
                 setSnackbar({ children: 'User successfully saved', severity: 'success' });
             })
@@ -215,7 +200,7 @@ export default function CursoCard() {
     const renderDetailsButton = (params) => {
         return (
             <IconButton color="primary" aria-label="borrar" onClick={() => {
-                fetch(`http://localhost:3001/cursos/${id}/evaluaciones/${params.row.id}`, { credentials: "include", method: 'DELETE' })
+                fetchDelete(`cursos/${id}/evaluaciones/${params.row.id}`)
                     .then(res => {
                         if (res) {
                             let rows = evaluaciones.slice()
@@ -315,7 +300,7 @@ export default function CursoCard() {
         return (
             <div style={{ height: "100vh", width: '100%' }}>
                 <div style={{ width: '100%' }}>
-                    <IconButton color="primary" aria-label="ir para atras" onClick={() => {  window.location.href="/profesor/curso" }}>
+                    <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
                         <ArrowBackRoundedIcon fontSize='large' />
                     </IconButton>
                     <IconButton color="primary" aria-label="crear fila" onClick={() => { handleNewRow() }}>
@@ -395,24 +380,19 @@ export default function CursoCard() {
         const functionClick = () => {
             if (diaCorrecto() && !asitenciaNoTomada()) {
                 ausentes.map((id) => rows.find((row) => row.id === id)).forEach((alumno) => {
-                    fetch("http://localhost:3001/inasistencias/", {
-                        credentials: "include",
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json, text/plain, */*',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ "fecha": `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`, "tipo": "Falta", "motivo": " ", "justificado": "Injustificada", "curso": id, "materia": curso.materia, "persona": { "nombre": alumno.Nombre, "apellido": alumno.Apellido, "dni": alumno.id } })
+                    fetchPost("inasistencias/", {
+                        "fecha": `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`,
+                        "tipo": "Falta",
+                        "motivo": " ",
+                        "justificado":
+                            "Injustificada",
+                        "curso": id,
+                        "materia": curso.materia,
+                        "persona": { "nombre": alumno.Nombre, "apellido": alumno.Apellido, "dni": alumno.id }
                     })
                 })
-                fetch(`http://localhost:3001/cursos/${id}/`, {
-                    credentials: "include",
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json, text/plain, */*',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ "fechasAsistencia": [`${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`] })
+                fetchPost(`cursos/${id}/`, {
+                    "fechasAsistencia": [`${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`]
                 })
                     .then(data => {
                         window.history.go(-1); return false;
@@ -424,7 +404,7 @@ export default function CursoCard() {
         }
         return (
             <div style={{ height: "94.9vh", width: '100%' }}>
-                <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href="/profesor/curso" }}>
+                <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
                     <ArrowBackRoundedIcon fontSize='large' />
                 </IconButton>
                 <div style={{ display: 'flex', height: '100%' }}>
@@ -439,7 +419,6 @@ export default function CursoCard() {
                         />
                     </div>
                 </div>
-
                 <button onClick={() => { functionClick() }}>Tomar asistencia</button>
             </div>
         );

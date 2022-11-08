@@ -84,6 +84,7 @@ export default function Carreras() {
 
 	useEffect(() => {
 		fetchGet(`carreras`)
+			.then(response => response.json())
 			.then(carreras => {
 				setCarreras(carreras)
 				setLoading(false)
@@ -113,6 +114,7 @@ export default function Carreras() {
 
 		const handleCreateClick = () => {
 			fetchGet(`materias/`)
+				.then(response => response.json())
 				.then(materias => {
 					setMateriasPosibles(materias.map(mat => mat.nombre))
 					setLoading(false)

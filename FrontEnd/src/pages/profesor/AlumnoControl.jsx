@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom"
 import Cookies from "js-cookie";
 import TableNotas from "../../components/tables/TableNotas/Table"
 import TableFinales from "../../components/tables/TableFinales/Table"
+import { fetchGet } from '../../components/utils/Fetch';
 
 
 export default function CursoCard() {
@@ -15,7 +16,7 @@ export default function CursoCard() {
     
     useEffect(() => {
             let p = []
-            fetch(`http://localhost:3001/cursos/${id}`, {credentials: "include"})
+            fetchGet(`cursos/${id}`)
             .then(response => response.json())
             .then(curso => {
                 setNotas([])
@@ -40,4 +41,3 @@ export default function CursoCard() {
         </div>
     );
 }
-

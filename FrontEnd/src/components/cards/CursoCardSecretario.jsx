@@ -35,6 +35,5 @@ export default function cursoCard({ curso, setCurso, setCursos }) {
                 </CardActions>
             </Card>
         </Grid>
-
     );
 }

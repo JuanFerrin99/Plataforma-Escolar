@@ -4,6 +4,7 @@ import { handleDeleteTitulo, handleDeleteAlt, handleDelete, handleCreate, handle
 import CreateIcon from '@mui/icons-material/Create';
 import ClearIcon from '@mui/icons-material/Clear';
 import AlumnoCard from "../../cards/AlumnoCardSecretario";
+import { fetchGet, fetchPatch } from '../../utils/Fetch'
 import "../../../styles/administrativos/alumnos.css"
 
 function Variants() {
@@ -40,20 +41,10 @@ export default function Alumnos() {
 	const [entre2, setEntre2] = useState(false);
 	const [loading, setLoading] = useState(true);
 	
-	const handleClick = () => {//todo crear endpoint put en ves de patch
+	const handleClick = () => {
 		let a = Object.assign({}, alumno)
 		delete a._id
-		fetch(`http://localhost:3001/alumnos/${alumno._id}/`, {
-			credentials: "include",
-			method: 'PATCH',
-			headers: {
-				'Accept': 'application/json, text/plain, */*',
-				'Content-Type': 'application/json'
-			},
-
-			body: JSON.stringify(a)
-
-		})
+		fetchPatch(`alumnos/${alumno._id}/`, a)
 			.then(res => {
 				setIsShown(current => false);
 			})
@@ -64,7 +55,7 @@ export default function Alumnos() {
 
 	//* fetch base
 	useEffect(() => {
-		fetch(`http://localhost:3001/alumnos/`, { credentials: 'include' })
+		fetchGet(`alumnos/`)
 			.then(response => response.json())
 			.then(alumnos => {
 				setAlumnos(alumnos)
@@ -78,7 +69,7 @@ export default function Alumnos() {
 	useEffect(() => {
 		if (Object.keys(alumno).length > 0 && !entre1) {
 			setEntre1(true)
-			fetch(`http://localhost:3001/cursos/`, { credentials: 'include' })
+			fetchGet(`cursos/`)
 				.then(response => response.json())
 				.then(cursos => {
 					cursos.forEach(curso => {
@@ -96,7 +87,7 @@ export default function Alumnos() {
 	useEffect(() => {
 		if (Object.keys(alumno).length > 0 && !entre2) {
 			setEntre2(true)
-			fetch(`http://localhost:3001/carreras/`, { credentials: 'include' })
+			fetchGet(`carreras/`)
 				.then(response => response.json())
 				.then(carreras => {
 					setTitulos(alumno.titulos)

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Card, CardActions, CardContent, Grid, Skeleton, Box, Button, TextField, IconButton} from "@mui/material";
-import { handleDeleteTitulo, handleCreateTitulo, changeObjectHandler, changeHandlerComplex, changeHandler, onEnter} from "../../utils/administrativos"
+import { Card, CardActions, CardContent, Grid, Skeleton, Box, Button, TextField, IconButton } from "@mui/material";
+import { handleDeleteTitulo, handleCreateTitulo, changeObjectHandler, changeHandlerComplex, changeHandler, onEnter } from "../../utils/administrativos"
 import CreateIcon from '@mui/icons-material/Create';
 import ClearIcon from '@mui/icons-material/Clear';
 import ProfesorCard from "../../cards/ProfesorCardSecretario";
-import { fetchGet } from "../../utils/Fetch"
+import { fetchGet, fetchPatch } from "../../utils/Fetch"
 
 function Variants() {
 	return (
@@ -40,6 +40,7 @@ export default function Profesors() {
 
 	useEffect(() => {
 		fetchGet(`profesores`)
+			.then(response => response.json())
 			.then(profesores => {
 				setProfesores(profesores)
 				setLoading(false)
@@ -50,7 +51,7 @@ export default function Profesors() {
 	useEffect(() => {
 		if (Object.keys(profesor).length > 0 && !entre) {
 			setEntre(true)
-			fetch(`http://localhost:3001/cursos/`, { credentials: 'include' })
+			fetchGet(`cursos`)
 				.then(response => response.json())
 				.then(cursos => {
 					setTitulos(profesor.titulos)
@@ -69,16 +70,7 @@ export default function Profesors() {
 	const handleClick = () => {//todo crear endpoint put en ves de patch
 		let a = Object.assign({}, profesor)
 		delete a._id
-		fetch(`http://localhost:3001/profesores/${profesor._id}/`, {
-			credentials: "include",
-			method: 'PATCH',
-			headers: {
-				'Accept': 'application/json, text/plain, */*',
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(a)
-
-		})
+		fetchPatch(`profesores/${profesor._id}/`, a)
 			.then(res => {
 				setIsShown(false);
 			})
@@ -109,36 +101,36 @@ export default function Profesors() {
 		return (
 			<Box id="info">
 				go back button aca
-				<div><TextField id="standard-basic" defaultValue={profesor.nombre} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "nombre",setProfesor, setIsShown)} label="Nombre" variant="standard" /></div>
-				<div><TextField id="standard-basic" defaultValue={profesor.apellido} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "apellido",setProfesor, setIsShown)} label="Apellido" variant="standard" /></div>
-				<div><TextField id="standard-basic" defaultValue={profesor.dni} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "dni",setProfesor, setIsShown)} label="DNI" variant="standard" /></div>
-				<div><TextField id="standard-basic" defaultValue={profesor.fechaNacimiento} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "fechaNacimiento",setProfesor, setIsShown)} label="Fecha de Nacimiento" variant="standard" /></div>
-				<div><TextField id="standard-basic" defaultValue={profesor.telefono} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "telefono",setProfesor, setIsShown)} label="Telefono" variant="standard" /></div>
-				<div><TextField id="standard-basic" defaultValue={profesor.mail} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "mail",setProfesor, setIsShown)} label="Mail" variant="standard" /></div>
-				<div><TextField id="standard-basic" defaultValue={profesor.rol} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "rol",setProfesor, setIsShown)} label="Rol" variant="standard" /></div>
-				<div><TextField id="standard-basic" defaultValue={profesor.fechaIngreso} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "fechaIngreso",setProfesor, setIsShown)} label="Fecha de ingreso" variant="standard" /></div>
+				<div><TextField id="standard-basic" defaultValue={profesor.nombre} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "nombre", setProfesor, setIsShown)} label="Nombre" variant="standard" /></div>
+				<div><TextField id="standard-basic" defaultValue={profesor.apellido} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "apellido", setProfesor, setIsShown)} label="Apellido" variant="standard" /></div>
+				<div><TextField id="standard-basic" defaultValue={profesor.dni} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "dni", setProfesor, setIsShown)} label="DNI" variant="standard" /></div>
+				<div><TextField id="standard-basic" defaultValue={profesor.fechaNacimiento} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "fechaNacimiento", setProfesor, setIsShown)} label="Fecha de Nacimiento" variant="standard" /></div>
+				<div><TextField id="standard-basic" defaultValue={profesor.telefono} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "telefono", setProfesor, setIsShown)} label="Telefono" variant="standard" /></div>
+				<div><TextField id="standard-basic" defaultValue={profesor.mail} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "mail", setProfesor, setIsShown)} label="Mail" variant="standard" /></div>
+				<div><TextField id="standard-basic" defaultValue={profesor.rol} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "rol", setProfesor, setIsShown)} label="Rol" variant="standard" /></div>
+				<div><TextField id="standard-basic" defaultValue={profesor.fechaIngreso} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "fechaIngreso", setProfesor, setIsShown)} label="Fecha de ingreso" variant="standard" /></div>
 				<div style={{ backgroundColor: "lightgray" }}>
 					<p>Datos de residencia</p>
-					<div><TextField id="standard-basic" defaultValue={profesor.datosResidencia.pais} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "pais",setProfesor, setIsShown)} label="Pais de residencia" variant="standard" /></div>
-					<div><TextField id="standard-basic" defaultValue={profesor.datosResidencia.provincia} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "provincia",setProfesor, setIsShown)} label="Provincia de residencia" variant="standard" /></div>
-					<div><TextField id="standard-basic" defaultValue={profesor.datosResidencia.localidad} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "localidad",setProfesor, setIsShown)} label="Localidad de residencia" variant="standard" /></div>
-					<div><TextField id="standard-basic" defaultValue={profesor.datosResidencia.domicilio} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "domicilio",setProfesor, setIsShown)} label="Domicilio" variant="standard" /></div>
-					<div><TextField id="standard-basic" defaultValue={profesor.datosResidencia.codigoPostal} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "codigoPostal",setProfesor, setIsShown)} label="Codigo postal" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={profesor.datosResidencia.pais} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "pais", setProfesor, setIsShown)} label="Pais de residencia" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={profesor.datosResidencia.provincia} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "provincia", setProfesor, setIsShown)} label="Provincia de residencia" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={profesor.datosResidencia.localidad} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "localidad", setProfesor, setIsShown)} label="Localidad de residencia" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={profesor.datosResidencia.domicilio} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "domicilio", setProfesor, setIsShown)} label="Domicilio" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={profesor.datosResidencia.codigoPostal} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "codigoPostal", setProfesor, setIsShown)} label="Codigo postal" variant="standard" /></div>
 				</div>
 				<div style={{ backgroundColor: "lightgray" }}>
 					<p>titulos</p>
 					{titulos.map((titulo, i) => {
 						return (
 							<div>
-								<TextField id="standard-basic" defaultValue={titulo} onKeyPress={e => onEnter(e)}  onBlur={e => changeHandlerComplex(e, "titulos", setTitulos,titulo,setProfesor, setIsShown,titulos)} label={`Titulo ${i + 1}`} variant="standard" />
-								<IconButton color="primary" aria-label="borrar" onClick={() => { handleDeleteTitulo(titulo, setIsShown,titulos, setProfesor, setTitulos) }}>
+								<TextField id="standard-basic" defaultValue={titulo} onKeyPress={e => onEnter(e)} onBlur={e => changeHandlerComplex(e, "titulos", setTitulos, titulo, setProfesor, setIsShown, titulos)} label={`Titulo ${i + 1}`} variant="standard" />
+								<IconButton color="primary" aria-label="borrar" onClick={() => { handleDeleteTitulo(titulo, setIsShown, titulos, setProfesor, setTitulos) }}>
 									<ClearIcon fontSize='small' ></ClearIcon>
 								</IconButton>
 							</div>
 						)
 					})
 					}
-					<IconButton color="primary" aria-label="crear fila" onClick={() => { handleCreateTitulo(setProfesor, setTitulos,setIsShown, titulos) }}>
+					<IconButton color="primary" aria-label="crear fila" onClick={() => { handleCreateTitulo(setProfesor, setTitulos, setIsShown, titulos) }}>
 						<CreateIcon fontSize='small' />
 					</IconButton>
 				</div>
@@ -154,9 +146,7 @@ export default function Profesors() {
 					}
 				</div>
 				{isShown && <Button variant="contained" onClick={handleClick}>Guardar cambios</Button>}
-
 			</Box>
 		)
-
 	}
 } 

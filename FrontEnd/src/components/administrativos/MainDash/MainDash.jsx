@@ -9,11 +9,13 @@ import Profesores from "../controlPages/Profesores"
 import Cursos from "../controlPages/Cursos"
 import CerrarSesion from "../controlPages/CerrarSesion"
 import Carreras from "../controlPages/Carreras"
+import { fetchGet } from '../../utils/Fetch';
+
 
 export default function MainDash({index}) {
     const [paginas, setPaginas] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:3001/secretarios/filtro/${Cookies.get("mail")}`, { credentials: "include" })
+        fetchGet(`secretarios/filtro/${Cookies.get("mail")}`)
             .then(response => response.json())
             .then(secretario => {
                 setPaginas([<Home dni={secretario.dni} />, <Inscripciones />, <Alumnos/>, <Profesores />, <Cursos />,<Carreras/>, <CerrarSesion/>])

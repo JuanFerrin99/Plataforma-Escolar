@@ -100,6 +100,7 @@ export default function Cursos() {
 	//* Fetch Principal
 	useEffect(() => {
 		fetchGet(`cursos/`)
+			.then(response => response.json())
 			.then(cursos => {
 				setCursos(cursos)
 				setLoading(false)
@@ -124,6 +125,7 @@ export default function Cursos() {
 		const cursosSkeleton = new Array(20).fill(<Variants />)
 		const handleCreateClick = () => {
 			fetchGet(`materias/`)
+				.then(response => response.json())
 				.then(materias => {
 					setMaterias(materias)
 					setLoading(false)
@@ -131,6 +133,7 @@ export default function Cursos() {
 				.catch(err => console.log(err))
 
 			fetchGet(`profesores/`)
+				.then(response => response.json())
 				.then(profesores => {
 					setProfesores(profesores)
 					setLoading(false)

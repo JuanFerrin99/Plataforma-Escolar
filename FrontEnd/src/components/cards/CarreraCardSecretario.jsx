@@ -38,6 +38,5 @@ export default function cursoCard({ carrera, setCarrera, setCarreras, setMateria
                 </CardActions>
             </Card>
         </Grid>
-
     );
 }

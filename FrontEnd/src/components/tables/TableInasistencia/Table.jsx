@@ -12,6 +12,7 @@ import CreateIcon from '@mui/icons-material/Create';
 import ClearIcon from '@mui/icons-material/Clear';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import { fetchPatch, fetchDelete } from '../../utils/Fetch'
 
 //Todo todos los mensajes de error estan en la pagina de evaluaciones
 //* skeleton
@@ -121,31 +122,22 @@ export default function TableInasistencias(props) {
 
 
 	useEffect(() => {
-		if(s){ //toDO checkear que si al estar la coleccion esta vacia que no se quede cargando infinitamente y consuma mucho
+		if (s) { //toDO checkear que si al estar la coleccion esta vacia que no se quede cargando infinitamente y consuma mucho
 			setFaltas(props.inasistencia)
-			if(faltas.length === 0){return undefined}
-			else{setS(false)}
+			if (faltas.length === 0) { return undefined }
+			else { setS(false) }
 		}
 	});
 
 	//* Patch faltas
 	const ProcessRowUpdate = (props) => {
-		fetch(`http://localhost:3001/inasistencias/${props._id}`, {
-			credentials: "include",
-			method: 'PATCH',
-			headers: {
-				'Accept': 'application/json, text/plain, */*',
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(
-				{
-				fecha: props.fecha,
-				justificado: props.justificado,
-				motivo: props.motivo,
-				tipo: props.tipo,
-				_id: props._id})
-				}
-			)
+		fetchPatch(`inasistencias/${props._id}`, {
+			fecha: props.fecha,
+			justificado: props.justificado,
+			motivo: props.motivo,
+			tipo: props.tipo,
+			_id: props._id
+		})
 			.then(res => { //toDo checkear si lo encontro o no y cambiar el mensaje
 				setSnackbar({ children: 'User successfully saved', severity: 'success' });
 			})
@@ -158,7 +150,7 @@ export default function TableInasistencias(props) {
 	const renderDetailsButton = (params) => {
 		return (
 			<IconButton color="primary" aria-label="borrar" onClick={() => {
-				fetch(`http://localhost:3001/inasistencias/${params.row._id}`, { credentials: "include", method: 'DELETE' })//toDo checkear si lo encontro o no y cambiar el mensaje
+				fetchDelete(`inasistencias/${params.row._id}`) //toDo checkear si lo encontro o no y cambiar el mensaje
 					.then(res => {
 						if (res) {
 							let rows = faltas.slice()

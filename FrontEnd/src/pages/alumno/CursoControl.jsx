@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom"
 import TableInasistencia from "../../components/tables/TableInasistenciaInmodificable/Table"
 import TableNotas from "../../components/tables/TableNotasInmodificable/Table"
+import { fetchGet } from '../../components/utils/Fetch';
 
 export default function CursoCard({ }) {
     const [materia, setMateria] = useState("")
@@ -15,7 +16,7 @@ export default function CursoCard({ }) {
     const dni = location.state.dni
 
     useEffect(() => {
-        fetch(`http://localhost:3001/inasistencias/${dni}/${id}`, {credentials: "include"})
+        fetchGet(`inasistencias/${dni}/${id}`)
             .then(response => response.json())
             .then(res => {
                 setInasistencias(res)
@@ -25,7 +26,7 @@ export default function CursoCard({ }) {
             })
     }, []);
     useEffect(() => {
-        fetch(`http://localhost:3001/cursos/${id}`, {credentials: "include"})
+        fetchGet(`cursos/${id}`)
             .then(response => response.json())
             .then(curso => {
                 setMateria(curso.materia)
@@ -36,8 +37,7 @@ export default function CursoCard({ }) {
                     }
                 }
                 )
-            }
-            )
+            })
             .catch(error => {
                 console.log(error)
             })
@@ -53,4 +53,3 @@ export default function CursoCard({ }) {
         </div>
     );
 }
-

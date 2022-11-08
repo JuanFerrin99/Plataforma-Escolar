@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 import CursoCard from "../../components/cards/CursoCard";
 import "../../styles/pages/AlumnoPage.css";
 import Cookies from "js-cookie";
-
+import { fetchGet } from '../../components/utils/Fetch'
 
 function Variants() {
     return (
@@ -36,7 +36,7 @@ export default function AlumnoPage() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`http://localhost:3001/alumnos/filtro/${Cookies.get("mail")}`, { credentials: "include" })
+        fetchGet(`alumnos/filtro/${Cookies.get("mail")}`)
             .then(response => response.json())
             .then(alumno => {
                 setCursos(alumno.cursosActivos)
@@ -66,8 +66,6 @@ export default function AlumnoPage() {
             <Container>
                 <Outlet />
             </Container>
-
         </div>
     )
-
 }

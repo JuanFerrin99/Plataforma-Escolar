@@ -12,6 +12,7 @@ import Alert from '@mui/material/Alert';
 import ClearIcon from '@mui/icons-material/Clear';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import { fetchPost, fetchPatch, fetchDelete } from '../../utils/Fetch'
 
 //Todo todos los mensajes de error estan en la pagina de evaluaciones
 //* skeleton
@@ -119,46 +120,28 @@ export default function TableNotas(props) {
 	const id = props.idCurso
 	const dni = props.dniAlumno
 	useEffect(() => {
-			setNotas(props.notas)
-	},[props.notas]);	
+		setNotas(props.notas)
+	}, [props.notas]);
 	//* Create evaluaciones
 	const handleNewRow = () => {
-		fetch(`http://localhost:3001/cursos/${id}/alumnos/${dni}/calificaciones/`, {
-			credentials: "include",
-			method: 'POST',
-			headers: {
-				'Accept': 'application/json, text/plain, */*',
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				"calificacion": {
-					id: notas[notas.length - 1].id + 1,	//!Linkear id con su evaluacion
-					nota: 0
-				}
-			})
+		fetchPost(`cursos/${id}/alumnos/${dni}/calificaciones/`, {
+			"calificacion": {
+				id: notas[notas.length - 1].id + 1,	//!Linkear id con su evaluacion
+				nota: 0
+			}
 		})
-			.then(res => setNotas(current => [...current, {//!Linkear id con su evaluacion
+			.then(res => setNotas(current => [...current, { //!Linkear id con su evaluacion
 				id: notas[notas.length - 1].id + 1,
-				nota:0  
+				nota: 0
 			}]))
 	}
 
 	//* Patch notas
 	const ProcessRowUpdate = (props) => {
-		fetch(`http://localhost:3001/cursos/${id}/alumnos/${dni}/calificaciones/${props.id}`, {
-			credentials: "include",
-			method: 'PATCH',
-			headers: {
-				'Accept': 'application/json, text/plain, */*',
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(
-				{
-					_id: props._id,
-					nota: props.nota
-				})
-		}
-		)
+		fetchPatch(`cursos/${id}/alumnos/${dni}/calificaciones/${props.id}`, {
+			_id: props._id,
+			nota: props.nota
+		})
 			.then(res => { //toDo checkear si lo encontro o no y cambiar el mensaje
 				setSnackbar({ children: 'User successfully saved', severity: 'success' });
 			})
@@ -171,7 +154,7 @@ export default function TableNotas(props) {
 	const renderDetailsButton = (params) => {
 		return (
 			<IconButton color="primary" aria-label="borrar" onClick={() => {
-				fetch(`http://localhost:3001/cursos/${id}/alumnos/${dni}/calificaciones/${params.row.id}`, { method: 'DELETE', credentials: 'include' })
+				fetchDelete(`cursos/${id}/alumnos/${dni}/calificaciones/${params.row.id}`)
 					.then(res => {
 						if (res) {
 							let rows = notas.slice()
@@ -274,7 +257,6 @@ export default function TableNotas(props) {
 					</Snackbar>
 				)}
 			</div>
-
 		</div>
 	);
 }

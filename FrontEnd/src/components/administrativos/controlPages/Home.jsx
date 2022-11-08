@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import Table from "../../tables/TableInasistenciaInmodificable/Table.jsx";
+import { fetchGet } from "../../utils/Fetch.jsx";
 
 
 export default function Home({dni}) {
     const [inasistencias, setInasistencias] = useState([])
     useEffect(() => {
-        fetch(`http://localhost:3001/inasistencias/filtro/${dni}`, { credentials: "include" })
+        fetchGet(`inasistencias/filtro/${dni}`)
             .then(response => response.json())
             .then(res => {
                 setInasistencias(res)
@@ -24,4 +25,3 @@ export default function Home({dni}) {
         </div>
     )
 }
-
