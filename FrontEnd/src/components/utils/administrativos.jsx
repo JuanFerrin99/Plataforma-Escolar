@@ -1,7 +1,7 @@
 
-export const getDay = (dayIndex) => { return ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][dayIndex] }
+export const getDay = (dayIndex) => { return ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"][dayIndex] }
 
-export const getDayIndex = (day) => { return ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].indexOf(day) }
+export const getDayIndex = (day) => { return ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"].indexOf(day) }
 
 //* Unfocus with enter
 export const focusInCurrentTarget = ({ relatedTarget, currentTarget }) => {
@@ -89,7 +89,7 @@ export const handleCreateMateria = (setGeneralInstance, setTitulos, setIsShown, 
     setIsShown(true);
 }
 export const handleCreateFinal = (setCurso, setIsShown, lastId) => {
-    setCurso(current => ({ ...current, ...{ finales: [...current.finales, { "fecha": "2022-00-00", "id": lastId + 1, "alumnosInscriptos": [{ "dni": 80808080, "nota": 0 }], "final": "2022-12-31", "inicio": "2022-12-31" }] } }))
+    setCurso(current => ({ ...current, ...{ finales: [...current.finales, { "fecha": "año-mes-dia", "id": lastId + 1, "alumnosInscriptos": [{ "dni": 0, "nota": 0 }], "final": "año-mes-dia", "inicio": "año-mes-dia" }] } }))
     setIsShown(true);
 }
 export const handleCreate = (key, setter, values, setIsShown, setGeneralInstance) => {

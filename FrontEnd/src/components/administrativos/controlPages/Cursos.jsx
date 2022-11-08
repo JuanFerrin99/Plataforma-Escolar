@@ -122,6 +122,7 @@ export default function Cursos() {
 			return <CursosCard key={curso._id} setCurso={setCurso} setCursos={setCursos} curso={curso} />
 		})
 		const cursosSkeleton = new Array(20).fill(<Variants />)
+		
 		const handleCreateClick = () => {
 			fetchGet(`materias/`)
 				.then(materias => {
