@@ -1,93 +1,97 @@
-[
-  {
-    "_id": {
-      "$oid": "6320c137f4e49413d16e89c0"
-    },
-    "nombre": "Santiago12",
-    "apellido": "Patiño",
-    "dni": 45749908,
-    "fechaNacimiento": {
-      "$date": "2004-06-12T00:00:00.000Z"
-    },
-    "telefono": 1122475777,
-    "mail": "santigamer24@gmail.com",
-    "titulos": [
-      "Instituto Politecnico Modelo"
-    ],
-    "datosResidencia": {
-      "pais": "Argentina",
-      "provincia": "Buenos Aires",
-      "localidad": "CABA",
-      "domicilio": "Capdevila 2852",
-      "codigoPostal": 1417
-    },
-    "fechaIngreso": {
-      "$date": "2000-01-01T00:00:00.000Z"
-    },
-    "rol": "alumno",
-    "datosNacimiento": {
-      "pais": "Argentina",
-      "localidad": "CABA"
-    },
-    "cursosActivos": [
-      "6335eed14fda6c2aa027fdb6"
-    ],
-    "carrera": [
-      {
-        "materiasAprobadas": [
-          "meth"
-        ],
-        "id": "6320c137f4e49413d16e89c0"
-      }
-    ]
+[{
+  "_id": {
+    "$oid": "6320c137f4e49413d16e89c0"
   },
-  {
-    "_id": {
-      "$oid": "6335ef5e4fda6c2aa027fdb7"
-    },
-    "nombre": "Emanuel",
-    "apellido": "Ruiz",
-    "dni": 15456123,
-    "fechaNacimiento": "2004-06-12",
-    "telefono": 1122475777,
-    "mail": "alumno2@gmail.com",
-    "titulos": [
-      "Secundario"
-    ],
-    "datosResidencia": {
-      "pais": "Argentina",
-      "provincia": "Buenos Aires",
-      "localidad": "CABA",
-      "domicilio": "Capdevila 2852",
-      "codigoPostal": 1417
-    },
-    "fechaIngreso": "2000-01-01",
-    "rol": "alumno",
-    "datosNacimiento": {
-      "pais": "Argentina",
-      "localidad": "CABA"
-    },
-    "cursosActivos": [
-      {
-        "id": {
-          "$oid": "6335eed14fda6c2aa027fdb6"
-        },
-        "nombre": "Fisica"
+  "nombre": "Santiago",
+  "apellido": "Patiño",
+  "dni": 45749908,
+  "fechaNacimiento": "2004-06-12",
+  "telefono": 1122475777,
+  "mail": "santigamer24@gmail.com",
+  "titulos": [
+    "Instituto Politecnico Modelo"
+  ],
+  "datosResidencia": {
+    "pais": "Argentina",
+    "provincia": "Buenos Aires",
+    "localidad": "CABA",
+    "domicilio": "Capdevila 2852",
+    "codigoPostal": 1417
+  },
+  "fechaIngreso": "2000-01-01",
+  "rol": "alumno",
+  "datosNacimiento": {
+    "pais": "Argentina",
+    "localidad": "CABA"
+  },
+  "cursosActivos": [
+    {
+      "id": {
+        "$oid": "6335eed14fda6c2aa027fdb6"
       },
-      {
-        "id": {
-          "$oid": "6335efb26c759fe918851162"
-        },
-        "nombre": "Matematica"
-      }
-    ],
-    "carrera": {
-      "nombre": "Ingenieria Informatica",
-      "duracion": 5,
-      "materias": [
-        {}
-      ],
-      "tipo": "Carrera"
+      "nombre": "Fisica"
+    },
+    {
+      "id": {
+        "$oid": "6320bfc1f4e49413d16e89bd"
+      },
+      "nombre": "Matematica"
     }
-  }
-]
+  ],
+  "carrera": [
+    {
+      "id": "6320c137f4e49413d16e89c0",
+      "materiasAprobadas": [
+        ""
+      ]
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "636a945537031424054022b6"
+  },
+  "nombre": "Emanuel",
+  "apellido": "Ruiz",
+  "dni": 20749908,
+  "fechaNacimiento": "2003-09-10",
+  "telefono": 1122475777,
+  "mail": "emagamer24@gmail.com",
+  "titulos": [
+    "Instituto Politecnico Modelo"
+  ],
+  "datosResidencia": {
+    "pais": "Argentina",
+    "provincia": "Buenos Aires",
+    "localidad": "CABA",
+    "domicilio": "Sucasa 4567",
+    "codigoPostal": 1417
+  },
+  "fechaIngreso": "2000-01-01",
+  "rol": "alumno",
+  "datosNacimiento": {
+    "pais": "Argentina",
+    "localidad": "CABA"
+  },
+  "cursosActivos": [
+    {
+      "id": {
+        "$oid": "6335eed14fda6c2aa027fdb6"
+      },
+      "nombre": "Fisica"
+    },
+    {
+      "id": {
+        "$oid": "6320bfc1f4e49413d16e89bd"
+      },
+      "nombre": "Matematica"
+    }
+  ],
+  "carrera": [
+    {
+      "id": "6320c137f4e49413d16e89c0",
+      "materiasAprobadas": [
+        ""
+      ]
+    }
+  ]
+}]
