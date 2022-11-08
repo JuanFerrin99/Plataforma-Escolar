@@ -24,9 +24,9 @@ export default function Sidebar({indexChanger, index}) {
 				animate={window.innerWidth <= 768 ? `${expanded}` : ''}
 			>
 				<div className="logo">
-					<img src={Logo} alt="logo" />
+					<img src={ Logo}alt="logo" />
 					<span>
-						S<span>U</span>S
+						I<span>S</span>E
 					</span>
 				</div>
 				<div className="menu">

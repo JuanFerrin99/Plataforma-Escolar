@@ -50,11 +50,10 @@ export default function AlumnoPage() {
     
     
     const cursosComponent = cursos.map((curso, i) => {
-        return <CursoCard key={curso.id} nombre={curso.nombre } id={curso.id} dni={dni} />
+        return <CursoCard key={curso} nombre={ "Matematica" } id={curso} dni={dni} />//todo hacer fetch de cursos
     })
     
     const cursosSkeleton = new Array(20).fill(<Variants />)
-    
     return (
         <div>
             <Button id="botonInscripcion" variant="contained" endIcon={<AddIcon/>}>
