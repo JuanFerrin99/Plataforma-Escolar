@@ -18,7 +18,6 @@ import AlumnoCard from "../../components/cards/AlumnoCard";
 import "../../styles/bordes.css"
 
 //*------------------------------------cosas inutiles que deberian estar en otros archivos porque ocupan mucho espacio 
-//toDo importar las cosas inutiles de algun utils y evitar repeticion
 
 function Variants() {
     return (
@@ -117,7 +116,6 @@ function CustomNoRowsOverlay() {
 }
 
 export default function CursoCard() {
-    //! si vas para atras pierde el state
     const gridRef = useRef();
     const [curso, setCurso] = useState({});
     const [alumnos, setAlumnos] = useState([]);
@@ -131,11 +129,12 @@ export default function CursoCard() {
     const [isPressedEvaluacion, setIsPressedEvaluacion] = useState(false);
 
     const location = useLocation()
-    const id = location.state.idCurso //Todo al parecer podes pasar valores por url con este codigo, asi que habria que usar es oen ves de state asi funciona la flecha para atars en alumno
+    const id = location.state.idCurso 
     /*
     import { useParams } from 'react-router-dom'
     const { slug } = useParams()
     */
+   //todo pasar parametros por url
     let ausentes = []
 
 
@@ -316,7 +315,7 @@ export default function CursoCard() {
         return (
             <div style={{ height: "100vh", width: '100%' }}>
                 <div style={{ width: '100%' }}>
-                    <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
+                    <IconButton color="primary" aria-label="ir para atras" onClick={() => {  window.location.href="/profesor/curso" }}>
                         <ArrowBackRoundedIcon fontSize='large' />
                     </IconButton>
                     <IconButton color="primary" aria-label="crear fila" onClick={() => { handleNewRow() }}>
@@ -331,7 +330,7 @@ export default function CursoCard() {
                         columns={columns}
                         pageSize={10}
                         enterMovesDown={true}
-                        processRowUpdate={ProcessRowUpdate} //! no sale de modo de editar aunque apretes enter, tab
+                        processRowUpdate={ProcessRowUpdate} //todo checker con onkeypress cuando aprete enter y desfocusear (codigo en secretario)
                         onProcessRowUpdateError={handleProcessRowUpdateError}
                         components={{
                             Pagination: CustomPagination,
@@ -416,7 +415,7 @@ export default function CursoCard() {
                     body: JSON.stringify({ "fechasAsistencia": [`${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`] })
                 })
                     .then(data => {
-                        window.location.href = "/profesor/curso"
+                        window.history.go(-1); return false;
                     })
             }
             else {
@@ -425,7 +424,7 @@ export default function CursoCard() {
         }
         return (
             <div style={{ height: "94.9vh", width: '100%' }}>
-                <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
+                <IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href="/profesor/curso" }}>
                     <ArrowBackRoundedIcon fontSize='large' />
                 </IconButton>
                 <div style={{ display: 'flex', height: '100%' }}>

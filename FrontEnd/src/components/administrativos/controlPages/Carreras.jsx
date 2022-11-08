@@ -200,7 +200,7 @@ export default function Carreras() {
 		return (
 			<div>
 				<div>
-					<Grid width={"85.5vw"} container spacing={45}>
+					<Grid width={"85.5vw"} container spacing={3}>
 						{loading ? carrerasSkeleton : carrerasComponent}
 					</Grid>
 				</div>

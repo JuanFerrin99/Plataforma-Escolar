@@ -100,7 +100,7 @@ export default function Alumnos() {
 				.then(response => response.json())
 				.then(carreras => {
 					setTitulos(alumno.titulos)
-					alumno.carrera.forEach(carreraAlumno => {
+					alumno.carreras.forEach(carreraAlumno => {
 						carreras.forEach((carrera) => {
 							if (carrera._id === carreraAlumno.id) {
 								setCarreras(current => [...current, { nombre: carrera.nombre, id: carrera._id, materiasAprobadas: carreraAlumno.materiasAprobadas }])
@@ -147,18 +147,18 @@ export default function Alumnos() {
 
 				<div style={{ backgroundColor: "lightgray" }}>
 					<p>Datos de nacimiento</p>
-					<div><TextField id="standard-basic" defaultValue={alumno.datosNacimiento.pais} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosNacimiento", "pais", setIsShown,setAlumno)} label="Pais de nacimiento" variant="standard" /></div>
-					<div><TextField id="standard-basic" defaultValue={alumno.datosNacimiento.localidad} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosNacimiento", "localidad", setIsShown,setAlumno)} label="Localidad de nacimiento" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosNacimiento.pais} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosNacimiento", "pais", setAlumno, setIsShown)} label="Pais de nacimiento" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosNacimiento.localidad} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosNacimiento", "localidad", setAlumno, setIsShown)} label="Localidad de nacimiento" variant="standard" /></div>
 				</div>
 
 
 				<div style={{ backgroundColor: "lightgray" }}>
 					<p>Datos de residencia</p>
-					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.pais} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "pais", setIsShown,setAlumno)} label="Pais de residencia" variant="standard" /></div>
-					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.provincia} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "provincia", setIsShown,setAlumno)} label="Provincia de residencia" variant="standard" /></div>
-					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.localidad} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "localidad", setIsShown,setAlumno)} label="Localidad de residencia" variant="standard" /></div>
-					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.domicilio} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "domicilio", setIsShown,setAlumno)} label="Domicilio" variant="standard" /></div>
-					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.codigoPostal} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "codigoPostal", setIsShown,setAlumno)} label="Codigo postal" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.pais} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "pais", setAlumno, setIsShown)} label="Pais de residencia" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.provincia} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "provincia", setAlumno, setIsShown)} label="Provincia de residencia" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.localidad} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "localidad", setAlumno, setIsShown)} label="Localidad de residencia" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.domicilio} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "domicilio", setAlumno, setIsShown)} label="Domicilio" variant="standard" /></div>
+					<div><TextField id="standard-basic" defaultValue={alumno.datosResidencia.codigoPostal} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "datosResidencia", "codigoPostal", setAlumno, setIsShown)} label="Codigo postal" variant="standard" /></div>
 				</div>
 
 				<div style={{ backgroundColor: "lightgray" }}>
