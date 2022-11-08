@@ -40,6 +40,38 @@ export default function Alumnos() {
 	const [entre1, setEntre1] = useState(false);
 	const [entre2, setEntre2] = useState(false);
 	const [loading, setLoading] = useState(true);
+	const [cardStyle, setCardStyle] = useState({
+		height: "6vh",
+		width: "6vh",
+		marginTop: "2vh",
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		borderRadius: "20%",
+		transition: '0.35s'
+	});
+	const [createValues, setCreateValues] = useState({
+		materia: "",
+		profesor: "",
+		duracion: "",
+		dias: [],
+		horario: "",
+	});
+
+	const handleChange = (event, key) => {
+		setCreateValues(current => ({ ...current, [key]: event.target.value }));
+	};
+	const handleChangeCheck = (event) => {
+		const {
+			target: { value },
+		} = event;
+		setDiasSeleccionados(
+			// On autofill we get a stringified value.
+			typeof value === 'string' ? value.split(',') : value,
+		)
+		setCreateValues(current => ({ ...current, "dias": typeof value === 'string' ? value.split(',') : value }));
+	};
+
 	
 	const handleClick = () => {
 		let a = Object.assign({}, alumno)
@@ -106,23 +138,328 @@ export default function Alumnos() {
 		}
 	}, [alumno]);
 
-	const alumnosComponent = alumnos.map((alumno, i) => {
-		return <AlumnoCard key={alumno._id} setAlumno={setAlumno} alumno={alumno} />
-	})
-
-	const alumnosSkeleton = new Array(20).fill(<Variants />)
-
-	//*         Vistas
-
+	
+	//*---------------------------------------Vista base-------------------------------
+	
 	if (Object.keys(alumno).length === 0) {
+		const createAlumnoComponent = () => {
+			return (
+				<div style={{ height: "100%", width: '100%',overflow:"visible" }}>
+					<Box sx={{ width: "30vw", margin: " 7% 0% 2.5%", float: "left" }}>
+						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
+							<InputLabel id="demo-simple-select-label">Nombre</InputLabel>
+							<Select
+								labelId="demo-simple-select-label"
+								id="demo-simple-select"
+								value={createValues.materia}
+								label="Materia"
+								onChange={(e) => handleChange(e, 'materia')}>
+								{materias.map((materia) => (
+									<MenuItem value={materia.nombre}>{materia.nombre}</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
+							<InputLabel id="demo-simple-select-label">Apellido</InputLabel>
+							<Select
+								labelId="demo-simple-select-label"
+								id="demo-simple-select"
+								value={createValues.profesor}
+								label="Profesor"
+								onChange={(e) => handleChange(e, 'profesor')}
+							>
+								{profesores.map((profesor) => (
+									<MenuItem value={profesor}>{`${profesor.apellido}, ${profesor.nombre}`}</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
+							<InputLabel id="demo-simple-select-label">DNI</InputLabel>
+							<Select
+								labelId="demo-simple-select-label"
+								id="demo-simple-select"
+								value={createValues.materia}
+								label="Materia"
+								onChange={(e) => handleChange(e, 'materia')}>
+								{materias.map((materia) => (
+									<MenuItem value={materia.nombre}>{materia.nombre}</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
+							<InputLabel id="demo-simple-select-label">Fecha de nacimiento</InputLabel>
+							<Select
+								labelId="demo-simple-select-label"
+								id="demo-simple-select"
+								value={createValues.materia}
+								label="Materia"
+								onChange={(e) => handleChange(e, 'materia')}>
+								{materias.map((materia) => (
+									<MenuItem value={materia.nombre}>{materia.nombre}</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+					</Box>
+
+					<Box sx={{ width: "30vw", margin: " 7% 0% 2.5%", float: "left" }}>
+						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
+							<InputLabel id="demo-simple-select-label">Mail</InputLabel>
+							<Select
+								labelId="demo-simple-select-label"
+								id="demo-simple-select"
+								value={createValues.materia}
+								label="Materia"
+								onChange={(e) => handleChange(e, 'materia')}>
+								{materias.map((materia) => (
+									<MenuItem value={materia.nombre}>{materia.nombre}</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
+							<InputLabel id="demo-simple-select-label">Telefono</InputLabel>
+							<Select
+								labelId="demo-simple-select-label"
+								id="demo-simple-select"
+								value={createValues.profesor}
+								label="Profesor"
+								onChange={(e) => handleChange(e, 'profesor')}
+							>
+								{profesores.map((profesor) => (
+									<MenuItem value={profesor}>{`${profesor.apellido}, ${profesor.nombre}`}</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
+							<InputLabel id="demo-simple-select-label">Pais de nacimiento</InputLabel>
+							<Select
+								labelId="demo-simple-select-label"
+								id="demo-simple-select"
+								value={createValues.materia}
+								label="Materia"
+								onChange={(e) => handleChange(e, 'materia')}>
+								{materias.map((materia) => (
+									<MenuItem value={materia.nombre}>{materia.nombre}</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
+							<InputLabel id="demo-simple-select-label">Localidad de nacimiento</InputLabel>
+							<Select
+								labelId="demo-simple-select-label"
+								id="demo-simple-select"
+								value={createValues.materia}
+								label="Materia"
+								onChange={(e) => handleChange(e, 'materia')}>
+								{materias.map((materia) => (
+									<MenuItem value={materia.nombre}>{materia.nombre}</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+					</Box>					
+					
+					<Box sx={{ width: "30vw", margin: " 7% 0% 2.5%", float: "left" }}>
+						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
+							<InputLabel id="demo-simple-select-label">Fecha de ingreso</InputLabel>
+							<Select
+								labelId="demo-simple-select-label"
+								id="demo-simple-select"
+								value={createValues.materia}
+								label="Materia"
+								onChange={(e) => handleChange(e, 'materia')}>
+								{materias.map((materia) => (
+									<MenuItem value={materia.nombre}>{materia.nombre}</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
+							<InputLabel id="demo-simple-select-label">Carrera</InputLabel>
+							<Select
+								labelId="demo-simple-select-label"
+								id="demo-simple-select"
+								value={createValues.materia}
+								label="Materia"
+								onChange={(e) => handleChange(e, 'materia')}>
+								{materias.map((materia) => (
+									<MenuItem value={materia.nombre}>{materia.nombre}</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
+							<InputLabel id="demo-simple-select-label">Titulos</InputLabel>{/*wide*/}
+							<Select
+								labelId="demo-simple-select-label"
+								id="demo-simple-select"
+								value={createValues.profesor}
+								label="Profesor"
+								onChange={(e) => handleChange(e, 'profesor')}
+							>
+								{profesores.map((profesor) => (
+									<MenuItem value={profesor}>{`${profesor.apellido}, ${profesor.nombre}`}</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+					</Box>					<Box sx={{ width: "30vw", margin: " 7% 0% 2.5%", float: "left" }}>
+						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
+							<InputLabel id="demo-simple-select-label">Pais de residencia</InputLabel>{/*smoll*/}
+							<Select
+								labelId="demo-simple-select-label"
+								id="demo-simple-select"
+								value={createValues.materia}
+								label="Materia"
+								onChange={(e) => handleChange(e, 'materia')}>
+								{materias.map((materia) => (
+									<MenuItem value={materia.nombre}>{materia.nombre}</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
+							<InputLabel id="demo-simple-select-label">Provincia de residencia</InputLabel>
+							<Select
+								labelId="demo-simple-select-label"
+								id="demo-simple-select"
+								value={createValues.profesor}
+								label="Profesor"
+								onChange={(e) => handleChange(e, 'profesor')}
+							>
+								{profesores.map((profesor) => (
+									<MenuItem value={profesor}>{`${profesor.apellido}, ${profesor.nombre}`}</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
+							<InputLabel id="demo-simple-select-label">Localidad de residencia</InputLabel>
+							<Select
+								labelId="demo-simple-select-label"
+								id="demo-simple-select"
+								value={createValues.materia}
+								label="Materia"
+								onChange={(e) => handleChange(e, 'materia')}>
+								{materias.map((materia) => (
+									<MenuItem value={materia.nombre}>{materia.nombre}</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
+							<InputLabel id="demo-simple-select-label">Domicilio de residencia</InputLabel>
+							<Select
+								labelId="demo-simple-select-label"
+								id="demo-simple-select"
+								value={createValues.profesor}
+								label="Profesor"
+								onChange={(e) => handleChange(e, 'profesor')}
+							>
+								{profesores.map((profesor) => (
+									<MenuItem value={profesor}>{`${profesor.apellido}, ${profesor.nombre}`}</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
+							<InputLabel id="demo-simple-select-label">Codigo postal de residencia</InputLabel>{/*smoll*/}
+							<Select
+								labelId="demo-simple-select-label"
+								id="demo-simple-select"
+								value={createValues.materia}
+								label="Materia"
+								onChange={(e) => handleChange(e, 'materia')}>
+								{materias.map((materia) => (
+									<MenuItem value={materia.nombre}>{materia.nombre}</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+					</Box>
+
+					<div style={{ display: "flex", position: "relative", justifyContent: "center", width: "29vw", height: "25%" }}>
+						<Button style={{ position: "absolute", bottom: 0, width: "20vw" }} variant="outlined" startIcon={<CreateIcon />} onClick={() => { handleCreateCurso() }}>
+							Crear
+						</Button>
+					</div>
+				</div >
+			)
+		}
+		const alumnosComponent = alumnos.map((alumno, i) => {
+			return <AlumnoCard key={alumno._id} setAlumno={setAlumno} alumno={alumno} />
+		})
+	
+		const alumnosSkeleton = new Array(20).fill(<Variants />)
+
+		const handleCreateClick = () => {
+			fetchGet(`materias/`)
+				.then(materias => {
+					setMaterias(materias)
+					setLoading(false)
+				})
+				.catch(err => console.log(err))
+
+			fetchGet(`profesores/`)
+				.then(profesores => {
+					setProfesores(profesores)
+					setLoading(false)
+				})
+				.catch(err => console.log(err))
+
+			setCardStyle(current => ({ ...current, height: "70vh", width: "70vw", borderRadius: "0.5%", }))
+			setChecked(false)
+		}
+		const handleCreateCurso = () => {
+			const cursoBase =
+			{
+				"materia": createValues.materia,
+				"profesor": {
+					"nombre": createValues.profesor.nombre,
+					"apellido": createValues.profesor.apellido,
+					"dni": createValues.profesor.dni
+				},
+				"alumnos": [],
+				"periodo": {
+					"año": new Date().getFullYear(),
+					"cuatrimestre": createValues.duracion,
+					"horario": createValues.horario,
+					"dias": [createValues.horario]
+				},
+				"estado": "Activa",
+				"fechasAsistencia": [],
+				"evaluaciones": [],
+				"finales": [],
+				"mail": createValues.profesor.mail
+			}
+			fetchPost(`cursos/`, cursoBase)
+				.then(res => {
+					setIsShown(false);
+					fetchPatch(`profesores/${createValues.profesor._id}`, { cursos: [...createValues.profesor.cursos, { id: res._id, materia: cursoBase.materia }] })
+						.then()
+						.catch(err => console.log(err))
+				})
+				.catch(err => console.log(err))
+
+			setChecked(true)
+			setCardStyle(current => ({ ...current, height: "6vh", width: "6vh", borderRadius: "20%" }))
+		}
+		//*--------------------------------------------return.-----------------------------
 		return (
-			<div>
-				<Grid width={"100vw"} container spacing={3}>
+			<div style={{ paddingTop: "3%", paddingLeft: "3%", width: "auto" }}>
+				<div>
+					<Grid width={"auto"} container spacing={1}>
 					{loading ? alumnosSkeleton : alumnosComponent}
-				</Grid>
+					</Grid>
+				</div>
+				<div style={{ paddingLeft: "2%",paddingBottom:"1%",overflow:"auto" }}>
+					<Card sx={cardStyle}>
+						{!checked ?
+							<CardContent sx={{ height: "100%", width: '100%' }}>{createAlumnoComponent()}</CardContent>
+							:
+							<CardActions>
+								<IconButton color="primary" aria-label="crear fila" onClick={() => handleCreateClick()}>
+									<AddIcon style={{ fontSize: "2.5vw" }} />
+								</IconButton>
+							</CardActions>
+						}
+					</Card>
+				</div>
+
 			</div>
 		)
 	}
+	//* ---------------------------------------------------------Vista curso-------------------------------------------------------------------------
 	else {//todo boton para atars
 		return (
 			<Box id="info">
