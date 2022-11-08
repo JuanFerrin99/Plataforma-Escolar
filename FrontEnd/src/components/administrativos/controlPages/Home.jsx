@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Table from "../../tables/TableInasistenciaInmodificable/Table.jsx";
 
+
 export default function Home({dni}) {
     const [inasistencias, setInasistencias] = useState([])
     useEffect(() => {
@@ -13,6 +14,8 @@ export default function Home({dni}) {
                 console.log(error)
             })
     }, []);
+   
+
     return (
 
         <div className="MainDash">
