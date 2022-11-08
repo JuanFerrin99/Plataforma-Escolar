@@ -177,7 +177,7 @@ export default function Cursos() {
 
 		const createCursoComponent = () => {
 			return (
-				<div style={{ height: "100%", width: '100%' }}>
+				<div style={{ height: "100%", width: '100%',overflow:"visible" }}>
 
 					<Box sx={{ width: "30vw", margin: " 7% 0% 2.5%", float: "left" }}>
 						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
@@ -241,8 +241,8 @@ export default function Cursos() {
 							</Select>
 						</FormControl>
 					</Box>
-					<Box sx={{ width: "26vw", margin: "3% 3%", float: "left" }}>
-						<FormControl sx={{ width: '100%', margin: "0 3%" }}>
+					<Box sx={{ width: "30vw", margin: "3% 0%", float: "left" }}>
+						<FormControl sx={{ width: '25.8vw', margin: "0 3%" }}>
 							<InputLabel id="demo-multiple-checkbox-label">Dias</InputLabel>
 							<Select
 								labelId="demo-multiple-checkbox-label"
@@ -278,7 +278,7 @@ export default function Cursos() {
 						{loading ? cursosSkeleton : cursosComponent}
 					</Grid>
 				</div>
-				<div style={{ paddingLeft: "2%" }}>
+				<div style={{ paddingLeft: "2%",paddingBottom:"1%",overflow:"auto" }}>
 					<Card sx={cardStyle}>
 						{!checked ?
 							<CardContent sx={{ height: "100%", width: '100%' }}>{createCursoComponent()}</CardContent>

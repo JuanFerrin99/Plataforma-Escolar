@@ -4,6 +4,7 @@ import HomePage from "../pages/HomePage"
 import Info from "../pages/InfoInstitucional"
 import Navbar from "../pages/Navbar"
 import Cursoshomepage from "../pages/Cursoshomepage"
+import Carrerahomepage from "../pages/Carrerahomepage"
 
 import AdminPage from "../pages/admin/Admin"
 import SecretarioPage from "../pages/secretario/Secretario"
@@ -26,7 +27,8 @@ export default function Router() {
                         <Route path="/login" element= { <LoginPage /> } />
                         <Route path="/inscripcion" element= { <HomePage /> } />
                         <Route path="/informacion" element= { <Info /> } />    
-                        <Route path="/cursos" element= { <Cursoshomepage /> } />                            
+                        <Route path="/cursos" element= { <Cursoshomepage /> } />  
+                        <Route path="/carrera" element= { <Carrerahomepage /> } />                            
                 </Route>
                     <Route path="/alumno" element= { <AlumnoPage/> } />
                         <Route path="/alumno/curso" element= { <CursoAlumnoPage /> } />

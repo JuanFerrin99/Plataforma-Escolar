@@ -12,10 +12,20 @@ const Navbar = () => {
 
     const closeMenu = () => setClick(false)
 
+    const [colorChange, setColorchange] = useState(false);
+    const changeNavbarColor = () =>{
+       if(window.scrollY >= 30){
+         setColorchange(true);
+       }
+       else{
+         setColorchange(false);
+       }
+    };
+    window.addEventListener('scroll', changeNavbarColor);
 
     return (<>
         <div className='header'>
-            <nav className='navbar'>
+            <nav className={colorChange ? 'navbar colorChange' : 'navbar'}>
                 <a href='/' className='logo'>
                     <img src="https://ise.com.ar/wp-content/uploads/2021/08/marca-ise-h-fb-2_.png" alt='logo' />
                 </a>
@@ -35,7 +45,7 @@ const Navbar = () => {
                         <a href='/cursos' onClick={closeMenu}>CURSOS</a>
                     </li>
                     <li className='nav-item'>
-                        <a href='/' onClick={closeMenu}>CARRERA</a>
+                        <a href='/carrera' onClick={closeMenu}>CARRERA</a>
                     </li>
                     <li className='nav-item'>
                         <a href='/login' onClick={closeMenu}>ACCESO</a>

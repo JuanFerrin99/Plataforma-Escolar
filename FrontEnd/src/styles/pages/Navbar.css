@@ -1,7 +1,7 @@
 .header {
     position: fixed;
-    height: 10vw;
-    width: 100%;
+    height: 20vh;
+    width: 100vw;
     top: 0;
     left: 0;
     z-index: 1;
@@ -10,15 +10,30 @@
     background-color: transparent;
 }
 
+li{
+    list-style: none;
+}
+
 .header .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     max-width: 1240px;
-    margin: auto;
-    height: 100%;
-    padding: 0 1rem;
+    width: 100vw;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
 }
+
+.navbar{
+	background-color: transparent;
+}
+
+.navbar.colorChange{
+	background-color: rgba(0, 0, 0, 0.842);
+}
+
 
 .header .nav-menu a {
     text-decoration: none;
