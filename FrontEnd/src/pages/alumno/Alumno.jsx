@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import CursoCard from "../../components/cards/CursoCard";
 import "../../styles/pages/AlumnoPage.css";
-import { fetchGet } from "../../components/utils/Fetch"
 import Cookies from "js-cookie";
 
 
@@ -33,39 +32,32 @@ function Variants() {
 
 export default function AlumnoPage() {
     const [cursos, setCursos] = useState([]);
-    const [curso, setCurso] = useState({});
     const [dni, setDni] = useState(0);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`http://localhost:3001/alumnos/filtro/${Cookies.get("mail")}`, { credentials: "include" })
-            .then(response => response.json())
-            .then(alumno => {
-                setCursos(alumno.cursosActivos)
-                setDni(alumno.dni)
-                setLoading(false)
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }, [])
-// todo hacer esto pero bien
-//!loop infinitp
-    const cursosComponent = cursos.map((curs, i) => {
-        fetchGet(`cursos/${curs}`)
-            .then(c => {
-                setCurso(c)
-            })
-            .catch(error => {
-                console.log(error)
-            })
-            return <CursoCard key={curso._id} nombre={curso.materia} id={curso._id} dni={dni} />
+        fetch(`http://localhost:3001/alumnos/filtro/${Cookies.get("mail")}`, {credentials:"include"})
+        .then(response => response.json())
+        .then(alumno => {
+            setCursos(alumno.cursosActivos)
+            setDni(alumno.dni)
+            setLoading(false)
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    },[])
+    
+    
+    const cursosComponent = cursos.map((curso, i) => {
+        return <CursoCard key={curso.id} nombre={curso.nombre } id={curso.id} dni={dni} />
     })
-
+    
     const cursosSkeleton = new Array(20).fill(<Variants />)
+    
     return (
         <div>
-            <Button id="botonInscripcion" variant="contained" endIcon={<AddIcon />}>
+            <Button id="botonInscripcion" variant="contained" endIcon={<AddIcon/>}>
                 Inscribirse materia
             </Button>
             <Grid container spacing={3}>
@@ -77,5 +69,5 @@ export default function AlumnoPage() {
 
         </div>
     )
-
+    
 }
