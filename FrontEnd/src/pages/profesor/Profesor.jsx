@@ -73,8 +73,6 @@ export default function AlumnoPage() {
     return (
         <div>
             <TableInasistencia inasistencia={inasistencias} />
-            <br />
-            <p> flechita atras en alumnos no funciona</p>
             <Grid container spacing={3}>
                 {loading ? cursosSkeleton : cursosComponent}
             </Grid>

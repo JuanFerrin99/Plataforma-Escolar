@@ -14,30 +14,25 @@ export default function CursoCard() {
     const dni = location.state.dni // dni alumno
     
     useEffect(() => {
-            let tempNotas = []
-            let p = ""
+            let p = []
             fetch(`http://localhost:3001/cursos/${id}`, {credentials: "include"})
             .then(response => response.json())
             .then(curso => {
                 setNotas([])
                 setFinales(curso.finales)
-                curso.alumnos.forEach((element, i) => {
-                    if (element.dni === dni) {
-                        tempNotas = [...notas, ...element.calificaciones]
-                        setNotas(tempNotas.map((elem) => {
-                            p = curso.evaluaciones.find(e => e.id === elem.id)
-                            elem.fecha = p.fecha
-                            elem.tipo = p.tipo
-                            return elem
-                        }))
+                curso.alumnos.forEach((alumno, i) => {
+                    if (alumno.dni === dni) {
+                        alumno.calificaciones.map((calificacion) => {
+                            p = curso.evaluaciones.map(evaluacion => {if (evaluacion.id === calificacion.id){setNotas(current=>[...current, {...evaluacion, nota: calificacion.nota}]) }} ) 
+                        })
                     }
                 })
             })
             .catch(error => {
                 console.log(error)
             })
-        },[]);//todo si algun use effect se queda en loop infinito es por que tiene un setVar adentro cuando pasa eso hay que pasar un [] como segundo arg para que no se renderize despues de la primera ves
-
+        },[])
+ 
     return (
         <div>
             <TableNotas notas={notas} idCurso={id} dniAlumno = {dni}/>

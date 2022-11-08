@@ -8,7 +8,7 @@ export default function cursoCard({ carrera, setCarrera, setCarreras, setMateria
     //!mover boton de borrar a a la derecah de manera mas reponsive (tipo float right)
     return (
         <Grid Grid item xs={2.5} margin={"1%"} >
-            <Card sx={{ width:"25vw", height:"25vh"}}>
+            <Card sx={{ width:"100%", height:"100%"}}>
 
                 <CardContent sx={{padding:"3%"}}>
                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>

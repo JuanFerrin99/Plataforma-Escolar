@@ -115,18 +115,12 @@ export default function TableNotas(props) {
 	const [loading, setLoading] = useState(true) //toDo que muestre loding skeleton
 	const [snackbar, setSnackbar] = useState(null);
 	const [notas, setNotas] = useState([]);
-	const [s, setS] = useState(true);
 	const gridRef = useRef();
 	const id = props.idCurso
 	const dni = props.dniAlumno
 	useEffect(() => {
-		if (s) {
 			setNotas(props.notas)
-			if (notas.length === 0) { return undefined }
-			else { setS(false) }
-		}
-	});
-
+	},[props.notas]);	
 	//* Create evaluaciones
 	const handleNewRow = () => {
 		fetch(`http://localhost:3001/cursos/${id}/alumnos/${dni}/calificaciones/`, {
@@ -143,8 +137,9 @@ export default function TableNotas(props) {
 				}
 			})
 		})
-			.then(res => setNotas(current => [...current, {
-				id: notas[notas.length - 1].id + 1  //!Linkear id con su evaluacion
+			.then(res => setNotas(current => [...current, {//!Linkear id con su evaluacion
+				id: notas[notas.length - 1].id + 1,
+				nota:0  
 			}]))
 	}
 
@@ -176,7 +171,7 @@ export default function TableNotas(props) {
 	const renderDetailsButton = (params) => {
 		return (
 			<IconButton color="primary" aria-label="borrar" onClick={() => {
-				fetch(`http://localhost:3001/cursos/${id}/alumnos/${dni}/calificaciones/${params.row._id}`, { method: 'DELETE', credentials: 'include' })
+				fetch(`http://localhost:3001/cursos/${id}/alumnos/${dni}/calificaciones/${params.row.id}`, { method: 'DELETE', credentials: 'include' })
 					.then(res => {
 						if (res) {
 							let rows = notas.slice()
@@ -245,7 +240,7 @@ export default function TableNotas(props) {
 		<div style={{ height: "66vh", width: '100%' }}>
 
 			<div style={{ width: '100%' }}>
-				<IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
+				<IconButton color="primary" aria-label="ir para atras" onClick={() => { window.history.go(-1); return false; }}>
 					<ArrowBackRoundedIcon fontSize='large' />
 				</IconButton>
 				<IconButton color="primary" aria-label="crear fila" onClick={() => { handleNewRow() }}>

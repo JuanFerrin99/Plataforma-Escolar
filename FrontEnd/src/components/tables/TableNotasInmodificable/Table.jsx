@@ -152,7 +152,7 @@ export default function TableNotas(props) {
 		<div style={{ height: "66vh", width: '100%' }}>
 
 			<div style={{ width: '100%' }}>
-				<IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
+				<IconButton color="primary" aria-label="ir para atras" onClick={() => {window.history.go(-1); return false; }}>
 					<ArrowBackRoundedIcon fontSize='large' />
 				</IconButton>
 			</div>
