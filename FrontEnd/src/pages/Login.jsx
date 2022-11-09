@@ -11,12 +11,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import TextField from '@mui/material/TextField'; 
-import InputAdornment from '@mui/material/InputAdornment'; 
-import IconButton from '@mui/material/IconButton'; 
-import VisibilityIcon from '@mui/icons-material/Visibility'; 
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'; 
-
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { fetchPost } from '../components/utils/Fetch';
 
 const theme = createTheme();
 export default function SignIn() {
@@ -52,22 +52,14 @@ export default function SignIn() {
             password: password
         }
 
-        const options = {
-            withCredentials: true
-        }
-
-        axios.post("http://localhost:3001/login", body, options)
+        fetchPost("login", body)
             .then(jwt => {
                 window.location.href = `/${Cookies.get("rol")}`
             })
             .catch(e => { alert("Error en los datos") });
     }
     const handleResetPassword = () => {
-        const options = {
-            withCredentials: true
-        }
-
-        axios.post("http://localhost:3001/login/password/reset", { email: email }, options)
+        fetchPost(`login/password/reset/`, { email: email })
             .then(jwt => {
             })
             .catch(e => console.log(e));
@@ -132,15 +124,15 @@ export default function SignIn() {
 
                                 InputProps={{ // <-- This is where the toggle button is added.
                                     endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
-                                        onMouseDown={handleMouseDownPassword}
-                                        >
-                                        {showPassword ? <VisibilityIcon/> : <VisibilityOffIcon />}
-                                        </IconButton>
-                                    </InputAdornment>
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                            >
+                                                {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                            </IconButton>
+                                        </InputAdornment>
                                     )
                                 }}
                             />
