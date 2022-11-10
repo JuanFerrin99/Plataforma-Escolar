@@ -107,16 +107,28 @@ function CustomNoRowsOverlay() {
 }
 
 export default function TableNotas(props) {
-	const [loading, setLoading] = useState(true);//toDo que muestre loding skeleton
+	const [loading, setLoading] = useState(true) //TODO que muestre loding skeleton
 	const [notas, setNotas] = useState([]);
 	const [s, setS] = useState(true);
 	const gridRef = useRef();
 
 	useEffect(() => {
-		if (s) { //toDO checkear que si al estar la coleccion vacia que no se quede cargando infinitamente
-			setNotas(props.notas)
-			if (notas.length === 0) { return undefined }
-			else { setS(false) }
+		if (s) { //? Que pasa con una coleccion vacia
+			if (props.notas.length === 0) { return undefined }
+			else {
+				const nuevasNotas = props.evaluaciones.map((evaluacion) => {
+					let nuevaRow;
+					props.notas.forEach((nota) => {
+						if (evaluacion.id === nota.id) {
+							nuevaRow = { ...evaluacion, nota: nota.nota }
+						}
+					})
+					if (nuevaRow === undefined) return { ...evaluacion, nota: "-" }
+					else return nuevaRow
+				})
+				setNotas(nuevasNotas)
+				setS(false)
+			}
 		}
 	});
 
@@ -150,9 +162,8 @@ export default function TableNotas(props) {
 	//*  Return
 	return (
 		<div style={{ height: "66vh", width: '100%' }}>
-
 			<div style={{ width: '100%' }}>
-				<IconButton color="primary" aria-label="ir para atras" onClick={() => {window.history.go(-1); return false; }}>
+				<IconButton color="primary" aria-label="ir para atras" onClick={() => { window.history.go(-1); return false; }}>
 					<ArrowBackRoundedIcon fontSize='large' />
 				</IconButton>
 			</div>

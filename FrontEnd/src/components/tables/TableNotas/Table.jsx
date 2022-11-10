@@ -119,9 +119,11 @@ export default function TableNotas(props) {
 	const gridRef = useRef();
 	const id = props.idCurso
 	const dni = props.dniAlumno
+	
 	useEffect(() => {
 		setNotas(props.notas)
 	}, [props.notas]);
+
 	//* Create evaluaciones
 	const handleNewRow = () => {
 		fetchPost(`cursos/${id}/alumnos/${dni}/calificaciones/`, {
