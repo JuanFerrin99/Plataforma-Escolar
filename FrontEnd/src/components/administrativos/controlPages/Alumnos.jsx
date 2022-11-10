@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Select,MenuItem,FormControl, InputLabel,CardActions, CardContent, Grid, Skeleton, Box, Button, TextField, IconButton, Divider } from "@mui/material";
+import { Card, Select, MenuItem, FormControl, InputLabel, CardActions, CardContent, Grid, Skeleton, Box, Button, TextField, IconButton, Divider } from "@mui/material";
 import { handleDeleteTitulo, handleDeleteAlt, handleDelete, handleCreate, handleCreateTitulo, changeObjectHandler, changeHandlerComplex, changeHandler, onEnter } from "../../utils/administrativos"
 import CreateIcon from '@mui/icons-material/Create';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -13,6 +13,7 @@ import AddIcon from '@mui/icons-material/AddRounded';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import "../../../styles/administrativos/alumnos.css"
 import MultipleInput from "../../utils/MultipleInput"
+import { height } from '@mui/system';
 
 function Variants() {
 	return (
@@ -48,7 +49,7 @@ export default function Alumnos() {
 	const [entre2, setEntre2] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [diasSeleccionados, setDiasSeleccionados] = useState([]);
-	const [checked, setChecked] = useState(false);
+	const [checked, setChecked] = useState(true);
 	const [cardStyle, setCardStyle] = useState({
 		height: "6vh",
 		width: "6vh",
@@ -62,15 +63,15 @@ export default function Alumnos() {
 	const [createValues, setCreateValues] = useState({
 		nombre: "",
 		apellido: "",
-		dni: 0,
+		dni: null,
 		mail: "",
-		telefono: 0,
-		fechaNacimiento: [],
+		telefono: null,
+		fechaNacimiento: null,
 		datosNacimiento: {
 			pais: "",
 			localidad: "",
 		},
-		fechaIngreso: "",
+		fechaIngreso: null,
 		carreras: [],
 		titulos: [],
 		datosResidencia: {
@@ -78,7 +79,7 @@ export default function Alumnos() {
 			provincia: "",
 			localidad: "",
 			domicilio: "",
-			codigoPostal: 0
+			codigoPostal: null
 		}
 	});
 
@@ -86,7 +87,7 @@ export default function Alumnos() {
 		setCreateValues(current => ({ ...current, [key]: event.target.value }));
 	};
 	const handleChangeNested = (event, firstKey, secondkey) => {
-		setCreateValues(current => ({ ...current, [firstKey]:{...current.firstKey, [secondkey]:event.target.value} }));
+		setCreateValues(current => ({ ...current, [firstKey]: { ...current.firstKey, [secondkey]: event.target.value } }));
 	};
 	const handleChangeCheck = (event) => {
 		const {
@@ -172,115 +173,151 @@ export default function Alumnos() {
 		const createAlumnoComponent = () => {
 			return (
 				<div style={{ height: "100%", width: '100%', overflow: "visible" }}>
-					<Box sx={{ width: "30vw", margin: " 7% 0% 2.5%", float: "left" }}>
-						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
-							<InputLabel id="demo-simple-select-label">Nombre</InputLabel>
-							<TextField id="outlined-basic" value={createValues.nombre} label="Nombre" onChange={(e) => handleChange(e, 'nombre')} variant="outlined" />
-						</FormControl>
-						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
-							<InputLabel id="demo-simple-select-label">Apellido</InputLabel>
-							<TextField id="outlined-basic" value={createValues.apellido} label="Apellido" onChange={(e) => handleChange(e, 'apellido')} variant="outlined" />
-						</FormControl>
-						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
-							<InputLabel id="demo-simple-select-label">DNI</InputLabel>
-							<TextField id="outlined-basic" value={createValues.dni} label="DNI" onChange={(e) => handleChange(e, 'dni')} variant="outlined" />
-						</FormControl>
-						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
-							<InputLabel id="demo-simple-select-label">Fecha de nacimiento</InputLabel>
-							<LocalizationProvider dateAdapter={AdapterDayjs}>
-								<Stack spacing={3}>
-									<DatePicker
-										disableFuture
-										label="Fecha de nacimiento<"
-										openTo="year"
-										views={['year', 'month', 'day']}
-										value={createValues.fechaNacimiento}
-										onChange={(newValue) => {
-											setCreateValues(current => ({ ...current, fechaNacimiento: newValue }));
-										}}
-										renderInput={(params) => <TextField {...params} />}
-									/>
-								</Stack>
-							</LocalizationProvider>
-						</FormControl>
+					<Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+						<div style={{ width: '15vw',  height: "20vh",margin: "2.5% 1%", float: "left", }}>
+								<TextField inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}} id="outlined-basic" value={createValues.nombre} label="Nombre" onChange={(e) => handleChange(e, 'nombre')} variant="outlined" />
+							
+						</div>
+						<div style={{ width: '15vw', margin: "2.5% 1%", float: "left" }}>
+
+							<FormControl>
+								<TextField id="outlined-basic" inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}}  onKeyPress={e => onEnter(e)} value={createValues.apellido} label="Apellido" onBlur={(e) => handleChange(e, 'apellido')} variant="outlined" />
+							</FormControl></div>
+
+						<div style={{ width: '15vw', margin: "2.5% 1%", float: "left" }}>
+							<FormControl>
+								<TextField id="outlined-basic"inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}} value={createValues.dni} label="DNI" onChange={(e) => handleChange(e, 'dni')} variant="outlined" />
+							</FormControl>
+						</div>
+						<div style={{ width: '15vw', margin: "2.5% 1%", float: "left" }}>
+
+							<FormControl sx={{"& .MuiInputBase-root": {height: "8.5vh"}}}>
+								<LocalizationProvider dateAdapter={AdapterDayjs}>
+									<Stack spacing={3}>
+										<DatePicker
+											inputProps={{min: 0, style: { marginLeft: '1vw' }}}
+											disableFuture
+											label="Fecha de nacimiento"
+											openTo="year"
+											views={['year', 'month', 'day']}
+											value={createValues.fechaNacimiento}
+											onChange={(newValue) => {
+												setCreateValues(current => ({ ...current, fechaNacimiento: newValue }));
+											}}
+											renderInput={(params) => <TextField {...params} />}
+										/>
+									</Stack>
+								</LocalizationProvider>
+							</FormControl>
+						</div>
 					</Box>
 
-					<Box sx={{ width: "30vw", margin: " 7% 0% 2.5%", float: "left" }}>
-						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
-							<InputLabel id="demo-simple-select-label">Mail</InputLabel>
-							<TextField id="outlined-basic" value={createValues.mail} label="Mail" onChange={(e) => handleChange(e, 'mail')} variant="outlined" />
-						</FormControl>
-						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
-							<InputLabel id="demo-simple-select-label">Telefono</InputLabel>
-							<TextField id="outlined-basic" value={createValues.telefono} label="Telefono" onChange={(e) => handleChange(e, 'telefono')} variant="outlined" />
-						</FormControl>
-						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
-							<InputLabel id="demo-simple-select-label">Pais de nacimiento</InputLabel>
-							<TextField id="outlined-basic" value={createValues.datosNacimiento.pais} label="Pais de nacimiento" onChange={(e) => handleChangeNested(e, "datosNacimiento",'pais')} variant="outlined" />
+					<Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+						<div style={{ width: '12vw', margin: "5%" }}>
 
-						</FormControl>
-						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
-							<InputLabel id="demo-simple-select-label">Localidad de nacimiento</InputLabel>
-							<TextField id="outlined-basic" value={createValues.datosNacimiento.localidad} label="Pais de localidad" onChange={(e) => handleChangeNested(e, "datosNacimiento",'localidad')} variant="outlined" />
+							<FormControl>
+								<TextField id="outlined-basic"inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}} value={createValues.mail} label="Mail" onChange={(e) => handleChange(e, 'mail')} variant="outlined" />
+							</FormControl>
+						</div>
+						<div style={{ width: '12vw', margin: "5%" }}>
 
-						</FormControl>
+							<FormControl>
+
+								<TextField id="outlined-basic"inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}} value={createValues.telefono} label="Telefono" onChange={(e) => handleChange(e, 'telefono')} variant="outlined" />
+							</FormControl>
+						</div>
+						<div style={{ width: '12vw', margin: "5%" }}>
+
+							<FormControl>
+
+								<TextField id="outlined-basic"inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}} value={createValues.datosNacimiento.pais} label="Pais de nacimiento" onChange={(e) => handleChangeNested(e, "datosNacimiento", 'pais')} variant="outlined" />
+
+							</FormControl>
+						</div>
+						<div style={{ width: '12vw', margin: "5%" }}>
+
+							<FormControl>
+
+								<TextField id="outlined-basic"inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}} value={createValues.datosNacimiento.localidad} label="Pais de localidad" onChange={(e) => handleChangeNested(e, "datosNacimiento", 'localidad')} variant="outlined" />
+
+							</FormControl>
+						</div>
 					</Box>
 
-					<Box sx={{ width: "30vw", margin: " 7% 0% 2.5%", float: "left" }}>
-						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
-							<InputLabel id="demo-simple-select-label">Fecha de ingreso</InputLabel>
-							<LocalizationProvider dateAdapter={AdapterDayjs}>
-								<Stack spacing={3}>
-									<DatePicker
-										disableFuture
-										label="Fecha de ingreso<"
-										openTo="year"
-										views={['year', 'month', 'day']}
-										value={createValues.fechaIngreso}
-										onChange={(newValue) => {
-											setCreateValues(current => ({ ...current, fechaIngreso: newValue }));
-										}}
-										renderInput={(params) => <TextField {...params} />}
-									/>
-								</Stack>
-							</LocalizationProvider>
-						</FormControl>
-						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
-							<InputLabel id="demo-simple-select-label">Carrera</InputLabel>
-							<Select
-								labelId="demo-simple-select-label"
-								id="demo-simple-select"
-								value={createValues.carreras}
-								label="Materia"
-								onChange={(e) => handleChangeCheck(e, 'carreras')}>
-								{carreras.map((carrera) => (
-									<MenuItem value={carrera.nombre}>{carrera.nombre}</MenuItem>
-								))}
-							</Select>
-						</FormControl>
-						<MultipleInput valueSetter = {setCreateValues} values= {createValues.titulos}/>
-					</Box>					
-					<Box sx={{ width: "30vw", margin: " 7% 0% 2.5%", float: "left" }}>
-						<FormControl sx={{ width: '6vw', margin: "0 3%" }}>
-							<InputLabel id="demo-simple-select-label">Pais de residencia</InputLabel>{/*smoll*/}
-							<TextField id="outlined-basic" value={createValues.datosResidencia.pais} label="pais" onChange={(e) => handleChangeNested(e, 'datosResidencia','pais')} variant="outlined" />
-						</FormControl>
-						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
-							<InputLabel id="demo-simple-select-label">Provincia de residencia</InputLabel>
-							<TextField id="outlined-basic" value={createValues.datosResidencia.provincia} label="provincia" onChange={(e) => handleChangeNested(e, 'datosResidencia','provincia')} variant="outlined" />
-						</FormControl>
-						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
-							<InputLabel id="demo-simple-select-label">Localidad de residencia</InputLabel>
-							<TextField id="outlined-basic" value={createValues.datosResidencia.localidad} label="localidad" onChange={(e) => handleChangeNested(e, 'datosResidencia','localidad')} variant="outlined" />
-						</FormControl>
-						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
-							<InputLabel id="demo-simple-select-label">Domicilio de residencia</InputLabel>
-							<TextField id="outlined-basic" value={createValues.datosResidencia.domicilio} label="domicilio" onChange={(e) => handleChangeNested(e, 'datosResidencia','domicilio')} variant="outlined" />
-						</FormControl>
-						<FormControl sx={{ width: '6vw', margin: "0 3%" }}>
-							<InputLabel id="demo-simple-select-label">Codigo postal de residencia</InputLabel>{/*smoll*/}
-							<TextField id="outlined-basic" value={createValues.datosResidencia.codigoPostal} label="codigoPostal" onChange={(e) => handleChangeNested(e, 'datosResidencia','codigoPostal')} variant="outlined" />
-						</FormControl>
+					<Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+						<div style={{ width: '12vw', margin: "5%" }}>
+
+							<FormControl>
+
+								<LocalizationProvider dateAdapter={AdapterDayjs}>
+									<Stack spacing={3}>
+										<DatePicker
+											disableFuture
+											label="Fecha de ingreso"
+											openTo="year"
+											views={['year', 'month', 'day']}
+											value={createValues.fechaIngreso}
+											onChange={(newValue) => {
+												setCreateValues(current => ({ ...current, fechaIngreso: newValue }));
+											}}
+											renderInput={(params) => <TextField {...params} />}
+										/>
+									</Stack>
+								</LocalizationProvider>
+							</FormControl>
+						</div>
+						<div style={{ width: '12vw', margin: "5%" }}>
+
+							<FormControl>
+
+								<Select
+									labelId="demo-simple-select-label"
+									id="demo-simple-select"
+									value={createValues.carreras}
+									label="Materia"
+									onChange={(e) => handleChangeCheck(e, 'carreras')}>
+									{carreras.map((carrera) => (
+										<MenuItem value={carrera.nombre}>{carrera.nombre}</MenuItem>
+									))}
+								</Select>
+							</FormControl>
+						</div>
+						<MultipleInput valueSetter={setCreateValues} values={createValues.titulos} />
+					</Box>
+					<Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+						<div style={{ width: '12vw', margin: "5%" }}>
+							<FormControl sx={{ width: '6vw', margin: "1% 3%" }}>
+								{/*smoll*/}
+								<TextField id="outlined-basic"inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}} value={createValues.datosResidencia.pais} label="pais" onChange={(e) => handleChangeNested(e, 'datosResidencia', 'pais')} variant="outlined" />
+							</FormControl>
+						</div>
+						<div style={{ width: '12vw', margin: "5%" }}>
+
+							<FormControl>
+
+								<TextField id="outlined-basic"inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}} value={createValues.datosResidencia.provincia} label="provincia" onChange={(e) => handleChangeNested(e, 'datosResidencia', 'provincia')} variant="outlined" />
+							</FormControl>
+						</div>
+						<div style={{ width: '12vw', margin: "5%" }}>
+
+							<FormControl>
+
+								<TextField id="outlined-basic"inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}} value={createValues.datosResidencia.localidad} label="localidad" onChange={(e) => handleChangeNested(e, 'datosResidencia', 'localidad')} variant="outlined" />
+							</FormControl>
+						</div>
+						<div style={{ width: '12vw', margin: "5%" }}>
+
+							<FormControl>
+
+								<TextField id="outlined-basic"inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}} value={createValues.datosResidencia.domicilio} label="domicilio" onChange={(e) => handleChangeNested(e, 'datosResidencia', 'domicilio')} variant="outlined" />
+							</FormControl>
+						</div>
+						<div style={{ width: '12vw', margin: "5%" }}>
+							<FormControl sx={{ width: '6vw', margin: "1% 3%" }}>
+								{/*smoll*/}
+								<TextField id="outlined-basic" inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}}value={createValues.datosResidencia.codigoPostal} label="codigoPostal" onChange={(e) => handleChangeNested(e, 'datosResidencia', 'codigoPostal')} variant="outlined" />
+							</FormControl>
+						</div>
 					</Box>
 
 					<div style={{ display: "flex", position: "relative", justifyContent: "center", width: "29vw", height: "25%" }}>
@@ -288,7 +325,7 @@ export default function Alumnos() {
 							Crear
 						</Button>
 					</div>
-				</div >
+				</div>
 			)
 		}
 		const alumnosComponent = alumnos.map((alumno, i) => {

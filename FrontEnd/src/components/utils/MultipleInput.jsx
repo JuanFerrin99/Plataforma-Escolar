@@ -8,10 +8,9 @@ import {
 
   
   
-  export default function MultipleInput(valueSetter, values) {
+  export default function MultipleInput({valueSetter, values}) {
       const classes = useStyles();
       const [currValue, setCurrValue] = useState("");
-  
       const handleKeyUp = (e) => {
           if (e.keyCode == 32) {
             valueSetter((oldState) => ({...oldState, titulos:[...oldState.titulos, e.target.value]}));
