@@ -10,7 +10,8 @@ import { fetchGet } from '../../components/utils/Fetch';
 export default function CursoCard({ }) {
     const [materia, setMateria] = useState("")
     const [inasistencias, setInasistencias] = useState([])
-    const [notas, setNotas] = useState([]);
+    const [notas, setNotas] = useState([])
+    const [evaluaciones, setEvaluaciones] = useState([])
     const location = useLocation()
     const id = location.state.idCurso
     const dni = location.state.dni
@@ -30,6 +31,7 @@ export default function CursoCard({ }) {
             .then(response => response.json())
             .then(curso => {
                 setMateria(curso.materia)
+                setEvaluaciones(curso.evaluaciones)
                 setNotas([])
                 curso.alumnos.forEach((element, i) => {
                     if (element.dni === dni) {
@@ -49,7 +51,7 @@ export default function CursoCard({ }) {
                 Inscribirse final
             </Button>
             <TableInasistencia inasistencia={inasistencias} />
-            <TableNotas notas={notas} />
+            <TableNotas notas={notas} evaluaciones={evaluaciones}/>
         </div>
     );
 }

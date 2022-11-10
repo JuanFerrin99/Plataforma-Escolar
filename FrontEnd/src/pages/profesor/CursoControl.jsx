@@ -128,18 +128,11 @@ export default function CursoCard() {
     const [loading, setLoading] = useState(true);
     const [isPressedAsistencia, setIsPressedAsistencia] = useState(false);
     const [isPressedEvaluacion, setIsPressedEvaluacion] = useState(false);
+    const [snackbar, setSnackbar] = React.useState(null);
 
     const location = useLocation()
     const id = location.state.idCurso
-    /*
-    import { useParams } from 'react-router-dom'
-    const { slug } = useParams()
-    */
-    //todo pasar parametros por url
     let ausentes = []
-
-
-    const [snackbar, setSnackbar] = React.useState(null);
 
     //* Llamada principal
 
