@@ -169,6 +169,12 @@ export default function CursoCard() {
 
         fetchPost(`cursos/${id}/evaluaciones/`, { "evaluacion": evaluacion })
             .then(res => {
+                alumnos.forEach((alumno) => {
+                    fetchPost(`cursos/${id}/alumnos/${alumno.dni}/calificaciones`, { "calificacion": { "id": evaluacion.id, "nota": "-" } })
+                        .catch(error => {
+                            console.log(error)
+                        })
+                })
                 setEvaluaciones(copia)
             })
             .catch(error => {
@@ -195,6 +201,12 @@ export default function CursoCard() {
             <IconButton color="primary" aria-label="borrar" onClick={() => {
                 fetchDelete(`cursos/${id}/evaluaciones/${params.row.id}`)
                     .then(res => {
+                        alumnos.forEach((alumno) => {
+                            fetchDelete(`cursos/${id}/alumnos/${alumno.dni}/calificaciones/${params.row.id}`)
+                                .catch(error => {
+                                    console.log(error)
+                                })
+                        })
                         if (res) {
                             let rows = evaluaciones.slice()
                             rows = rows.filter(row => row.id !== params.row.id)
