@@ -119,32 +119,51 @@ export default function TableNotas(props) {
 	const gridRef = useRef();
 	const id = props.idCurso
 	const dni = props.dniAlumno
-	
+
 	useEffect(() => {
 		setNotas(props.notas)
 	}, [props.notas]);
 
 	//* Create evaluaciones
 	const handleNewRow = () => {
-		fetchPost(`cursos/${id}/alumnos/${dni}/calificaciones/`, {
-			"calificacion": {
-				id: notas[notas.length - 1].id + 1,	//!Linkear id con su evaluacion
-				nota: 0
+		let bool = false
+		let idMax = 0
+		notas.forEach((nota) => {
+			if (nota.id >= 10000) {
+				bool = true
+				if (idMax < nota.id) idMax = nota.id
 			}
 		})
-			.then(res => setNotas(current => [...current, { //!Linkear id con su evaluacion
-				id: notas[notas.length - 1].id + 1,
-				nota: 0
-			}]))
+
+		let calificacion = {}
+		if (bool === false) {
+			calificacion = {
+				id: 10000,
+				nota: "-"
+			}
+		}
+		else {
+			calificacion = {
+				id: idMax + 1,
+				nota: "-"
+			}
+		}
+
+		fetchPost(`cursos/${id}/alumnos/${dni}/calificaciones/`, {
+			"calificacion": calificacion
+		})
+			.then(res => setNotas(current => [...current, calificacion]))
+			.catch(error => {
+				console.log(error)
+			})
 	}
 
 	//* Patch notas
 	const ProcessRowUpdate = (props) => {
 		fetchPatch(`cursos/${id}/alumnos/${dni}/calificaciones/${props.id}`, {
-			_id: props._id,
 			nota: props.nota
 		})
-			.then(res => { //toDo checkear si lo encontro o no y cambiar el mensaje
+			.then(res => {
 				setSnackbar({ children: 'User successfully saved', severity: 'success' });
 			})
 			.catch(error => {
@@ -172,12 +191,9 @@ export default function TableNotas(props) {
 			}}>
 				<ClearIcon
 					fontSize="medium"
-				//style={{ marginLeft: 16 }}
 				>
 				</ClearIcon>
 			</IconButton>
-
-
 		)
 	}
 
@@ -206,17 +222,15 @@ export default function TableNotas(props) {
 						onChange={(event, value) => apiRef.current.setPage(value - 1)}
 					/>
 				</div>
-
 			</div>
-
 		);
 	}
 
 	//* rows y columns
 	const columns = [
 		{ field: 'nota', headerName: 'Nota', flex: 1, editable: true },
-		{ field: 'fecha', headerName: 'Fecha', flex: 1, editable: true },
-		{ field: 'tipo', headerName: 'Tipo', flex: 1, editable: true },
+		{ field: 'fecha', headerName: 'Fecha', flex: 1, editable: false },
+		{ field: 'tipo', headerName: 'Tipo', flex: 1, editable: false },
 		{ field: 'boton', headerName: '', suppressRowClickSelection: true, flex: 0.1, renderCell: (e) => { return renderDetailsButton(e) } }
 	];
 

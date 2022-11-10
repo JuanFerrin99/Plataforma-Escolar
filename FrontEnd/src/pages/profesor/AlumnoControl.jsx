@@ -21,7 +21,7 @@ export default function CursoCard() {
             .then(curso => {
                 setNotas([])
                 setFinales(curso.finales)
-                
+
                 curso.alumnos.forEach((alumno) => {
                     if (alumno.dni === dni) {
                         const nuevasNotas = curso.evaluaciones.map((evaluacion) => {
@@ -33,6 +33,12 @@ export default function CursoCard() {
                             })
                             if (nuevaRow === undefined) return { ...evaluacion, nota: "-" }
                             else return nuevaRow
+                        })
+
+                        alumno.calificaciones.forEach((nota) => {
+                            if (nota.id >= 10000){
+                                nuevasNotas.push(nota)
+                            }
                         })
                         setNotas(nuevasNotas)
                     }
