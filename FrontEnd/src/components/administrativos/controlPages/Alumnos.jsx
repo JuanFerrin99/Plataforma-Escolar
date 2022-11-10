@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { Card, CardActions, CardContent, Grid, Skeleton, Box, Button, TextField, IconButton, Divider } from "@mui/material";
-import { handleDeleteTitulo, handleDeleteAlt, handleDelete, handleCreate, handleCreateTitulo, changeObjectHandler, changeHandlerComplex, changeHandler, onEnter} from "../../utils/administrativos"
+import { Card, Select,MenuItem,FormControl, InputLabel,CardActions, CardContent, Grid, Skeleton, Box, Button, TextField, IconButton, Divider } from "@mui/material";
+import { handleDeleteTitulo, handleDeleteAlt, handleDelete, handleCreate, handleCreateTitulo, changeObjectHandler, changeHandlerComplex, changeHandler, onEnter } from "../../utils/administrativos"
 import CreateIcon from '@mui/icons-material/Create';
 import ClearIcon from '@mui/icons-material/Clear';
 import AlumnoCard from "../../cards/AlumnoCardSecretario";
-import { fetchGet, fetchPatch } from '../../utils/Fetch'
+import { fetchGet, fetchPatch, fetchPost } from '../../utils/Fetch'
+import dayjs from 'dayjs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import Stack from '@mui/material/Stack';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import AddIcon from '@mui/icons-material/AddRounded';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import "../../../styles/administrativos/alumnos.css"
+import MultipleInput from "../../utils/MultipleInput"
 
 function Variants() {
 	return (
@@ -40,6 +47,8 @@ export default function Alumnos() {
 	const [entre1, setEntre1] = useState(false);
 	const [entre2, setEntre2] = useState(false);
 	const [loading, setLoading] = useState(true);
+	const [diasSeleccionados, setDiasSeleccionados] = useState([]);
+	const [checked, setChecked] = useState(false);
 	const [cardStyle, setCardStyle] = useState({
 		height: "6vh",
 		width: "6vh",
@@ -51,15 +60,33 @@ export default function Alumnos() {
 		transition: '0.35s'
 	});
 	const [createValues, setCreateValues] = useState({
-		materia: "",
-		profesor: "",
-		duracion: "",
-		dias: [],
-		horario: "",
+		nombre: "",
+		apellido: "",
+		dni: 0,
+		mail: "",
+		telefono: 0,
+		fechaNacimiento: [],
+		datosNacimiento: {
+			pais: "",
+			localidad: "",
+		},
+		fechaIngreso: "",
+		carreras: [],
+		titulos: [],
+		datosResidencia: {
+			pais: "",
+			provincia: "",
+			localidad: "",
+			domicilio: "",
+			codigoPostal: 0
+		}
 	});
 
 	const handleChange = (event, key) => {
 		setCreateValues(current => ({ ...current, [key]: event.target.value }));
+	};
+	const handleChangeNested = (event, firstKey, secondkey) => {
+		setCreateValues(current => ({ ...current, [firstKey]:{...current.firstKey, [secondkey]:event.target.value} }));
 	};
 	const handleChangeCheck = (event) => {
 		const {
@@ -72,7 +99,7 @@ export default function Alumnos() {
 		setCreateValues(current => ({ ...current, "dias": typeof value === 'string' ? value.split(',') : value }));
 	};
 
-	
+
 	const handleClick = () => {
 		let a = Object.assign({}, alumno)
 		delete a._id
@@ -138,233 +165,121 @@ export default function Alumnos() {
 		}
 	}, [alumno]);
 
-	
+
 	//*---------------------------------------Vista base-------------------------------
-	
+
 	if (Object.keys(alumno).length === 0) {
 		const createAlumnoComponent = () => {
 			return (
-				<div style={{ height: "100%", width: '100%',overflow:"visible" }}>
+				<div style={{ height: "100%", width: '100%', overflow: "visible" }}>
 					<Box sx={{ width: "30vw", margin: " 7% 0% 2.5%", float: "left" }}>
 						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
 							<InputLabel id="demo-simple-select-label">Nombre</InputLabel>
-							<Select
-								labelId="demo-simple-select-label"
-								id="demo-simple-select"
-								value={createValues.materia}
-								label="Materia"
-								onChange={(e) => handleChange(e, 'materia')}>
-								{materias.map((materia) => (
-									<MenuItem value={materia.nombre}>{materia.nombre}</MenuItem>
-								))}
-							</Select>
+							<TextField id="outlined-basic" value={createValues.nombre} label="Nombre" onChange={(e) => handleChange(e, 'nombre')} variant="outlined" />
 						</FormControl>
 						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
 							<InputLabel id="demo-simple-select-label">Apellido</InputLabel>
-							<Select
-								labelId="demo-simple-select-label"
-								id="demo-simple-select"
-								value={createValues.profesor}
-								label="Profesor"
-								onChange={(e) => handleChange(e, 'profesor')}
-							>
-								{profesores.map((profesor) => (
-									<MenuItem value={profesor}>{`${profesor.apellido}, ${profesor.nombre}`}</MenuItem>
-								))}
-							</Select>
+							<TextField id="outlined-basic" value={createValues.apellido} label="Apellido" onChange={(e) => handleChange(e, 'apellido')} variant="outlined" />
 						</FormControl>
 						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
 							<InputLabel id="demo-simple-select-label">DNI</InputLabel>
-							<Select
-								labelId="demo-simple-select-label"
-								id="demo-simple-select"
-								value={createValues.materia}
-								label="Materia"
-								onChange={(e) => handleChange(e, 'materia')}>
-								{materias.map((materia) => (
-									<MenuItem value={materia.nombre}>{materia.nombre}</MenuItem>
-								))}
-							</Select>
+							<TextField id="outlined-basic" value={createValues.dni} label="DNI" onChange={(e) => handleChange(e, 'dni')} variant="outlined" />
 						</FormControl>
 						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
 							<InputLabel id="demo-simple-select-label">Fecha de nacimiento</InputLabel>
-							<Select
-								labelId="demo-simple-select-label"
-								id="demo-simple-select"
-								value={createValues.materia}
-								label="Materia"
-								onChange={(e) => handleChange(e, 'materia')}>
-								{materias.map((materia) => (
-									<MenuItem value={materia.nombre}>{materia.nombre}</MenuItem>
-								))}
-							</Select>
+							<LocalizationProvider dateAdapter={AdapterDayjs}>
+								<Stack spacing={3}>
+									<DatePicker
+										disableFuture
+										label="Fecha de nacimiento<"
+										openTo="year"
+										views={['year', 'month', 'day']}
+										value={createValues.fechaNacimiento}
+										onChange={(newValue) => {
+											setCreateValues(current => ({ ...current, fechaNacimiento: newValue }));
+										}}
+										renderInput={(params) => <TextField {...params} />}
+									/>
+								</Stack>
+							</LocalizationProvider>
 						</FormControl>
 					</Box>
 
 					<Box sx={{ width: "30vw", margin: " 7% 0% 2.5%", float: "left" }}>
 						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
 							<InputLabel id="demo-simple-select-label">Mail</InputLabel>
-							<Select
-								labelId="demo-simple-select-label"
-								id="demo-simple-select"
-								value={createValues.materia}
-								label="Materia"
-								onChange={(e) => handleChange(e, 'materia')}>
-								{materias.map((materia) => (
-									<MenuItem value={materia.nombre}>{materia.nombre}</MenuItem>
-								))}
-							</Select>
+							<TextField id="outlined-basic" value={createValues.mail} label="Mail" onChange={(e) => handleChange(e, 'mail')} variant="outlined" />
 						</FormControl>
 						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
 							<InputLabel id="demo-simple-select-label">Telefono</InputLabel>
-							<Select
-								labelId="demo-simple-select-label"
-								id="demo-simple-select"
-								value={createValues.profesor}
-								label="Profesor"
-								onChange={(e) => handleChange(e, 'profesor')}
-							>
-								{profesores.map((profesor) => (
-									<MenuItem value={profesor}>{`${profesor.apellido}, ${profesor.nombre}`}</MenuItem>
-								))}
-							</Select>
+							<TextField id="outlined-basic" value={createValues.telefono} label="Telefono" onChange={(e) => handleChange(e, 'telefono')} variant="outlined" />
 						</FormControl>
 						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
 							<InputLabel id="demo-simple-select-label">Pais de nacimiento</InputLabel>
-							<Select
-								labelId="demo-simple-select-label"
-								id="demo-simple-select"
-								value={createValues.materia}
-								label="Materia"
-								onChange={(e) => handleChange(e, 'materia')}>
-								{materias.map((materia) => (
-									<MenuItem value={materia.nombre}>{materia.nombre}</MenuItem>
-								))}
-							</Select>
+							<TextField id="outlined-basic" value={createValues.datosNacimiento.pais} label="Pais de nacimiento" onChange={(e) => handleChangeNested(e, "datosNacimiento",'pais')} variant="outlined" />
+
 						</FormControl>
 						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
 							<InputLabel id="demo-simple-select-label">Localidad de nacimiento</InputLabel>
-							<Select
-								labelId="demo-simple-select-label"
-								id="demo-simple-select"
-								value={createValues.materia}
-								label="Materia"
-								onChange={(e) => handleChange(e, 'materia')}>
-								{materias.map((materia) => (
-									<MenuItem value={materia.nombre}>{materia.nombre}</MenuItem>
-								))}
-							</Select>
+							<TextField id="outlined-basic" value={createValues.datosNacimiento.localidad} label="Pais de localidad" onChange={(e) => handleChangeNested(e, "datosNacimiento",'localidad')} variant="outlined" />
+
 						</FormControl>
-					</Box>					
-					
+					</Box>
+
 					<Box sx={{ width: "30vw", margin: " 7% 0% 2.5%", float: "left" }}>
 						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
 							<InputLabel id="demo-simple-select-label">Fecha de ingreso</InputLabel>
-							<Select
-								labelId="demo-simple-select-label"
-								id="demo-simple-select"
-								value={createValues.materia}
-								label="Materia"
-								onChange={(e) => handleChange(e, 'materia')}>
-								{materias.map((materia) => (
-									<MenuItem value={materia.nombre}>{materia.nombre}</MenuItem>
-								))}
-							</Select>
+							<LocalizationProvider dateAdapter={AdapterDayjs}>
+								<Stack spacing={3}>
+									<DatePicker
+										disableFuture
+										label="Fecha de ingreso<"
+										openTo="year"
+										views={['year', 'month', 'day']}
+										value={createValues.fechaIngreso}
+										onChange={(newValue) => {
+											setCreateValues(current => ({ ...current, fechaIngreso: newValue }));
+										}}
+										renderInput={(params) => <TextField {...params} />}
+									/>
+								</Stack>
+							</LocalizationProvider>
 						</FormControl>
 						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
 							<InputLabel id="demo-simple-select-label">Carrera</InputLabel>
 							<Select
 								labelId="demo-simple-select-label"
 								id="demo-simple-select"
-								value={createValues.materia}
+								value={createValues.carreras}
 								label="Materia"
-								onChange={(e) => handleChange(e, 'materia')}>
-								{materias.map((materia) => (
-									<MenuItem value={materia.nombre}>{materia.nombre}</MenuItem>
+								onChange={(e) => handleChangeCheck(e, 'carreras')}>
+								{carreras.map((carrera) => (
+									<MenuItem value={carrera.nombre}>{carrera.nombre}</MenuItem>
 								))}
 							</Select>
 						</FormControl>
-						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
-							<InputLabel id="demo-simple-select-label">Titulos</InputLabel>{/*wide*/}
-							<Select
-								labelId="demo-simple-select-label"
-								id="demo-simple-select"
-								value={createValues.profesor}
-								label="Profesor"
-								onChange={(e) => handleChange(e, 'profesor')}
-							>
-								{profesores.map((profesor) => (
-									<MenuItem value={profesor}>{`${profesor.apellido}, ${profesor.nombre}`}</MenuItem>
-								))}
-							</Select>
-						</FormControl>
-					</Box>					<Box sx={{ width: "30vw", margin: " 7% 0% 2.5%", float: "left" }}>
-						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
+						<MultipleInput valueSetter = {setCreateValues} values= {createValues.titulos}/>
+					</Box>					
+					<Box sx={{ width: "30vw", margin: " 7% 0% 2.5%", float: "left" }}>
+						<FormControl sx={{ width: '6vw', margin: "0 3%" }}>
 							<InputLabel id="demo-simple-select-label">Pais de residencia</InputLabel>{/*smoll*/}
-							<Select
-								labelId="demo-simple-select-label"
-								id="demo-simple-select"
-								value={createValues.materia}
-								label="Materia"
-								onChange={(e) => handleChange(e, 'materia')}>
-								{materias.map((materia) => (
-									<MenuItem value={materia.nombre}>{materia.nombre}</MenuItem>
-								))}
-							</Select>
+							<TextField id="outlined-basic" value={createValues.datosResidencia.pais} label="pais" onChange={(e) => handleChangeNested(e, 'datosResidencia','pais')} variant="outlined" />
 						</FormControl>
 						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
 							<InputLabel id="demo-simple-select-label">Provincia de residencia</InputLabel>
-							<Select
-								labelId="demo-simple-select-label"
-								id="demo-simple-select"
-								value={createValues.profesor}
-								label="Profesor"
-								onChange={(e) => handleChange(e, 'profesor')}
-							>
-								{profesores.map((profesor) => (
-									<MenuItem value={profesor}>{`${profesor.apellido}, ${profesor.nombre}`}</MenuItem>
-								))}
-							</Select>
+							<TextField id="outlined-basic" value={createValues.datosResidencia.provincia} label="provincia" onChange={(e) => handleChangeNested(e, 'datosResidencia','provincia')} variant="outlined" />
 						</FormControl>
 						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
 							<InputLabel id="demo-simple-select-label">Localidad de residencia</InputLabel>
-							<Select
-								labelId="demo-simple-select-label"
-								id="demo-simple-select"
-								value={createValues.materia}
-								label="Materia"
-								onChange={(e) => handleChange(e, 'materia')}>
-								{materias.map((materia) => (
-									<MenuItem value={materia.nombre}>{materia.nombre}</MenuItem>
-								))}
-							</Select>
+							<TextField id="outlined-basic" value={createValues.datosResidencia.localidad} label="localidad" onChange={(e) => handleChangeNested(e, 'datosResidencia','localidad')} variant="outlined" />
 						</FormControl>
 						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
 							<InputLabel id="demo-simple-select-label">Domicilio de residencia</InputLabel>
-							<Select
-								labelId="demo-simple-select-label"
-								id="demo-simple-select"
-								value={createValues.profesor}
-								label="Profesor"
-								onChange={(e) => handleChange(e, 'profesor')}
-							>
-								{profesores.map((profesor) => (
-									<MenuItem value={profesor}>{`${profesor.apellido}, ${profesor.nombre}`}</MenuItem>
-								))}
-							</Select>
+							<TextField id="outlined-basic" value={createValues.datosResidencia.domicilio} label="domicilio" onChange={(e) => handleChangeNested(e, 'datosResidencia','domicilio')} variant="outlined" />
 						</FormControl>
-						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
+						<FormControl sx={{ width: '6vw', margin: "0 3%" }}>
 							<InputLabel id="demo-simple-select-label">Codigo postal de residencia</InputLabel>{/*smoll*/}
-							<Select
-								labelId="demo-simple-select-label"
-								id="demo-simple-select"
-								value={createValues.materia}
-								label="Materia"
-								onChange={(e) => handleChange(e, 'materia')}>
-								{materias.map((materia) => (
-									<MenuItem value={materia.nombre}>{materia.nombre}</MenuItem>
-								))}
-							</Select>
+							<TextField id="outlined-basic" value={createValues.datosResidencia.codigoPostal} label="codigoPostal" onChange={(e) => handleChangeNested(e, 'datosResidencia','codigoPostal')} variant="outlined" />
 						</FormControl>
 					</Box>
 
@@ -379,24 +294,10 @@ export default function Alumnos() {
 		const alumnosComponent = alumnos.map((alumno, i) => {
 			return <AlumnoCard key={alumno._id} setAlumno={setAlumno} alumno={alumno} />
 		})
-	
+
 		const alumnosSkeleton = new Array(20).fill(<Variants />)
 
 		const handleCreateClick = () => {
-			fetchGet(`materias/`)
-				.then(materias => {
-					setMaterias(materias)
-					setLoading(false)
-				})
-				.catch(err => console.log(err))
-
-			fetchGet(`profesores/`)
-				.then(profesores => {
-					setProfesores(profesores)
-					setLoading(false)
-				})
-				.catch(err => console.log(err))
-
 			setCardStyle(current => ({ ...current, height: "70vh", width: "70vw", borderRadius: "0.5%", }))
 			setChecked(false)
 		}
@@ -439,10 +340,10 @@ export default function Alumnos() {
 			<div style={{ paddingTop: "3%", paddingLeft: "3%", width: "auto" }}>
 				<div>
 					<Grid width={"auto"} container spacing={1}>
-					{loading ? alumnosSkeleton : alumnosComponent}
+						{loading ? alumnosSkeleton : alumnosComponent}
 					</Grid>
 				</div>
-				<div style={{ paddingLeft: "2%",paddingBottom:"1%",overflow:"auto" }}>
+				<div style={{ paddingLeft: "2%", paddingBottom: "1%", overflow: "auto" }}>
 					<Card sx={cardStyle}>
 						{!checked ?
 							<CardContent sx={{ height: "100%", width: '100%' }}>{createAlumnoComponent()}</CardContent>
@@ -464,14 +365,14 @@ export default function Alumnos() {
 		return (
 			<Box id="info">
 				goback button aca
-				<div><TextField id="standard-basic" defaultValue={alumno.nombre} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "nombre",setAlumno, setIsShown)} label="Nombre" variant="standard" /></div>
-				<div><TextField id="standard-basic" defaultValue={alumno.apellido} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "apellido",setAlumno, setIsShown)} label="Apellido" variant="standard" /></div>
-				<div><TextField id="standard-basic" defaultValue={alumno.dni} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "dni",setAlumno, setIsShown)} label="DNI" variant="standard" /></div>
-				<div><TextField id="standard-basic" defaultValue={alumno.fechaNacimiento} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "fechaNacimiento",setAlumno, setIsShown)} label="Fecha de Nacimiento" variant="standard" /></div>
-				<div><TextField id="standard-basic" defaultValue={alumno.telefono} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "telefono",setAlumno, setIsShown)} label="Telefono" variant="standard" /></div>
-				<div><TextField id="standard-basic" defaultValue={alumno.mail} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "mail",setAlumno, setIsShown)} label="Mail" variant="standard" /></div>
-				<div><TextField id="standard-basic" defaultValue={alumno.rol} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "rol",setAlumno, setIsShown)} label="Rol" variant="standard" /></div>
-				<div><TextField id="standard-basic" defaultValue={alumno.fechaIngreso} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "fechaIngreso",setAlumno, setIsShown)} label="Fecha de ingreso" variant="standard" /></div>
+				<div><TextField id="standard-basic" defaultValue={alumno.nombre} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "nombre", setAlumno, setIsShown)} label="Nombre" variant="standard" /></div>
+				<div><TextField id="standard-basic" defaultValue={alumno.apellido} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "apellido", setAlumno, setIsShown)} label="Apellido" variant="standard" /></div>
+				<div><TextField id="standard-basic" defaultValue={alumno.dni} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "dni", setAlumno, setIsShown)} label="DNI" variant="standard" /></div>
+				<div><TextField id="standard-basic" defaultValue={alumno.fechaNacimiento} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "fechaNacimiento", setAlumno, setIsShown)} label="Fecha de Nacimiento" variant="standard" /></div>
+				<div><TextField id="standard-basic" defaultValue={alumno.telefono} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "telefono", setAlumno, setIsShown)} label="Telefono" variant="standard" /></div>
+				<div><TextField id="standard-basic" defaultValue={alumno.mail} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "mail", setAlumno, setIsShown)} label="Mail" variant="standard" /></div>
+				<div><TextField id="standard-basic" defaultValue={alumno.rol} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "rol", setAlumno, setIsShown)} label="Rol" variant="standard" /></div>
+				<div><TextField id="standard-basic" defaultValue={alumno.fechaIngreso} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "fechaIngreso", setAlumno, setIsShown)} label="Fecha de ingreso" variant="standard" /></div>
 
 				<div style={{ backgroundColor: "lightgray" }}>
 					<p>Datos de nacimiento</p>
@@ -494,15 +395,15 @@ export default function Alumnos() {
 					{titulos.map((titulo, i) => {
 						return (
 							<div>
-								<TextField key={titulo} id="standard-basic" defaultValue={titulo} onKeyPress={e => onEnter(e)} onBlur={e => changeHandlerComplex(e, "titulos", setTitulos, titulo,setAlumno, setIsShown,titulos)} label={`Titulo ${i + 1}`} variant="standard" />
-								<IconButton color="primary" aria-label="borrar" onClick={() => { handleDeleteTitulo(titulo, setIsShown,titulos, setAlumno, setTitulos) }}>
+								<TextField key={titulo} id="standard-basic" defaultValue={titulo} onKeyPress={e => onEnter(e)} onBlur={e => changeHandlerComplex(e, "titulos", setTitulos, titulo, setAlumno, setIsShown, titulos)} label={`Titulo ${i + 1}`} variant="standard" />
+								<IconButton color="primary" aria-label="borrar" onClick={() => { handleDeleteTitulo(titulo, setIsShown, titulos, setAlumno, setTitulos) }}>
 									<ClearIcon fontSize='small' ></ClearIcon>
 								</IconButton>
 							</div>
 						)
 					})
 					}
-					<IconButton color="primary" aria-label="crear fila" onClick={() => { handleCreateTitulo(setAlumno, setTitulos,setIsShown, titulos) }}>
+					<IconButton color="primary" aria-label="crear fila" onClick={() => { handleCreateTitulo(setAlumno, setTitulos, setIsShown, titulos) }}>
 						<CreateIcon fontSize='small' />
 					</IconButton>
 				</div>
@@ -511,7 +412,7 @@ export default function Alumnos() {
 					{cursosActivos.map((cursoActivo, i) => {
 						return (
 							<div><TextField key={cursoActivo.nombre} id="standard-basic" defaultValue={cursoActivo.nombre} inputProps={{ readOnly: true }} label={`Curso ${i + 1}`} variant="standard" />
-								<IconButton color="primary" aria-label="borrar" onClick={()=>{handleDeleteAlt(cursoActivo,"cursosActivos",setCursosActivos,setAlumno,cursosActivos, setIsShown)}}>
+								<IconButton color="primary" aria-label="borrar" onClick={() => { handleDeleteAlt(cursoActivo, "cursosActivos", setCursosActivos, setAlumno, cursosActivos, setIsShown) }}>
 									<ClearIcon fontSize='small' ></ClearIcon>
 								</IconButton>
 							</div>)
@@ -531,7 +432,7 @@ export default function Alumnos() {
 									return (
 
 										<TextField id="standard-basic" defaultValue={materia} inputProps={{ readOnly: true }} label={`materia aprobadas ${i + 1}`} variant="standard" />
-										
+
 									)
 								})}
 							</div>
