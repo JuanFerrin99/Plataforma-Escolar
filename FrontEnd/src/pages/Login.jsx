@@ -10,15 +10,15 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { fetchPost } from '../components/utils/Fetch';
+import '../styles/pages/Login.css';
 
-const theme = createTheme();
+
 export default function SignIn() {
 
     const [email, setEmail] = useState('');
@@ -79,7 +79,7 @@ export default function SignIn() {
 
     if (pressed === false) {
         return (
-            <ThemeProvider theme={theme}>
+            <div class="login">
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
                     <Box
@@ -107,6 +107,7 @@ export default function SignIn() {
                                 name="email"
                                 autoComplete="email"
                                 variant='standard'
+                                color='warning'
                                 autoFocus
                             />
                             <TextField
@@ -118,6 +119,7 @@ export default function SignIn() {
                                 label="Contraseña"
                                 id="password"
                                 variant='standard'
+                                color='warning'
                                 autoComplete="current-password"
 
                                 type={showPassword ? "text" : "password"} // <-- This is where the magic happens
@@ -148,12 +150,12 @@ export default function SignIn() {
                     </Box>
                     {cambiarContraseña()}
                 </Container>
-            </ThemeProvider>
+            </div>
         );
     }
     else {
         return (
-            <ThemeProvider theme={theme}>
+            <div class="login">
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
                     <Box
@@ -180,6 +182,7 @@ export default function SignIn() {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                                color='warning'
                                 autoFocus
                             />
                             <Button
@@ -193,7 +196,7 @@ export default function SignIn() {
                         </Box>
                     </Box>
                 </Container>
-            </ThemeProvider>
+            </div>
         )
     }
 }

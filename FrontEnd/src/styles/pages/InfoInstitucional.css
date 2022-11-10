@@ -2,7 +2,11 @@ body{
 	background: #fafafa;
 }
 
-#imgHero {
+
+
+#img {
+	background: linear-gradient(to bottom, #010e2969, #010e29);
+	opacity: 50%;
 	width: 98.9vw;
 	height: 55vh;
 

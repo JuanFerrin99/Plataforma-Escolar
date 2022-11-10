@@ -4,7 +4,7 @@
     width: 100vw;
     top: 0;
     left: 0;
-    z-index: 1;
+    z-index: 100;
     transition: .3s ease-in;
     overflow: hidden;
     background-color: transparent;
@@ -31,7 +31,7 @@ li{
 }
 
 .navbar.colorChange{
-	background-color: rgba(0, 0, 0, 0.842);
+	background-image: linear-gradient(to bottom, rgb(0, 0, 0) 50%, #00000000);
 }
 
 
@@ -42,7 +42,7 @@ li{
 }
 
 .header .navbar img {
-    width: 250px;
+    width: 25vw;
     height: auto;
 }
 
@@ -55,9 +55,18 @@ li{
     font-weight: 500;
 }
 
-.header .nav-item a:hover {
+.header li:hover {
     padding-bottom: 12px;
-    border-bottom: 3px solid var(--secondary-color);
+    border-bottom: 3px solid #01c4ff;
+}
+
+.header #inscripcion a{
+    color: #ffaf01 !important;
+}
+
+.header #inscripcion:hover {
+    padding-bottom: 12px;
+    border-bottom: 3px solid #ffaf01 !important;
 }
 
 .hamburger {

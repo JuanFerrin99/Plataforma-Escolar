@@ -113,6 +113,13 @@ iframe{
     line-height: 50%;
 }
 
+.slider #botonInfo:hover{
+    border-color:  #01c4ff;
+}
+#infoInicio button:hover{
+    border-color:  #01c4ff;
+}
+
 .slider #botonInfo{
     align-items: center;
     appearance: none;

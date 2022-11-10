@@ -444,7 +444,7 @@ const Card = ({
     : addPipe
     ? "card add-pipe"
     : "card";
-  const pluralFormat = counter === 1 ? "card" : "cards";
+  const pluralFormat = counter === 1 ? "card" : "meses";
   const [star, toggleStar] = useState(favorited);
   const [loading, setToLoading] = useState(false);
 

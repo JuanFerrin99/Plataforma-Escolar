@@ -36,7 +36,7 @@ const Navbar = () => {
                 </div>
                 <ul className={click ? "nav-menu active" : "nav-menu"}>
                     <li className='nav-item'>
-                        <a href='/inscripcion' onClick={closeMenu}>INSCRIBITE</a>
+                        <a href='/login' onClick={closeMenu}>ACCESO</a>
                     </li>
                     <li className='nav-item'>
                         <a href='/informacion' onClick={closeMenu}>EL INSTITUTO</a>
@@ -47,8 +47,8 @@ const Navbar = () => {
                     <li className='nav-item'>
                         <a href='/carrera' onClick={closeMenu}>CARRERA</a>
                     </li>
-                    <li className='nav-item'>
-                        <a href='/login' onClick={closeMenu}>ACCESO</a>
+                    <li className='nav-item' id="inscripcion">
+                        <a href='/inscripcion' onClick={closeMenu}>INSCRIBITE</a>
                     </li>
                 </ul>
             </nav>

@@ -6,6 +6,7 @@ import Navbar from "../pages/Navbar"
 import Cursoshomepage from "../pages/Cursoshomepage"
 import Carrerahomepage from "../pages/Carrerahomepage"
 
+
 import AdminPage from "../pages/admin/Admin"
 import SecretarioPage from "../pages/secretario/Secretario"
 

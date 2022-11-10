@@ -4,7 +4,7 @@ import '../styles/pages/InfoInstitucional.css';
 export default function Info() {
   return (
     <div  className="Info">
-      <img id="imgHero" src="https://ise.com.ar/wp-content/uploads/2021/08/cropped-GettyImages-1226985345-scaled-1.jpg" />
+      <img id="img" src="https://ise.com.ar/wp-content/uploads/2021/08/cropped-GettyImages-1226985345-scaled-1.jpg" />
       <div id="encabezado">
         <h1>El Instituto</h1>
         <h2>Formando Profesionales desde 1962</h2>

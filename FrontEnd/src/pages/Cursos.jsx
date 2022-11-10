@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
 import Container from "./Container";
-import CardGrid from "../components/homeCardGrid";
+import CardGrid from "../components/home/tarjetas/CardGrid";
 import content from "./content";
 
 const StyledPage = styled(animated.main)`
