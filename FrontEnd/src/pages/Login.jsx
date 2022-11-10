@@ -52,7 +52,7 @@ export default function SignIn() {
             password: password
         }
 
-        fetchPost("login", body)
+        fetchPost(`login`, body)
             .then(jwt => {
                 window.location.href = `/${Cookies.get("rol")}`
             })
