@@ -18,7 +18,7 @@ import AlumnoCard from "../../components/cards/AlumnoCard";
 import "../../styles/bordes.css"
 import { fetchGet, fetchPost, fetchPatch, fetchDelete } from '../../components/utils/Fetch'
 
-//*------------------------------------cosas inutiles que deberian estar en otros archivos porque ocupan mucho espacio 
+//*------------------------------------ Componentes a guardar en otros archivos
 
 function Variants() {
     return (
@@ -249,9 +249,7 @@ export default function CursoCard() {
                         onChange={(event, value) => apiRef.current.setPage(value - 1)}
                     />
                 </div>
-
             </div>
-
         );
     }
 
