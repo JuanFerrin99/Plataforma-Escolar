@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { useEffect, useState, useRef } from "react";
-import { useLocation } from "react-router-dom"
-import { Card, CardActions, CardContent, Grid, Skeleton, Container } from "@mui/material";
 import { DataGrid, gridPageCountSelector, gridPageSelector, useGridApiContext, useGridSelector } from '@mui/x-data-grid';
 import Pagination from '@mui/material/Pagination';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
@@ -12,32 +10,7 @@ import CreateIcon from '@mui/icons-material/Create';
 import ClearIcon from '@mui/icons-material/Clear';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import { fetchPatch, fetchDelete } from '../../utils/Fetch'
-
-//Todo todos los mensajes de error estan en la pagina de evaluaciones
-//* skeleton
-function Variants() {
-	return (
-		<Grid item xs={4}>
-			<Card sx={{ minWidth: 275 }}>
-				<CardContent>
-					<Skeleton variant="rectangular" width={210} height={10} />
-					<br />
-					<Skeleton variant="rectangular" width={210} height={10} />
-					<br />
-					<Skeleton variant="rectangular" width={100} height={5} />
-					<br />
-					<Skeleton variant="rectangular" width={100} height={5} />
-					<br />
-					<Skeleton variant="rectangular" width={100} height={5} />
-				</CardContent>
-				<CardActions>
-					<Skeleton variant="rectangular" width={50} height={2} />
-				</CardActions>
-			</Card>
-		</Grid>
-	);
-}
+import { fetchPatch, fetchDelete, fetchPost, fetchGet } from '../../utils/Fetch'
 
 //*dibujo lindo de no hay rows
 const StyledGridOverlay = styled('div')(({ theme }) => ({
@@ -113,30 +86,39 @@ function CustomNoRowsOverlay() {
 }
 
 export default function TableInasistencias(props) {
-	const [loading, setLoading] = useState(true);//toDo que muestre loding skeleton
 	const [snackbar, setSnackbar] = useState(null);
 	const [faltas, setFaltas] = useState([]);
+	const [cursos, setCursos] = useState([]);
 	const [s, setS] = useState(true);
 	const gridRef = useRef();
-	const id = props.idCurso
 
 
 	useEffect(() => {
 		if (s) { //toDO checkear que si al estar la coleccion esta vacia que no se quede cargando infinitamente y consuma mucho
-			setFaltas(props.inasistencia)
+			setFaltas(props.inasistencias)
 			if (faltas.length === 0) { return undefined }
 			else { setS(false) }
 		}
 	});
 
+	useEffect(()=>{
+		fetchGet('cursos')
+			.then(response => response.json())
+			.then(cursos =>setCursos(cursos))
+			.catch(err => console.log(err))
+	},[])
+
 	//* Patch faltas
 	const ProcessRowUpdate = (props) => {
+	console.log(cursos.find(elem => elem.materia === props.materia))
 		fetchPatch(`inasistencias/${props._id}`, {
-			fecha: props.fecha,
-			justificado: props.justificado,
-			motivo: props.motivo,
 			tipo: props.tipo,
-			_id: props._id
+			motivo: props.motivo,
+			justificado: props.justificado,
+			curso: cursos.find(elem => elem.materia === props.materia)._id,
+			materia: props.materia,
+			dni: props.dni,
+			rol: props.rol
 		})
 			.then(res => { //toDo checkear si lo encontro o no y cambiar el mensaje
 				setSnackbar({ children: 'User successfully saved', severity: 'success' });
@@ -154,7 +136,7 @@ export default function TableInasistencias(props) {
 					.then(res => {
 						if (res) {
 							let rows = faltas.slice()
-							rows = rows.filter(row => row.id !== params.row.id)
+							rows = rows.filter(row => row._id !== params.row._id)
 							setFaltas(rows)
 							setSnackbar({ children: 'Inasistencia borrada', severity: 'error' });
 						}
@@ -174,7 +156,23 @@ export default function TableInasistencias(props) {
 
 		)
 	}
-
+	//* Post faltas
+	const handleNewRow = () =>{ 
+		 fetchPost('inasistencias', 		{
+				"fecha": new Date().toJSON().slice(0, 10),
+				"tipo": "",
+				"motivo": "",
+				"justificado": "",
+				"curso": "",
+				"materia": "",
+				"dni": null,
+				"rol": ""
+			  }
+			)
+			.then(res => {
+				setFaltas(current => [...current, {...res, _id:res._id}])
+			})
+	}
 	//*snackbar error
 	const handleProcessRowUpdateError = React.useCallback((error) => {
 		setSnackbar({ children: error.message, severity: 'error' });
@@ -208,32 +206,34 @@ export default function TableInasistencias(props) {
 
 	//* rows y columns
 	const columns = [
-		{ field: 'fecha', headerName: 'Fecha', flex: 1, editable: true },
+		{ field: 'fecha', headerName: 'Fecha', flex: 1, editable: false },
 		{ field: 'tipo', headerName: 'Tipo', flex: 1, editable: true },
 		{ field: 'justificado', headerName: 'Justificado', flex: 1, editable: true },
 		{ field: 'motivo', headerName: 'Motivo', flex: 1, editable: true },
-		{ field: 'total', headerName: 'Total', flex: 1, editable: true },
+		{ field: 'rol', headerName: 'Rol', flex: 1, editable: true },
+		{ field: 'dni', headerName: 'Dni de ausente', flex: 1, editable: true },
+		{ field: 'materia', headerName: 'Materia', flex: 1, editable: true },
 		{ field: 'boton', headerName: '', suppressRowClickSelection: true, flex: 0.1, renderCell: (e) => { return renderDetailsButton(e) } }
 	];
-
 	//*  Return
 	return (
-		<div style={{ height: "100vh", width: '100%' }}>
+		<div style={{ height: "100%", width: '100%' }}>
 
 			<div style={{ width: '100%' }}>
 				<IconButton color="primary" aria-label="ir para atras" onClick={() => { window.location.href = "/profesor/curso" }}>
 					<ArrowBackRoundedIcon fontSize='large' />
 				</IconButton>
-				<IconButton color="primary" aria-label="crear fila" onClick={() => { let r = faltas.slice(); r.push({ id: props.insistencia.id + 1 }); return setFaltas(r) }}>
+				<IconButton color="primary" aria-label="crear fila" onClick={handleNewRow}>
 					<CreateIcon fontSize='large' />
 				</IconButton>
 			</div>
 
-			<div style={{ height: '46%' }}>
+			<div style={{ height: '100%' }}>
 				<DataGrid
 					ref={gridRef}
 					rows={faltas}
 					columns={columns}
+					getRowId={(row) => row._id} 
 					pageSize={10}
 					enterMovesDown={true}
 					processRowUpdate={ProcessRowUpdate}

@@ -58,6 +58,21 @@ module.exports.modificarInasistencia = (req, res) => {
         })
         .catch(errorHandler(res))
 }
+//-------------------------------------------- GET /inasistencias/id --------------------------------------------------------------
+
+module.exports.getInasistencias = (req, res) => {
+    return Inasistencia.find({})
+        .then((inasistencias) => {
+            if(inasistencias == undefined){
+                res.status(404).json({error: "No se encontron inasistencias"})
+            }
+            else{
+                res.status(200).json(inasistencias)
+            }
+        })
+        .catch(errorHandler(res))
+}
+
 
 //-------------------------------------------- GET /inasistencias/id --------------------------------------------------------------
 

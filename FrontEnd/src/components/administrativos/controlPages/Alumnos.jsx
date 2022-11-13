@@ -94,10 +94,6 @@ export default function Alumnos() {
 		const {
 			target: { value },
 		} = event;
-		setDiasSeleccionados(
-			// On autofill we get a stringified value.
-			typeof value === 'string' ? value.split(',') : value,
-		)
 		setCreateValues(current => ({ ...current, [key]: typeof value === 'string' ? value.split(',') : value }));
 	};
 

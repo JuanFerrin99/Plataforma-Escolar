@@ -45,6 +45,10 @@ export const SidebarData = [
     heading: 'Carreras'
   },
   {
+    icon: UilChart,
+    heading: 'Inasistencias'
+  },
+  {
     icon: UilSignOutAlt,
     heading: 'Cerrar sesion'
   },
