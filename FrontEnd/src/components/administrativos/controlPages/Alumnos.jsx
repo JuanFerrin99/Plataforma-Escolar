@@ -43,6 +43,7 @@ export default function Alumnos() {
 	const [titulos, setTitulos] = useState([]);
 	const [cursosActivos, setCursosActivos] = useState([]);
 	const [carreras, setCarreras] = useState([]);
+	const [carrerasTodas, setCarrerasTodas] = useState([]);
 	const [alumno, setAlumno] = useState({});
 	const [isShown, setIsShown] = useState(false);
 	const [entre1, setEntre1] = useState(false);
@@ -61,24 +62,24 @@ export default function Alumnos() {
 		transition: '0.35s'
 	});
 	const [createValues, setCreateValues] = useState({
-		nombre: "",
-		apellido: "",
+		nombre: '',
+		apellido: '',
 		dni: null,
-		mail: "",
+		mail: '',
 		telefono: null,
 		fechaNacimiento: null,
 		datosNacimiento: {
-			pais: "",
-			localidad: "",
+			pais: '',
+			localidad: '',
 		},
 		fechaIngreso: null,
-		carreras: [],
+		carreras: [''],
 		titulos: [],
 		datosResidencia: {
-			pais: "",
-			provincia: "",
-			localidad: "",
-			domicilio: "",
+			pais: '',
+			provincia: '',
+			localidad: '',
+			domicilio: '',
 			codigoPostal: null
 		}
 	});
@@ -87,9 +88,9 @@ export default function Alumnos() {
 		setCreateValues(current => ({ ...current, [key]: event.target.value }));
 	};
 	const handleChangeNested = (event, firstKey, secondkey) => {
-		setCreateValues(current => ({ ...current, [firstKey]: { ...current.firstKey, [secondkey]: event.target.value } }));
+		setCreateValues(current => ({ ...current, [firstKey]: { ...current[firstKey], [secondkey]: event.target.value } }));
 	};
-	const handleChangeCheck = (event) => {
+	const handleChangeCheck = (event, key) => {
 		const {
 			target: { value },
 		} = event;
@@ -97,7 +98,7 @@ export default function Alumnos() {
 			// On autofill we get a stringified value.
 			typeof value === 'string' ? value.split(',') : value,
 		)
-		setCreateValues(current => ({ ...current, "dias": typeof value === 'string' ? value.split(',') : value }));
+		setCreateValues(current => ({ ...current, [key]: typeof value === 'string' ? value.split(',') : value }));
 	};
 
 
@@ -150,6 +151,7 @@ export default function Alumnos() {
 			fetchGet(`carreras/`)
 				.then(response => response.json())
 				.then(carreras => {
+					console.log(carreras)
 					setTitulos(alumno.titulos)
 					alumno.carreras.forEach(carreraAlumno => {
 						carreras.forEach((carrera) => {
@@ -165,37 +167,33 @@ export default function Alumnos() {
 				})
 		}
 	}, [alumno]);
-
-
 	//*---------------------------------------Vista base-------------------------------
-
 	if (Object.keys(alumno).length === 0) {
 		const createAlumnoComponent = () => {
 			return (
-				<div style={{ height: "100%", width: '100%', overflow: "visible" }}>
-					<Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
-						<div style={{ width: '15vw',  height: "20vh",margin: "2.5% 1%", float: "left", }}>
-								<TextField inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}} id="outlined-basic" value={createValues.nombre} label="Nombre" onChange={(e) => handleChange(e, 'nombre')} variant="outlined" />
-							
-						</div>
-						<div style={{ width: '15vw', margin: "2.5% 1%", float: "left" }}>
-
+				<div style={{ height: "100%", width: '85%', margin: "0 7.5%" }}>
+					<Box sx={{ width: "100%", display: "flex", justifyContent: "center", margin: "3vh 0%", height: "auto" }}>
+						<div style={{ width: 'auto', padding: "0 1.5vw", float: "left" }}>
 							<FormControl>
-								<TextField id="outlined-basic" inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}}  onKeyPress={e => onEnter(e)} value={createValues.apellido} label="Apellido" onBlur={(e) => handleChange(e, 'apellido')} variant="outlined" />
+								<TextField sx={{ "& .MuiInputBase-root": { height: "auto", "padding": "0.6vw 0.5vw" } }} id="outlined-basic" value={createValues.nombre} label="Nombre" onChange={(e) => handleChange(e, 'nombre')} variant="outlined" />
 							</FormControl></div>
 
-						<div style={{ width: '15vw', margin: "2.5% 1%", float: "left" }}>
+						<div style={{ width: 'auto', padding: "0 1.5vw", float: "left" }}>
 							<FormControl>
-								<TextField id="outlined-basic"inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}} value={createValues.dni} label="DNI" onChange={(e) => handleChange(e, 'dni')} variant="outlined" />
-							</FormControl>
-						</div>
-						<div style={{ width: '15vw', margin: "2.5% 1%", float: "left" }}>
+								<TextField sx={{ "& .MuiInputBase-root": { height: "auto", "padding": "0.6vw 0.5vw" } }} id="outlined-basic" value={createValues.apellido} label="Apellido" onChange={(e) => handleChange(e, 'apellido')} variant="outlined" />
+							</FormControl></div>
 
-							<FormControl sx={{"& .MuiInputBase-root": {height: "8.5vh"}}}>
+						<div style={{ width: 'auto', padding: "0 1.5vw", float: "left" }}>
+							<FormControl>
+								<TextField id="outlined-basic" sx={{ "& .MuiInputBase-root": { height: "auto", "padding": "0.6vw 0.5vw" } }} value={createValues.dni} label="DNI" onChange={(e) => handleChange(e, 'dni')} variant="outlined" />
+							</FormControl></div>
+
+						<div style={{ width: 'auto', padding: "0 1.5vw", float: "left" }}>
+							<FormControl sx={{ "& .MuiInputBase-root": { height: "auto", "padding": "0.6vw 0.5vw" } }}>
 								<LocalizationProvider dateAdapter={AdapterDayjs}>
 									<Stack spacing={3}>
 										<DatePicker
-											inputProps={{min: 0, style: { marginLeft: '1vw' }}}
+											inputProps={{ min: 0, style: { marginLeft: '1vw' } }}
 											disableFuture
 											label="Fecha de nacimiento"
 											openTo="year"
@@ -208,47 +206,71 @@ export default function Alumnos() {
 										/>
 									</Stack>
 								</LocalizationProvider>
+							</FormControl></div>
+					</Box>
+
+					<Box sx={{ width: "100%", display: "flex", justifyContent: "center", margin: "3vh 0", height: "auto" }}>
+						<div style={{ width: 'auto', padding: "0 1.5vw", float: "left" }}>
+
+							<FormControl>
+								<TextField id="outlined-basic" sx={{ "& .MuiInputBase-root": { height: "auto", "padding": "0.6vw 0.5vw" } }} value={createValues.mail} label="Mail" onChange={(e) => handleChange(e, 'mail')} variant="outlined" />
+							</FormControl>
+						</div>
+						<div style={{ width: 'auto', padding: "0 1.5vw", float: "left" }}>
+
+							<FormControl>
+
+								<TextField id="outlined-basic" sx={{ "& .MuiInputBase-root": { height: "auto", "padding": "0.6vw 0.5vw" } }} value={createValues.telefono} label="Telefono" onChange={(e) => handleChange(e, 'telefono')} variant="outlined" />
+							</FormControl>
+						</div>
+						<div style={{ width: 'auto', padding: "0 1.5vw", float: "left" }}>
+
+							<FormControl>
+
+								<TextField id="outlined-basic" sx={{ "& .MuiInputBase-root": { height: "auto", "padding": "0.6vw 0.5vw" } }} value={createValues.datosNacimiento.pais} label="Pais de nacimiento" onChange={(e) => handleChangeNested(e, "datosNacimiento", 'pais')} variant="outlined" />
+
+							</FormControl>
+						</div>
+						<div style={{ width: 'auto', padding: "0 1.5vw", float: "left" }}>
+
+							<FormControl>
+
+								<TextField id="outlined-basic" sx={{ "& .MuiInputBase-root": { height: "auto", "padding": "0.6vw 0.5vw" } }} value={createValues.datosNacimiento.localidad} label="Pais de localidad" onChange={(e) => handleChangeNested(e, "datosNacimiento", 'localidad')} variant="outlined" />
+
+							</FormControl>
+						</div>
+					</Box>
+					<Box sx={{ width: "100%", display: "flex", justifyContent: "center", margin: "3vh 0", height: "auto" }}>
+						<div style={{ width: 'auto', padding: "0 1.5vw", float: "left" }}>
+							<FormControl>
+								<TextField id="outlined-basic" sx={{ "& .MuiInputBase-root": { height: "auto", "padding": "0.6vw 0.5vw" } }} value={createValues.datosResidencia.pais} label="pais" onChange={(e) => handleChangeNested(e, 'datosResidencia', 'pais')} variant="outlined" />
+							</FormControl>
+						</div>
+						<div style={{ width: 'auto', padding: "0 1.5vw", float: "left" }}>
+							<FormControl>
+								<TextField id="outlined-basic" sx={{ "& .MuiInputBase-root": { height: "auto", "padding": "0.6vw 0.5vw" } }} value={createValues.datosResidencia.provincia} label="provincia" onChange={(e) => handleChangeNested(e, 'datosResidencia', 'provincia')} variant="outlined" />
+							</FormControl>
+						</div>
+						<div style={{ width: 'auto', padding: "0 1.5vw", float: "left" }}>
+							<FormControl>
+								<TextField id="outlined-basic" sx={{ "& .MuiInputBase-root": { height: "auto", "padding": "0.6vw 0.5vw" } }} value={createValues.datosResidencia.localidad} label="localidad" onChange={(e) => handleChangeNested(e, 'datosResidencia', 'localidad')} variant="outlined" />
+							</FormControl>
+						</div>
+						<div style={{ width: 'auto', padding: "0 1.5vwvw", float: "left" }}>
+							<FormControl>
+								<TextField id="outlined-basic" sx={{ "& .MuiInputBase-root": { height: "auto", "padding": "0.6vw 0.5vw" } }} value={createValues.datosResidencia.domicilio} label="domicilio" onChange={(e) => handleChangeNested(e, 'datosResidencia', 'domicilio')} variant="outlined" />
+							</FormControl>
+						</div>
+						<div style={{ width: 'auto', padding: "0 1.5vw", float: "left" }}>
+							<FormControl>
+								<TextField size={'small'} id="outlined-basic" sx={{ "& .MuiInputBase-root": { height: "auto", "padding": "0.6vw 0.5vw" } }} value={createValues.datosResidencia.codigoPostal} label="codigoPostal" onChange={(e) => handleChangeNested(e, 'datosResidencia', 'codigoPostal')} variant="outlined" />
 							</FormControl>
 						</div>
 					</Box>
 
-					<Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
-						<div style={{ width: '12vw', margin: "5%" }}>
-
-							<FormControl>
-								<TextField id="outlined-basic"inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}} value={createValues.mail} label="Mail" onChange={(e) => handleChange(e, 'mail')} variant="outlined" />
-							</FormControl>
-						</div>
-						<div style={{ width: '12vw', margin: "5%" }}>
-
-							<FormControl>
-
-								<TextField id="outlined-basic"inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}} value={createValues.telefono} label="Telefono" onChange={(e) => handleChange(e, 'telefono')} variant="outlined" />
-							</FormControl>
-						</div>
-						<div style={{ width: '12vw', margin: "5%" }}>
-
-							<FormControl>
-
-								<TextField id="outlined-basic"inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}} value={createValues.datosNacimiento.pais} label="Pais de nacimiento" onChange={(e) => handleChangeNested(e, "datosNacimiento", 'pais')} variant="outlined" />
-
-							</FormControl>
-						</div>
-						<div style={{ width: '12vw', margin: "5%" }}>
-
-							<FormControl>
-
-								<TextField id="outlined-basic"inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}} value={createValues.datosNacimiento.localidad} label="Pais de localidad" onChange={(e) => handleChangeNested(e, "datosNacimiento", 'localidad')} variant="outlined" />
-
-							</FormControl>
-						</div>
-					</Box>
-
-					<Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
-						<div style={{ width: '12vw', margin: "5%" }}>
-
-							<FormControl>
-
+					<Box sx={{ width: "100%", display: "flex", justifyContent: "center", margin: "3vh 0", height: "auto" }}>
+						<div style={{ width: 'auto', padding: "0 1.5vw", float: "left" }}>
+							<FormControl sx={{ "& .MuiInputBase-root": { height: "auto", "padding": "0.6vw 0.5vw" } }}>
 								<LocalizationProvider dateAdapter={AdapterDayjs}>
 									<Stack spacing={3}>
 										<DatePicker
@@ -266,57 +288,25 @@ export default function Alumnos() {
 								</LocalizationProvider>
 							</FormControl>
 						</div>
-						<div style={{ width: '12vw', margin: "5%" }}>
-
-							<FormControl>
-
+						<div style={{ width: '25%', padding: "0 1.5vw", float: "left" }}>
+							<FormControl sx={{ width: "100% " }}>
+								<InputLabel id="demo-simple-select-label">Carrera</InputLabel>
 								<Select
+									sx={{ width: "100% ", "& .MuiInputBase-root": { height: "auto", "padding": "0.6vw 0.5vw" } }}
 									labelId="demo-simple-select-label"
 									id="demo-simple-select"
-									value={createValues.carreras}
-									label="Materia"
+									value={createValues.carrera}
+									label="Carrera"
 									onChange={(e) => handleChangeCheck(e, 'carreras')}>
-									{carreras.map((carrera) => (
-										<MenuItem value={carrera.nombre}>{carrera.nombre}</MenuItem>
-									))}
-								</Select>
+									{carrerasTodas.map((carrera) => {
+										return <MenuItem value={carrera.nombre}>{carrera.nombre}</MenuItem>
+									}
+									)}
+								</Select> 
 							</FormControl>
 						</div>
-						<MultipleInput valueSetter={setCreateValues} values={createValues.titulos} />
-					</Box>
-					<Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
-						<div style={{ width: '12vw', margin: "5%" }}>
-							<FormControl sx={{ width: '6vw', margin: "1% 3%" }}>
-								{/*smoll*/}
-								<TextField id="outlined-basic"inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}} value={createValues.datosResidencia.pais} label="pais" onChange={(e) => handleChangeNested(e, 'datosResidencia', 'pais')} variant="outlined" />
-							</FormControl>
-						</div>
-						<div style={{ width: '12vw', margin: "5%" }}>
-
-							<FormControl>
-
-								<TextField id="outlined-basic"inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}} value={createValues.datosResidencia.provincia} label="provincia" onChange={(e) => handleChangeNested(e, 'datosResidencia', 'provincia')} variant="outlined" />
-							</FormControl>
-						</div>
-						<div style={{ width: '12vw', margin: "5%" }}>
-
-							<FormControl>
-
-								<TextField id="outlined-basic"inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}} value={createValues.datosResidencia.localidad} label="localidad" onChange={(e) => handleChangeNested(e, 'datosResidencia', 'localidad')} variant="outlined" />
-							</FormControl>
-						</div>
-						<div style={{ width: '12vw', margin: "5%" }}>
-
-							<FormControl>
-
-								<TextField id="outlined-basic"inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}} value={createValues.datosResidencia.domicilio} label="domicilio" onChange={(e) => handleChangeNested(e, 'datosResidencia', 'domicilio')} variant="outlined" />
-							</FormControl>
-						</div>
-						<div style={{ width: '12vw', margin: "5%" }}>
-							<FormControl sx={{ width: '6vw', margin: "1% 3%" }}>
-								{/*smoll*/}
-								<TextField id="outlined-basic" inputProps={{min: 0, style: { marginLeft: '1vw' }}} sx={{"& .MuiInputBase-root": {height: "8.5vh"}}}value={createValues.datosResidencia.codigoPostal} label="codigoPostal" onChange={(e) => handleChangeNested(e, 'datosResidencia', 'codigoPostal')} variant="outlined" />
-							</FormControl>
+						<div>
+							<MultipleInput valueSetter={setCreateValues} values={createValues.titulos} />
 						</div>
 					</Box>
 
@@ -335,42 +325,61 @@ export default function Alumnos() {
 		const alumnosSkeleton = new Array(20).fill(<Variants />)
 
 		const handleCreateClick = () => {
-			setCardStyle(current => ({ ...current, height: "70vh", width: "70vw", borderRadius: "0.5%", }))
+
+			fetchGet(`carreras/`)
+				.then(response => response.json())
+				.then(carreras => {
+					setCarrerasTodas(carreras)
+				})
+				.catch(error => {
+					console.log(error)
+				})
+
+			setCardStyle(current => ({ ...current, height: "auto", width: "60vw", borderRadius: "0.5%", }))
 			setChecked(false)
 		}
 		const handleCreateCurso = () => {
-			const cursoBase =
+			const carreraElegida = carrerasTodas.find(elem => elem.nombre === createValues.carreras[0])
+			const alumnoBase =
 			{
-				"materia": createValues.materia,
-				"profesor": {
-					"nombre": createValues.profesor.nombre,
-					"apellido": createValues.profesor.apellido,
-					"dni": createValues.profesor.dni
+				"nombre": createValues.nombre,
+				"apellido": createValues.apellido,
+				"dni": createValues.dni,
+				"fechaNacimiento": `${createValues.fechaNacimiento.$y}-${createValues.fechaNacimiento.$M}-${createValues.fechaNacimiento.$D}`,
+				"telefono": createValues.telefono,
+				"mail": createValues.mail,
+				"titulos": createValues.titulos,
+				"datosResidencia": {
+					"pais": createValues.datosResidencia.pais,
+					"provincia": createValues.datosResidencia.provincia,
+					"localidad": createValues.datosResidencia.localidad,
+					"domicilio": createValues.datosResidencia.domicilio,
+					"codigoPostal": createValues.datosResidencia.codigoPostal
 				},
-				"alumnos": [],
-				"periodo": {
-					"año": new Date().getFullYear(),
-					"cuatrimestre": createValues.duracion,
-					"horario": createValues.horario,
-					"dias": [createValues.horario]
+				"fechaIngreso": `${createValues.fechaIngreso.$y}-${createValues.fechaIngreso.$M}-${createValues.fechaIngreso.$D}`,
+				"rol": "alumno",
+				"datosNacimiento": {
+					"pais": createValues.datosNacimiento.pais,
+					"localidad": createValues.datosNacimiento.localidad
 				},
-				"estado": "Activa",
-				"fechasAsistencia": [],
-				"evaluaciones": [],
-				"finales": [],
-				"mail": createValues.profesor.mail
+				"cursosActivos": [],
+				"carreras": [
+					{
+						"nombre": carreraElegida.nombre,
+						"duracion": carreraElegida.duracion,
+						"materias": carreraElegida.materias,
+						"tipo": carreraElegida.tipo
+					}
+				]
+
 			}
-			fetchPost(`cursos/`, cursoBase)
+			fetchPost(`alumnos/`, alumnoBase)
 				.then(res => {
 					setIsShown(false);
-					fetchPatch(`profesores/${createValues.profesor._id}`, { cursos: [...createValues.profesor.cursos, { id: res._id, materia: cursoBase.materia }] })
-						.then()
-						.catch(err => console.log(err))
+					setChecked(true)
+					setCardStyle(current => ({ ...current, height: "6vh", width: "6vh", borderRadius: "20%" }))
 				})
 				.catch(err => console.log(err))
-
-			setChecked(true)
-			setCardStyle(current => ({ ...current, height: "6vh", width: "6vh", borderRadius: "20%" }))
 		}
 		//*--------------------------------------------return.-----------------------------
 		return (
@@ -380,11 +389,9 @@ export default function Alumnos() {
 						{loading ? alumnosSkeleton : alumnosComponent}
 					</Grid>
 				</div>
-				<div style={{ paddingLeft: "2%", paddingBottom: "1%", overflow: "auto" }}>
+				<div style={{ paddingLeft: "2%", paddingBottom: "1%" }}>
 					<Card sx={cardStyle}>
-						{!checked ?
-							<CardContent sx={{ height: "100%", width: '100%' }}>{createAlumnoComponent()}</CardContent>
-							:
+						{!checked ? <CardContent sx={{ width: '100%', padding: "0" }}>{createAlumnoComponent()}</CardContent> :
 							<CardActions>
 								<IconButton color="primary" aria-label="crear fila" onClick={() => handleCreateClick()}>
 									<AddIcon style={{ fontSize: "2.5vw" }} />

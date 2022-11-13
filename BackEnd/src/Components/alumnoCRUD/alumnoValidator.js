@@ -34,7 +34,7 @@ module.exports.agregarValidator = [
     body("cursosActivos.*")
         .isObject().withMessage("CursosActivos debe ser un array de objetos"),
     body("carrera")
-        .isObject().withMessage("Carrera debe ser un objeto con los campos nombre, duracion, materias y tipo"),
+        .isArray().withMessage("Carrera debe ser un array objeto con los campos nombre, duracion, materias y tipo"),
     verifyValidation
 ]
 

@@ -12,7 +12,7 @@ import {
       const classes = useStyles();
       const [currValue, setCurrValue] = useState("");
       const handleKeyUp = (e) => {
-          if (e.keyCode == 32) {
+          if (e.code === "Enter") {
             valueSetter((oldState) => ({...oldState, titulos:[...oldState.titulos, e.target.value]}));
               setCurrValue("");
           }

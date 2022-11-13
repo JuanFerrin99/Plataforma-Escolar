@@ -7,7 +7,7 @@ const { agregarValidator, idValidator, mailValidator, modificacionValidator } = 
 //router.use(verificarAuth)
 
 // 1 POST /alumnos/
-router.post('/', verificarRol(["secretario", "admin"]), agregarValidator, agregarAlumno);
+router.post('/', verificarRol(["secretario", "admin"]), agregarAlumno);
 
 // 2 DELETE /alumnos/:id
 router.delete('/:id', verificarRol(["admin"]), idValidator, eliminarAlumno);

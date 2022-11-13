@@ -7,7 +7,8 @@ const { default: mongoose } = require('mongoose');
 
 module.exports.agregarAlumno = (req, res) => {
     const { nombre, apellido, dni, fechaNacimiento, telefono, mail, titulos, datosResidiencia, fechaIngreso, rol, datosNacimiento, cursosActivos, carrera } = req.body;
-
+    //!aca
+    console.log('validator mal, arreglaar')
     const alumno = new Alumno({
         nombre,
         apellido,
