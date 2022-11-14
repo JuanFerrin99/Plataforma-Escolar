@@ -4,6 +4,7 @@ import { handleDeleteTitulo, handleCreateTitulo, changeObjectHandler, changeHand
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers/';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { fetchGet, fetchPatch, fetchPost } from '../../utils/Fetch'
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import ProfesorCard from "../../cards/ProfesorCardSecretario";
 import CreateIcon from '@mui/icons-material/Create';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -317,7 +318,9 @@ export default function Profesors() {
 	else {
 		return (
 			<Box id="info">
-				go back button aca
+								<IconButton sx={{float:"left"}} color="primary" aria-label="ir para atras" onClick={() => { setProfesor({}) }}>
+					<ArrowBackRoundedIcon fontSize='large' />
+				</IconButton>
 				<div><TextField id="standard-basic" defaultValue={profesor.nombre} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "nombre", setProfesor, setIsShown)} label="Nombre" variant="standard" /></div>
 				<div><TextField id="standard-basic" defaultValue={profesor.apellido} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "apellido", setProfesor, setIsShown)} label="Apellido" variant="standard" /></div>
 				<div><TextField id="standard-basic" defaultValue={profesor.dni} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "dni", setProfesor, setIsShown)} label="DNI" variant="standard" /></div>

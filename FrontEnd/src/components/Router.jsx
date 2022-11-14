@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { HashRouter, BrowserRouter, Routes, Route } from "react-router-dom"
 import LoginPage from "../pages/Login"
 import HomePage from "../pages/HomePage"
 import Info from "../pages/InfoInstitucional"
@@ -24,7 +24,7 @@ export default function Router() {
             <Routes>
                 <Route path='/' element={ <Navbar /> }>
                         <Route index element={ <HomePage /> } />
-                        <Route path="/login" element= { <LoginPage /> } />
+                        <Route  path="/login" element= { <LoginPage /> } />
                         <Route path="/inscripcion" element= { <HomePage /> } />
                         <Route path="/informacion" element= { <Info /> } />    
                         <Route path="/cursos" element= { <Cursoshomepage /> } />  
