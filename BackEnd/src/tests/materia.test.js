@@ -23,7 +23,7 @@ beforeAll(async () => {
     token = response._body.message
 
     await Admin.deleteMany({});
-})
+}, 9999)
 
 
 /*-------------------------------------------------POST materia test-------------------------------------------------------------*/
@@ -160,4 +160,4 @@ describe("Get materia", () => {
 
 afterAll(async () => {
     await disconnectTestDB()
-})
+}, 9999)

@@ -1,5 +1,5 @@
 {
-    "mongodbUri": "mongodb+srv://plataforma:plataforma-escolar@plataforma-escolar.ts5k9kf.mongodb.net/Plataforma-Escolar?retryWrites=true&w=majority",
+    "mongodbUri": "mongodb+srv://plataforma:plataforma-escolar@plataforma-escolar.ts5k9kf.mongodb.net/Plataforma-Escolar",
     "authentication": {
         "jwtSecret": "asdsahdjhj1h23787as98dyoh1i2h3hoi798asdyhiu12y8632y1iugqudy81237oaisdhu16238978y",
         "jwtExpiry": "14d"
