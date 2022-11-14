@@ -16,7 +16,6 @@ import AlumnoPage from "../pages/alumno/Alumno"
 import ProfesorPage from "../pages/profesor/Profesor"
     import CursoProfesorPage from "../pages/profesor/CursoControl"
     import AlumnoControlPage from "../pages/profesor/AlumnoControl"
-import { Switch } from "@mui/material"
 
 
 export default function Router() {
