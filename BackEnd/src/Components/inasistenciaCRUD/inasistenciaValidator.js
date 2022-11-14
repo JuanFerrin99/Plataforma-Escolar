@@ -15,8 +15,14 @@ module.exports.agregarValidator = [
         .isString().withMessage("Curso debe ser un string"),
     body("materia")
         .isString().withMessage("Materia deber ser un string"),
-    body("persona")
-        .isObject().withMessage("Persona debe ser un objeto"),
+    body("apellido")
+        .isString().withMessage("Apellido deber ser un string"),
+    body("nombre")
+        .isString().withMessage("Nombre deber ser un string"),
+    body("dni")
+        .isInt().withMessage("Materia deber ser un int"),
+    body("rol")
+        .isString().withMessage("Rol deber ser un string"),
     verifyValidation
 ]
 
@@ -51,8 +57,17 @@ module.exports.modificacionValidator = [
     body("materia")
         .optional({nullable: true})
         .isString().withMessage("Materia deber ser un string"),
-    body("persona")
+    body("apellido")
         .optional({nullable: true})
-        .isObject().withMessage("Persona debe ser un objeto"),
+        .isString().withMessage("Apellido deber ser un string"),
+    body("nombre")
+        .optional({nullable: true})
+        .isString().withMessage("Nombre deber ser un string"),
+    body("dni")
+        .optional({nullable: true})
+        .isInt().withMessage("Materia deber ser un int"),
+    body("rol")
+        .optional({nullable: true})
+        .isString().withMessage("Rol deber ser un string"),
     verifyValidation
 ]

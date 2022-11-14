@@ -9,7 +9,10 @@ var inasistencias = new Schema({
     justificado: String,
     curso: String,
     materia: String,
-    persona: Object  /* nombre: String, apellido: String, dni: int */
+    apellido: String,
+    nombre: String,
+    dni: Number,
+    rol: String
 });
 
 module.exports = mongoose.model('Inasistencia', inasistencias);
