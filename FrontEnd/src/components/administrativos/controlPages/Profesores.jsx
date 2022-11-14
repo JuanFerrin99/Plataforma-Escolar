@@ -190,20 +190,26 @@ export default function Profesors() {
 							</FormControl>
 						</div>
 						<div style={{ width: 'auto', padding: "0 1.5vw", float: "left" }}>
-
-							<FormControl>
-
-								<TextField id="outlined-basic" sx={{ "& .MuiInputBase-root": { height: "auto", "padding": "0.6vw 0.5vw" } }} value={createValues.datosNacimiento.pais} label="Pais de nacimiento" onChange={(e) => handleChangeNested(e, "datosNacimiento", 'pais')} variant="outlined" />
-
+							<FormControl sx={{ "& .MuiInputBase-root": { height: "auto", "padding": "0.6vw 0.5vw" } }}>
+								<LocalizationProvider dateAdapter={AdapterDayjs}>
+									<Stack spacing={3}>
+										<DatePicker
+											disableFuture
+											label="Fecha de ingreso"
+											openTo="year"
+											views={['year', 'month', 'day']}
+											value={createValues.fechaIngreso}
+											onChange={(newValue) => {
+												setCreateValues(current => ({ ...current, fechaIngreso: newValue }));
+											}}
+											renderInput={(params) => <TextField {...params} />}
+										/>
+									</Stack>
+								</LocalizationProvider>
 							</FormControl>
 						</div>
-						<div style={{ width: 'auto', padding: "0 1.5vw", float: "left" }}>
-
-							<FormControl>
-
-								<TextField id="outlined-basic" sx={{ "& .MuiInputBase-root": { height: "auto", "padding": "0.6vw 0.5vw" } }} value={createValues.datosNacimiento.localidad} label="Pais de localidad" onChange={(e) => handleChangeNested(e, "datosNacimiento", 'localidad')} variant="outlined" />
-
-							</FormControl>
+						<div>
+							<MultipleInput valueSetter={setCreateValues} values={createValues.titulos} />
 						</div>
 					</Box>
 					<Box sx={{ width: "100%", display: "flex", justifyContent: "center", margin: "3vh 0", height: "auto" }}>
@@ -234,50 +240,8 @@ export default function Profesors() {
 						</div>
 					</Box>
 
-					<Box sx={{ width: "100%", display: "flex", justifyContent: "center", margin: "3vh 0", height: "auto" }}>
-						<div style={{ width: 'auto', padding: "0 1.5vw", float: "left" }}>
-							<FormControl sx={{ "& .MuiInputBase-root": { height: "auto", "padding": "0.6vw 0.5vw" } }}>
-								<LocalizationProvider dateAdapter={AdapterDayjs}>
-									<Stack spacing={3}>
-										<DatePicker
-											disableFuture
-											label="Fecha de ingreso"
-											openTo="year"
-											views={['year', 'month', 'day']}
-											value={createValues.fechaIngreso}
-											onChange={(newValue) => {
-												setCreateValues(current => ({ ...current, fechaIngreso: newValue }));
-											}}
-											renderInput={(params) => <TextField {...params} />}
-										/>
-									</Stack>
-								</LocalizationProvider>
-							</FormControl>
-						</div>
-						<div style={{ width: '25%', padding: "0 1.5vw", float: "left" }}>
-							<FormControl sx={{ width: "100% " }}>
-								<InputLabel id="demo-simple-select-label">Carrera</InputLabel>
-								<Select
-									sx={{ width: "100% ", "& .MuiInputBase-root": { height: "auto", "padding": "0.6vw 0.5vw" } }}
-									labelId="demo-simple-select-label"
-									id="demo-simple-select"
-									value={createValues.carrera}
-									label="Carrera"
-									onChange={(e) => handleChangeCheck(e, 'carreras')}>
-									{[].map((carrera) => {
-										return <MenuItem value={carrera.nombre}>{carrera.nombre}</MenuItem>
-									}
-									)}
-								</Select>
-							</FormControl>
-						</div>
-						<div>
-							<MultipleInput valueSetter={setCreateValues} values={createValues.titulos} />
-						</div>
-					</Box>
-
-					<div style={{ display: "flex", position: "relative", justifyContent: "center", width: "29vw", height: "25%" }}>
-						<Button style={{ position: "absolute", bottom: 0, width: "20vw" }} variant="outlined" startIcon={<CreateIcon />} onClick={() => { handleCreateCurso() }}>
+					<div style={{ display: "flex",  justifyContent: "center", width: "auto", height: "25%" }}>
+						<Button style={{  bottom: 0, width: "auto" }} variant="outlined" startIcon={<CreateIcon />} onClick={() => { handleCreateCurso() }}>
 							Crear
 						</Button>
 					</div>
@@ -290,17 +254,7 @@ export default function Profesors() {
 		const profesoresSkeleton = new Array(20).fill(<Variants />)
 
 		const handleCreateClick = () => {
-
-			fetchGet(`carreras/`)
-				.then(response => response.json())
-				.then(carreras => {
-				
-				})
-				.catch(error => {
-					console.log(error)
-				})
-
-			setCardStyle(current => ({ ...current, height: "auto", width: "60vw", borderRadius: "0.5%", }))
+			setCardStyle(current => ({ ...current, height: "auto", width: "70vw", borderRadius: "0.5%", }))
 			setChecked(false)
 		}
 		const handleCreateCurso = () => {
@@ -310,7 +264,7 @@ export default function Profesors() {
 				"nombre": createValues.nombre,
 				"apellido": createValues.apellido,
 				"dni": createValues.dni,
-				"fechaNacimiento": `${createValues.fechaNacimiento.$y}-${createValues.fechaNacimiento.$M}-${createValues.fechaNacimiento.$D}`,
+				"fechaNacimiento": `${createValues.fechaNacimiento.$y}-${(`0`+ createValues.fechaNacimiento.$M).slice(-2)}-${(`0` + createValues.fechaNacimiento.$D).slice(-2)}`,
 				"telefono": createValues.telefono,
 				"mail": createValues.mail,
 				"titulos": createValues.titulos,
@@ -321,23 +275,12 @@ export default function Profesors() {
 					"domicilio": createValues.datosResidencia.domicilio,
 					"codigoPostal": createValues.datosResidencia.codigoPostal
 				},
-				"fechaIngreso": `${createValues.fechaIngreso.$y}-${createValues.fechaIngreso.$M}-${createValues.fechaIngreso.$D}`,
+				"fechaIngreso": `${createValues.fechaIngreso.$y}-${(`0`+ createValues.fechaIngreso.$M).slice(-2)}-${(`0` + createValues.fechaIngreso.$D).slice(-2)}`,
 				"rol": "profesor",
-				"datosNacimiento": {
-					"pais": createValues.datosNacimiento.pais,
-					"localidad": createValues.datosNacimiento.localidad
-				},
-				"cursosActivos": [],
-				"carreras": [
-					{
-						"nombre": carreraElegida.nombre,
-						"duracion": carreraElegida.duracion,
-						"materias": carreraElegida.materias,
-						"tipo": carreraElegida.tipo
-					}
-				]
+				"cursos": []
 
 			}
+			console.log(profesorBase)
 			fetchPost(`profesores/`, profesorBase)
 				.then(res => {
 					setIsShown(false);
