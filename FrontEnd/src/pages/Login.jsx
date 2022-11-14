@@ -58,8 +58,6 @@ export default function SignIn() {
             .then(res => {
                 document.cookie = `mail = ${body.email}`
                 document.cookie =  `rol = ${res.rol}`
-                document.cookie =  `token = ${res.message}; httpOnly`
-
 
                 window.location.href = `/${Cookies.get("rol")}`
             })

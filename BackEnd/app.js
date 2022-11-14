@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var jwt = require("jsonwebtoken");
 var cors = require('cors');
-var corsAllowed = ["http://localhost:3000", "https://plataforma-escolar.onrender.com"]
+var corsAllowed = ["http://localhost:3000", "https://ise.onrender.com"]
 
 /*-------------------------------------routes-------------------------------------*/
 var routeCarrera = require('./src/Components/carreraCRUD/carreraRouter')
