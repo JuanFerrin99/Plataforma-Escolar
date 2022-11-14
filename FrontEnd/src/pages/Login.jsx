@@ -17,6 +17,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { fetchPost } from '../components/utils/Fetch';
 import '../styles/pages/Login.css';
+import { borders } from '@mui/system';
+
 
 
 export default function SignIn() {
@@ -65,15 +67,15 @@ export default function SignIn() {
             .catch(e => console.log(e));
     }
 
-    function cambiarContraseña(props) {
+    function cambiarContraseña() {
         return (
-            <Typography variant="body2" color="text.secondary" align="center" {...props}>
-                <button onClick={() => {
-                    setPressed(true)
-                }}>
-                    Restabler contraseña
-                </button>
-            </Typography>
+            <Button variant="text" fullWidth sx={{color:"info", fontSize:10}}
+            onClick={() => {
+                setPressed(true)
+            }}>
+                Restablecer contraseña
+            </Button>
+
         );
     }
 
@@ -90,14 +92,14 @@ export default function SignIn() {
                             alignItems: 'center',
                         }}
                     >
-                        <Avatar sx={{ m: 1, bgcolor: '#01c4ff' }}>
+                        <Avatar sx={{ m: 1, bgcolor: '#ffaf01 ' }}>
                             <LockOutlinedIcon />
                         </Avatar>
-                        <Typography component="h1" variant="h5">
-                            Sign in
+                        <Typography component="h1" variant="h5" sx={{color:"#FAFAFA"}}>
+                            Inicar sesión
                         </Typography>
                         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-                            <TextField
+                            <TextField sx={{ '& .MuiInput-underline:before': { borderBottomColor: '#FAFAFA' }, '& .MuiInput-underline:after': { borderBottomColor: 'info' }, input: { color: '#F2F3F4' }, label: { color: '#FAFAFA' } }} 
                                 onChange={handleEmailChange}
                                 margin="normal"
                                 required
@@ -107,10 +109,10 @@ export default function SignIn() {
                                 name="email"
                                 autoComplete="email"
                                 variant='standard'
-                                color='warning'
+                                color='info'
                                 autoFocus
                             />
-                            <TextField
+                            <TextField  sx={{ '& .MuiInput-underline:before': { borderBottomColor: '#FAFAFA' }, '& .MuiInput-underline:after': { borderBottomColor: 'info' }, input: { color: '#F2F3F4' }, label: { color: '#FAFAFA' } }} 
                                 onChange={handlePasswordChange}
                                 margin="normal"
                                 required
@@ -119,20 +121,21 @@ export default function SignIn() {
                                 label="Contraseña"
                                 id="password"
                                 variant='standard'
-                                color='warning'
+                                color='info'
+                                autoFocus
                                 autoComplete="current-password"
 
-                                type={showPassword ? "text" : "password"} // <-- This is where the magic happens
+                                type={showPassword ? "text" : "password"} 
 
-                                InputProps={{ // <-- This is where the toggle button is added.
+                                InputProps={{ 
                                     endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
+                                        <InputAdornment position="end" color='#FAFAFA'>
+                                            <IconButton   
                                                 aria-label="toggle password visibility"
                                                 onClick={handleClickShowPassword}
                                                 onMouseDown={handleMouseDownPassword}
                                             >
-                                                {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                                {showPassword ? <VisibilityIcon sx={{color:"#fafafa"}}/> : <VisibilityOffIcon sx={{color:"#fafafa"}}/>}
                                             </IconButton>
                                         </InputAdornment>
                                     )
@@ -144,7 +147,7 @@ export default function SignIn() {
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
                             >
-                                Sign In
+                                Ingresar
                             </Button>
                         </Box>
                     </Box>
@@ -166,23 +169,24 @@ export default function SignIn() {
                             alignItems: 'center',
                         }}
                     >
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                        <Avatar sx={{ m: 1, bgcolor: '#ffaf01 '  }}>
                             <LockOutlinedIcon />
                         </Avatar>
-                        <Typography component="h1" variant="h5">
+                        <Typography component="h1" variant="h5" sx={{color:"#FAFAFA"}}>
                             Ingrese su mail
                         </Typography>
                         <Box component="form" onSubmit={handleEnviarReset} noValidate sx={{ mt: 1 }}>
-                            <TextField
+                            <TextField sx={{ '& .MuiInput-underline:before': { borderBottomColor: '#FAFAFA' }, '& .MuiInput-underline:after': { borderBottomColor: 'info' }, input: { color: '#F2F3F4' }, label: { color: '#FAFAFA' } }} 
                                 onChange={handleEmailChange}
                                 margin="normal"
                                 required
                                 fullWidth
                                 id="email"
-                                label="Email Address"
+                                label="Email"
                                 name="email"
                                 autoComplete="email"
-                                color='warning'
+                                variant='standard'
+                                color='info'
                                 autoFocus
                             />
                             <Button
