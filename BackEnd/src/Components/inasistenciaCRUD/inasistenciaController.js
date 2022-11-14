@@ -11,7 +11,7 @@ const errorHandler = (res) => (error) => {
 //---------------------------------------- POST /inasistencias/ ------------------------------------------------------------------
 
 module.exports.agregarInasistencia = (req, res) => {
-    const { fecha, tipo, motivo, justificado, curso, materia, persona } = req.body;
+    const { fecha, tipo, motivo, justificado, curso, materia, apellido, nombre, dni, rol } = req.body;
 
     const inasistencia = new Inasistencia({
         fecha,
@@ -20,7 +20,10 @@ module.exports.agregarInasistencia = (req, res) => {
         justificado,
         curso, 
         materia,
-        persona
+        apellido,
+        nombre,
+        dni,
+        rol
     });
 
     inasistencia.save()
@@ -47,7 +50,7 @@ module.exports.eliminarInasistencia = (req, res) => {
 //-------------------------------------------------- PATCH /inasistencias/id ------------------------------------------------------
 
 module.exports.modificarInasistencia = (req, res) => {
-    return Inasistencia.findOneAndUpdate({ _id: req.params.id }, { fecha: req.body.fecha, tipo: req.body.tipo, motivo: req.body.motivo, justificado: req.body.justificado, curso: req.body.curso, materia: req.body.materia, persona: req.body.persona } ,{new: true})
+    return Inasistencia.findOneAndUpdate({ _id: req.params.id }, { fecha: req.body.fecha, tipo: req.body.tipo, motivo: req.body.motivo, justificado: req.body.justificado, curso: req.body.curso, materia: req.body.materia, apellido: req.body.apellido, nombre: req.body.nombre, dni: req.body.dni, rol: req.body.rol } ,{new: true})
         .then((result) => {
             if(result){
                 res.status(200).json("Se realizaron los cambios a " + req.params.id)
@@ -72,7 +75,6 @@ module.exports.getInasistencias = (req, res) => {
         })
         .catch(errorHandler(res))
 }
-
 
 //-------------------------------------------- GET /inasistencias/id --------------------------------------------------------------
 

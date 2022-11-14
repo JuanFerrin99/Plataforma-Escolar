@@ -4,8 +4,13 @@ const config = require("../../config/default.json")
 
 const uri = config.mongodbUri;
 
+const connectionParams={
+    useNewUrlParser: true,
+    useUnifiedTopology: true 
+}
+
 module.exports.connectToDB = function (suffix = "", params = {}) {
-    return mongoose.connect(`${uri}${suffix}` , params);
+    return mongoose.connect(`${uri}${suffix}?retryWrites=true&w=majority` , connectionParams);
 }
 
 module.exports.disconnectDB = function () {

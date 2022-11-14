@@ -387,11 +387,13 @@ export default function CursoCard() {
                         "fecha": `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`,
                         "tipo": "Falta",
                         "motivo": " ",
-                        "justificado":
-                            "Injustificada",
+                        "justificado":  "Injustificada",
                         "curso": id,
                         "materia": curso.materia,
-                        "persona": { "nombre": alumno.Nombre, "apellido": alumno.Apellido, "dni": alumno.id }
+                        "nombre": alumno.Nombre, 
+                        "apellido": alumno.Apellido, 
+                        "dni": alumno.dni,
+                        "rol": "alumno"
                     })
                 })
                 fetchPost(`cursos/${id}/`, {

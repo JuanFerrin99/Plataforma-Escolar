@@ -52,7 +52,7 @@ import {
           display: "flex",
           alignItems: "center",
           gap: "8px",
-          width: "300px",
+          width: "auto",
           flexWrap: "wrap",
           flexDirection: "row",
           border:'2px solid lightgray',

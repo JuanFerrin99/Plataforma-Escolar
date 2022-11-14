@@ -143,13 +143,11 @@ module.exports.sendLoginResponse = (req, res) => {
     }
 
     res.cookie("token", token, { ...options, httpOnly: true })
-    res.cookie("isLogged", true, { ...options, httpOnly: true })
-    res.cookie("mail", req.currentUserData.mail)
-    res.cookie("rol", req.currentUserData.rol)
 
     res.status(200).json({
         code: 10,
-        message: token
+        message: token,
+        rol: req.currentUserData.rol
     })
 }
 

@@ -55,7 +55,10 @@ export default function SignIn() {
         }
 
         fetchPost(`login`, body)
-            .then(jwt => {
+            .then(res => {
+                document.cookie = `mail = ${body.email}`
+                document.cookie =  `rol = ${res.rol}`
+
                 window.location.href = `/${Cookies.get("rol")}`
             })
             .catch(e => { alert("Error en los datos") });
