@@ -1,4 +1,4 @@
-const prefijo = "https://plataforma-escolar.onrender.com/"
+const prefijo = "https://plataforma-escolar.onrender.com/" //!cambiar para trabajar localmente
 
 module.exports.fetchGet = (url) => {
     return fetch(`${prefijo}${url}`, { credentials: 'include' })
