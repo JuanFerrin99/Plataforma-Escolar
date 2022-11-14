@@ -7,7 +7,7 @@ import AddIcon from '@mui/icons-material/AddRounded';
 import { fetchGet, fetchPatch, fetchPost } from "../../utils/Fetch"
 import CursosCard from "../../cards/CursoCardSecretario";
 import "../../../styles/administrativos/cursos.css"
-import Create from '@mui/icons-material/Create'
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import Cookies from "js-cookie";
 import socket from '../../../components/utils/Socket'
 socket.emit('connected', Cookies.get("mail"))
@@ -123,7 +123,7 @@ export default function Cursos() {
 			return <CursosCard key={curso._id} setCurso={setCurso} setCursos={setCursos} curso={curso} />
 		})
 		const cursosSkeleton = new Array(20).fill(<Variants />)
-		
+
 		const handleCreateClick = () => {
 			fetchGet(`materias/`)
 				.then(response => response.json())
@@ -181,7 +181,7 @@ export default function Cursos() {
 
 		const createCursoComponent = () => {
 			return (
-				<div style={{ height: "100%", width: '100%',overflow:"visible" }}>
+				<div style={{ height: "100%", width: '100%', overflow: "visible" }}>
 
 					<Box sx={{ width: "30vw", margin: " 7% 0% 2.5%", float: "left" }}>
 						<FormControl sx={{ width: '12vw', margin: "0 3%" }}>
@@ -282,7 +282,7 @@ export default function Cursos() {
 						{loading ? cursosSkeleton : cursosComponent}
 					</Grid>
 				</div>
-				<div style={{ paddingLeft: "2%",paddingBottom:"1%",overflow:"auto" }}>
+				<div style={{ paddingLeft: "2%", paddingBottom: "1%", overflow: "auto" }}>
 					<Card sx={cardStyle}>
 						{!checked ?
 							<CardContent sx={{ height: "100%", width: '100%' }}>{createCursoComponent()}</CardContent>
@@ -304,7 +304,10 @@ export default function Cursos() {
 	if (Object.keys(curso).length > 0) {
 		return (
 			<div id="vistaGrande" style={{ height: "100%", width: '100%', fontSize: "18px" }}>
-				<div style={{ backgroundColor: "lightCyan", width: '20%', float: 'left', marginTop: '2%', marginLeft: "2%" }}>
+				<IconButton sx={{ float: "left" }} color="primary" aria-label="ir para atras" onClick={() => { setCurso({}) }}>
+					<ArrowBackRoundedIcon fontSize='large' />
+				</IconButton>
+				<div style={{ backgroundColor: "lightCyan", width: '19%', float: 'left', marginTop: '2%', marginLeft: "2%" }}>
 					<b>Profesor</b>
 					<div><TextField id="standard-basic" defaultValue={curso.profesor.nombre} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "profesor", "nombre", setCurso, setIsShown)} label="Nombre" variant="standard" /></div>
 					<div><TextField id="standard-basic" defaultValue={curso.profesor.apellido} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "profesor", "apellido", setCurso, setIsShown)} label="Apellido postal" variant="standard" /></div>
@@ -312,7 +315,7 @@ export default function Cursos() {
 					<div><TextField id="standard-basic" defaultValue={curso.profesor.mail} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "profesor", "mail", setCurso, setIsShown)} label="Mail" variant="standard" /></div>
 				</div>
 
-				<div style={{ backgroundColor: "#222233", color: "#AACCFF", width: '20%', float: 'left', marginTop: '2%', marginLeft: "2%" }}>
+				<div style={{ backgroundColor: "#222233", color: "#AACCFF", width: '19%', float: 'left', marginTop: '2%', marginLeft: "2%" }}>
 					<b>Alumnos</b>
 					{curso.alumnos.map((alumno) => {
 						return (
@@ -330,7 +333,7 @@ export default function Cursos() {
 					}
 				</div>
 
-				<div style={{ backgroundColor: "#107896", color: "#F2F3F4", width: '20%', float: 'left', marginTop: '2%', marginLeft: "2%" }}>
+				<div style={{ backgroundColor: "#107896", color: "#F2F3F4", width: '19%', float: 'left', marginTop: '2%', marginLeft: "2%" }}>
 					<b>Periodo</b>
 					<div><TextField sx={{ label: { color: '#F2F3F4' } }} id="standard-basic" defaultValue={curso.periodo.año} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "periodo", "año", setCurso, setIsShown)} label="Año" variant="standard" /></div>
 					<div><TextField sx={{ label: { color: '#F2F3F4' } }} id="standard-basic" defaultValue={curso.periodo.cuatrimestre} onKeyPress={e => onEnter(e)} onBlur={e => changeObjectHandler(e, "periodo", "cuatrimestre", setCurso, setIsShown)} label="Cuatrimestre" variant="standard" /></div>
@@ -347,7 +350,7 @@ export default function Cursos() {
 						}
 					</div>
 				</div>
-				<div style={{ backgroundColor: "lightCyan", width: '20%', float: 'left', marginTop: '2%', marginLeft: "2%" }}>
+				<div style={{ backgroundColor: "lightCyan", width: '19%', float: 'left', marginTop: '2%', marginLeft: "2%" }}>
 					<b>Finales</b>
 					{curso.finales.map((final, i) => {
 						return (

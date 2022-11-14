@@ -5,6 +5,7 @@ import CreateIcon from '@mui/icons-material/Create';
 import ClearIcon from '@mui/icons-material/Clear';
 import CarreraCard from "../../cards/CarreraCardSecretario";
 import { fetchGet, fetchPatch, fetchPost } from "../../utils/Fetch"
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import AddIcon from '@mui/icons-material/AddRounded';
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -228,7 +229,9 @@ export default function Carreras() {
 	else {
 		return (
 			<Box id="info">
-				go back button aca
+								<IconButton sx={{float:"left"}} color="primary" aria-label="ir para atras" onClick={() => { setCarrera({}) }}>
+					<ArrowBackRoundedIcon fontSize='large' />
+				</IconButton>
 				<div><TextField id="standard-basic" defaultValue={carrera.nombre} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "nombre", setCarrera, setIsShown)} label="Nombre" variant="standard" /></div>
 				<div><TextField id="standard-basic" defaultValue={carrera.duracion} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "duracion", setCarrera, setIsShown)} label="Duracion" variant="standard" /></div>
 				<div><TextField id="standard-basic" defaultValue={carrera.tipo} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "tipo", setCarrera, setIsShown)} label="Tipo" tipoiant="standard" /></div>

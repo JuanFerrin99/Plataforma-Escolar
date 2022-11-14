@@ -25,10 +25,6 @@ export const SidebarData = [
     heading: "Inicio"
   },
   {
-    icon: UilPackage,
-    heading: 'Inscripciones'
-  },
-  {
     icon: UilClipboardAlt,
     heading: "Alumnos",
   },

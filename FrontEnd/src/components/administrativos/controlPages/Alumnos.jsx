@@ -5,7 +5,7 @@ import CreateIcon from '@mui/icons-material/Create';
 import ClearIcon from '@mui/icons-material/Clear';
 import AlumnoCard from "../../cards/AlumnoCardSecretario";
 import { fetchGet, fetchPatch, fetchPost } from '../../utils/Fetch'
-import dayjs from 'dayjs';
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Stack from '@mui/material/Stack';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -168,6 +168,7 @@ export default function Alumnos() {
 		const createAlumnoComponent = () => {
 			return (
 				<div style={{ height: "100%", width: '85%', margin: "0 7.5%" }}>
+
 					<Box sx={{ width: "100%", display: "flex", justifyContent: "center", margin: "3vh 0%", height: "auto" }}>
 						<div style={{ width: 'auto', padding: "0 1.5vw", float: "left" }}>
 							<FormControl>
@@ -298,7 +299,7 @@ export default function Alumnos() {
 										return <MenuItem value={carrera.nombre}>{carrera.nombre}</MenuItem>
 									}
 									)}
-								</Select> 
+								</Select>
 							</FormControl>
 						</div>
 						<div>
@@ -403,8 +404,11 @@ export default function Alumnos() {
 	//* ---------------------------------------------------------Vista curso-------------------------------------------------------------------------
 	else {//todo boton para atars
 		return (
+
 			<Box id="info">
-				goback button aca
+				<IconButton sx={{float:"left"}} color="primary" aria-label="ir para atras" onClick={() => { setAlumno({}) }}>
+					<ArrowBackRoundedIcon fontSize='large' />
+				</IconButton>
 				<div><TextField id="standard-basic" defaultValue={alumno.nombre} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "nombre", setAlumno, setIsShown)} label="Nombre" variant="standard" /></div>
 				<div><TextField id="standard-basic" defaultValue={alumno.apellido} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "apellido", setAlumno, setIsShown)} label="Apellido" variant="standard" /></div>
 				<div><TextField id="standard-basic" defaultValue={alumno.dni} onKeyPress={e => onEnter(e)} onBlur={e => changeHandler(e, "dni", setAlumno, setIsShown)} label="DNI" variant="standard" /></div>

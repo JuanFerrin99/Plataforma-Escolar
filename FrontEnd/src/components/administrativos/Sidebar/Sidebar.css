@@ -1,8 +1,8 @@
-.sidebar {
+  .sidebar {
   display: flex;
   flex-direction: column;
   position: relative;
-  padding-top: 4rem;
+  padding-top: 1rem;
   transition: all 300ms ease;
 }
 /* logo */
@@ -14,7 +14,7 @@
   display: flex;
   height: 5rem;
   font-weight: bold;
-  font-size: 22px;
+  font-size: 18px;
   gap: 1rem;
   align-items: center;
   justify-content: center;
@@ -25,17 +25,17 @@
 }
 
 .logo > img {
-  width: 3rem;
-  height: 3rem;
+  width: auto;
+  height: 5.5rem;
 }
 
 
 /* menu */
 .menu {
-  margin-top: 4rem;
+  
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
 }
 .menuItem {
   display: flex;
@@ -86,7 +86,7 @@
   .sidebar{
     position: fixed;
     z-index: 9;
-    background: #ffe0e0;
+    background: #b8f2fb;
     width: 55%;
     padding-right: 1rem;
     height: 100%;
@@ -99,17 +99,20 @@
   }
   .menu .menuItem:last-child {
     position: relative;
-    margin-top: 6rem;
+    margin-top: 5rem;
   }
   .bars{
     display: flex;
     position: fixed;
     top: 2rem;
     left:60%;
-    background:#ffe0e0;
+    background:hsl(188, 100%, 89%);
     padding:10px;
     border-radius: 10px;
-    z-index: 9;
+    z-index: 9;/*  {
+      icon: UilPackage,
+      heading: 'Inscripciones'
+    },*/
   }
   .close{
     left: -60%;

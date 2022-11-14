@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Sidebar.css";
-import Logo from "../imgs/nicePic.png";
+import Logo from "../imgs/marca-ise-h-fb-2_ (1) (2).png";
 import { SidebarData } from "../Data/Data";
 import { UilBars } from "@iconscout/react-unicons";
 import { motion } from "framer-motion";
@@ -23,11 +23,9 @@ export default function Sidebar({indexChanger, index}) {
 				variants={sidebarVariants}
 				animate={window.innerWidth <= 768 ? `${expanded}` : ''}
 			>
-				<div className="logo">
-					<img src={ Logo}alt="logo" />
-					<span>
-						I<span>S</span>E
-					</span>
+				<div className="logo" style={{width:"auto", height:"auto", display:"block", justifyContent:"center"}}>
+					<img src={Logo} alt="logo" />
+					<p>Instituto<br />Superior<br />Electronico</p>
 				</div>
 				<div className="menu">
 					{SidebarData.map((item, i) => {
