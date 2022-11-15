@@ -10,7 +10,7 @@ Node.js
 React
 MongoDB
 Instalación
-Clonar el [repositorio](https://repo.com de Github en la carpeta a eleccion"
+Clonar el [repositorio](https://github.com/JuanFerrin99/Plataforma-Escolar/tree/main de Github en la carpeta a eleccion"
 Acceder a la carpeta "./BackEnd"
 Ejecutar el comando: "npm i"
 Acceder a la carpeta "./FrontEnd"
