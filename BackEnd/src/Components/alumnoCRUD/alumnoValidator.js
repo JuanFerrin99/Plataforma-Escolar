@@ -12,7 +12,7 @@ module.exports.agregarValidator = [
     body("dni")
         .isInt({min:1, max: 99999999}).withMessage("Dni debe ser un int y estar comprendido entre 1 y 99999999"),
     body("fechaNacimiento")
-        .isISO8601().withMessage("Fecha de nacimiento debe tener formato yyyy-mm-dd"),
+        .isString().withMessage("FechaNacimiento debe ser un string"),
     body("telefono")
         .isInt().withMessage("Telefono debe ser un int"),
     body("mail")
@@ -24,7 +24,7 @@ module.exports.agregarValidator = [
     body("datosResidencia")
         .isObject().withMessage("Datos de residencia debe ser un objeto con los campos pais, provincia, localidad, domicilio y codigo postal"),
     body("fechaIngreso")
-        .isISO8601().withMessage("Fecha de ingreso debe tener formato yyyy-mm-dd"),
+        .isString().withMessage("FechaIngreso debe ser un string"),
     body("rol")
         .isString().withMessage("Rol debe ser un string"),
     body("datosNacimiento")
@@ -64,7 +64,7 @@ module.exports.modificacionValidator = [
         .isInt({min:1, max: 99999999}).withMessage("Dni debe ser un int y estar comprendido entre 1 y 99999999"),
     body("fechaNacimiento")
         .optional({nullable: true})
-        .isISO8601().withMessage("Fecha de nacimiento debe tener formato yyyy-mm-dd"),
+        .isString().withMessage("FechaNacimiento debe ser un string"),
     body("telefono")
         .optional({nullable: true})
         .isInt().withMessage("Telefono debe ser un int"),
@@ -81,7 +81,7 @@ module.exports.modificacionValidator = [
         .isObject().withMessage("Datos de residencia debe ser un objeto con los campos pais, provincia, localidad, domicilio y codigo postal"),
     body("fechaIngreso")
         .optional({nullable: true})
-        .isISO8601().withMessage("Fecha de ingreso debe tener formato yyyy-mm-dd"),
+        .isString().withMessage("FechaIngreso debe ser un string"),
     body("rol")
         .optional({nullable: true})
         .isString().withMessage("Rol debe ser un string"),

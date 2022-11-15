@@ -6,12 +6,12 @@ var profesores = new Schema({
     nombre: String,
     apellido: String,
     dni: Number,
-    fechaNacimiento: Date,
+    fechaNacimiento: String,
     telefono: Number,
     mail: String,
     titulos: [String],
     datosResidencia: Object,    /* pais: String, provincia: String, localidad: String, domicilio: String, codigoPostal: Number*/
-    fechaIngreso: Date,
+    fechaIngreso: String,
     rol: String,
     cursos: [Object]  /* id: String, materia: String */
 });

@@ -17,7 +17,6 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { fetchPost } from '../components/utils/Fetch';
 import '../styles/pages/Login.css';
-import { borders } from '@mui/system';
 
 
 export default function SignIn() {
