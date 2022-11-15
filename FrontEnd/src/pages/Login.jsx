@@ -20,9 +20,7 @@ import '../styles/pages/Login.css';
 import { borders } from '@mui/system';
 
 
-
 export default function SignIn() {
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [pressed, setPressed] = useState(false);
@@ -58,6 +56,7 @@ export default function SignIn() {
             .then(res => {
                 document.cookie = `mail = ${body.email}`
                 document.cookie =  `rol = ${res.rol}`
+                document.cookie =  `token = ${res.message}`
 
                 window.location.href = `/${Cookies.get("rol")}`
             })
@@ -78,7 +77,6 @@ export default function SignIn() {
             }}>
                 Restablecer contraseña
             </Button>
-
         );
     }
 

@@ -138,12 +138,6 @@ module.exports.createSessionToken = (req, res, next) => {
 module.exports.sendLoginResponse = (req, res) => {
     const token = req.userToken;
 
-    const options = {
-        maxAge: 5000 * 1000
-    }
-
-    res.cookie("token", token, { ...options, httpOnly: true })
-
     res.status(200).json({
         code: 10,
         message: token,
