@@ -342,7 +342,7 @@ export default function Alumnos() {
 				"nombre": createValues.nombre,
 				"apellido": createValues.apellido,
 				"dni": createValues.dni,
-				"fechaNacimiento": `${createValues.fechaNacimiento.$y}-${createValues.fechaNacimiento.$M}-${createValues.fechaNacimiento.$D}`,
+				"fechaNacimiento": `${createValues.fechaNacimiento.$y}-${(`0`+ createValues.fechaNacimiento.$M).slice(-2)}-${(`0` + createValues.fechaNacimiento.$D).slice(-2)}`,
 				"telefono": createValues.telefono,
 				"mail": createValues.mail,
 				"titulos": createValues.titulos,
@@ -353,14 +353,14 @@ export default function Alumnos() {
 					"domicilio": createValues.datosResidencia.domicilio,
 					"codigoPostal": createValues.datosResidencia.codigoPostal
 				},
-				"fechaIngreso": `${createValues.fechaIngreso.$y}-${createValues.fechaIngreso.$M}-${createValues.fechaIngreso.$D}`,
+				"fechaIngreso": `${createValues.fechaIngreso.$y}-${(`0`+ createValues.fechaIngreso.$M).slice(-2)}-${(`0` + createValues.fechaIngreso.$D).slice(-2)}`,
 				"rol": "alumno",
 				"datosNacimiento": {
 					"pais": createValues.datosNacimiento.pais,
 					"localidad": createValues.datosNacimiento.localidad
 				},
 				"cursosActivos": [],
-				"carreras": [
+				"carrera": [
 					{
 						"nombre": carreraElegida.nombre,
 						"duracion": carreraElegida.duracion,

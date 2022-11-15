@@ -276,6 +276,7 @@ export default function Profesors() {
 					"domicilio": createValues.datosResidencia.domicilio,
 					"codigoPostal": createValues.datosResidencia.codigoPostal
 				},
+
 				"fechaIngreso": `${createValues.fechaIngreso.$y}-${(`0`+ createValues.fechaIngreso.$M).slice(-2)}-${(`0` + createValues.fechaIngreso.$D).slice(-2)}`,
 				"rol": "profesor",
 				"cursos": []
