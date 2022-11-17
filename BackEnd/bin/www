@@ -74,7 +74,8 @@ function onListening() {
 
 options = {
     cors: {
-        origin: ["http://localhost:3000", "https://ise.onrender.com"],
+        //origin: "https://ise.onrender.com",
+        origin: "http://localhost:3000",
         methods: ["GET", "POST"]
     }
 }
