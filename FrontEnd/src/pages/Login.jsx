@@ -55,7 +55,6 @@ export default function SignIn() {
             .then(res => {
                 document.cookie = `mail = ${body.email}`
                 document.cookie =  `rol = ${res.rol}`
-                document.cookie =  `token = ${res.message}`
 
                 window.location.href = `/${Cookies.get("rol")}`
             })
@@ -142,6 +141,8 @@ export default function SignIn() {
                                 }}
                             />
                             <Button
+                                id='ingresar'
+                                name='ingresar'
                                 type="submit"
                                 fullWidth
                                 variant="contained"

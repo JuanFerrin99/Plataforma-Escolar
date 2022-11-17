@@ -36,7 +36,7 @@ const Navbar = () => {
                 </div>
                 <ul className={click ? "nav-menu active" : "nav-menu"}>
                     <li className='nav-item'>
-                        <a href='/login' onClick={closeMenu}>ACCESO</a>
+                        <a href='/login' id='acceso' onClick={closeMenu}>ACCESO</a>
                     </li>
                     <li className='nav-item'>
                         <a href='/informacion' onClick={closeMenu}>EL INSTITUTO</a>
